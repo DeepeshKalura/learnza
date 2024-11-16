@@ -35,3 +35,4 @@ We welcome contributions to improve Learnza. Please fork the repository and subm
 
 ## License
 
+No license but i am developer so dont know baout it but i will use commerical one 
