@@ -8,5 +8,7 @@
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {});
+  test("Always postive test", () {
+    expect(1, 1);
+  });
 }

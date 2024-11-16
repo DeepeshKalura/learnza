@@ -1,14 +1,30 @@
-name: Deploy Flutter Web to Firebase
+name: Flutter CI/CD Workflow 🛠️🚀
 
 on:
   push:
     branches:
       - main
+  workflow_dispatch:
+    inputs:
+      release_type:
+        description: "Release type (major/minor/patch)"
+        required: true
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+        default: 'patch'
+
+env:
+  FLUTTER_VERSION: 3.24.3
+  FIREBASE_PROJECT_ID: "learnza"
+  JAVA_VERSION: '17'
 
 jobs:
-  build:
+  test:
+    name: "Run Tests 🧪"
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -16,18 +32,132 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: 3.24.3
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          cache: true
 
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Build for web
+      - name: Analyze code
+        run: flutter analyze
+
+      - name: Run tests
+        run: flutter test --coverage
+
+      - name: Upload coverage reports
+        uses: codecov/codecov-action@v3
+        if: success()
+
+  version-and-build:
+    name: "Version Update & Build 🏗️"
+    needs: test
+    runs-on: ubuntu-latest
+    outputs:
+      new_version: ${{ steps.version.outputs.new_version }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          cache: true
+
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: ${{ env.JAVA_VERSION }}
+
+      - name: Update version
+        id: version
+        run: |
+          CURRENT_VERSION=$(grep "^version:" pubspec.yaml | awk '{print $2}' | tr -d '\r')
+          echo "Current version: $CURRENT_VERSION"
+          
+          IFS='.' read -r -a version_parts <<< "$CURRENT_VERSION"
+          MAJOR="${version_parts[0]}"
+          MINOR="${version_parts[1]}"
+          PATCH="${version_parts[2]%%+*}"
+          BUILD="${version_parts[2]##*+}"
+          
+          case "${{ github.event.inputs.release_type }}" in
+            "major")
+              MAJOR=$((MAJOR + 1))
+              MINOR=0
+              PATCH=0
+              ;;
+            "minor")
+              MINOR=$((MINOR + 1))
+              PATCH=0
+              ;;
+            *)
+              PATCH=$((PATCH + 1))
+              ;;
+          esac
+          
+          NEW_VERSION="$MAJOR.$MINOR.$PATCH+$BUILD"
+          echo "New version: $NEW_VERSION"
+          echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
+          
+          sed -i "s/^version: .*/version: $NEW_VERSION/" pubspec.yaml
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Build Web
         run: flutter build web --release
 
-      - name: Deploy to Firebase
+      - name: Build Android
+        run: flutter build apk --release
+
+      - name: Archive build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-artifacts
+          path: |
+            build/web
+            build/app/outputs/flutter-apk/app-release.apk
+          retention-days: 7
+
+      - name: Commit version update
+        if: success()
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add pubspec.yaml
+          git commit -m "chore: bump version to ${{ steps.version.outputs.new_version }}"
+          git push
+
+  deploy:
+    name: "Deploy 🚀"
+    needs: version-and-build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: build-artifacts
+
+      - name: Deploy to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: "${{ secrets.GITHUB_TOKEN }}"
           firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT }}"
-          projectId: "learnza"
+          projectId: ${{ env.FIREBASE_PROJECT_ID }}
           channelId: live
+
+      - name: Create GitHub Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "v${{ needs.version-and-build.outputs.new_version }}" \
+            "app/outputs/flutter-apk/app-release.apk" \
+            --title "Release v${{ needs.version-and-build.outputs.new_version }}" \
+            --notes "Release version ${{ needs.version-and-build.outputs.new_version }}"
