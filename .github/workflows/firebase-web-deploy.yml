@@ -28,7 +28,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
+        with:
+          token: ${{ secrets.PAT_TOKEN }}  
       - name: Cache Flutter dependencies
         uses: actions/cache@v3
         with:
@@ -60,6 +61,7 @@ jobs:
           if [[ -n $(git status --porcelain) ]]; then
             git add .
             git commit -m "chore: apply dart fixes"
+            git remote set-url origin https://x-access-token:${{ secrets.PAT_TOKEN }}@github.com/${{ github.repository }}.git
             git push
           fi
 
@@ -83,6 +85,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
+          token: ${{ secrets.PAT_TOKEN }}
           fetch-depth: 0
 
       - name: Cache Flutter dependencies
@@ -170,6 +173,7 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git add pubspec.yaml
           git commit -m "chore: bump version to ${{ steps.version.outputs.new_version }}"
+          git remote set-url origin https://x-access-token:${{ secrets.PAT_TOKEN }}@github.com/${{ github.repository }}.git
           git push
 
   deploy:
