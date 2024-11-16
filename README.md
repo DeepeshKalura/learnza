@@ -1,4 +1,4 @@
-# learnza
+# Learnza
 
 Learnza is a learning platform created with Flutter. It aims to provide an interactive and user-friendly experience for learners of all ages. With Learnza, you can access a wide range of courses, track your progress, and engage with a community of learners.
 

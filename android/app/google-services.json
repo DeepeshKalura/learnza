@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1081864532778",
+    "project_id": "learnza",
+    "storage_bucket": "learnza.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1081864532778:android:2522ac606433bc8fb0a453",
+        "android_client_info": {
+          "package_name": "xyz.deepeshkalura.learnza"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-TWa5qSTg-OkydTOBrEtJuJ3cHoayjLs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
