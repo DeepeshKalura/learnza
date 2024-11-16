@@ -237,6 +237,7 @@ jobs:
           pwd
           ls -la
           ls -la build/web || echo "build/web not found"
+          ls -la build/app/outputs/flutter-apk || echo "APK directory not found"
 
       - name: Deploy to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
@@ -250,7 +251,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          # Verify APK exists and show its path
+          find . -name "app-release.apk" -type f
+          
+          # Create the release with the correct APK path
           gh release create "v${{ needs.version-and-build.outputs.new_version }}" \
-            "app/outputs/flutter-apk/app-release.apk" \
+            "build/app/outputs/flutter-apk/app-release.apk" \
             --title "Release v${{ needs.version-and-build.outputs.new_version }}" \
             --notes "Release version ${{ needs.version-and-build.outputs.new_version }}"
