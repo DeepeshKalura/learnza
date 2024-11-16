@@ -156,13 +156,8 @@ jobs:
 
       - name: Setup Keystore
         run: |
-          # Create keystore directory
           mkdir -p ~/keystore
-          
-          # Decode and save keystore file
           echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > ~/keystore/upload-keystore.jks
-          
-          # Create key.properties file
           cat << EOF > android/key.properties
           storePassword=${{ secrets.KEYSTORE_PASSWORD }}
           keyPassword=${{ secrets.KEY_PASSWORD }}
@@ -176,13 +171,44 @@ jobs:
       - name: Build Android
         run: flutter build apk --release
 
+      - name: Create Firebase Config
+        run: |
+          cat << EOF > firebase.json
+          {
+            "hosting": {
+              "public": "build/web",
+              "ignore": [
+                "firebase.json",
+                "**/.*",
+                "**/node_modules/**"
+              ],
+              "rewrites": [
+                {
+                  "source": "**",
+                  "destination": "/index.html"
+                }
+              ]
+            }
+          }
+          EOF
+          
+          cat << EOF > .firebaserc
+          {
+            "projects": {
+              "default": "${{ env.FIREBASE_PROJECT_ID }}"
+            }
+          }
+          EOF
+
       - name: Archive build artifacts
         uses: actions/upload-artifact@v3
         with:
           name: build-artifacts
           path: |
-            build/web
+            build/web/**
             build/app/outputs/flutter-apk/app-release.apk
+            firebase.json
+            .firebaserc
           retention-days: 7
 
       - name: Commit version update
@@ -200,13 +226,17 @@ jobs:
     needs: version-and-build
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
       - name: Download build artifacts
         uses: actions/download-artifact@v3
         with:
           name: build-artifacts
+          path: .
+
+      - name: List files for debugging
+        run: |
+          pwd
+          ls -la
+          ls -la build/web || echo "build/web not found"
 
       - name: Deploy to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
