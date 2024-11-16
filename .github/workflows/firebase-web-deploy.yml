@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+    paths-ignore:
+      - 'pubspec.yaml'
   workflow_dispatch:
     inputs:
       release_type:

@@ -44,3 +44,5 @@ app.*.map.json
 
 serviceAccountKey.json
 secret
+.firebase/logs/
+.firebase/hosting.*
