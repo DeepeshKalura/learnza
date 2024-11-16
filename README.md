@@ -33,8 +33,5 @@ To get started with Learnza, follow these steps:
 
 We welcome contributions to improve Learnza. Please fork the repository and submit a pull request with your changes.
 
+## License
 
-
-```
-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
-```
