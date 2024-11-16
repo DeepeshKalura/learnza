@@ -29,7 +29,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.PAT_TOKEN }}  
+          token: ${{ secrets.PAT_TOKEN }}
+
       - name: Cache Flutter dependencies
         uses: actions/cache@v3
         with:
@@ -150,6 +151,22 @@ jobs:
 
       - name: Install dependencies
         run: flutter pub get
+
+      - name: Setup Keystore
+        run: |
+          # Create keystore directory
+          mkdir -p ~/keystore
+          
+          # Decode and save keystore file
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > ~/keystore/upload-keystore.jks
+          
+          # Create key.properties file
+          cat << EOF > android/key.properties
+          storePassword=${{ secrets.KEYSTORE_PASSWORD }}
+          keyPassword=${{ secrets.KEY_PASSWORD }}
+          keyAlias=${{ secrets.KEY_ALIAS }}
+          storeFile=~/keystore/upload-keystore.jks
+          EOF
 
       - name: Build Web
         run: flutter build web --release
