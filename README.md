@@ -36,3 +36,12 @@ We welcome contributions to improve Learnza. Please fork the repository and subm
 ## License
 
 No license but i am developer so dont know baout it but i will use commerical which ones paid by the people to use the license.
+
+
+## Note:
+
+I decide to use PostgresSql but I am not been able to do so because of prising, so, I decide to switch to firebase realtime database because of simple reason i.e, highest number of read and write so I will not get good amount of the locked in.
+
+so basically I switch to firebase realtime database.
+
+

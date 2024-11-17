@@ -46,3 +46,6 @@ serviceAccountKey.json
 secret
 .firebase/logs/
 .firebase/hosting.*
+
+# Adding for the docs
+.venv/

@@ -39,7 +39,6 @@ dependencies:
   provider: ^6.1.2
   shadcn_ui: ^0.15.4
   json_annotation: ^4.9.0
-  firebase_data_connect: ^0.1.2+3
 
 dev_dependencies:
   flutter_test:
