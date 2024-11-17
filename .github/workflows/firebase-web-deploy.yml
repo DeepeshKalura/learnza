@@ -247,15 +247,15 @@ jobs:
           projectId: ${{ env.FIREBASE_PROJECT_ID }}
           channelId: live
 
-      - name: Create GitHub Release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          # Verify APK exists and show its path
-          find . -name "app-release.apk" -type f
+      # - name: Create GitHub Release
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   run: |
+      #     # Verify APK exists and show its path
+      #     find . -name "app-release.apk" -type f
           
-          # Create the release with the correct APK path
-          gh release create "v${{ needs.version-and-build.outputs.new_version }}" \
-            "build/app/outputs/flutter-apk/app-release.apk" \
-            --title "Release v${{ needs.version-and-build.outputs.new_version }}" \
-            --notes "Release version ${{ needs.version-and-build.outputs.new_version }}"
+      #     # Create the release with the correct APK path
+      #     gh release create "v${{ needs.version-and-build.outputs.new_version }}" \
+      #       "build/app/outputs/flutter-apk/app-release.apk" \
+      #       --title "Release v${{ needs.version-and-build.outputs.new_version }}" \
+      #       --notes "Release version ${{ needs.version-and-build.outputs.new_version }}"
