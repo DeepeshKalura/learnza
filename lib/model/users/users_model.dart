@@ -10,7 +10,7 @@ class UsersModel {
   final String fullName;
   final UserRole role;
   final bool isActive;
-  final bool isEmailVerified;
+  final DateTime? isEmailVerified;
   final DateTime createdAt;
   final DateTime? lastLogin;
 
@@ -45,7 +45,7 @@ class UsersModel {
     required this.fullName,
     required this.role,
     required this.isActive,
-    required this.isEmailVerified,
+    this.isEmailVerified,
     required this.createdAt,
     this.lastLogin,
     this.profileImage,

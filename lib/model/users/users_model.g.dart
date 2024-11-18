@@ -12,7 +12,9 @@ UsersModel _$UsersModelFromJson(Map<String, dynamic> json) => UsersModel(
       fullName: json['fullName'] as String,
       role: $enumDecode(_$UserRoleEnumMap, json['role']),
       isActive: json['isActive'] as bool,
-      isEmailVerified: json['isEmailVerified'] as bool,
+      isEmailVerified: json['isEmailVerified'] == null
+          ? null
+          : DateTime.parse(json['isEmailVerified'] as String),
       createdAt: DateTime.parse(json['createdAt'] as String),
       lastLogin: json['lastLogin'] == null
           ? null
@@ -49,7 +51,7 @@ Map<String, dynamic> _$UsersModelToJson(UsersModel instance) =>
       'fullName': instance.fullName,
       'role': _$UserRoleEnumMap[instance.role]!,
       'isActive': instance.isActive,
-      'isEmailVerified': instance.isEmailVerified,
+      'isEmailVerified': instance.isEmailVerified?.toIso8601String(),
       'createdAt': instance.createdAt.toIso8601String(),
       'lastLogin': instance.lastLogin?.toIso8601String(),
       'profileImage': instance.profileImage,

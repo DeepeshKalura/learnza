@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+// import 'package:go_router/go_router.dart';
 import 'package:learnza/gen/assets.gen.dart';
 import 'package:provider/provider.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../providers/auth_provider.dart';
+// import '../../../router/app_urls.dart';
 
 class LoginAuthCommonScreen extends StatefulWidget {
   const LoginAuthCommonScreen({super.key});
@@ -39,6 +41,8 @@ class _LoginAuthCommonScreenState extends State<LoginAuthCommonScreen> {
               _emailController.text,
               _passwordController.text,
             );
+
+        // context.pushReplacementNamed(AppUrls.homeAdminScreen);
       } catch (e) {
         if (mounted) {
           ShadToaster.of(context).show(
@@ -201,11 +205,11 @@ class _LoginAuthCommonScreenState extends State<LoginAuthCommonScreen> {
                       child: SingleChildScrollView(
                         child: Container(
                           constraints: BoxConstraints(
-                            maxWidth: 600.w, // Increased max width for desktop
-                            minWidth: 400.w, // Added minimum width
+                            maxWidth: 600.w,
+                            minWidth: 400.w,
                           ),
                           padding: EdgeInsets.all(32.w),
-                          child: Card(
+                          child: ShadCard(
                             child: Padding(
                               padding: EdgeInsets.all(32.w),
                               child: _buildLoginForm(),
