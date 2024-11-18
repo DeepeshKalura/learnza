@@ -115,7 +115,7 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> _sendFirstTimeEmail(String email) async {
+  Future<void> sendFirstTimeEmail(String email) async {
     await FirebaseAuth.instance.sendPasswordResetEmail(
       email: email,
       actionCodeSettings: ActionCodeSettings(
