@@ -5,49 +5,45 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:learnza/model/app_enums.dart';
 import 'package:learnza/service/firebase_service.dart';
+import 'package:http/http.dart' as http;
+import 'package:uuid/uuid.dart';
 
 import '../model/users/users_model.dart';
+import '../service/firebase_cloud_function_service.dart';
 
 class AuthProvider extends ChangeNotifier {
   final FirebaseService firebaseService;
 
   AuthProvider(this.firebaseService);
 
-  User? _user;
+  UsersModel? _user;
 
-  User? get user => _user;
+  UsersModel? get user => _user;
 
-  Future<User?> login(String email, String password) async {
+  Future<UsersModel?> login(String email, String password) async {
     final firebaseService = FirebaseService();
 
     try {
       final UserCredential userCredential = await firebaseService.auth
           .signInWithEmailAndPassword(email: email, password: password);
 
-      _user = userCredential.user;
-
-      if (user == null) {
+      if (userCredential.user == null) {
         throw FirebaseAuthException(
           code: 'USER_NOT_FOUND',
           message: 'Unable to fetch user information.',
         );
       }
 
+      final userFromCollection = await firebaseService.database
+          .collection('users')
+          .doc('${userCredential.user}')
+          .get();
+
+      _user = UsersModel.fromJson(
+        userFromCollection.data() as Map<String, dynamic>,
+      );
+
       return _user;
-
-      // Retrieve user data from Realtime Database
-      // final userRef = firebaseService.database.ref('users/${user.uid}');
-      // final event = await userRef.once();
-
-      // if (event.snapshot.value == null) {
-      //   throw Exception('User data not found in the database.');
-      // }
-
-      // final Map<String, dynamic> userData =
-      //     Map<String, dynamic>.from(event.snapshot.value as Map);
-
-      // // Convert to UsersModel
-      // return UsersModel.fromJson(userData);
     } catch (e, s) {
       developer.log(e.toString());
       developer.log(s.toString());
@@ -72,30 +68,12 @@ class AuthProvider extends ChangeNotifier {
   Future<void> createAdminRegisteration({
     required String email,
     required String username,
-    String? whoCreatedYou,
   }) async {
     try {
       final password = _generateRandomPassword();
-
-      final newUser = await firebaseService.auth.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-
-      if (newUser.user == null) {
-        throw FirebaseAuthException(
-          code: 'USER_NOT_CREATED',
-          message: 'Unable to create this $username account.',
-        );
-      }
-
-      newUser.user!.updateDisplayName(username);
-
-      final userRef =
-          firebaseService.database.ref('users/${newUser.user!.uid}');
-
+      final id = const Uuid().v4();
       final newUserModel = UsersModel(
-        uid: newUser.user!.uid,
+        uid: id,
         email: email,
         fullName: username,
         role: UserRole.admin,
@@ -104,26 +82,25 @@ class AuthProvider extends ChangeNotifier {
         isSuperAdmin: true,
         createdAt: DateTime.now(),
       );
+      var response = await http.post(
+        Uri.parse(
+          FirebaseCloudFunctionService.createAdminUser,
+        ),
+        body: {
+          'user': newUserModel.toJson(),
+          'password': password,
+        },
+      );
 
-      await userRef.set(newUserModel.toJson());
+      if (response.statusCode != 200) {
+        throw Exception('Failed to create user');
+      }
 
-      // Send email to the user
+      return;
     } catch (e, s) {
       developer.log(e.toString());
       developer.log(s.toString());
       rethrow;
     }
-  }
-
-  Future<void> sendFirstTimeEmail(String email) async {
-    await FirebaseAuth.instance.sendPasswordResetEmail(
-      email: email,
-      actionCodeSettings: ActionCodeSettings(
-        url: 'https://your-app.com/welcome?first_time=true',
-        handleCodeInApp: true,
-        androidPackageName: 'xyz.deepeshkalura.learnza',
-        iOSBundleId: 'xyz.deepeshkalura.learnza',
-      ),
-    );
   }
 }

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shadcn_ui/shadcn_ui.dart';
+
+import '../sheet/edit_profile_admin_sheet.dart';
 
 class DetailedReportScreen extends StatefulWidget {
   const DetailedReportScreen({super.key});
@@ -69,19 +72,18 @@ class _DetailedReportScreenState extends State<DetailedReportScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              ElevatedButton(
+              ShadButton.outline(
                 onPressed: () {
-                  // Implement import logic
+                  showShadSheet(
+                    context: context,
+                    builder: (context) => const EditProfileAdminSheet(
+                      side: ShadSheetSide.bottom,
+                    ),
+                  );
                 },
-                child: const Text("Import"),
+                child: const Text("Add New Admin"),
               ),
               const SizedBox(width: 8),
-              ElevatedButton(
-                onPressed: () {
-                  // Implement export logic
-                },
-                child: const Text("Export"),
-              ),
             ],
           ),
           const SizedBox(height: 16),
