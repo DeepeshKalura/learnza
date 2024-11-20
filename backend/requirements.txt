@@ -1,0 +1,5 @@
+fastapi[all]
+python-dotenv
+pytest
+firebase-admin
+resend

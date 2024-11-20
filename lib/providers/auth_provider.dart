@@ -1,5 +1,6 @@
 import 'dart:developer' as developer;
 import 'dart:math';
+import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
@@ -83,13 +84,16 @@ class AuthProvider extends ChangeNotifier {
         createdAt: DateTime.now(),
       );
       var response = await http.post(
+        headers: {
+          'Content-Type': 'application/json',
+        },
         Uri.parse(
           FirebaseCloudFunctionService.createAdminUser,
         ),
-        body: {
+        body: jsonEncode({
           'user': newUserModel.toJson(),
           'password': password,
-        },
+        }),
       );
 
       if (response.statusCode != 200) {

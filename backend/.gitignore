@@ -1,0 +1,13 @@
+# virtual environment
+.venv
+# Screts File
+.env
+
+# IDE files
+.vscode
+
+__pycache__
+
+.pytest_cache
+
+serviceAccountKey.json

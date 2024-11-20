@@ -19,8 +19,7 @@ class UsersModel {
   final String? phoneNumber;
 
   // Admin specific fields
-  final bool? isSuperAdmin; // For different admin levels
-
+  final bool? isSuperAdmin;
   // Teacher specific fields
   final bool? isHeadTeacher;
   final String? departmentId;
@@ -45,8 +44,8 @@ class UsersModel {
     required this.fullName,
     required this.role,
     required this.isActive,
-    this.isEmailVerified,
     required this.createdAt,
+    this.isEmailVerified,
     this.lastLogin,
     this.profileImage,
     this.phoneNumber,
