@@ -4,7 +4,6 @@ import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:provider/provider.dart';
 
 import '../../../model/departments/departments_model.dart';
-import '../../../providers/admin_provider.dart';
 import '../../../providers/department_provider.dart';
 import '../../../utils/form_validator.dart';
 import '../../universal/error_univseral_screen.dart';
