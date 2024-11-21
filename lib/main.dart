@@ -8,7 +8,10 @@ import 'package:provider/provider.dart';
 // I will remove add app check
 
 import 'firebase_options.dart';
+import 'providers/admin_provider.dart';
 import 'providers/auth_provider.dart';
+import 'providers/course_provider.dart';
+import 'providers/department_provider.dart';
 import 'router/app_routers.dart';
 import 'service/firebase_service.dart';
 
@@ -44,6 +47,21 @@ class MyApp extends StatelessWidget {
                 di.injector.get<FirebaseService>(),
               ),
             ),
+            ChangeNotifierProvider(
+              create: (_) => AdminProvider(
+                firebaseService: di.injector.get<FirebaseService>(),
+              ),
+            ),
+            ChangeNotifierProvider(
+              create: (_) => DepartmentProvider(
+                firebaseService: di.injector.get<FirebaseService>(),
+              ),
+            ),
+            ChangeNotifierProvider(
+              create: (_) => CourseProvider(
+                firebaseService: di.injector.get<FirebaseService>(),
+              ),
+            )
           ],
           child: ShadApp.router(
             title: 'Learnza',

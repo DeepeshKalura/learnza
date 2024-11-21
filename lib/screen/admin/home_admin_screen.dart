@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'screen/admin_management_pannel.dart';
+import 'package:learnza/screen/admin/pannel/course_mangement_pannel.dart';
+import 'package:learnza/screen/admin/pannel/department_managment_pannel.dart';
+import 'pannel/admin_management_pannel.dart';
 import 'widget/header_admin_widget.dart';
 import 'widget/menu_bar_admin_widget.dart';
 
@@ -14,15 +16,9 @@ class _HomeAdminScreenState extends State<HomeAdminScreen> {
   int _currentPageIndex = 0;
 
   final List<Widget> _pages = [
-    const DetailedReportScreen(),
-    const Center(
-      child: Text(
-        'Departments',
-        style: TextStyle(
-          fontSize: 24,
-        ),
-      ),
-    ),
+    const AdminManagementPannel(),
+    const DepartmentManagementPanel(),
+    const CourseMangementPanel(),
     const Center(
       child: Text(
         'Teachers',
@@ -116,8 +112,7 @@ class _HomeAdminScreenState extends State<HomeAdminScreen> {
                       ),
                     ),
                     Expanded(
-                      child:
-                          _pages[_currentPageIndex], // Simplified page display
+                      child: _pages[_currentPageIndex],
                     ),
                   ],
                 ),

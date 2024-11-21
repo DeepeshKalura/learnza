@@ -1,33 +1,23 @@
-import 'package:json_annotation/json_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
+part 'departments_model.freezed.dart';
 part 'departments_model.g.dart';
 
-@JsonSerializable()
-class DepartmentsModel {
-  final String id;
-  final String name;
-  final String description;
-  final String headTeacherId;
-  final List<String> teacherIds;
-  final bool isActive;
-  final DateTime createdAt;
-  final String createdBy;
-  final Map<String, dynamic> metadata;
+@freezed
+class DepartmentsModel with _$DepartmentsModel {
+  const factory DepartmentsModel({
+    required String id,
+    required String name,
+    required String description,
+    String? departmentProfilePictureUrl,
+    String? headTeacherId,
+    List<String>? teacherIds,
+    required bool isActive,
+    required DateTime createdAt,
+    Map<String, dynamic>? metadata,
+  }) = _DepartmentsModel;
 
-  DepartmentsModel({
-    required this.id,
-    required this.name,
-    required this.description,
-    required this.headTeacherId,
-    required this.teacherIds,
-    required this.isActive,
-    required this.createdAt,
-    required this.createdBy,
-    required this.metadata,
-  });
-
+  // Freezed automatically generates this method in departments_model.g.dart
   factory DepartmentsModel.fromJson(Map<String, dynamic> json) =>
       _$DepartmentsModelFromJson(json);
-
-  Map<String, dynamic> toJson() => _$DepartmentsModelToJson(this);
 }

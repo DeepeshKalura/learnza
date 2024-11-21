@@ -37,8 +37,10 @@ class AuthProvider extends ChangeNotifier {
 
       final userFromCollection = await firebaseService.database
           .collection('users')
-          .doc('${userCredential.user}')
+          .doc(userCredential.user!.uid)
           .get();
+
+      // print(userFromCollection.data());
 
       _user = UsersModel.fromJson(
         userFromCollection.data() as Map<String, dynamic>,
@@ -101,6 +103,16 @@ class AuthProvider extends ChangeNotifier {
       }
 
       return;
+    } catch (e, s) {
+      developer.log(e.toString());
+      developer.log(s.toString());
+      rethrow;
+    }
+  }
+
+  Future<void> forgotPassword(String email) async {
+    try {
+      await firebaseService.auth.sendPasswordResetEmail(email: email);
     } catch (e, s) {
       developer.log(e.toString());
       developer.log(s.toString());

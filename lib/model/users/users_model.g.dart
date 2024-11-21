@@ -6,16 +6,17 @@ part of 'users_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-UsersModel _$UsersModelFromJson(Map<String, dynamic> json) => UsersModel(
+_$UsersModelImpl _$$UsersModelImplFromJson(Map<String, dynamic> json) =>
+    _$UsersModelImpl(
       uid: json['uid'] as String,
       email: json['email'] as String,
       fullName: json['fullName'] as String,
       role: $enumDecode(_$UserRoleEnumMap, json['role']),
       isActive: json['isActive'] as bool,
+      createdAt: DateTime.parse(json['createdAt'] as String),
       isEmailVerified: json['isEmailVerified'] == null
           ? null
           : DateTime.parse(json['isEmailVerified'] as String),
-      createdAt: DateTime.parse(json['createdAt'] as String),
       lastLogin: json['lastLogin'] == null
           ? null
           : DateTime.parse(json['lastLogin'] as String),
@@ -44,15 +45,15 @@ UsersModel _$UsersModelFromJson(Map<String, dynamic> json) => UsersModel(
       activityLog: json['activityLog'] as Map<String, dynamic>?,
     );
 
-Map<String, dynamic> _$UsersModelToJson(UsersModel instance) =>
+Map<String, dynamic> _$$UsersModelImplToJson(_$UsersModelImpl instance) =>
     <String, dynamic>{
       'uid': instance.uid,
       'email': instance.email,
       'fullName': instance.fullName,
       'role': _$UserRoleEnumMap[instance.role]!,
       'isActive': instance.isActive,
-      'isEmailVerified': instance.isEmailVerified?.toIso8601String(),
       'createdAt': instance.createdAt.toIso8601String(),
+      'isEmailVerified': instance.isEmailVerified?.toIso8601String(),
       'lastLogin': instance.lastLogin?.toIso8601String(),
       'profileImage': instance.profileImage,
       'phoneNumber': instance.phoneNumber,

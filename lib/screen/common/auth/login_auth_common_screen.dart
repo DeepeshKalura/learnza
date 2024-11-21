@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-// import 'package:go_router/go_router.dart';
+import 'package:go_router/go_router.dart';
 import 'package:learnza/gen/assets.gen.dart';
 import 'package:provider/provider.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../providers/auth_provider.dart';
-// import '../../../router/app_urls.dart';
+import '../../../router/app_urls.dart';
+import '../../../utils/form_validator.dart';
 
 class LoginAuthCommonScreen extends StatefulWidget {
   const LoginAuthCommonScreen({super.key});
@@ -42,7 +43,9 @@ class _LoginAuthCommonScreenState extends State<LoginAuthCommonScreen> {
               _passwordController.text,
             );
 
-        // context.pushReplacementNamed(AppUrls.homeAdminScreen);
+        if (mounted) {
+          context.pushReplacementNamed(AppUrls.homeAdminScreen);
+        }
       } catch (e) {
         if (mounted) {
           ShadToaster.of(context).show(
@@ -98,12 +101,7 @@ class _LoginAuthCommonScreenState extends State<LoginAuthCommonScreen> {
             controller: _emailController,
             placeholder:
                 Text('Enter your email', style: TextStyle(fontSize: 14.sp)),
-            validator: (v) {
-              if (v.length < 2) {
-                return 'Username must be at least 2 characters.';
-              }
-              return null;
-            },
+            validator: FormValidator.validateEmail,
           ),
           SizedBox(height: 20.h),
           ShadInputFormField(
@@ -146,23 +144,56 @@ class _LoginAuthCommonScreenState extends State<LoginAuthCommonScreen> {
             },
           ),
           SizedBox(height: 20.h),
-          SizedBox(
-            height: 48.h,
-            child: ShadButton(
-              onPressed: _isLoading ? null : _handleLogin,
-              child: _isLoading
-                  ? SizedBox(
-                      height: 20.h,
-                      width: 20.w,
-                      child: const CircularProgressIndicator(
-                        strokeWidth: 2,
-                        valueColor: AlwaysStoppedAnimation<Color>(
-                          Colors.white,
-                        ),
+          Align(
+            alignment: Alignment.centerRight,
+            child: ShadButton.ghost(
+              child: const Text('Forgot Password?'),
+              onPressed: () async {
+                if (FormValidator.validateEmail(_emailController.text) !=
+                    null) {
+                  ShadToaster.of(context).show(
+                    const ShadToast.destructive(
+                      title: Text('Valid Email is required'),
+                      description: Text('Please enter your email'),
+                    ),
+                  );
+                  return;
+                }
+                await context.read<AuthProvider>().forgotPassword(
+                      _emailController.text,
+                    );
+
+                if (mounted) {
+                  ShadToaster.of(context).show(
+                    const ShadToast(
+                      title: Text('Password Reset Email Sent'),
+                      backgroundColor: Colors.green,
+                      description: Text(
+                        'Please check your email for further instructions',
                       ),
-                    )
-                  : Text('Login', style: TextStyle(fontSize: 16.sp)),
+                    ),
+                  );
+                }
+              },
             ),
+          ),
+          ShadButton(
+            onPressed: _isLoading ? null : _handleLogin,
+            child: _isLoading
+                ? SizedBox(
+                    height: 25.h,
+                    width: 20.w,
+                    child: const CircularProgressIndicator(
+                      strokeWidth: 2,
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                        Colors.white,
+                      ),
+                    ),
+                  )
+                : Text(
+                    'Login',
+                    style: TextStyle(fontSize: 16.sp),
+                  ),
           ),
         ],
       ),

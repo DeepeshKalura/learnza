@@ -50,27 +50,33 @@ class MenuBarAdminWidget extends StatelessWidget {
                     onTap: onItemSelected,
                   ),
                   DrawerItem(
+                    icon: Icons.golf_course,
+                    label: "Course",
+                    index: 2,
+                    onTap: onItemSelected,
+                  ),
+                  DrawerItem(
                     icon: Icons.person,
                     label: "Teachers",
-                    index: 2,
+                    index: 3,
                     onTap: onItemSelected,
                   ),
                   DrawerItem(
                     icon: Icons.people,
                     label: "Students",
-                    index: 3,
+                    index: 4,
                     onTap: onItemSelected,
                   ),
                   DrawerItem(
                     icon: Icons.chat,
                     label: "Posts",
-                    index: 4,
+                    index: 5,
                     onTap: onItemSelected,
                   ),
                   DrawerItem(
                     icon: Icons.book,
                     label: "Books",
-                    index: 5,
+                    index: 6,
                     onTap: onItemSelected,
                   ),
                   const Divider(
@@ -80,13 +86,13 @@ class MenuBarAdminWidget extends StatelessWidget {
                   DrawerItem(
                     icon: Icons.person,
                     label: "Talk to Developer",
-                    index: 6,
+                    index: 7,
                     onTap: onItemSelected,
                   ),
                   DrawerItem(
                     icon: Icons.add,
                     label: "Request New Feature",
-                    index: 7,
+                    index: 8,
                     onTap: onItemSelected,
                   ),
                 ],
