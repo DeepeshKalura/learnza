@@ -21,6 +21,23 @@ class AuthProvider extends ChangeNotifier {
 
   UsersModel? get user => _user;
 
+  Future<void> getUser(String uid) async {
+    try {
+      developer.log("I reached here");
+      final userFromCollection =
+          await firebaseService.database.collection('users').doc(uid).get();
+
+      _user = UsersModel.fromJson(
+        userFromCollection.data() as Map<String, dynamic>,
+      );
+      developer.log("I reached here");
+    } catch (e, s) {
+      developer.log(e.toString());
+      developer.log(s.toString());
+      rethrow;
+    }
+  }
+
   Future<UsersModel?> login(String email, String password) async {
     final firebaseService = FirebaseService();
 
@@ -160,6 +177,7 @@ class AuthProvider extends ChangeNotifier {
     required String email,
     required String fullName,
     List<String>? enrolledCourseIds,
+    required String batch,
   }) async {
     try {
       final password = _generateRandomPassword();
@@ -172,6 +190,7 @@ class AuthProvider extends ChangeNotifier {
         role: UserRole.student,
         isActive: true,
         enrolledCourseIds: enrolledCourseIds,
+        batch: batch,
         createdAt: DateTime.now(),
       );
 

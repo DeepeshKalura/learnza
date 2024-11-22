@@ -33,6 +33,7 @@ class UsersModel with _$UsersModel {
     String? enrolledDepartmentId,
     List<String>? enrolledCourseIds,
     bool? isOnProbation, // For academic status tracking
+    String? batch,
 
     // Status tracking
     String? banReason,

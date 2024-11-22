@@ -19,11 +19,11 @@ class FirebaseService:
         return self.db
     
     @property
-    def authentication(self) -> auth:
+    def authentication(self) :
         return self.auth
     
     @property
-    def cloud_storage(self) -> storage:
+    def cloud_storage(self) :
         return self.storage
 
 # To make it singlethon instance 

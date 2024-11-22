@@ -3,8 +3,10 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
+import '../../../model/course/courses_model.dart';
 import '../../../model/users/users_model.dart';
 import '../../../model/departments/departments_model.dart';
+import '../../../providers/course_provider.dart';
 import '../../../providers/student_provider.dart';
 import '../../../providers/department_provider.dart';
 import '../../../providers/auth_provider.dart';
@@ -51,7 +53,9 @@ class _StudentManagementPanelState extends State<StudentManagementPanel> {
     return Container(
       padding: const EdgeInsets.all(16),
       child: _isLoading
-          ? const Center(child: CircularProgressIndicator())
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
           : Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -272,7 +276,53 @@ class _StudentCreateDialogState extends State<_StudentCreateDialog> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
   String? _selectedDepartmentId;
+  List<String> _selectedCourseIds = [];
+  List<CoursesModel> _availableCourses = [];
+  bool _isLoadingCourses = false;
+  String? _selectedBatchYear;
   final _shadPopoverController = ShadPopoverController();
+  final _coursePopoverController = ShadPopoverController();
+  final _batchPopoverController = ShadPopoverController();
+
+  // Generate list of years from current year to 4 years ahead
+  List<String> _getBatchYears() {
+    final currentYear = DateTime.now().year;
+    return List.generate(5, (index) => (currentYear + index).toString());
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  Future<void> _loadDepartmentCourses(String departmentId) async {
+    setState(() {
+      _isLoadingCourses = true;
+      _selectedCourseIds = []; // Reset selected courses when department changes
+    });
+
+    try {
+      final courseProvider = context.read<CourseProvider>();
+      final courses = await courseProvider.getCoursesByDepartment(departmentId);
+
+      setState(() {
+        _availableCourses = courses;
+        _isLoadingCourses = false;
+      });
+    } catch (error) {
+      setState(() {
+        _isLoadingCourses = false;
+      });
+      if (mounted) {
+        ShadToaster.of(context).show(
+          ShadToast.destructive(
+            title: const Text('Error'),
+            description: Text('Failed to load courses: $error'),
+          ),
+        );
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -304,31 +354,95 @@ class _StudentCreateDialogState extends State<_StudentCreateDialog> {
               },
             ),
             const SizedBox(height: 16),
-            ShadSelect<String>(
-              controller: _shadPopoverController,
-              placeholder: const Text('From Which Department'),
-              options: [
-                ...widget.departments.map(
-                  (dept) => ShadOption(
-                    value: dept.id,
-                    child: Text(dept.name),
+            SizedBox(
+              width: double.infinity,
+              child: ShadSelect<String>(
+                controller: _batchPopoverController,
+                placeholder: const Text('Select Batch Year'),
+                options: [
+                  ..._getBatchYears().map(
+                    (year) => ShadOption(
+                      value: year,
+                      child: Text('Batch $year'),
+                    ),
                   ),
-                ),
-              ],
-              selectedOptionBuilder: (context, value) {
-                try {
-                  final selectedDepartment = widget.departments.firstWhere(
-                    (dept) => dept.id == value,
-                  );
-                  return Text(selectedDepartment.name);
-                } catch (e) {
-                  return const Text('Department not found');
-                }
-              },
-              onChanged: (value) {
-                _selectedDepartmentId = value;
-              },
+                ],
+                selectedOptionBuilder: (context, value) {
+                  return Text('Batch $value');
+                },
+                onChanged: (value) {
+                  setState(() {
+                    _selectedBatchYear = value;
+                  });
+                },
+              ),
             ),
+            const SizedBox(height: 16),
+            SizedBox(
+              width: double.infinity,
+              child: ShadSelect<String>(
+                controller: _shadPopoverController,
+                placeholder: const Text('Select Department'),
+                options: [
+                  ...widget.departments.map(
+                    (dept) => ShadOption(
+                      value: dept.id,
+                      child: Text(dept.name),
+                    ),
+                  ),
+                ],
+                selectedOptionBuilder: (context, value) {
+                  try {
+                    final selectedDepartment = widget.departments.firstWhere(
+                      (dept) => dept.id == value,
+                    );
+                    return Text(selectedDepartment.name);
+                  } catch (e) {
+                    return const Text('Department not found');
+                  }
+                },
+                onChanged: (value) {
+                  setState(() {
+                    _selectedDepartmentId = value;
+                    if (value != null) {
+                      _loadDepartmentCourses(value);
+                    }
+                  });
+                },
+              ),
+            ),
+            const SizedBox(height: 16),
+            if (_selectedDepartmentId != null) ...[
+              _isLoadingCourses
+                  ? const CircularProgressIndicator()
+                  : SizedBox(
+                      width: double.infinity,
+                      child: ShadSelect<String>(
+                        controller: _coursePopoverController,
+                        placeholder: const Text('Select Courses'),
+                        options: [
+                          ..._availableCourses.map(
+                            (course) => ShadOption(
+                              value: course.id,
+                              child: Text(course.name),
+                            ),
+                          ),
+                        ],
+                        selectedOptionBuilder: (context, values) {
+                          return Text(
+                            '${values.length} courses selected',
+                          );
+                        },
+                        onChanged: (values) {
+                          setState(() {
+                            if (values != null) {
+                              _selectedCourseIds.add(values);
+                            }
+                          });
+                        },
+                      ),
+                    ),
+            ],
           ],
         ),
       ),
@@ -346,17 +460,21 @@ class _StudentCreateDialogState extends State<_StudentCreateDialog> {
   }
 
   void _submitStudent() {
-    if (_formKey.currentState!.validate() && _selectedDepartmentId != null) {
+    if (_formKey.currentState!.validate() &&
+        _selectedDepartmentId != null &&
+        _selectedBatchYear != null &&
+        _selectedCourseIds.isNotEmpty) {
       final authProvider = context.read<AuthProvider>();
 
       authProvider
           .createStudentRegistration(
         email: _emailController.text,
         fullName: _nameController.text,
-        // departmentId: _selectedDepartmentId!,
+        batch: _selectedBatchYear!,
+        enrolledCourseIds: _selectedCourseIds,
       )
           .then((_) {
-        Navigator.of(context).pop();
+        context.pop();
         ShadToaster.of(context).show(
           const ShadToast(
             backgroundColor: Colors.green,
@@ -372,6 +490,15 @@ class _StudentCreateDialogState extends State<_StudentCreateDialog> {
           ),
         );
       });
+    } else {
+      ShadToaster.of(context).show(
+        const ShadToast.destructive(
+          title: Text('Validation Error'),
+          description: Text(
+            'Please fill in all required fields, select a batch year, and select at least one course.',
+          ),
+        ),
+      );
     }
   }
 
@@ -400,17 +527,53 @@ class _StudentEditDialogState extends State<_StudentEditDialog> {
   final _formKey = GlobalKey<ShadFormState>();
   late TextEditingController _nameController;
   late String _selectedDepartmentId;
+  List<String> _selectedCourseIds = [];
+  List<CoursesModel> _availableCourses = [];
+  bool _isLoadingCourses = false;
   late bool _isActive;
+
+  final _shadPopoverController = ShadPopoverController();
+  final _coursePopoverController = ShadPopoverController();
 
   @override
   void initState() {
     super.initState();
     _nameController = TextEditingController(text: widget.student.fullName);
     _selectedDepartmentId = widget.student.departmentId ?? '';
+    _selectedCourseIds = widget.student.enrolledCourseIds ?? [];
     _isActive = widget.student.isActive;
+    if (_selectedDepartmentId.isNotEmpty) {
+      _loadDepartmentCourses(_selectedDepartmentId);
+    }
   }
 
-  final _shadPopoverController = ShadPopoverController();
+  Future<void> _loadDepartmentCourses(String departmentId) async {
+    setState(() {
+      _isLoadingCourses = true;
+    });
+
+    try {
+      final courseProvider = context.read<CourseProvider>();
+      final courses = await courseProvider.getCoursesByDepartment(departmentId);
+
+      setState(() {
+        _availableCourses = courses;
+        _isLoadingCourses = false;
+      });
+    } catch (error) {
+      setState(() {
+        _isLoadingCourses = false;
+      });
+      if (mounted) {
+        ShadToaster.of(context).show(
+          ShadToast.destructive(
+            title: const Text('Error'),
+            description: Text('Failed to load courses: $error'),
+          ),
+        );
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -433,7 +596,7 @@ class _StudentEditDialogState extends State<_StudentEditDialog> {
             const SizedBox(height: 16),
             ShadSelect<String>(
               controller: _shadPopoverController,
-              placeholder: const Text('From Which Department'),
+              placeholder: const Text('Select Department'),
               options: [
                 ...widget.departments.map(
                   (dept) => ShadOption(
@@ -454,10 +617,39 @@ class _StudentEditDialogState extends State<_StudentEditDialog> {
               },
               onChanged: (value) {
                 if (value != null) {
-                  _selectedDepartmentId = value;
+                  setState(() {
+                    _selectedDepartmentId = value;
+                    _loadDepartmentCourses(value);
+                  });
                 }
               },
             ),
+            const SizedBox(height: 16),
+            if (_isLoadingCourses)
+              const CircularProgressIndicator()
+            else
+              ShadSelect<String>(
+                controller: _coursePopoverController,
+                placeholder: const Text('Select Courses'),
+                options: [
+                  ..._availableCourses.map(
+                    (course) => ShadOption(
+                      value: course.id,
+                      child: Text(course.name),
+                    ),
+                  ),
+                ],
+                selectedOptionBuilder: (context, values) {
+                  return Text('${values.length} courses selected');
+                },
+                onChanged: (values) {
+                  setState(() {
+                    if (values != null) {
+                      _selectedCourseIds.add(values);
+                    }
+                  });
+                },
+              ),
             const SizedBox(height: 16),
             ShadSwitch(
               label: const Text('Active Status'),
@@ -489,12 +681,13 @@ class _StudentEditDialogState extends State<_StudentEditDialog> {
   }
 
   void _submitStudentUpdate() {
-    if (_formKey.currentState!.validate()) {
+    if (_formKey.currentState!.validate() && _selectedCourseIds.isNotEmpty) {
       final studentProvider = context.read<StudentProvider>();
 
       final updatedStudent = widget.student.copyWith(
         fullName: _nameController.text,
         departmentId: _selectedDepartmentId,
+        enrolledCourseIds: _selectedCourseIds,
         isActive: _isActive,
       );
 
@@ -520,6 +713,15 @@ class _StudentEditDialogState extends State<_StudentEditDialog> {
           );
         }
       });
+    } else {
+      ShadToaster.of(context).show(
+        const ShadToast.destructive(
+          title: Text('Validation Error'),
+          description: Text(
+            'Please fill in all required fields and select at least one course.',
+          ),
+        ),
+      );
     }
   }
 

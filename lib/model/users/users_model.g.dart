@@ -34,6 +34,7 @@ _$UsersModelImpl _$$UsersModelImplFromJson(Map<String, dynamic> json) =>
           ?.map((e) => e as String)
           .toList(),
       isOnProbation: json['isOnProbation'] as bool?,
+      batch: json['batch'] as String?,
       banReason: json['banReason'] as String?,
       banExpiry: json['banExpiry'] == null
           ? null
@@ -65,6 +66,7 @@ Map<String, dynamic> _$$UsersModelImplToJson(_$UsersModelImpl instance) =>
       'enrolledDepartmentId': instance.enrolledDepartmentId,
       'enrolledCourseIds': instance.enrolledCourseIds,
       'isOnProbation': instance.isOnProbation,
+      'batch': instance.batch,
       'banReason': instance.banReason,
       'banExpiry': instance.banExpiry?.toIso8601String(),
       'bannedBy': instance.bannedBy,

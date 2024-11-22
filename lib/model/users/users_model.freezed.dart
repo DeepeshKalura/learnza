@@ -44,7 +44,7 @@ mixin _$UsersModel {
   List<String>? get enrolledCourseIds => throw _privateConstructorUsedError;
   bool? get isOnProbation =>
       throw _privateConstructorUsedError; // For academic status tracking
-// Status tracking
+  String? get batch => throw _privateConstructorUsedError; // Status tracking
   String? get banReason => throw _privateConstructorUsedError;
   DateTime? get banExpiry => throw _privateConstructorUsedError;
   String? get bannedBy => throw _privateConstructorUsedError;
@@ -86,6 +86,7 @@ abstract class $UsersModelCopyWith<$Res> {
       String? enrolledDepartmentId,
       List<String>? enrolledCourseIds,
       bool? isOnProbation,
+      String? batch,
       String? banReason,
       DateTime? banExpiry,
       String? bannedBy,
@@ -126,6 +127,7 @@ class _$UsersModelCopyWithImpl<$Res, $Val extends UsersModel>
     Object? enrolledDepartmentId = freezed,
     Object? enrolledCourseIds = freezed,
     Object? isOnProbation = freezed,
+    Object? batch = freezed,
     Object? banReason = freezed,
     Object? banExpiry = freezed,
     Object? bannedBy = freezed,
@@ -205,6 +207,10 @@ class _$UsersModelCopyWithImpl<$Res, $Val extends UsersModel>
           ? _value.isOnProbation
           : isOnProbation // ignore: cast_nullable_to_non_nullable
               as bool?,
+      batch: freezed == batch
+          ? _value.batch
+          : batch // ignore: cast_nullable_to_non_nullable
+              as String?,
       banReason: freezed == banReason
           ? _value.banReason
           : banReason // ignore: cast_nullable_to_non_nullable
@@ -256,6 +262,7 @@ abstract class _$$UsersModelImplCopyWith<$Res>
       String? enrolledDepartmentId,
       List<String>? enrolledCourseIds,
       bool? isOnProbation,
+      String? batch,
       String? banReason,
       DateTime? banExpiry,
       String? bannedBy,
@@ -294,6 +301,7 @@ class __$$UsersModelImplCopyWithImpl<$Res>
     Object? enrolledDepartmentId = freezed,
     Object? enrolledCourseIds = freezed,
     Object? isOnProbation = freezed,
+    Object? batch = freezed,
     Object? banReason = freezed,
     Object? banExpiry = freezed,
     Object? bannedBy = freezed,
@@ -373,6 +381,10 @@ class __$$UsersModelImplCopyWithImpl<$Res>
           ? _value.isOnProbation
           : isOnProbation // ignore: cast_nullable_to_non_nullable
               as bool?,
+      batch: freezed == batch
+          ? _value.batch
+          : batch // ignore: cast_nullable_to_non_nullable
+              as String?,
       banReason: freezed == banReason
           ? _value.banReason
           : banReason // ignore: cast_nullable_to_non_nullable
@@ -419,6 +431,7 @@ class _$UsersModelImpl extends _UsersModel {
       this.enrolledDepartmentId,
       final List<String>? enrolledCourseIds,
       this.isOnProbation,
+      this.batch,
       this.banReason,
       this.banExpiry,
       this.bannedBy,
@@ -492,6 +505,8 @@ class _$UsersModelImpl extends _UsersModel {
   @override
   final bool? isOnProbation;
 // For academic status tracking
+  @override
+  final String? batch;
 // Status tracking
   @override
   final String? banReason;
@@ -513,7 +528,7 @@ class _$UsersModelImpl extends _UsersModel {
 
   @override
   String toString() {
-    return 'UsersModel(uid: $uid, email: $email, fullName: $fullName, role: $role, isActive: $isActive, createdAt: $createdAt, isEmailVerified: $isEmailVerified, lastLogin: $lastLogin, profileImage: $profileImage, phoneNumber: $phoneNumber, isSuperAdmin: $isSuperAdmin, isHeadTeacher: $isHeadTeacher, departmentId: $departmentId, assignedCourseIds: $assignedCourseIds, canInviteTeachers: $canInviteTeachers, enrolledDepartmentId: $enrolledDepartmentId, enrolledCourseIds: $enrolledCourseIds, isOnProbation: $isOnProbation, banReason: $banReason, banExpiry: $banExpiry, bannedBy: $bannedBy, lastActiveAt: $lastActiveAt, activityLog: $activityLog)';
+    return 'UsersModel(uid: $uid, email: $email, fullName: $fullName, role: $role, isActive: $isActive, createdAt: $createdAt, isEmailVerified: $isEmailVerified, lastLogin: $lastLogin, profileImage: $profileImage, phoneNumber: $phoneNumber, isSuperAdmin: $isSuperAdmin, isHeadTeacher: $isHeadTeacher, departmentId: $departmentId, assignedCourseIds: $assignedCourseIds, canInviteTeachers: $canInviteTeachers, enrolledDepartmentId: $enrolledDepartmentId, enrolledCourseIds: $enrolledCourseIds, isOnProbation: $isOnProbation, batch: $batch, banReason: $banReason, banExpiry: $banExpiry, bannedBy: $bannedBy, lastActiveAt: $lastActiveAt, activityLog: $activityLog)';
   }
 
   @override
@@ -554,6 +569,7 @@ class _$UsersModelImpl extends _UsersModel {
                 .equals(other._enrolledCourseIds, _enrolledCourseIds) &&
             (identical(other.isOnProbation, isOnProbation) ||
                 other.isOnProbation == isOnProbation) &&
+            (identical(other.batch, batch) || other.batch == batch) &&
             (identical(other.banReason, banReason) ||
                 other.banReason == banReason) &&
             (identical(other.banExpiry, banExpiry) ||
@@ -588,6 +604,7 @@ class _$UsersModelImpl extends _UsersModel {
         enrolledDepartmentId,
         const DeepCollectionEquality().hash(_enrolledCourseIds),
         isOnProbation,
+        batch,
         banReason,
         banExpiry,
         bannedBy,
@@ -631,6 +648,7 @@ abstract class _UsersModel extends UsersModel {
       final String? enrolledDepartmentId,
       final List<String>? enrolledCourseIds,
       final bool? isOnProbation,
+      final String? batch,
       final String? banReason,
       final DateTime? banExpiry,
       final String? bannedBy,
@@ -678,7 +696,8 @@ abstract class _UsersModel extends UsersModel {
   List<String>? get enrolledCourseIds;
   @override
   bool? get isOnProbation; // For academic status tracking
-// Status tracking
+  @override
+  String? get batch; // Status tracking
   @override
   String? get banReason;
   @override

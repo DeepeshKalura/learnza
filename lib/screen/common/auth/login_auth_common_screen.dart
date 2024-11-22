@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../model/app_enums.dart';
 import '../../../providers/auth_provider.dart';
 import '../../../router/app_urls.dart';
 import '../../../utils/form_validator.dart';
@@ -17,6 +18,23 @@ class LoginAuthCommonScreen extends StatefulWidget {
 }
 
 class _LoginAuthCommonScreenState extends State<LoginAuthCommonScreen> {
+  void getRedirectPathByRole() {
+    final authProvider = context.read<AuthProvider>();
+
+    final user = authProvider.user;
+    if (user == null) {
+      context.pushReplacementNamed(AppUrls.authenticationScreen);
+    }
+    final userRole = user!.role;
+    if (userRole == UserRole.admin) {
+      context.pushReplacementNamed(AppUrls.homeAdminScreen);
+    } else if (userRole == UserRole.teacher) {
+      context.pushReplacementNamed(AppUrls.homeTeacherScreen);
+    } else {
+      context.pushReplacementNamed(AppUrls.editBlogStudentScreen);
+    }
+  }
+
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -44,7 +62,7 @@ class _LoginAuthCommonScreenState extends State<LoginAuthCommonScreen> {
             );
 
         if (mounted) {
-          context.pushReplacementNamed(AppUrls.homeAdminScreen);
+          getRedirectPathByRole();
         }
       } catch (e) {
         if (mounted) {

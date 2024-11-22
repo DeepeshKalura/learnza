@@ -27,7 +27,9 @@ async def create_user(
             uid=user_request.user.uid,
             email=user_request.user.email,
             password=user_request.password,
-            display_name=user_request.user.fullName
+            display_name=user_request.user.fullName,
+
+            
         )
 
         # Convert the model to JSON, removing None values

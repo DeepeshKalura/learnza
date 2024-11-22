@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:learnza/screen/admin/pannel/course_mangement_pannel.dart';
 import 'package:learnza/screen/admin/pannel/department_managment_pannel.dart';
 import 'pannel/admin_management_pannel.dart';
-import 'pannel/student_managment_pannle.dart';
+import 'pannel/student_managment_pannel.dart';
 import 'pannel/teacher_management_pannel.dart';
 import 'widget/header_admin_widget.dart';
 import 'widget/menu_bar_admin_widget.dart';

@@ -164,4 +164,25 @@ class CourseProvider extends ChangeNotifier {
       rethrow;
     }
   }
+
+  Future<List<CoursesModel>> getCoursesByDepartment(String departmentId) async {
+    try {
+      final query = firebaseService.database
+          .collection("courses")
+          .where('departmentId', isEqualTo: departmentId);
+
+      final snapshots = await query.get();
+
+      _courses = snapshots.docs
+          .map((doc) => CoursesModel.fromJson(doc.data()))
+          .toList();
+
+      return _courses;
+    } catch (e, s) {
+      developer.log('Error fetching courses', error: e, stackTrace: s);
+      _error = e.toString();
+
+      rethrow;
+    }
+  }
 }
