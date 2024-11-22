@@ -12,6 +12,8 @@ import 'providers/admin_provider.dart';
 import 'providers/auth_provider.dart';
 import 'providers/course_provider.dart';
 import 'providers/department_provider.dart';
+import 'providers/student_provider.dart';
+import 'providers/teacher_provider.dart';
 import 'router/app_routers.dart';
 import 'service/firebase_service.dart';
 
@@ -61,7 +63,17 @@ class MyApp extends StatelessWidget {
               create: (_) => CourseProvider(
                 firebaseService: di.injector.get<FirebaseService>(),
               ),
-            )
+            ),
+            ChangeNotifierProvider(
+              create: (_) => TeacherProvider(
+                firebaseService: di.injector.get<FirebaseService>(),
+              ),
+            ),
+            ChangeNotifierProvider(
+              create: (_) => StudentProvider(
+                firebaseService: di.injector.get<FirebaseService>(),
+              ),
+            ),
           ],
           child: ShadApp.router(
             title: 'Learnza',

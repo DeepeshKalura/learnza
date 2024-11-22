@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:learnza/screen/admin/pannel/course_mangement_pannel.dart';
 import 'package:learnza/screen/admin/pannel/department_managment_pannel.dart';
 import 'pannel/admin_management_pannel.dart';
+import 'pannel/student_managment_pannle.dart';
+import 'pannel/teacher_management_pannel.dart';
 import 'widget/header_admin_widget.dart';
 import 'widget/menu_bar_admin_widget.dart';
 
@@ -19,22 +21,8 @@ class _HomeAdminScreenState extends State<HomeAdminScreen> {
     const AdminManagementPannel(),
     const DepartmentManagementPanel(),
     const CourseMangementPanel(),
-    const Center(
-      child: Text(
-        'Teachers',
-        style: TextStyle(
-          fontSize: 24,
-        ),
-      ),
-    ),
-    const Center(
-      child: Text(
-        'Students',
-        style: TextStyle(
-          fontSize: 24,
-        ),
-      ),
-    ),
+    const TeacherManagementPanel(),
+    const StudentManagementPanel(),
     const Center(
       child: Text(
         'Posts',

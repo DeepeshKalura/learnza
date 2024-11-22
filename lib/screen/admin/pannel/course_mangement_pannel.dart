@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -42,7 +44,7 @@ class _CourseMangementPanelState extends State<CourseMangementPanel> {
         _isLoading = false; // Loading failed
       });
       // Handle errors (e.g., show a message)
-      print('Error loading departments: $error');
+      log('Error loading departments: $error');
     }
   }
 
@@ -234,7 +236,6 @@ class _CourseMangementPanelState extends State<CourseMangementPanel> {
             ),
             IconButton(
               onPressed: () {
-                // TODO: Implement next page logic
                 ShadToaster.of(context).show(
                   const ShadToast.destructive(
                     title: Text("Pagination Not Implemented"),
@@ -337,8 +338,6 @@ class _CourseCreateDialogState extends State<_CourseCreateDialog> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.departments);
-    final theme = ShadTheme.of(context);
     return ShadDialog(
       title: const Text('Create New Course'),
       description: ShadForm(

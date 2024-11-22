@@ -75,7 +75,7 @@ class AuthProvider extends ChangeNotifier {
     try {
       final password = _generateRandomPassword();
       final id = const Uuid().v4();
-      final newUserModel = UsersModel(
+      final newAdminModel = UsersModel(
         uid: id,
         email: email,
         fullName: username,
@@ -90,10 +90,10 @@ class AuthProvider extends ChangeNotifier {
           'Content-Type': 'application/json',
         },
         Uri.parse(
-          FirebaseCloudFunctionService.createAdminUser,
+          FirebaseCloudFunctionService.createUser,
         ),
         body: jsonEncode({
-          'user': newUserModel.toJson(),
+          'user': newAdminModel.toJson(),
           'password': password,
         }),
       );
@@ -105,6 +105,95 @@ class AuthProvider extends ChangeNotifier {
       return;
     } catch (e, s) {
       developer.log(e.toString());
+      developer.log(s.toString());
+      rethrow;
+    }
+  }
+
+  Future<void> createTeacherRegistration({
+    required String email,
+    required String fullName,
+    required String departmentId,
+    bool isHeadTeacher = false,
+  }) async {
+    try {
+      final password = _generateRandomPassword();
+      final id = const Uuid().v4();
+
+      final newTeacherModel = UsersModel(
+        uid: id,
+        email: email,
+        fullName: fullName,
+        role: UserRole.teacher,
+        isActive: true,
+        departmentId: departmentId,
+        isHeadTeacher: isHeadTeacher,
+        createdAt: DateTime.now(),
+      );
+
+      print(jsonEncode({"user": newTeacherModel.toJson()}));
+      var response = await http.post(
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        Uri.parse(
+          FirebaseCloudFunctionService.createUser,
+        ),
+        body: jsonEncode({
+          'user': newTeacherModel.toJson(),
+          'password': password,
+        }),
+      );
+
+      if (response.statusCode != 200) {
+        throw Exception('Failed to create user');
+      }
+      return;
+    } catch (e, s) {
+      developer.log(e.toString());
+      developer.log(s.toString());
+      rethrow;
+    }
+  }
+
+  Future<void> createStudentRegistration({
+    required String email,
+    required String fullName,
+    List<String>? enrolledCourseIds,
+  }) async {
+    try {
+      final password = _generateRandomPassword();
+      final id = const Uuid().v4();
+
+      final newStudentModel = UsersModel(
+        uid: id,
+        email: email,
+        fullName: fullName,
+        role: UserRole.student,
+        isActive: true,
+        enrolledCourseIds: enrolledCourseIds,
+        createdAt: DateTime.now(),
+      );
+
+      var response = await http.post(
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        Uri.parse(
+          FirebaseCloudFunctionService.createUser,
+        ),
+        body: jsonEncode({
+          'user': newStudentModel.toJson(),
+          'password': password,
+        }),
+      );
+
+      if (response.statusCode != 200) {
+        throw Exception('Failed to create student');
+      }
+      return;
+    } catch (e, s) {
+      developer.log('Student Registration Error', error: e);
       developer.log(s.toString());
       rethrow;
     }
