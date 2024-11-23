@@ -17,7 +17,7 @@ class _EditBlogStudentScreenState extends State<EditBlogStudentScreen> {
     return Scaffold(
       body: Column(
         children: [
-          Text("Hello"),
+          const Text("Hello"),
           QuillSimpleToolbar(
             controller: _controller,
             configurations: const QuillSimpleToolbarConfigurations(),
