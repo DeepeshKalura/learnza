@@ -11,7 +11,6 @@ import '../providers/auth_provider.dart';
 import '../screen/admin/home_admin_screen.dart';
 import '../screen/common/auth/login_auth_common_screen.dart';
 import '../screen/common/loading_common_screen.dart';
-import '../screen/student/edit_blog_student_screen.dart';
 import '../screen/student/home_student_screen.dart';
 import '../screen/teacher/home_teacher_screen.dart';
 import 'app_urls.dart';

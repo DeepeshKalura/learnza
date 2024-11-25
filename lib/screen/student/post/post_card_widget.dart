@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
 import '../../../model/posts/posts_model.dart';
 import '../../../model/users/users_model.dart';
-import '../../../providers/post_provider.dart';
-import '../../../router/app_urls.dart';
 
 class PostCardWidget extends StatelessWidget {
   final PostsModel post;
