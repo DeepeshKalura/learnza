@@ -12,6 +12,7 @@ import 'providers/admin_provider.dart';
 import 'providers/auth_provider.dart';
 import 'providers/course_provider.dart';
 import 'providers/department_provider.dart';
+import 'providers/post_provider.dart';
 import 'providers/student_provider.dart';
 import 'providers/teacher_provider.dart';
 import 'router/app_routers.dart';
@@ -71,6 +72,11 @@ class MyApp extends StatelessWidget {
             ),
             ChangeNotifierProvider(
               create: (_) => StudentProvider(
+                firebaseService: di.injector.get<FirebaseService>(),
+              ),
+            ),
+            ChangeNotifierProvider(
+              create: (_) => PostProvider(
                 firebaseService: di.injector.get<FirebaseService>(),
               ),
             ),

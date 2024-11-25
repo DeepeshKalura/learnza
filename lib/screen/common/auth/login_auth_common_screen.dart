@@ -31,7 +31,7 @@ class _LoginAuthCommonScreenState extends State<LoginAuthCommonScreen> {
     } else if (userRole == UserRole.teacher) {
       context.pushReplacementNamed(AppUrls.homeTeacherScreen);
     } else {
-      context.pushReplacementNamed(AppUrls.editBlogStudentScreen);
+      context.pushReplacementNamed(AppUrls.homeStudentScreen);
     }
   }
 

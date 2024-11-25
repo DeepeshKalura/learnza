@@ -3,6 +3,8 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import 'package:learnza/locator/injector.dart' as di;
+import '../model/posts/posts_model.dart';
+import '../screen/student/post/deatail_blog_student.dart';
 import '../service/firebase_service.dart';
 import '/model/app_enums.dart';
 import '../providers/auth_provider.dart';
@@ -55,20 +57,44 @@ class AppRouters {
       // here will exit authenticated student routes
       GoRoute(
         path: "/student",
-        name: AppUrls.homeStudentScreen,
-        builder: (context, state) => const HomeStudentScreen(),
+        redirect: studentRoutesRedirect,
         routes: [
           GoRoute(
-            path: '/edit-blog',
-            name: AppUrls.editBlogStudentScreen,
+            path: "/home",
+            name: AppUrls.homeStudentScreen,
+            builder: (context, state) => const HomeStudentScreen(),
+          ),
+          // GoRoute(
+          //   path: '/edit-blog',
+          //   name: AppUrls.editBlogStudentScreen,
+          //   builder: (context, state) {
+          //     return const EditBlogStudentScreen();
+          //   },
+          // ),
+          GoRoute(
+            path: '/detail-blog',
+            name: AppUrls.detailBlogStudentScreen,
             builder: (context, state) {
-              return const EditBlogStudentScreen();
+              var args = state.extra! as Map<String, PostsModel>;
+              return DetailBlogStudentScreen(
+                post: args['post']!,
+              );
             },
           ),
         ],
       ),
     ],
   );
+}
+
+String? studentRoutesRedirect(BuildContext context, GoRouterState state) {
+  final authProvider = context.read<AuthProvider>();
+
+  if (authProvider.user!.role == UserRole.student) {
+    return null;
+  } else {
+    return '/unauthorized';
+  }
 }
 
 Future<String?> roleBasedRedirect(
@@ -90,7 +116,7 @@ Future<String?> roleBasedRedirect(
     } else if (user.role == UserRole.teacher) {
       return '/teacher';
     } else {
-      return '/student';
+      return '/student/home';
     }
   }
 }
