@@ -9,6 +9,7 @@ import 'package:shadcn_ui/shadcn_ui.dart';
 import '../../model/posts/posts_model.dart';
 import '../../model/users/users_model.dart';
 import '../../providers/post_provider.dart';
+import '../common/widget/drawer_widget.dart';
 import 'post/post_card_widget.dart';
 
 import 'package:image_picker/image_picker.dart';
@@ -36,14 +37,17 @@ class _HomeStudentScreenState extends State<HomeStudentScreen> {
   Widget build(BuildContext context) {
     final isWeb = MediaQuery.of(context).size.width > 600;
 
+    final scafoldKey = GlobalKey<ScaffoldState>();
     return Scaffold(
+      key: scafoldKey,
       appBar: AppBar(
         leading: isWeb
             ? const MenuWidget()
             : IconButton(
-                icon: const Icon(Icons.menu),
+                icon: const Icon(LucideIcons.menu),
                 onPressed: () {
                   // TODO: Add drawer or menu functionality
+                  scafoldKey.currentState!.openDrawer();
                 },
               ),
         title: const Text('Student Screen'),
@@ -62,6 +66,11 @@ class _HomeStudentScreenState extends State<HomeStudentScreen> {
           ),
         ],
       ),
+      drawer: isWeb
+          ? null
+          : const DrawerWidget(
+              currentIndex: 0,
+            ),
       body: Row(
         children: [
           if (isWeb) const MenuWidget(),

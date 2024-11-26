@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 
-from app.router import authentication
+from app.router import authentication, books
 
 app = FastAPI()
 
@@ -28,6 +28,7 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
     )
 
 app.include_router(authentication.router)
+app.include_router(books.router)
 
 @app.get("/")
 def read_root():

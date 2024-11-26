@@ -4,7 +4,9 @@ import 'package:provider/provider.dart';
 
 import 'package:learnza/locator/injector.dart' as di;
 import '../model/posts/posts_model.dart';
+import '../screen/student/library/library_student_screen.dart';
 import '../screen/student/post/deatail_blog_student.dart';
+import '../screen/student/profile/profile_student_screen.dart';
 import '../service/firebase_service.dart';
 import '/model/app_enums.dart';
 import '../providers/auth_provider.dart';
@@ -62,6 +64,19 @@ class AppRouters {
             path: "/home",
             name: AppUrls.homeStudentScreen,
             builder: (context, state) => const HomeStudentScreen(),
+          ),
+          GoRoute(
+            path: "/profile",
+            name: AppUrls.profileStudentScreen,
+            builder: (context, state) => const ProfileStudentScreen(),
+          ),
+
+          GoRoute(
+            path: '/library',
+            name: AppUrls.libraryStudentScreen,
+            builder: (context, state) {
+              return const LibraryStudentScreen();
+            },
           ),
           // GoRoute(
           //   path: '/edit-blog',

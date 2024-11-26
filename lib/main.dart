@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 import 'providers/admin_provider.dart';
 import 'providers/auth_provider.dart';
+import 'providers/book_provider.dart';
 import 'providers/course_provider.dart';
 import 'providers/department_provider.dart';
 import 'providers/post_provider.dart';
@@ -77,6 +78,11 @@ class MyApp extends StatelessWidget {
             ),
             ChangeNotifierProvider(
               create: (_) => PostProvider(
+                firebaseService: di.injector.get<FirebaseService>(),
+              ),
+            ),
+            ChangeNotifierProvider(
+              create: (_) => BookProvider(
                 firebaseService: di.injector.get<FirebaseService>(),
               ),
             ),

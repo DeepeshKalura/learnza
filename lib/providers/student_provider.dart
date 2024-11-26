@@ -1,6 +1,7 @@
 import 'dart:developer' as developer;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 import '../model/users/users_model.dart';
 import '../service/firebase_service.dart';
@@ -90,5 +91,38 @@ class StudentProvider extends ChangeNotifier {
       _error = e.toString();
       rethrow;
     }
+  }
+
+  // making a search consumer
+
+  var isSearch = false;
+
+  void toggleSearch() {
+    isSearch = !isSearch;
+    notifyListeners();
+  }
+
+  List<dynamic> searchFromOpenLibrary(String query) {
+    final url = Uri.parse(
+      'https://openlibrary.org/search.json?q=$query&limit=10&fields=title,author_name,cover_i',
+    );
+
+    var header = {
+      "User-Agent": "DeepeshKalura (deepeshkalurs@gmail.com)",
+      "Accept": "application/json"
+    };
+
+    http.get(url, headers: header).then((response) {
+      if (response.statusCode == 200) {
+        final data = response.body;
+        return data;
+      } else {
+        return [];
+      }
+    }).catchError((e) {
+      developer.log('Error fetching data from Open Library', error: e);
+      return [];
+    });
+    return [];
   }
 }
