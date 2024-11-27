@@ -3,9 +3,11 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import 'package:learnza/locator/injector.dart' as di;
+import '../model/groups/groups_model.dart';
 import '../model/posts/posts_model.dart';
+import '../screen/student/groups/groups_detail_screen.dart';
 import '../screen/student/library/library_student_screen.dart';
-import '../screen/student/post/deatail_blog_student.dart';
+import '../screen/student/blogs/deatail_blog_student.dart';
 import '../screen/student/profile/profile_student_screen.dart';
 import '../service/firebase_service.dart';
 import '/model/app_enums.dart';
@@ -24,6 +26,18 @@ class AppRouters {
     debugLogDiagnostics: true,
     initialLocation: '/auth',
     navigatorKey: rootNavigatorKey,
+    errorBuilder: (context, state) {
+      return Scaffold(
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('Error: ${state.error}'),
+            ],
+          ),
+        ),
+      );
+    },
     routes: [
       // Public routes
 
@@ -78,6 +92,16 @@ class AppRouters {
               return const LibraryStudentScreen();
             },
           ),
+
+          GoRoute(
+              path: '/groups-details',
+              name: AppUrls.groupDetailStudentScreen,
+              builder: (context, state) {
+                var args = state.extra! as Map<String, GroupsModel>;
+                return GroupsDetailScreen(
+                  groups: args['group'] as GroupsModel,
+                );
+              }),
           // GoRoute(
           //   path: '/edit-blog',
           //   name: AppUrls.editBlogStudentScreen,

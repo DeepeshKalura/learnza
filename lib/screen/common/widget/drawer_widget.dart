@@ -48,66 +48,80 @@ class DrawerWidget extends StatelessWidget {
             ),
           ),
           // Navigation menu
-          Expanded(
-            child: ListView(
-              children: [
-                ListTile(
-                  leading: const Icon(
-                    LucideIcons.house,
-                  ),
-                  title: const Text('Home'),
-                  onTap: () {
-                    if (currentIndex == 0) {
-                      context.pop();
-                    } else {
-                      context.pushReplacementNamed(AppUrls.homeStudentScreen);
-                    }
-                    context.pop();
-                  },
-                ),
-                ListTile(
-                  leading: const Icon(
-                    LucideIcons.bookA,
-                  ),
-                  title: const Text('Library'),
-                  onTap: () {
-                    if (currentIndex == 1) {
-                      context.pop();
-                    } else {
-                      context
-                          .pushReplacementNamed(AppUrls.libraryStudentScreen);
-                    }
-                  },
-                ),
-                ListTile(
-                  leading: const Icon(
-                    LucideIcons.user,
-                  ),
-                  title: const Text('Profile'),
-                  onTap: () {
-                    if (currentIndex == 2) {
-                      context.pop();
-                    } else {
-                      context
-                          .pushReplacementNamed(AppUrls.profileStudentScreen);
-                    }
-                  },
-                ),
-                Divider(color: Colors.grey[300]),
-                ListTile(
-                  leading: const Icon(LucideIcons.logOut, color: Colors.red),
-                  title: const Text(
-                    'Logout',
-                    style: TextStyle(color: Colors.red),
-                  ),
-                  onTap: () {
-                    context.read<AuthProvider>().logout();
-                    Navigator.pop(context);
-                  },
-                ),
-              ],
-            ),
-          ),
+          // Expanded(
+          //   child: ListView(
+          //     children: [
+          //       ListTile(
+          //         leading: const Icon(
+          //           LucideIcons.house,
+          //         ),
+          //         title: const Text('Home'),
+          //         onTap: () {
+          //           if (currentIndex == 0) {
+          //             context.pop();
+          //           } else {
+          //             context.pushReplacementNamed(AppUrls.homeStudentScreen);
+          //           }
+          //           context.pop();
+          //         },
+          //       ),
+          //       ListTile(
+          //         leading: const Icon(
+          //           LucideIcons.bookA,
+          //         ),
+          //         title: const Text('Library'),
+          //         onTap: () {
+          //           if (currentIndex == 1) {
+          //             context.pop();
+          //           } else {
+          //             context
+          //                 .pushReplacementNamed(AppUrls.libraryStudentScreen);
+          //           }
+          //         },
+          //       ),
+          //       ListTile(
+          //         leading: const Icon(
+          //           LucideIcons.user,
+          //         ),
+          //         title: const Text('Profile'),
+          //         onTap: () {
+          //           if (currentIndex == 2) {
+          //             context.pop();
+          //           } else {
+          //             context
+          //                 .pushReplacementNamed(AppUrls.profileStudentScreen);
+          //           }
+          //         },
+          //       ),
+          //       ListTile(
+          //         leading: const Icon(
+          //           LucideIcons.group,
+          //         ),
+          //         title: const Text('Groups'),
+          //         onTap: () {
+          //           if (currentIndex == 3) {
+          //             context.pop();
+          //           } else {
+          //             context
+          //                 .pushReplacementNamed(AppUrls.profileStudentScreen);
+          //           }
+          //         },
+          //       ),
+          //       Divider(color: Colors.grey[300]),
+          //       // ListTile(
+          //       //   leading: const Icon(LucideIcons.logOut, color: Colors.red),
+          //       //   title: const Text(
+          //       //     'Logout',
+          //       //     style: TextStyle(color: Colors.red),
+          //       //   ),
+          //       //   onTap: () {
+          //       //     context.read<AuthProvider>().logout();
+          //       //     Navigator.pop(context);
+          //       //   },
+          //       // ),
+          //     ],
+          //   ),
+          // ),
         ],
       ),
     );

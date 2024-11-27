@@ -13,6 +13,7 @@ import 'providers/auth_provider.dart';
 import 'providers/book_provider.dart';
 import 'providers/course_provider.dart';
 import 'providers/department_provider.dart';
+import 'providers/groups_provider.dart';
 import 'providers/post_provider.dart';
 import 'providers/student_provider.dart';
 import 'providers/teacher_provider.dart';
@@ -85,6 +86,13 @@ class MyApp extends StatelessWidget {
               create: (_) => BookProvider(
                 firebaseService: di.injector.get<FirebaseService>(),
               ),
+            ),
+            ChangeNotifierProvider(
+              create: (context) {
+                return GroupsProvider(
+                  firebaseService: di.injector.get<FirebaseService>(),
+                );
+              },
             ),
           ],
           child: ShadApp.router(

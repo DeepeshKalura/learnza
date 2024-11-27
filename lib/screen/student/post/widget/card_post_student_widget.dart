@@ -4,20 +4,21 @@ import 'package:animations/animations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
-import '../../../model/posts/posts_model.dart';
-import '../../../model/users/users_model.dart';
+import '../../../../model/posts/posts_model.dart';
+import '../../../../model/users/users_model.dart';
 
-class PostCardWidget extends StatefulWidget {
+class CardPostStudentWidget extends StatefulWidget {
   final PostsModel post;
   final UsersModel user;
 
-  const PostCardWidget({super.key, required this.post, required this.user});
+  const CardPostStudentWidget(
+      {super.key, required this.post, required this.user});
 
   @override
-  PostCardWidgetState createState() => PostCardWidgetState();
+  CardPostStudentWidgetState createState() => CardPostStudentWidgetState();
 }
 
-class PostCardWidgetState extends State<PostCardWidget> {
+class CardPostStudentWidgetState extends State<CardPostStudentWidget> {
   bool _isLiked = false;
   bool _isBookmarked = false;
 
@@ -32,7 +33,7 @@ class PostCardWidgetState extends State<PostCardWidget> {
 
   Widget _buildPostCardTile() {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      margin: const EdgeInsets.only(left: 12, right: 12, bottom: 6),
       child: ShadCard(
         radius: BorderRadius.circular(16),
         child: Column(

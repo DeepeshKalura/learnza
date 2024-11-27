@@ -1,18 +1,9 @@
-import 'dart:io';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
-import 'package:shadcn_ui/shadcn_ui.dart';
 
-import '../../model/posts/posts_model.dart';
-import '../../model/users/users_model.dart';
-import '../../providers/post_provider.dart';
-import '../common/widget/drawer_widget.dart';
-import 'post/post_card_widget.dart';
-
-import 'package:image_picker/image_picker.dart';
+import 'groups/groups_student_screen.dart';
+import 'library/library_student_screen.dart';
+import 'post/post_student_screen.dart';
+import 'profile/profile_student_screen.dart';
 
 class HomeStudentScreen extends StatefulWidget {
   const HomeStudentScreen({super.key});
@@ -22,337 +13,56 @@ class HomeStudentScreen extends StatefulWidget {
 }
 
 class _HomeStudentScreenState extends State<HomeStudentScreen> {
-  final _formKey = GlobalKey<ShadFormState>();
-  final _titleController = TextEditingController();
-  final _contentController = TextEditingController();
+  int _currentIndex = 0;
 
-  @override
-  void dispose() {
-    super.dispose();
-    _titleController.dispose();
-    _contentController.dispose();
-  }
+  final List<Widget> _screens = [
+    const PostStudentScreen(),
+    const ProfileStudentScreen(),
+    const LibraryStudentScreen(),
+    const GroupsStudentScreen(),
+  ];
 
   @override
   Widget build(BuildContext context) {
-    final isWeb = MediaQuery.of(context).size.width > 600;
-
-    final scafoldKey = GlobalKey<ScaffoldState>();
     return Scaffold(
-      key: scafoldKey,
-      appBar: AppBar(
-        leading: isWeb
-            ? const MenuWidget()
-            : IconButton(
-                icon: const Icon(LucideIcons.menu),
-                onPressed: () {
-                  // TODO: Add drawer or menu functionality
-                  scafoldKey.currentState!.openDrawer();
-                },
-              ),
-        title: const Text('Student Screen'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.search),
-            onPressed: () {
-              // TODO: Implement search functionality
-            },
+      body: IndexedStack(
+        index: _currentIndex,
+        children: _screens,
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        onTap: (index) => setState(() => _currentIndex = index),
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.post_add,
+              color: Colors.black,
+            ),
+            label: 'Posts',
           ),
-          IconButton(
-            icon: const Icon(Icons.group),
-            onPressed: () {
-              // TODO: Implement group functionality
-            },
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.person,
+              color: Colors.black,
+            ),
+            label: 'Profile',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.library_books,
+              color: Colors.black,
+            ),
+            label: 'Library',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.group,
+              color: Colors.black,
+            ),
+            label: 'Groups',
           ),
         ],
       ),
-      drawer: isWeb
-          ? null
-          : const DrawerWidget(
-              currentIndex: 0,
-            ),
-      body: Row(
-        children: [
-          if (isWeb) const MenuWidget(),
-          Expanded(
-            child: StreamBuilder<Map<PostsModel, UsersModel>>(
-              stream:
-                  context.read<PostProvider>().getPostsAndUsersWithPagination(
-                        20,
-                      ),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-
-                if (!snapshot.hasData) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-
-                Map<PostsModel, UsersModel> data = snapshot.data!;
-                return ListView.builder(
-                  itemCount: data.length,
-                  itemBuilder: (context, index) {
-                    final post = data.keys.elementAt(index);
-                    final user = data[post]!;
-                    return PostCardWidget(post: post, user: user);
-                  },
-                );
-              },
-            ),
-          ),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showShadDialog(
-            context: context,
-            builder: (context) => Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: ShadDialog(
-                radius: BorderRadius.circular(10),
-                actionsAxis: Axis.horizontal,
-                title: const Text(
-                  'Add Post',
-                  textAlign: TextAlign.left,
-                ),
-                actions: [
-                  ShadButton.outline(
-                    width: 100,
-                    child: const Text(
-                      'Cancel',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 15,
-                      ),
-                    ),
-                    onPressed: () {
-                      context.pop();
-                    },
-                  ),
-                  ShadButton(
-                    width: 100,
-                    onPressed: _savePost,
-                    child: Consumer<PostProvider>(
-                      builder: (context, postProvider, child) {
-                        return postProvider.isLoading
-                            ? const Center(
-                                child: CircularProgressIndicator(
-                                  color: Colors.white,
-                                ),
-                              )
-                            : const Text(
-                                'Post',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 15,
-                                ),
-                              );
-                      },
-                    ),
-                  ),
-                ],
-                child: ShadForm(
-                  key: _formKey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      ShadInputFormField(
-                        id: 'titleOfPost',
-                        label: const Text("Title"),
-                        placeholder: const Text(
-                          "Write a Title for post here",
-                        ),
-                        controller: _titleController,
-                        validator: (value) => value.isEmpty == true
-                            ? 'Title cannot be empty'
-                            : null,
-                      ),
-                      const SizedBox(height: 10),
-                      ShadInputFormField(
-                        label: const Text("Content"),
-                        controller: _contentController,
-                        placeholder: const Text(
-                          'write a content of the post here',
-                        ),
-                        maxLines: 7,
-                        validator: (value) => value.isEmpty == true
-                            ? 'Content cannot be empty'
-                            : null,
-                      ),
-                      const SizedBox(height: 10),
-
-                      //  Image Picker Section
-
-                      const Text(
-                        'Thumbnail',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      Consumer<PostProvider>(
-                          builder: (context, postProvider, child) {
-                        final thumbnail = postProvider.thumbnail;
-
-                        return Column(
-                          children: [
-                            if (thumbnail != null) ...[
-                              Stack(
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(8),
-                                    child: Image.file(
-                                      File(thumbnail.path),
-                                      height: 200,
-                                      width: double.infinity,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                  Positioned(
-                                    top: 8,
-                                    right: 8,
-                                    child: GestureDetector(
-                                      onTap: () => postProvider.removeImage(),
-                                      child: Container(
-                                        padding: const EdgeInsets.all(4),
-                                        decoration: const BoxDecoration(
-                                          color: Colors.white,
-                                          shape: BoxShape.circle,
-                                        ),
-                                        child: const Icon(
-                                          Icons.close,
-                                          size: 20,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                            ShadButton.outline(
-                              onPressed: postProvider.pickImage,
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  const Icon(LucideIcons.image),
-                                  const SizedBox(width: 8),
-                                  Text(
-                                    thumbnail == null
-                                        ? 'Select Thumbnail'
-                                        : 'Change Thumbnail',
-                                  ),
-                                ],
-                              ),
-                            ),
-                            if (thumbnail == null) ...[
-                              const SizedBox(height: 8),
-                              Text(
-                                'Recommended size: 1200x1200px',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color: Colors.grey.shade600,
-                                ),
-                              ),
-                            ],
-                          ],
-                        );
-                      }),
-                      const SizedBox(height: 16),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          );
-        },
-        child: const Icon(Icons.add),
-      ),
-    );
-  }
-
-  Widget imageWidgetOrNot(XFile thumbnail) {
-    if (kIsWeb) {
-      return Image.network(
-        thumbnail.path,
-      );
-    } else {
-      return Image.file(
-        File(
-          thumbnail.path,
-        ),
-      );
-    }
-  }
-
-  Future<void> _savePost() async {
-    final postProvider = context.read<PostProvider>();
-
-    try {
-      if (_formKey.currentState!.validate()) {
-        await postProvider.createPost(
-            title: _titleController.text, content: _contentController.text);
-
-        _titleController.clear();
-        _contentController.clear();
-
-        postProvider.isLoading = false;
-        postProvider.thumbnail = null;
-        if (mounted) {
-          ShadToaster.of(context).show(
-            const ShadToast(
-              backgroundColor: Colors.green,
-              description: Text("Post have been post"),
-            ),
-          );
-        }
-      }
-    } catch (e) {
-      if (mounted) {
-        ShadToaster.of(context).show(
-          ShadToast.destructive(
-            description: Text(e.toString()),
-          ),
-        );
-      }
-    } finally {
-      if (mounted) {
-        context.pop();
-      }
-    }
-  }
-}
-
-class MenuWidget extends StatelessWidget {
-  const MenuWidget({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return NavigationRail(
-      selectedIndex: 0,
-      onDestinationSelected: (index) {
-        // TODO: Navigate based on selected menu item
-      },
-      labelType: NavigationRailLabelType.selected,
-      destinations: const [
-        NavigationRailDestination(
-          icon: Icon(Icons.book),
-          label: Text('Library'),
-        ),
-        NavigationRailDestination(
-          icon: Icon(Icons.group),
-          label: Text('People & Services'),
-        ),
-        NavigationRailDestination(
-          icon: Icon(Icons.calendar_today),
-          label: Text('Schedule'),
-        ),
-      ],
     );
   }
 }
