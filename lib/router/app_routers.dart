@@ -94,14 +94,15 @@ class AppRouters {
           ),
 
           GoRoute(
-              path: '/groups-details',
-              name: AppUrls.groupDetailStudentScreen,
-              builder: (context, state) {
-                var args = state.extra! as Map<String, GroupsModel>;
-                return GroupsDetailScreen(
-                  groups: args['group'] as GroupsModel,
-                );
-              }),
+            path: '/groups-message',
+            name: AppUrls.groupDetailStudentScreen,
+            builder: (context, state) {
+              var args = state.extra! as Map<String, GroupsModel>;
+              return GroupsMessageScreen(
+                groups: args['group'] as GroupsModel,
+              );
+            },
+          ),
           // GoRoute(
           //   path: '/edit-blog',
           //   name: AppUrls.editBlogStudentScreen,

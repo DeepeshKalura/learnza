@@ -473,52 +473,56 @@ class _GroupsStudentScreenState extends State<GroupsStudentScreen> {
                       child: Container(
                         margin: const EdgeInsets.all(12),
                         child: ShadCard(
+                          child: Hero(
+                            tag: group.id,
                             child: Row(
-                          children: [
-                            ShadAvatar(
-                              size: const Size(50, 50),
-                              group.imageUrl ??
-                                  "https://www.pngitem.com/pimgs/m/522-5220445_anonymous-profile-grey-person-sticker-glitch-empty-profile.png",
-                              placeholder: Text(
-                                group.name.substring(
-                                  0,
-                                  2,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(width: 20),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  group.name,
-                                  style: const TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                const SizedBox(height: 5),
-                                SizedBox(
-                                  width: 250,
-                                  child: Text(
-                                    group.description ?? 'No description',
-                                    maxLines: 3,
-                                    style: const TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.grey,
+                                ShadAvatar(
+                                  size: const Size(50, 50),
+                                  group.imageUrl ??
+                                      "https://www.pngitem.com/pimgs/m/522-5220445_anonymous-profile-grey-person-sticker-glitch-empty-profile.png",
+                                  placeholder: Text(
+                                    group.name.substring(
+                                      0,
+                                      2,
                                     ),
                                   ),
                                 ),
+                                const SizedBox(width: 20),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      group.name,
+                                      style: const TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 5),
+                                    SizedBox(
+                                      width: 250,
+                                      child: Text(
+                                        group.description ?? 'No description',
+                                        maxLines: 3,
+                                        style: const TextStyle(
+                                          fontSize: 14,
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const Spacer(),
+                                const Icon(
+                                  Icons.arrow_forward_ios,
+                                  size: 30,
+                                  color: Colors.grey,
+                                ),
                               ],
                             ),
-                            const Spacer(),
-                            const Icon(
-                              Icons.arrow_forward_ios,
-                              size: 30,
-                              color: Colors.grey,
-                            ),
-                          ],
-                        )),
+                          ),
+                        ),
                       ),
                     );
                   },
