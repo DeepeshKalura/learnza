@@ -1,4 +1,7 @@
 class AppUrls {
+  // public
+  static const String splashScreen = 'splashScreen';
+
   static const String loadingCommonScreen = 'loadingCommonScreen';
   static const String authenticationScreen = 'authenticationScreen';
   // adminslibraryStudentScreen

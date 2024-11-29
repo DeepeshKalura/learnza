@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:learnza/locator/injector.dart' as di;
 import '../model/groups/groups_model.dart';
 import '../model/posts/posts_model.dart';
+import '../screen/common/splash/splash_screen.dart';
 import '../screen/student/groups/groups_detail_screen.dart';
 import '../screen/student/library/library_student_screen.dart';
 import '../screen/student/blogs/deatail_blog_student.dart';
@@ -14,7 +15,6 @@ import '/model/app_enums.dart';
 import '../providers/auth_provider.dart';
 import '../screen/admin/home_admin_screen.dart';
 import '../screen/common/auth/login_auth_common_screen.dart';
-import '../screen/common/loading_common_screen.dart';
 import '../screen/student/home_student_screen.dart';
 import '../screen/teacher/home_teacher_screen.dart';
 import 'app_urls.dart';
@@ -24,7 +24,7 @@ final rootNavigatorKey = GlobalKey<NavigatorState>();
 class AppRouters {
   static final router = GoRouter(
     debugLogDiagnostics: true,
-    initialLocation: '/auth',
+    initialLocation: '/',
     navigatorKey: rootNavigatorKey,
     errorBuilder: (context, state) {
       return Scaffold(
@@ -44,7 +44,7 @@ class AppRouters {
       GoRoute(
         path: "/",
         name: AppUrls.loadingCommonScreen,
-        builder: (context, state) => const SplashCommonScreen(),
+        builder: (context, state) => const SplashScreen(),
       ),
 
       GoRoute(
