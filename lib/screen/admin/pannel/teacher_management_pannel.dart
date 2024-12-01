@@ -111,7 +111,6 @@ class _TeacherManagementPanelState extends State<TeacherManagementPanel> {
                 DataColumn(label: Text("Name")),
                 DataColumn(label: Text("Email")),
                 DataColumn(label: Text("Status")),
-                DataColumn(label: Text("Head Teacher")),
                 DataColumn(label: Text("Actions")),
               ],
               rows: teachers.map((teacher) {
@@ -123,9 +122,6 @@ class _TeacherManagementPanelState extends State<TeacherManagementPanel> {
                       _buildStatusBadge(
                         teacher.isActive ? 'Active' : 'Inactive',
                       ),
-                    ),
-                    DataCell(
-                      Text(teacher.isHeadTeacher ?? false ? 'Yes' : 'No'),
                     ),
                     DataCell(
                       Row(
@@ -225,8 +221,6 @@ class _TeacherManagementPanelState extends State<TeacherManagementPanel> {
             Text('Email: ${teacher.email}'),
             Text('Department: $departmentName'),
             Text('Status: ${teacher.isActive ? 'Active' : 'Inactive'}'),
-            Text(
-                'Head Teacher: ${teacher.isHeadTeacher ?? false ? 'Yes' : 'No'}'),
             Text('Created At: ${teacher.createdAt}'),
           ],
         ),
@@ -374,8 +368,7 @@ class _TeacherCreateDialogState extends State<_TeacherCreateDialog> {
           .createTeacherRegistration(
         email: _emailController.text,
         fullName: _nameController.text,
-        departmentId: _selectedDepartmentId!,
-        isHeadTeacher: _isHeadTeacher,
+        courseId: _selectedDepartmentId!,
       )
           .then((_) {
         Navigator.of(context).pop();
@@ -431,7 +424,6 @@ class _TeacherEditDialogState extends State<_TeacherEditDialog> {
     _nameController = TextEditingController(text: widget.teacher.fullName);
     _selectedDepartmentId = widget.teacher.departmentId ?? '';
     _isActive = widget.teacher.isActive;
-    _isHeadTeacher = widget.teacher.isHeadTeacher ?? false;
   }
 
   final _shadPopoverController = ShadPopoverController();
@@ -534,7 +526,6 @@ class _TeacherEditDialogState extends State<_TeacherEditDialog> {
         fullName: _nameController.text,
         departmentId: _selectedDepartmentId,
         isActive: _isActive,
-        isHeadTeacher: _isHeadTeacher,
       );
 
       teacherProvider.updateTeacher(updatedTeacher: updatedTeacher).then((_) {

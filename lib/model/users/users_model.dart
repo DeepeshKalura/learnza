@@ -7,56 +7,40 @@ part 'users_model.g.dart';
 @freezed
 class UsersModel with _$UsersModel {
   const factory UsersModel({
+    required UserRole role,
+    String? title,
+
+    // Students
     required String uid,
     required String email,
     required String fullName,
-    required UserRole role,
-    required bool isActive,
-    required DateTime createdAt,
-    DateTime? isEmailVerified,
-    DateTime? lastLogin,
-
-    // Common optional fields
-    String? profileImage,
+    String? address,
     String? phoneNumber,
-
-    // Admin specific fields
-    bool? isSuperAdmin,
-
-    // Teacher specific fields
-    bool? isHeadTeacher,
-    String? departmentId,
-    List<String>? assignedCourseIds,
-    bool? canInviteTeachers, // For head teachers
-
-    // Student specific fields
-    String? enrolledDepartmentId,
-    List<String>? enrolledCourseIds,
-    bool? isOnProbation, // For academic status tracking
+    String? profileImageURL,
     String? batch,
+    String? motherName,
+    String? fatherName,
+
+    // Message
+    String? lastseen,
+    @Default(true) bool isActive,
+    required bool isOnline,
+    @Default([]) List<String> blockedUsers,
+    @Default([]) List<String> contactUsers,
+
+    // Teachers
+    String? courseId,
+
+    // Future purpose
+    String? departmentId,
 
     // Status tracking
     String? banReason,
-    DateTime? banExpiry,
-    String? bannedBy,
-    DateTime? lastActiveAt,
-    Map<String, dynamic>? activityLog,
+    String? bannedById,
+    required DateTime createdAt,
   }) = _UsersModel;
 
+  // For JSON serialization
   factory UsersModel.fromJson(Map<String, dynamic> json) =>
       _$UsersModelFromJson(json);
-
-  // ===== Role-Specific Computed Properties =====
-
-  const UsersModel._(); // Private constructor for custom getters
-
-  bool get isSuperAdminRole =>
-      role == UserRole.admin && (isSuperAdmin ?? false);
-
-  bool get isHeadTeacherRole =>
-      role == UserRole.teacher && (isHeadTeacher ?? false);
-
-  bool get isTeacherRole => role == UserRole.teacher;
-
-  bool get isStudentRole => role == UserRole.student;
 }

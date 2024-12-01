@@ -6,12 +6,16 @@ part 'courses_model.g.dart';
 @freezed
 class CoursesModel with _$CoursesModel {
   const factory CoursesModel({
-    required String id, // Primary Key
-    required String name, // Course name
-    required String departmentId, // Foreign Key: References the Department
+    required String id,
+    required String name,
+    required String year, // how long the year last for a given course
+    String? description,
+    String? shortName,
+    String? courseImageUrl,
+    String? departmentId, // Foreign Key: References the Department
     required bool isActive, // Indicates if the course is currently active
     required DateTime createdAt, // Timestamp when the course was created
-    Map<String, dynamic>? courseSettings, // Additional settings for the course
+    DateTime? updatedAt,
   }) = _CoursesModel;
 
   factory CoursesModel.fromJson(Map<String, dynamic> json) =>

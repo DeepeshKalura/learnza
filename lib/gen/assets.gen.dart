@@ -21,6 +21,10 @@ class $AssetsImagesCommonGen {
 
   /// Directory path: assets/images/common/auth
   $AssetsImagesCommonAuthGen get auth => const $AssetsImagesCommonAuthGen();
+
+  /// Directory path: assets/images/common/splash
+  $AssetsImagesCommonSplashGen get splash =>
+      const $AssetsImagesCommonSplashGen();
 }
 
 class $AssetsImagesCommonAuthGen {
@@ -32,6 +36,17 @@ class $AssetsImagesCommonAuthGen {
 
   /// List of all assets
   List<AssetGenImage> get values => [notebookImage];
+}
+
+class $AssetsImagesCommonSplashGen {
+  const $AssetsImagesCommonSplashGen();
+
+  /// File path: assets/images/common/splash/lernzaLogo.png
+  AssetGenImage get lernzaLogo =>
+      const AssetGenImage('assets/images/common/splash/lernzaLogo.png');
+
+  /// List of all assets
+  List<AssetGenImage> get values => [lernzaLogo];
 }
 
 class Assets {

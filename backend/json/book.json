@@ -1,0 +1,156 @@
+[
+    {
+        "id": "66802c8c-6186-414d-9745-1eb95711d3cd",
+        "isbm": "9789937936583",
+        "bookTitle": "अनिवार्य नेपाली",
+        "description": "अनिवार्य नेपाली (Aniwarya Nepali Byakaran, Bodh, Abhibyakti ra Samikshya)\" by Dr. Narayan Prasad Sharma Gaire is a vital textbook for Nursing and Health Science students under the CTEVT curriculum. It provides a comprehensive exploration of the Nepali language, covering grammar (Byakaran), comprehension (Bodh), expression (Abhibyakti), and critical analysis (Samikshya). Designed to enhance linguistic proficiency, the book equips students with essential communication skills necessary for their professional fields, fostering both effective interaction and a deeper understanding of cultural nuances in healthcare.",
+        "code": "401",
+        "bookUrl": null,
+        "language": "ne",
+        "author": ["Dr. Narayan Prasad Sharma Gaire"],
+        "categories": [
+            "Nursing", "CTEVT", "Nepali", "Health Science First Year"
+        ],
+        "publisher": "Heritage Publishers & Distributors Pvt. Ltd.",
+        "identifier": [
+            {
+                "type": "ISBN_13",
+                "value": "9789937936583"
+            }
+        ], 
+        "isActive": true,
+        "createdAt": "",
+        "updatedAt": "",
+        "coverImageUrl": null,
+        "founded": false,
+        "moreImageUrl": [] 
+    }, 
+    {
+        "id": "ab937d00-36a9-4835-9a4a-f3bf494f5ccb",
+        "isbm": "978-9351768449",
+        "bookTitle": "Objective General English",
+        "description": "An essential book that would brush up the language skills of any aspirants who is working towards clearing the competitive examinations for Hotel Management, B Ed, MBA, MCA courses held by many prestigious institutes and university or those conducted by UPSC for many openings for civil and armed forces positions.",
+        "code": null,
+        "bookUrl": "books/Objective General English.pdf",
+        "language": "en",
+        "author": ["S. P. Bakshi"],
+        "categories": [
+            "Verbal Ability","English", "Comprehension Skills", "Practical Grammar", "Foundation Module"
+        ],
+        "publisher": "Arihant Publications",
+        "identifier": [
+            {
+                "type": "ISBN_13",
+                "value": "978-9351768449"
+            }, 
+            {
+                "type": "ISBN_10",
+                "value": "8176030295"
+            }
+        ], 
+        "isActive": true,
+        "createdAt": "",
+        "updatedAt": "",
+        "coverImageUrl": "thumbnail/Objective General English.png",
+        "founded": true,
+        "moreImageUrl": []
+    }, 
+    {
+        "id": "41f1937e-cdd5-4e26-a3c0-e3b47a043a4e",
+        "isbm": "9788184884845",
+        "code": "412",
+        "bookTitle": "Philosophical and Sociological Foundations of Education",
+        "description": "Philosophy is to preceive the original source of certain ideas from which the practical matters of education are held to be derived by a series of logical inferences. Philosophy and education are like two faces of the same coin. Similarly, Social ideologies have their own impact on educational theories and practices. The aims and methods of education vary considerable due to varied conceptions of social organization. Education is an instrument of social control and social change. Education is a means for social transformation. Both the knowledge of philosophy and Sociology plays a vital role in the Classroom teaching ? learning process and hence giving a wide range of scope for teachers as well as students.",
+        "bookUrl": "books/Philosophical & Sociological Foundations of Education",
+        "language": "en",
+        "author": ["M.S. Talawar", "T. Pradeep Kumar"],
+        "categories": [
+            "Philosophy", "Sociology", "Education", "B.Ed"
+        ],
+        "publisher": "Himalaya Publishing House",
+        "isActive": true,
+        "identifier": [
+            {
+                "type": "ISBN_13",
+                "value": "9789350440551"
+            }, 
+            {
+                "type": "ISBN_10",
+                "value": "8184884842"
+            }, 
+            {
+                "type": "ISBN_10",
+                "value": "9350440555"
+            },
+            {
+                "type": "ISBN_13",
+                "value": "9788184884845"
+            }
+        ],
+        "createdAt": "",
+        "updatedAt": "",
+        "coverImageUrl" : "thumbnail/Philosophical & Sociological Foundations of Education.png",
+        "founded": true,
+        "moreImageUrl": []
+
+    },
+    {
+        "id": "313ab7af-3092-466e-9f18-2c309225d2a3",
+        "isbm": "978-3110622973",
+        "code": null,
+        "bookTitle": "Cognitive Linguistics - Foundations of Language",
+        "description": "Cognitive foundations of language introduces the reader to the abilities and processes in which research in Cognitive Linguistics is grounded. The book looks at key concepts, such as embodiment, salience, entrenchment, construal, categorization, and collaborative communication, and discusses their genesis and implications for cognitive linguistic research.",
+        "bookUrl": "books/Cognitive Linguistics - Foundations of Language.png",
+        "language": "en",
+        "author": ["Ewa Dąbrowska", "Dagmar Divjak"],
+        "categories": [    
+    "Language and languages", "Biolinguistics, Language", "Language Development", "Verbal Behavior", "Langage et langues", "Biolinguistique", "LANGUAGE ARTS & DISCIPLINES", "Linguistics", "Psycholinguistics", "Denken", "Psycholinguistik", "Sprache", "Kognition", "Taalpsychologie", "LINGUISTICS"
+        ],
+
+        "publisher": "De Gruyter Mouton",
+        "isActive": true,
+        "identifier": [
+            {
+                "type": "ISBN_13",
+                "value": "978-3110622973"
+            }, 
+            {
+                "type": "ISBN_10", 
+                "value": "3110622971"
+            }
+        ],
+        "createdAt": "",
+        "updatedAt": "",
+        "founded": true,
+        "coverImageUrl": "thumbnail/The language instinct.png",
+        "moreImageUrl": []
+    },
+    {
+        "id": "cf8c088b-10bc-4600-945d-1bfa383de2ea",
+        "isbm": "978-1265141417",
+        "code": null, 
+        "bookTitle": "McGraw Hill Conquering ACT English, Reading, and Writing",
+        "description": "The most intensive ACT English, Reading, and Writing prep you can get―with drills, strategies, and 15 full-length practice tests with explanations to help boost your ACT score!",
+        "bookUrl": "books/McGraw Hill Conquering ACT English, Reading, and Writing.pdf",
+        "language": "en",
+        "author": ["Steven W. Dulan", "Amy Dulan"],
+        "categories": ["English", "Reading", "Writing", "ACT", "Test Preparation"],
+        "publisher": "McGraw Hill",
+        "isActive": true, 
+        "identifier": [
+            {
+                "type": "ISBN_13",
+                "value": "9781265141417"
+            }, 
+            {
+                "type": "ISBN_10",
+                "value": "126514141X"
+            }
+        ],
+        "createdAt": "",
+        "updatedAt": "",
+        "coverImageUrl": "thumbnail/McGraw Hill Conquering ACT English, Reading, and Writing.png",
+        "founded": true,
+        "moreImageUrl": []
+    }
+]

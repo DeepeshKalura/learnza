@@ -20,16 +20,20 @@ CoursesModel _$CoursesModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$CoursesModel {
-  String get id => throw _privateConstructorUsedError; // Primary Key
-  String get name => throw _privateConstructorUsedError; // Course name
-  String get departmentId =>
+  String get id => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
+  String get year =>
+      throw _privateConstructorUsedError; // how long the year last for a given course
+  String? get description => throw _privateConstructorUsedError;
+  String? get shortName => throw _privateConstructorUsedError;
+  String? get courseImageUrl => throw _privateConstructorUsedError;
+  String? get departmentId =>
       throw _privateConstructorUsedError; // Foreign Key: References the Department
   bool get isActive =>
       throw _privateConstructorUsedError; // Indicates if the course is currently active
   DateTime get createdAt =>
       throw _privateConstructorUsedError; // Timestamp when the course was created
-  Map<String, dynamic>? get courseSettings =>
-      throw _privateConstructorUsedError;
+  DateTime? get updatedAt => throw _privateConstructorUsedError;
 
   /// Serializes this CoursesModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -50,10 +54,14 @@ abstract class $CoursesModelCopyWith<$Res> {
   $Res call(
       {String id,
       String name,
-      String departmentId,
+      String year,
+      String? description,
+      String? shortName,
+      String? courseImageUrl,
+      String? departmentId,
       bool isActive,
       DateTime createdAt,
-      Map<String, dynamic>? courseSettings});
+      DateTime? updatedAt});
 }
 
 /// @nodoc
@@ -73,10 +81,14 @@ class _$CoursesModelCopyWithImpl<$Res, $Val extends CoursesModel>
   $Res call({
     Object? id = null,
     Object? name = null,
-    Object? departmentId = null,
+    Object? year = null,
+    Object? description = freezed,
+    Object? shortName = freezed,
+    Object? courseImageUrl = freezed,
+    Object? departmentId = freezed,
     Object? isActive = null,
     Object? createdAt = null,
-    Object? courseSettings = freezed,
+    Object? updatedAt = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -87,10 +99,26 @@ class _$CoursesModelCopyWithImpl<$Res, $Val extends CoursesModel>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      departmentId: null == departmentId
+      year: null == year
+          ? _value.year
+          : year // ignore: cast_nullable_to_non_nullable
+              as String,
+      description: freezed == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      shortName: freezed == shortName
+          ? _value.shortName
+          : shortName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      courseImageUrl: freezed == courseImageUrl
+          ? _value.courseImageUrl
+          : courseImageUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      departmentId: freezed == departmentId
           ? _value.departmentId
           : departmentId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       isActive: null == isActive
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
@@ -99,10 +127,10 @@ class _$CoursesModelCopyWithImpl<$Res, $Val extends CoursesModel>
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      courseSettings: freezed == courseSettings
-          ? _value.courseSettings
-          : courseSettings // ignore: cast_nullable_to_non_nullable
-              as Map<String, dynamic>?,
+      updatedAt: freezed == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ) as $Val);
   }
 }
@@ -118,10 +146,14 @@ abstract class _$$CoursesModelImplCopyWith<$Res>
   $Res call(
       {String id,
       String name,
-      String departmentId,
+      String year,
+      String? description,
+      String? shortName,
+      String? courseImageUrl,
+      String? departmentId,
       bool isActive,
       DateTime createdAt,
-      Map<String, dynamic>? courseSettings});
+      DateTime? updatedAt});
 }
 
 /// @nodoc
@@ -139,10 +171,14 @@ class __$$CoursesModelImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? name = null,
-    Object? departmentId = null,
+    Object? year = null,
+    Object? description = freezed,
+    Object? shortName = freezed,
+    Object? courseImageUrl = freezed,
+    Object? departmentId = freezed,
     Object? isActive = null,
     Object? createdAt = null,
-    Object? courseSettings = freezed,
+    Object? updatedAt = freezed,
   }) {
     return _then(_$CoursesModelImpl(
       id: null == id
@@ -153,10 +189,26 @@ class __$$CoursesModelImplCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      departmentId: null == departmentId
+      year: null == year
+          ? _value.year
+          : year // ignore: cast_nullable_to_non_nullable
+              as String,
+      description: freezed == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      shortName: freezed == shortName
+          ? _value.shortName
+          : shortName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      courseImageUrl: freezed == courseImageUrl
+          ? _value.courseImageUrl
+          : courseImageUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      departmentId: freezed == departmentId
           ? _value.departmentId
           : departmentId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       isActive: null == isActive
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
@@ -165,10 +217,10 @@ class __$$CoursesModelImplCopyWithImpl<$Res>
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      courseSettings: freezed == courseSettings
-          ? _value._courseSettings
-          : courseSettings // ignore: cast_nullable_to_non_nullable
-              as Map<String, dynamic>?,
+      updatedAt: freezed == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ));
   }
 }
@@ -179,23 +231,33 @@ class _$CoursesModelImpl implements _CoursesModel {
   const _$CoursesModelImpl(
       {required this.id,
       required this.name,
-      required this.departmentId,
+      required this.year,
+      this.description,
+      this.shortName,
+      this.courseImageUrl,
+      this.departmentId,
       required this.isActive,
       required this.createdAt,
-      final Map<String, dynamic>? courseSettings})
-      : _courseSettings = courseSettings;
+      this.updatedAt});
 
   factory _$CoursesModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$CoursesModelImplFromJson(json);
 
   @override
   final String id;
-// Primary Key
   @override
   final String name;
-// Course name
   @override
-  final String departmentId;
+  final String year;
+// how long the year last for a given course
+  @override
+  final String? description;
+  @override
+  final String? shortName;
+  @override
+  final String? courseImageUrl;
+  @override
+  final String? departmentId;
 // Foreign Key: References the Department
   @override
   final bool isActive;
@@ -203,20 +265,12 @@ class _$CoursesModelImpl implements _CoursesModel {
   @override
   final DateTime createdAt;
 // Timestamp when the course was created
-  final Map<String, dynamic>? _courseSettings;
-// Timestamp when the course was created
   @override
-  Map<String, dynamic>? get courseSettings {
-    final value = _courseSettings;
-    if (value == null) return null;
-    if (_courseSettings is EqualUnmodifiableMapView) return _courseSettings;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(value);
-  }
+  final DateTime? updatedAt;
 
   @override
   String toString() {
-    return 'CoursesModel(id: $id, name: $name, departmentId: $departmentId, isActive: $isActive, createdAt: $createdAt, courseSettings: $courseSettings)';
+    return 'CoursesModel(id: $id, name: $name, year: $year, description: $description, shortName: $shortName, courseImageUrl: $courseImageUrl, departmentId: $departmentId, isActive: $isActive, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -226,20 +280,27 @@ class _$CoursesModelImpl implements _CoursesModel {
             other is _$CoursesModelImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
+            (identical(other.year, year) || other.year == year) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            (identical(other.shortName, shortName) ||
+                other.shortName == shortName) &&
+            (identical(other.courseImageUrl, courseImageUrl) ||
+                other.courseImageUrl == courseImageUrl) &&
             (identical(other.departmentId, departmentId) ||
                 other.departmentId == departmentId) &&
             (identical(other.isActive, isActive) ||
                 other.isActive == isActive) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
-            const DeepCollectionEquality()
-                .equals(other._courseSettings, _courseSettings));
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, departmentId, isActive,
-      createdAt, const DeepCollectionEquality().hash(_courseSettings));
+  int get hashCode => Object.hash(runtimeType, id, name, year, description,
+      shortName, courseImageUrl, departmentId, isActive, createdAt, updatedAt);
 
   /// Create a copy of CoursesModel
   /// with the given fields replaced by the non-null parameter values.
@@ -261,26 +322,38 @@ abstract class _CoursesModel implements CoursesModel {
   const factory _CoursesModel(
       {required final String id,
       required final String name,
-      required final String departmentId,
+      required final String year,
+      final String? description,
+      final String? shortName,
+      final String? courseImageUrl,
+      final String? departmentId,
       required final bool isActive,
       required final DateTime createdAt,
-      final Map<String, dynamic>? courseSettings}) = _$CoursesModelImpl;
+      final DateTime? updatedAt}) = _$CoursesModelImpl;
 
   factory _CoursesModel.fromJson(Map<String, dynamic> json) =
       _$CoursesModelImpl.fromJson;
 
   @override
-  String get id; // Primary Key
+  String get id;
   @override
-  String get name; // Course name
+  String get name;
   @override
-  String get departmentId; // Foreign Key: References the Department
+  String get year; // how long the year last for a given course
+  @override
+  String? get description;
+  @override
+  String? get shortName;
+  @override
+  String? get courseImageUrl;
+  @override
+  String? get departmentId; // Foreign Key: References the Department
   @override
   bool get isActive; // Indicates if the course is currently active
   @override
   DateTime get createdAt; // Timestamp when the course was created
   @override
-  Map<String, dynamic>? get courseSettings;
+  DateTime? get updatedAt;
 
   /// Create a copy of CoursesModel
   /// with the given fields replaced by the non-null parameter values.

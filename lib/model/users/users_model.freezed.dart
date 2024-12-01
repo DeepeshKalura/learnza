@@ -20,36 +20,29 @@ UsersModel _$UsersModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$UsersModel {
+  UserRole get role => throw _privateConstructorUsedError;
+  String? get title => throw _privateConstructorUsedError; // Students
   String get uid => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
   String get fullName => throw _privateConstructorUsedError;
-  UserRole get role => throw _privateConstructorUsedError;
+  String? get address => throw _privateConstructorUsedError;
+  String? get phoneNumber => throw _privateConstructorUsedError;
+  String? get profileImageURL => throw _privateConstructorUsedError;
+  String? get batch => throw _privateConstructorUsedError;
+  String? get motherName => throw _privateConstructorUsedError;
+  String? get fatherName => throw _privateConstructorUsedError; // Message
+  String? get lastseen => throw _privateConstructorUsedError;
   bool get isActive => throw _privateConstructorUsedError;
-  DateTime get createdAt => throw _privateConstructorUsedError;
-  DateTime? get isEmailVerified => throw _privateConstructorUsedError;
-  DateTime? get lastLogin =>
-      throw _privateConstructorUsedError; // Common optional fields
-  String? get profileImage => throw _privateConstructorUsedError;
-  String? get phoneNumber =>
-      throw _privateConstructorUsedError; // Admin specific fields
-  bool? get isSuperAdmin =>
-      throw _privateConstructorUsedError; // Teacher specific fields
-  bool? get isHeadTeacher => throw _privateConstructorUsedError;
-  String? get departmentId => throw _privateConstructorUsedError;
-  List<String>? get assignedCourseIds => throw _privateConstructorUsedError;
-  bool? get canInviteTeachers =>
-      throw _privateConstructorUsedError; // For head teachers
-// Student specific fields
-  String? get enrolledDepartmentId => throw _privateConstructorUsedError;
-  List<String>? get enrolledCourseIds => throw _privateConstructorUsedError;
-  bool? get isOnProbation =>
-      throw _privateConstructorUsedError; // For academic status tracking
-  String? get batch => throw _privateConstructorUsedError; // Status tracking
+  bool get isOnline => throw _privateConstructorUsedError;
+  List<String> get blockedUsers => throw _privateConstructorUsedError;
+  List<String> get contactUsers =>
+      throw _privateConstructorUsedError; // Teachers
+  String? get courseId => throw _privateConstructorUsedError; // Future purpose
+  String? get departmentId =>
+      throw _privateConstructorUsedError; // Status tracking
   String? get banReason => throw _privateConstructorUsedError;
-  DateTime? get banExpiry => throw _privateConstructorUsedError;
-  String? get bannedBy => throw _privateConstructorUsedError;
-  DateTime? get lastActiveAt => throw _privateConstructorUsedError;
-  Map<String, dynamic>? get activityLog => throw _privateConstructorUsedError;
+  String? get bannedById => throw _privateConstructorUsedError;
+  DateTime get createdAt => throw _privateConstructorUsedError;
 
   /// Serializes this UsersModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -68,30 +61,27 @@ abstract class $UsersModelCopyWith<$Res> {
       _$UsersModelCopyWithImpl<$Res, UsersModel>;
   @useResult
   $Res call(
-      {String uid,
+      {UserRole role,
+      String? title,
+      String uid,
       String email,
       String fullName,
-      UserRole role,
-      bool isActive,
-      DateTime createdAt,
-      DateTime? isEmailVerified,
-      DateTime? lastLogin,
-      String? profileImage,
+      String? address,
       String? phoneNumber,
-      bool? isSuperAdmin,
-      bool? isHeadTeacher,
-      String? departmentId,
-      List<String>? assignedCourseIds,
-      bool? canInviteTeachers,
-      String? enrolledDepartmentId,
-      List<String>? enrolledCourseIds,
-      bool? isOnProbation,
+      String? profileImageURL,
       String? batch,
+      String? motherName,
+      String? fatherName,
+      String? lastseen,
+      bool isActive,
+      bool isOnline,
+      List<String> blockedUsers,
+      List<String> contactUsers,
+      String? courseId,
+      String? departmentId,
       String? banReason,
-      DateTime? banExpiry,
-      String? bannedBy,
-      DateTime? lastActiveAt,
-      Map<String, dynamic>? activityLog});
+      String? bannedById,
+      DateTime createdAt});
 }
 
 /// @nodoc
@@ -109,32 +99,37 @@ class _$UsersModelCopyWithImpl<$Res, $Val extends UsersModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? role = null,
+    Object? title = freezed,
     Object? uid = null,
     Object? email = null,
     Object? fullName = null,
-    Object? role = null,
-    Object? isActive = null,
-    Object? createdAt = null,
-    Object? isEmailVerified = freezed,
-    Object? lastLogin = freezed,
-    Object? profileImage = freezed,
+    Object? address = freezed,
     Object? phoneNumber = freezed,
-    Object? isSuperAdmin = freezed,
-    Object? isHeadTeacher = freezed,
-    Object? departmentId = freezed,
-    Object? assignedCourseIds = freezed,
-    Object? canInviteTeachers = freezed,
-    Object? enrolledDepartmentId = freezed,
-    Object? enrolledCourseIds = freezed,
-    Object? isOnProbation = freezed,
+    Object? profileImageURL = freezed,
     Object? batch = freezed,
+    Object? motherName = freezed,
+    Object? fatherName = freezed,
+    Object? lastseen = freezed,
+    Object? isActive = null,
+    Object? isOnline = null,
+    Object? blockedUsers = null,
+    Object? contactUsers = null,
+    Object? courseId = freezed,
+    Object? departmentId = freezed,
     Object? banReason = freezed,
-    Object? banExpiry = freezed,
-    Object? bannedBy = freezed,
-    Object? lastActiveAt = freezed,
-    Object? activityLog = freezed,
+    Object? bannedById = freezed,
+    Object? createdAt = null,
   }) {
     return _then(_value.copyWith(
+      role: null == role
+          ? _value.role
+          : role // ignore: cast_nullable_to_non_nullable
+              as UserRole,
+      title: freezed == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String?,
       uid: null == uid
           ? _value.uid
           : uid // ignore: cast_nullable_to_non_nullable
@@ -147,90 +142,70 @@ class _$UsersModelCopyWithImpl<$Res, $Val extends UsersModel>
           ? _value.fullName
           : fullName // ignore: cast_nullable_to_non_nullable
               as String,
-      role: null == role
-          ? _value.role
-          : role // ignore: cast_nullable_to_non_nullable
-              as UserRole,
-      isActive: null == isActive
-          ? _value.isActive
-          : isActive // ignore: cast_nullable_to_non_nullable
-              as bool,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      isEmailVerified: freezed == isEmailVerified
-          ? _value.isEmailVerified
-          : isEmailVerified // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      lastLogin: freezed == lastLogin
-          ? _value.lastLogin
-          : lastLogin // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      profileImage: freezed == profileImage
-          ? _value.profileImage
-          : profileImage // ignore: cast_nullable_to_non_nullable
+      address: freezed == address
+          ? _value.address
+          : address // ignore: cast_nullable_to_non_nullable
               as String?,
       phoneNumber: freezed == phoneNumber
           ? _value.phoneNumber
           : phoneNumber // ignore: cast_nullable_to_non_nullable
               as String?,
-      isSuperAdmin: freezed == isSuperAdmin
-          ? _value.isSuperAdmin
-          : isSuperAdmin // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      isHeadTeacher: freezed == isHeadTeacher
-          ? _value.isHeadTeacher
-          : isHeadTeacher // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      departmentId: freezed == departmentId
-          ? _value.departmentId
-          : departmentId // ignore: cast_nullable_to_non_nullable
+      profileImageURL: freezed == profileImageURL
+          ? _value.profileImageURL
+          : profileImageURL // ignore: cast_nullable_to_non_nullable
               as String?,
-      assignedCourseIds: freezed == assignedCourseIds
-          ? _value.assignedCourseIds
-          : assignedCourseIds // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
-      canInviteTeachers: freezed == canInviteTeachers
-          ? _value.canInviteTeachers
-          : canInviteTeachers // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      enrolledDepartmentId: freezed == enrolledDepartmentId
-          ? _value.enrolledDepartmentId
-          : enrolledDepartmentId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      enrolledCourseIds: freezed == enrolledCourseIds
-          ? _value.enrolledCourseIds
-          : enrolledCourseIds // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
-      isOnProbation: freezed == isOnProbation
-          ? _value.isOnProbation
-          : isOnProbation // ignore: cast_nullable_to_non_nullable
-              as bool?,
       batch: freezed == batch
           ? _value.batch
           : batch // ignore: cast_nullable_to_non_nullable
+              as String?,
+      motherName: freezed == motherName
+          ? _value.motherName
+          : motherName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      fatherName: freezed == fatherName
+          ? _value.fatherName
+          : fatherName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      lastseen: freezed == lastseen
+          ? _value.lastseen
+          : lastseen // ignore: cast_nullable_to_non_nullable
+              as String?,
+      isActive: null == isActive
+          ? _value.isActive
+          : isActive // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isOnline: null == isOnline
+          ? _value.isOnline
+          : isOnline // ignore: cast_nullable_to_non_nullable
+              as bool,
+      blockedUsers: null == blockedUsers
+          ? _value.blockedUsers
+          : blockedUsers // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      contactUsers: null == contactUsers
+          ? _value.contactUsers
+          : contactUsers // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      courseId: freezed == courseId
+          ? _value.courseId
+          : courseId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      departmentId: freezed == departmentId
+          ? _value.departmentId
+          : departmentId // ignore: cast_nullable_to_non_nullable
               as String?,
       banReason: freezed == banReason
           ? _value.banReason
           : banReason // ignore: cast_nullable_to_non_nullable
               as String?,
-      banExpiry: freezed == banExpiry
-          ? _value.banExpiry
-          : banExpiry // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      bannedBy: freezed == bannedBy
-          ? _value.bannedBy
-          : bannedBy // ignore: cast_nullable_to_non_nullable
+      bannedById: freezed == bannedById
+          ? _value.bannedById
+          : bannedById // ignore: cast_nullable_to_non_nullable
               as String?,
-      lastActiveAt: freezed == lastActiveAt
-          ? _value.lastActiveAt
-          : lastActiveAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      activityLog: freezed == activityLog
-          ? _value.activityLog
-          : activityLog // ignore: cast_nullable_to_non_nullable
-              as Map<String, dynamic>?,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ) as $Val);
   }
 }
@@ -244,30 +219,27 @@ abstract class _$$UsersModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String uid,
+      {UserRole role,
+      String? title,
+      String uid,
       String email,
       String fullName,
-      UserRole role,
-      bool isActive,
-      DateTime createdAt,
-      DateTime? isEmailVerified,
-      DateTime? lastLogin,
-      String? profileImage,
+      String? address,
       String? phoneNumber,
-      bool? isSuperAdmin,
-      bool? isHeadTeacher,
-      String? departmentId,
-      List<String>? assignedCourseIds,
-      bool? canInviteTeachers,
-      String? enrolledDepartmentId,
-      List<String>? enrolledCourseIds,
-      bool? isOnProbation,
+      String? profileImageURL,
       String? batch,
+      String? motherName,
+      String? fatherName,
+      String? lastseen,
+      bool isActive,
+      bool isOnline,
+      List<String> blockedUsers,
+      List<String> contactUsers,
+      String? courseId,
+      String? departmentId,
       String? banReason,
-      DateTime? banExpiry,
-      String? bannedBy,
-      DateTime? lastActiveAt,
-      Map<String, dynamic>? activityLog});
+      String? bannedById,
+      DateTime createdAt});
 }
 
 /// @nodoc
@@ -283,32 +255,37 @@ class __$$UsersModelImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? role = null,
+    Object? title = freezed,
     Object? uid = null,
     Object? email = null,
     Object? fullName = null,
-    Object? role = null,
-    Object? isActive = null,
-    Object? createdAt = null,
-    Object? isEmailVerified = freezed,
-    Object? lastLogin = freezed,
-    Object? profileImage = freezed,
+    Object? address = freezed,
     Object? phoneNumber = freezed,
-    Object? isSuperAdmin = freezed,
-    Object? isHeadTeacher = freezed,
-    Object? departmentId = freezed,
-    Object? assignedCourseIds = freezed,
-    Object? canInviteTeachers = freezed,
-    Object? enrolledDepartmentId = freezed,
-    Object? enrolledCourseIds = freezed,
-    Object? isOnProbation = freezed,
+    Object? profileImageURL = freezed,
     Object? batch = freezed,
+    Object? motherName = freezed,
+    Object? fatherName = freezed,
+    Object? lastseen = freezed,
+    Object? isActive = null,
+    Object? isOnline = null,
+    Object? blockedUsers = null,
+    Object? contactUsers = null,
+    Object? courseId = freezed,
+    Object? departmentId = freezed,
     Object? banReason = freezed,
-    Object? banExpiry = freezed,
-    Object? bannedBy = freezed,
-    Object? lastActiveAt = freezed,
-    Object? activityLog = freezed,
+    Object? bannedById = freezed,
+    Object? createdAt = null,
   }) {
     return _then(_$UsersModelImpl(
+      role: null == role
+          ? _value.role
+          : role // ignore: cast_nullable_to_non_nullable
+              as UserRole,
+      title: freezed == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String?,
       uid: null == uid
           ? _value.uid
           : uid // ignore: cast_nullable_to_non_nullable
@@ -321,130 +298,110 @@ class __$$UsersModelImplCopyWithImpl<$Res>
           ? _value.fullName
           : fullName // ignore: cast_nullable_to_non_nullable
               as String,
-      role: null == role
-          ? _value.role
-          : role // ignore: cast_nullable_to_non_nullable
-              as UserRole,
-      isActive: null == isActive
-          ? _value.isActive
-          : isActive // ignore: cast_nullable_to_non_nullable
-              as bool,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      isEmailVerified: freezed == isEmailVerified
-          ? _value.isEmailVerified
-          : isEmailVerified // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      lastLogin: freezed == lastLogin
-          ? _value.lastLogin
-          : lastLogin // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      profileImage: freezed == profileImage
-          ? _value.profileImage
-          : profileImage // ignore: cast_nullable_to_non_nullable
+      address: freezed == address
+          ? _value.address
+          : address // ignore: cast_nullable_to_non_nullable
               as String?,
       phoneNumber: freezed == phoneNumber
           ? _value.phoneNumber
           : phoneNumber // ignore: cast_nullable_to_non_nullable
               as String?,
-      isSuperAdmin: freezed == isSuperAdmin
-          ? _value.isSuperAdmin
-          : isSuperAdmin // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      isHeadTeacher: freezed == isHeadTeacher
-          ? _value.isHeadTeacher
-          : isHeadTeacher // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      departmentId: freezed == departmentId
-          ? _value.departmentId
-          : departmentId // ignore: cast_nullable_to_non_nullable
+      profileImageURL: freezed == profileImageURL
+          ? _value.profileImageURL
+          : profileImageURL // ignore: cast_nullable_to_non_nullable
               as String?,
-      assignedCourseIds: freezed == assignedCourseIds
-          ? _value._assignedCourseIds
-          : assignedCourseIds // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
-      canInviteTeachers: freezed == canInviteTeachers
-          ? _value.canInviteTeachers
-          : canInviteTeachers // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      enrolledDepartmentId: freezed == enrolledDepartmentId
-          ? _value.enrolledDepartmentId
-          : enrolledDepartmentId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      enrolledCourseIds: freezed == enrolledCourseIds
-          ? _value._enrolledCourseIds
-          : enrolledCourseIds // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
-      isOnProbation: freezed == isOnProbation
-          ? _value.isOnProbation
-          : isOnProbation // ignore: cast_nullable_to_non_nullable
-              as bool?,
       batch: freezed == batch
           ? _value.batch
           : batch // ignore: cast_nullable_to_non_nullable
+              as String?,
+      motherName: freezed == motherName
+          ? _value.motherName
+          : motherName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      fatherName: freezed == fatherName
+          ? _value.fatherName
+          : fatherName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      lastseen: freezed == lastseen
+          ? _value.lastseen
+          : lastseen // ignore: cast_nullable_to_non_nullable
+              as String?,
+      isActive: null == isActive
+          ? _value.isActive
+          : isActive // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isOnline: null == isOnline
+          ? _value.isOnline
+          : isOnline // ignore: cast_nullable_to_non_nullable
+              as bool,
+      blockedUsers: null == blockedUsers
+          ? _value._blockedUsers
+          : blockedUsers // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      contactUsers: null == contactUsers
+          ? _value._contactUsers
+          : contactUsers // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      courseId: freezed == courseId
+          ? _value.courseId
+          : courseId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      departmentId: freezed == departmentId
+          ? _value.departmentId
+          : departmentId // ignore: cast_nullable_to_non_nullable
               as String?,
       banReason: freezed == banReason
           ? _value.banReason
           : banReason // ignore: cast_nullable_to_non_nullable
               as String?,
-      banExpiry: freezed == banExpiry
-          ? _value.banExpiry
-          : banExpiry // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      bannedBy: freezed == bannedBy
-          ? _value.bannedBy
-          : bannedBy // ignore: cast_nullable_to_non_nullable
+      bannedById: freezed == bannedById
+          ? _value.bannedById
+          : bannedById // ignore: cast_nullable_to_non_nullable
               as String?,
-      lastActiveAt: freezed == lastActiveAt
-          ? _value.lastActiveAt
-          : lastActiveAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      activityLog: freezed == activityLog
-          ? _value._activityLog
-          : activityLog // ignore: cast_nullable_to_non_nullable
-              as Map<String, dynamic>?,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$UsersModelImpl extends _UsersModel {
+class _$UsersModelImpl implements _UsersModel {
   const _$UsersModelImpl(
-      {required this.uid,
+      {required this.role,
+      this.title,
+      required this.uid,
       required this.email,
       required this.fullName,
-      required this.role,
-      required this.isActive,
-      required this.createdAt,
-      this.isEmailVerified,
-      this.lastLogin,
-      this.profileImage,
+      this.address,
       this.phoneNumber,
-      this.isSuperAdmin,
-      this.isHeadTeacher,
-      this.departmentId,
-      final List<String>? assignedCourseIds,
-      this.canInviteTeachers,
-      this.enrolledDepartmentId,
-      final List<String>? enrolledCourseIds,
-      this.isOnProbation,
+      this.profileImageURL,
       this.batch,
+      this.motherName,
+      this.fatherName,
+      this.lastseen,
+      this.isActive = true,
+      required this.isOnline,
+      final List<String> blockedUsers = const [],
+      final List<String> contactUsers = const [],
+      this.courseId,
+      this.departmentId,
       this.banReason,
-      this.banExpiry,
-      this.bannedBy,
-      this.lastActiveAt,
-      final Map<String, dynamic>? activityLog})
-      : _assignedCourseIds = assignedCourseIds,
-        _enrolledCourseIds = enrolledCourseIds,
-        _activityLog = activityLog,
-        super._();
+      this.bannedById,
+      required this.createdAt})
+      : _blockedUsers = blockedUsers,
+        _contactUsers = contactUsers;
 
   factory _$UsersModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$UsersModelImplFromJson(json);
 
+  @override
+  final UserRole role;
+  @override
+  final String? title;
+// Students
   @override
   final String uid;
   @override
@@ -452,83 +409,60 @@ class _$UsersModelImpl extends _UsersModel {
   @override
   final String fullName;
   @override
-  final UserRole role;
-  @override
-  final bool isActive;
-  @override
-  final DateTime createdAt;
-  @override
-  final DateTime? isEmailVerified;
-  @override
-  final DateTime? lastLogin;
-// Common optional fields
-  @override
-  final String? profileImage;
+  final String? address;
   @override
   final String? phoneNumber;
-// Admin specific fields
   @override
-  final bool? isSuperAdmin;
-// Teacher specific fields
-  @override
-  final bool? isHeadTeacher;
-  @override
-  final String? departmentId;
-  final List<String>? _assignedCourseIds;
-  @override
-  List<String>? get assignedCourseIds {
-    final value = _assignedCourseIds;
-    if (value == null) return null;
-    if (_assignedCourseIds is EqualUnmodifiableListView)
-      return _assignedCourseIds;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
-  }
-
-  @override
-  final bool? canInviteTeachers;
-// For head teachers
-// Student specific fields
-  @override
-  final String? enrolledDepartmentId;
-  final List<String>? _enrolledCourseIds;
-  @override
-  List<String>? get enrolledCourseIds {
-    final value = _enrolledCourseIds;
-    if (value == null) return null;
-    if (_enrolledCourseIds is EqualUnmodifiableListView)
-      return _enrolledCourseIds;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
-  }
-
-  @override
-  final bool? isOnProbation;
-// For academic status tracking
+  final String? profileImageURL;
   @override
   final String? batch;
+  @override
+  final String? motherName;
+  @override
+  final String? fatherName;
+// Message
+  @override
+  final String? lastseen;
+  @override
+  @JsonKey()
+  final bool isActive;
+  @override
+  final bool isOnline;
+  final List<String> _blockedUsers;
+  @override
+  @JsonKey()
+  List<String> get blockedUsers {
+    if (_blockedUsers is EqualUnmodifiableListView) return _blockedUsers;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_blockedUsers);
+  }
+
+  final List<String> _contactUsers;
+  @override
+  @JsonKey()
+  List<String> get contactUsers {
+    if (_contactUsers is EqualUnmodifiableListView) return _contactUsers;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_contactUsers);
+  }
+
+// Teachers
+  @override
+  final String? courseId;
+// Future purpose
+  @override
+  final String? departmentId;
 // Status tracking
   @override
   final String? banReason;
   @override
-  final DateTime? banExpiry;
+  final String? bannedById;
   @override
-  final String? bannedBy;
-  @override
-  final DateTime? lastActiveAt;
-  final Map<String, dynamic>? _activityLog;
-  @override
-  Map<String, dynamic>? get activityLog {
-    final value = _activityLog;
-    if (value == null) return null;
-    if (_activityLog is EqualUnmodifiableMapView) return _activityLog;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(value);
-  }
+  final DateTime createdAt;
 
   @override
   String toString() {
-    return 'UsersModel(uid: $uid, email: $email, fullName: $fullName, role: $role, isActive: $isActive, createdAt: $createdAt, isEmailVerified: $isEmailVerified, lastLogin: $lastLogin, profileImage: $profileImage, phoneNumber: $phoneNumber, isSuperAdmin: $isSuperAdmin, isHeadTeacher: $isHeadTeacher, departmentId: $departmentId, assignedCourseIds: $assignedCourseIds, canInviteTeachers: $canInviteTeachers, enrolledDepartmentId: $enrolledDepartmentId, enrolledCourseIds: $enrolledCourseIds, isOnProbation: $isOnProbation, batch: $batch, banReason: $banReason, banExpiry: $banExpiry, bannedBy: $bannedBy, lastActiveAt: $lastActiveAt, activityLog: $activityLog)';
+    return 'UsersModel(role: $role, title: $title, uid: $uid, email: $email, fullName: $fullName, address: $address, phoneNumber: $phoneNumber, profileImageURL: $profileImageURL, batch: $batch, motherName: $motherName, fatherName: $fatherName, lastseen: $lastseen, isActive: $isActive, isOnline: $isOnline, blockedUsers: $blockedUsers, contactUsers: $contactUsers, courseId: $courseId, departmentId: $departmentId, banReason: $banReason, bannedById: $bannedById, createdAt: $createdAt)';
   }
 
   @override
@@ -536,80 +470,69 @@ class _$UsersModelImpl extends _UsersModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$UsersModelImpl &&
+            (identical(other.role, role) || other.role == role) &&
+            (identical(other.title, title) || other.title == title) &&
             (identical(other.uid, uid) || other.uid == uid) &&
             (identical(other.email, email) || other.email == email) &&
             (identical(other.fullName, fullName) ||
                 other.fullName == fullName) &&
-            (identical(other.role, role) || other.role == role) &&
-            (identical(other.isActive, isActive) ||
-                other.isActive == isActive) &&
-            (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt) &&
-            (identical(other.isEmailVerified, isEmailVerified) ||
-                other.isEmailVerified == isEmailVerified) &&
-            (identical(other.lastLogin, lastLogin) ||
-                other.lastLogin == lastLogin) &&
-            (identical(other.profileImage, profileImage) ||
-                other.profileImage == profileImage) &&
+            (identical(other.address, address) || other.address == address) &&
             (identical(other.phoneNumber, phoneNumber) ||
                 other.phoneNumber == phoneNumber) &&
-            (identical(other.isSuperAdmin, isSuperAdmin) ||
-                other.isSuperAdmin == isSuperAdmin) &&
-            (identical(other.isHeadTeacher, isHeadTeacher) ||
-                other.isHeadTeacher == isHeadTeacher) &&
+            (identical(other.profileImageURL, profileImageURL) ||
+                other.profileImageURL == profileImageURL) &&
+            (identical(other.batch, batch) || other.batch == batch) &&
+            (identical(other.motherName, motherName) ||
+                other.motherName == motherName) &&
+            (identical(other.fatherName, fatherName) ||
+                other.fatherName == fatherName) &&
+            (identical(other.lastseen, lastseen) ||
+                other.lastseen == lastseen) &&
+            (identical(other.isActive, isActive) ||
+                other.isActive == isActive) &&
+            (identical(other.isOnline, isOnline) ||
+                other.isOnline == isOnline) &&
+            const DeepCollectionEquality()
+                .equals(other._blockedUsers, _blockedUsers) &&
+            const DeepCollectionEquality()
+                .equals(other._contactUsers, _contactUsers) &&
+            (identical(other.courseId, courseId) ||
+                other.courseId == courseId) &&
             (identical(other.departmentId, departmentId) ||
                 other.departmentId == departmentId) &&
-            const DeepCollectionEquality()
-                .equals(other._assignedCourseIds, _assignedCourseIds) &&
-            (identical(other.canInviteTeachers, canInviteTeachers) ||
-                other.canInviteTeachers == canInviteTeachers) &&
-            (identical(other.enrolledDepartmentId, enrolledDepartmentId) ||
-                other.enrolledDepartmentId == enrolledDepartmentId) &&
-            const DeepCollectionEquality()
-                .equals(other._enrolledCourseIds, _enrolledCourseIds) &&
-            (identical(other.isOnProbation, isOnProbation) ||
-                other.isOnProbation == isOnProbation) &&
-            (identical(other.batch, batch) || other.batch == batch) &&
             (identical(other.banReason, banReason) ||
                 other.banReason == banReason) &&
-            (identical(other.banExpiry, banExpiry) ||
-                other.banExpiry == banExpiry) &&
-            (identical(other.bannedBy, bannedBy) ||
-                other.bannedBy == bannedBy) &&
-            (identical(other.lastActiveAt, lastActiveAt) ||
-                other.lastActiveAt == lastActiveAt) &&
-            const DeepCollectionEquality()
-                .equals(other._activityLog, _activityLog));
+            (identical(other.bannedById, bannedById) ||
+                other.bannedById == bannedById) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hashAll([
         runtimeType,
+        role,
+        title,
         uid,
         email,
         fullName,
-        role,
-        isActive,
-        createdAt,
-        isEmailVerified,
-        lastLogin,
-        profileImage,
+        address,
         phoneNumber,
-        isSuperAdmin,
-        isHeadTeacher,
-        departmentId,
-        const DeepCollectionEquality().hash(_assignedCourseIds),
-        canInviteTeachers,
-        enrolledDepartmentId,
-        const DeepCollectionEquality().hash(_enrolledCourseIds),
-        isOnProbation,
+        profileImageURL,
         batch,
+        motherName,
+        fatherName,
+        lastseen,
+        isActive,
+        isOnline,
+        const DeepCollectionEquality().hash(_blockedUsers),
+        const DeepCollectionEquality().hash(_contactUsers),
+        courseId,
+        departmentId,
         banReason,
-        banExpiry,
-        bannedBy,
-        lastActiveAt,
-        const DeepCollectionEquality().hash(_activityLog)
+        bannedById,
+        createdAt
       ]);
 
   /// Create a copy of UsersModel
@@ -628,37 +551,37 @@ class _$UsersModelImpl extends _UsersModel {
   }
 }
 
-abstract class _UsersModel extends UsersModel {
+abstract class _UsersModel implements UsersModel {
   const factory _UsersModel(
-      {required final String uid,
+      {required final UserRole role,
+      final String? title,
+      required final String uid,
       required final String email,
       required final String fullName,
-      required final UserRole role,
-      required final bool isActive,
-      required final DateTime createdAt,
-      final DateTime? isEmailVerified,
-      final DateTime? lastLogin,
-      final String? profileImage,
+      final String? address,
       final String? phoneNumber,
-      final bool? isSuperAdmin,
-      final bool? isHeadTeacher,
-      final String? departmentId,
-      final List<String>? assignedCourseIds,
-      final bool? canInviteTeachers,
-      final String? enrolledDepartmentId,
-      final List<String>? enrolledCourseIds,
-      final bool? isOnProbation,
+      final String? profileImageURL,
       final String? batch,
+      final String? motherName,
+      final String? fatherName,
+      final String? lastseen,
+      final bool isActive,
+      required final bool isOnline,
+      final List<String> blockedUsers,
+      final List<String> contactUsers,
+      final String? courseId,
+      final String? departmentId,
       final String? banReason,
-      final DateTime? banExpiry,
-      final String? bannedBy,
-      final DateTime? lastActiveAt,
-      final Map<String, dynamic>? activityLog}) = _$UsersModelImpl;
-  const _UsersModel._() : super._();
+      final String? bannedById,
+      required final DateTime createdAt}) = _$UsersModelImpl;
 
   factory _UsersModel.fromJson(Map<String, dynamic> json) =
       _$UsersModelImpl.fromJson;
 
+  @override
+  UserRole get role;
+  @override
+  String? get title; // Students
   @override
   String get uid;
   @override
@@ -666,48 +589,37 @@ abstract class _UsersModel extends UsersModel {
   @override
   String get fullName;
   @override
-  UserRole get role;
+  String? get address;
+  @override
+  String? get phoneNumber;
+  @override
+  String? get profileImageURL;
+  @override
+  String? get batch;
+  @override
+  String? get motherName;
+  @override
+  String? get fatherName; // Message
+  @override
+  String? get lastseen;
   @override
   bool get isActive;
   @override
-  DateTime get createdAt;
+  bool get isOnline;
   @override
-  DateTime? get isEmailVerified;
+  List<String> get blockedUsers;
   @override
-  DateTime? get lastLogin; // Common optional fields
+  List<String> get contactUsers; // Teachers
   @override
-  String? get profileImage;
+  String? get courseId; // Future purpose
   @override
-  String? get phoneNumber; // Admin specific fields
-  @override
-  bool? get isSuperAdmin; // Teacher specific fields
-  @override
-  bool? get isHeadTeacher;
-  @override
-  String? get departmentId;
-  @override
-  List<String>? get assignedCourseIds;
-  @override
-  bool? get canInviteTeachers; // For head teachers
-// Student specific fields
-  @override
-  String? get enrolledDepartmentId;
-  @override
-  List<String>? get enrolledCourseIds;
-  @override
-  bool? get isOnProbation; // For academic status tracking
-  @override
-  String? get batch; // Status tracking
+  String? get departmentId; // Status tracking
   @override
   String? get banReason;
   @override
-  DateTime? get banExpiry;
+  String? get bannedById;
   @override
-  String? get bannedBy;
-  @override
-  DateTime? get lastActiveAt;
-  @override
-  Map<String, dynamic>? get activityLog;
+  DateTime get createdAt;
 
   /// Create a copy of UsersModel
   /// with the given fields replaced by the non-null parameter values.

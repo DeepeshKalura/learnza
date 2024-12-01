@@ -24,7 +24,7 @@ class CourseProvider extends ChangeNotifier {
   // Create a new course
   Future<void> createCourse({
     required String name,
-    required String departmentId,
+    required String year,
     Map<String, dynamic>? courseSettings,
   }) async {
     try {
@@ -33,10 +33,9 @@ class CourseProvider extends ChangeNotifier {
       final course = CoursesModel(
         id: docRef.id,
         name: name,
-        departmentId: departmentId,
+        year: year,
         isActive: true,
         createdAt: DateTime.now(),
-        courseSettings: courseSettings,
       );
 
       await docRef.set(course.toJson());

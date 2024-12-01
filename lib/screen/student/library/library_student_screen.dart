@@ -33,13 +33,14 @@ class _LibraryStudentScreenState extends State<LibraryStudentScreen> {
   final booksModel = BooksModel(
     id: '1',
     bookTitle: "The Great Gatsby",
-    author: "F. Scott Fitzgerald",
+    author: ["F. Scott Fitzgerald"],
     coverImageUrl: "https://covers.openlibrary.org/b/id/14825735-L.jpg",
     createdAt: DateTime.now(),
     description:
         "The Great Gatsby is a 1925 novel by American writer F. Scott Fitzgerald. Set in the Jazz Age on Long Island, near New York City, the novel depicts first-person narrator Nick Carraway's interactions with mysterious millionaire Jay Gatsby and Gatsby's obsession to reunite with his former lover, Daisy Buchanan.",
     isActive: true,
     isbm: "9780743273565",
+    language: "en",
     updatedAt: DateTime.now(),
   );
 

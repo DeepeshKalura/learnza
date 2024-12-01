@@ -39,8 +39,6 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future<UsersModel?> login(String email, String password) async {
-    final firebaseService = FirebaseService();
-
     try {
       final UserCredential userCredential = await firebaseService.auth
           .signInWithEmailAndPassword(email: email, password: password);
@@ -98,8 +96,7 @@ class AuthProvider extends ChangeNotifier {
         fullName: username,
         role: UserRole.admin,
         isActive: true,
-        // Admin fields
-        isSuperAdmin: true,
+        isOnline: false,
         createdAt: DateTime.now(),
       );
       var response = await http.post(
@@ -130,8 +127,7 @@ class AuthProvider extends ChangeNotifier {
   Future<void> createTeacherRegistration({
     required String email,
     required String fullName,
-    required String departmentId,
-    bool isHeadTeacher = false,
+    required String courseId,
   }) async {
     try {
       final password = _generateRandomPassword();
@@ -143,9 +139,9 @@ class AuthProvider extends ChangeNotifier {
         fullName: fullName,
         role: UserRole.teacher,
         isActive: true,
-        departmentId: departmentId,
-        isHeadTeacher: isHeadTeacher,
+        courseId: courseId,
         createdAt: DateTime.now(),
+        isOnline: false,
       );
 
       print(jsonEncode({"user": newTeacherModel.toJson()}));
@@ -188,8 +184,8 @@ class AuthProvider extends ChangeNotifier {
         email: email,
         fullName: fullName,
         role: UserRole.student,
+        isOnline: false,
         isActive: true,
-        enrolledCourseIds: enrolledCourseIds,
         batch: batch,
         createdAt: DateTime.now(),
       );

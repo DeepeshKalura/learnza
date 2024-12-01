@@ -11,3 +11,6 @@ __pycache__
 .pytest_cache
 
 serviceAccountKey.json
+
+/thumbnail
+/books

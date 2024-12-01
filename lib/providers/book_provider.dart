@@ -22,28 +22,20 @@ class BookProvider extends ChangeNotifier {
 
       final snapShot = firebaseService.database.collection('books');
 
-      if (user.enrolledCourseIds != null) {
-        final heroPerson = await snapShot
-            .where('courseId', whereIn: user.enrolledCourseIds)
-            .get();
+      final query = snapShot.where('courseId', isEqualTo: user.courseId);
 
-        books = heroPerson.docs
-            .map(
-              (doc) => BooksModel.fromJson(
-                doc.data(),
-              ),
-            )
-            .toList();
-      } else {
-        final heroPerson = await snapShot.limit(20).get();
+      final snapshots = query.snapshots();
 
-        books = heroPerson.docs
-            .map(
-              (doc) => BooksModel.fromJson(
-                doc.data(),
-              ),
-            )
-            .toList();
+      await for (final snapshot in snapshots) {
+        if (snapshot.docs.isNotEmpty) {
+          books = snapshot.docs
+              .map((doc) => BooksModel.fromJson(doc.data()))
+              .toList();
+        } else {
+          books = [];
+        }
+
+        notifyListeners();
       }
     } catch (e, s) {
       developer.log(e.toString());

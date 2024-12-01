@@ -1,6 +1,8 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:learnza/locator/injector.dart' as di;
 import 'package:provider/provider.dart';
@@ -20,6 +22,7 @@ import 'providers/student_provider.dart';
 import 'providers/teacher_provider.dart';
 import 'router/app_routers.dart';
 import 'service/firebase_service.dart';
+import 'utils/theme.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -43,7 +46,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: const Size(375, 812),
+      designSize: kIsWeb ? const Size(1440, 900) : const Size(375, 812),
       minTextAdapt: true,
       builder: (_, child) {
         return MultiProvider(
@@ -103,10 +106,7 @@ class MyApp extends StatelessWidget {
           ],
           child: ShadApp.router(
             title: 'Learnza',
-            darkTheme: ShadThemeData(
-              brightness: Brightness.light,
-              colorScheme: const ShadSlateColorScheme.light(),
-            ),
+            darkTheme: lightThemData,
             routerConfig: AppRouters.router,
           ),
         );

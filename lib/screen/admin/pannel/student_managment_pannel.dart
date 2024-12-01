@@ -527,7 +527,7 @@ class _StudentEditDialogState extends State<_StudentEditDialog> {
   final _formKey = GlobalKey<ShadFormState>();
   late TextEditingController _nameController;
   late String _selectedDepartmentId;
-  List<String> _selectedCourseIds = [];
+  final List<String> _selectedCourseIds = [];
   List<CoursesModel> _availableCourses = [];
   bool _isLoadingCourses = false;
   late bool _isActive;
@@ -540,7 +540,6 @@ class _StudentEditDialogState extends State<_StudentEditDialog> {
     super.initState();
     _nameController = TextEditingController(text: widget.student.fullName);
     _selectedDepartmentId = widget.student.departmentId ?? '';
-    _selectedCourseIds = widget.student.enrolledCourseIds ?? [];
     _isActive = widget.student.isActive;
     if (_selectedDepartmentId.isNotEmpty) {
       _loadDepartmentCourses(_selectedDepartmentId);
@@ -687,7 +686,6 @@ class _StudentEditDialogState extends State<_StudentEditDialog> {
       final updatedStudent = widget.student.copyWith(
         fullName: _nameController.text,
         departmentId: _selectedDepartmentId,
-        enrolledCourseIds: _selectedCourseIds,
         isActive: _isActive,
       );
 

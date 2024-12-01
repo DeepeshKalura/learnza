@@ -25,7 +25,7 @@ class DrawerWidget extends StatelessWidget {
               ),
             ),
             currentAccountPicture: ShadAvatar(
-              user?.profileImage ??
+              user?.profileImageURL ??
                   "https://www.pngitem.com/pimgs/m/522-5220445_anonymous-profile-grey-person-sticker-glitch-empty-profile.png",
               placeholder: Text(
                 user?.fullName.substring(0, 2) ?? 'JD',

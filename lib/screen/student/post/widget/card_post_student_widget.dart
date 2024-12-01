@@ -49,7 +49,7 @@ class CardPostStudentWidgetState extends State<CardPostStudentWidget> {
                   Row(
                     children: [
                       ShadAvatar(
-                        widget.user.profileImage ??
+                        widget.user.profileImageURL ??
                             "https://www.pngitem.com/pimgs/m/522-5220445_anonymous-profile-grey-person-sticker-glitch-empty-profile.png",
                         placeholder: Text(
                           widget.user.fullName.substring(0, 2),
@@ -245,10 +245,10 @@ class CardPostStudentWidgetState extends State<CardPostStudentWidget> {
                   Row(
                     children: [
                       CircleAvatar(
-                        backgroundImage: widget.user.profileImage != null
-                            ? NetworkImage(widget.user.profileImage!)
+                        backgroundImage: widget.user.profileImageURL != null
+                            ? NetworkImage(widget.user.profileImageURL!)
                             : null,
-                        child: widget.user.profileImage == null
+                        child: widget.user.profileImageURL == null
                             ? Text(widget.user.fullName.substring(0, 2))
                             : null,
                       ),

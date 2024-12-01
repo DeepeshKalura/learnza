@@ -4,8 +4,9 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 
 from app.router import authentication, books
+from app.scripts import create_course_script
 
-app = FastAPI()
+app = FastAPI(title="Lernza")
 
 origins = ["http://127.0.0.0"]
 
@@ -34,3 +35,6 @@ app.include_router(books.router)
 def read_root():
     return {"Hello": "World"}
 
+
+if __name__ == "__main__":
+    create_course_script.create_course_script()

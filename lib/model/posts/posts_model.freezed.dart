@@ -20,6 +20,7 @@ PostsModel _$PostsModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$PostsModel {
+// Core Post Information
   String get id => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   String get content => throw _privateConstructorUsedError;
@@ -27,7 +28,16 @@ mixin _$PostsModel {
   String? get thumbnailUrl => throw _privateConstructorUsedError;
   DateTime get createdAt => throw _privateConstructorUsedError;
   DateTime get updatedAt => throw _privateConstructorUsedError;
-  DateTime? get scheduledAt => throw _privateConstructorUsedError;
+  DateTime? get scheduledAt =>
+      throw _privateConstructorUsedError; // Enhanced Engagement Metrics
+  PostEngagementMetrics get engagementMetrics =>
+      throw _privateConstructorUsedError; // Post Categorization and Visibility
+  List<String> get tags => throw _privateConstructorUsedError;
+  PostVisibility get visibility =>
+      throw _privateConstructorUsedError; // Advanced Post Attributes
+  String? get categoryId => throw _privateConstructorUsedError;
+  bool get isPinned => throw _privateConstructorUsedError;
+  bool get isFeatured => throw _privateConstructorUsedError;
 
   /// Serializes this PostsModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -53,7 +63,15 @@ abstract class $PostsModelCopyWith<$Res> {
       String? thumbnailUrl,
       DateTime createdAt,
       DateTime updatedAt,
-      DateTime? scheduledAt});
+      DateTime? scheduledAt,
+      PostEngagementMetrics engagementMetrics,
+      List<String> tags,
+      PostVisibility visibility,
+      String? categoryId,
+      bool isPinned,
+      bool isFeatured});
+
+  $PostEngagementMetricsCopyWith<$Res> get engagementMetrics;
 }
 
 /// @nodoc
@@ -79,6 +97,12 @@ class _$PostsModelCopyWithImpl<$Res, $Val extends PostsModel>
     Object? createdAt = null,
     Object? updatedAt = null,
     Object? scheduledAt = freezed,
+    Object? engagementMetrics = null,
+    Object? tags = null,
+    Object? visibility = null,
+    Object? categoryId = freezed,
+    Object? isPinned = null,
+    Object? isFeatured = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -113,7 +137,42 @@ class _$PostsModelCopyWithImpl<$Res, $Val extends PostsModel>
           ? _value.scheduledAt
           : scheduledAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      engagementMetrics: null == engagementMetrics
+          ? _value.engagementMetrics
+          : engagementMetrics // ignore: cast_nullable_to_non_nullable
+              as PostEngagementMetrics,
+      tags: null == tags
+          ? _value.tags
+          : tags // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      visibility: null == visibility
+          ? _value.visibility
+          : visibility // ignore: cast_nullable_to_non_nullable
+              as PostVisibility,
+      categoryId: freezed == categoryId
+          ? _value.categoryId
+          : categoryId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      isPinned: null == isPinned
+          ? _value.isPinned
+          : isPinned // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isFeatured: null == isFeatured
+          ? _value.isFeatured
+          : isFeatured // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
+  }
+
+  /// Create a copy of PostsModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $PostEngagementMetricsCopyWith<$Res> get engagementMetrics {
+    return $PostEngagementMetricsCopyWith<$Res>(_value.engagementMetrics,
+        (value) {
+      return _then(_value.copyWith(engagementMetrics: value) as $Val);
+    });
   }
 }
 
@@ -133,7 +192,16 @@ abstract class _$$PostsModelImplCopyWith<$Res>
       String? thumbnailUrl,
       DateTime createdAt,
       DateTime updatedAt,
-      DateTime? scheduledAt});
+      DateTime? scheduledAt,
+      PostEngagementMetrics engagementMetrics,
+      List<String> tags,
+      PostVisibility visibility,
+      String? categoryId,
+      bool isPinned,
+      bool isFeatured});
+
+  @override
+  $PostEngagementMetricsCopyWith<$Res> get engagementMetrics;
 }
 
 /// @nodoc
@@ -157,6 +225,12 @@ class __$$PostsModelImplCopyWithImpl<$Res>
     Object? createdAt = null,
     Object? updatedAt = null,
     Object? scheduledAt = freezed,
+    Object? engagementMetrics = null,
+    Object? tags = null,
+    Object? visibility = null,
+    Object? categoryId = freezed,
+    Object? isPinned = null,
+    Object? isFeatured = null,
   }) {
     return _then(_$PostsModelImpl(
       id: null == id
@@ -191,6 +265,30 @@ class __$$PostsModelImplCopyWithImpl<$Res>
           ? _value.scheduledAt
           : scheduledAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      engagementMetrics: null == engagementMetrics
+          ? _value.engagementMetrics
+          : engagementMetrics // ignore: cast_nullable_to_non_nullable
+              as PostEngagementMetrics,
+      tags: null == tags
+          ? _value._tags
+          : tags // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      visibility: null == visibility
+          ? _value.visibility
+          : visibility // ignore: cast_nullable_to_non_nullable
+              as PostVisibility,
+      categoryId: freezed == categoryId
+          ? _value.categoryId
+          : categoryId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      isPinned: null == isPinned
+          ? _value.isPinned
+          : isPinned // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isFeatured: null == isFeatured
+          ? _value.isFeatured
+          : isFeatured // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -206,11 +304,19 @@ class _$PostsModelImpl implements _PostsModel {
       this.thumbnailUrl,
       required this.createdAt,
       required this.updatedAt,
-      this.scheduledAt});
+      this.scheduledAt,
+      this.engagementMetrics = const PostEngagementMetrics(),
+      final List<String> tags = const [],
+      this.visibility = PostVisibility.public,
+      this.categoryId,
+      this.isPinned = false,
+      this.isFeatured = false})
+      : _tags = tags;
 
   factory _$PostsModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$PostsModelImplFromJson(json);
 
+// Core Post Information
   @override
   final String id;
   @override
@@ -227,10 +333,37 @@ class _$PostsModelImpl implements _PostsModel {
   final DateTime updatedAt;
   @override
   final DateTime? scheduledAt;
+// Enhanced Engagement Metrics
+  @override
+  @JsonKey()
+  final PostEngagementMetrics engagementMetrics;
+// Post Categorization and Visibility
+  final List<String> _tags;
+// Post Categorization and Visibility
+  @override
+  @JsonKey()
+  List<String> get tags {
+    if (_tags is EqualUnmodifiableListView) return _tags;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_tags);
+  }
+
+  @override
+  @JsonKey()
+  final PostVisibility visibility;
+// Advanced Post Attributes
+  @override
+  final String? categoryId;
+  @override
+  @JsonKey()
+  final bool isPinned;
+  @override
+  @JsonKey()
+  final bool isFeatured;
 
   @override
   String toString() {
-    return 'PostsModel(id: $id, title: $title, content: $content, authorId: $authorId, thumbnailUrl: $thumbnailUrl, createdAt: $createdAt, updatedAt: $updatedAt, scheduledAt: $scheduledAt)';
+    return 'PostsModel(id: $id, title: $title, content: $content, authorId: $authorId, thumbnailUrl: $thumbnailUrl, createdAt: $createdAt, updatedAt: $updatedAt, scheduledAt: $scheduledAt, engagementMetrics: $engagementMetrics, tags: $tags, visibility: $visibility, categoryId: $categoryId, isPinned: $isPinned, isFeatured: $isFeatured)';
   }
 
   @override
@@ -250,13 +383,38 @@ class _$PostsModelImpl implements _PostsModel {
             (identical(other.updatedAt, updatedAt) ||
                 other.updatedAt == updatedAt) &&
             (identical(other.scheduledAt, scheduledAt) ||
-                other.scheduledAt == scheduledAt));
+                other.scheduledAt == scheduledAt) &&
+            (identical(other.engagementMetrics, engagementMetrics) ||
+                other.engagementMetrics == engagementMetrics) &&
+            const DeepCollectionEquality().equals(other._tags, _tags) &&
+            (identical(other.visibility, visibility) ||
+                other.visibility == visibility) &&
+            (identical(other.categoryId, categoryId) ||
+                other.categoryId == categoryId) &&
+            (identical(other.isPinned, isPinned) ||
+                other.isPinned == isPinned) &&
+            (identical(other.isFeatured, isFeatured) ||
+                other.isFeatured == isFeatured));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, title, content, authorId,
-      thumbnailUrl, createdAt, updatedAt, scheduledAt);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      title,
+      content,
+      authorId,
+      thumbnailUrl,
+      createdAt,
+      updatedAt,
+      scheduledAt,
+      engagementMetrics,
+      const DeepCollectionEquality().hash(_tags),
+      visibility,
+      categoryId,
+      isPinned,
+      isFeatured);
 
   /// Create a copy of PostsModel
   /// with the given fields replaced by the non-null parameter values.
@@ -283,11 +441,18 @@ abstract class _PostsModel implements PostsModel {
       final String? thumbnailUrl,
       required final DateTime createdAt,
       required final DateTime updatedAt,
-      final DateTime? scheduledAt}) = _$PostsModelImpl;
+      final DateTime? scheduledAt,
+      final PostEngagementMetrics engagementMetrics,
+      final List<String> tags,
+      final PostVisibility visibility,
+      final String? categoryId,
+      final bool isPinned,
+      final bool isFeatured}) = _$PostsModelImpl;
 
   factory _PostsModel.fromJson(Map<String, dynamic> json) =
       _$PostsModelImpl.fromJson;
 
+// Core Post Information
   @override
   String get id;
   @override
@@ -303,7 +468,20 @@ abstract class _PostsModel implements PostsModel {
   @override
   DateTime get updatedAt;
   @override
-  DateTime? get scheduledAt;
+  DateTime? get scheduledAt; // Enhanced Engagement Metrics
+  @override
+  PostEngagementMetrics
+      get engagementMetrics; // Post Categorization and Visibility
+  @override
+  List<String> get tags;
+  @override
+  PostVisibility get visibility; // Advanced Post Attributes
+  @override
+  String? get categoryId;
+  @override
+  bool get isPinned;
+  @override
+  bool get isFeatured;
 
   /// Create a copy of PostsModel
   /// with the given fields replaced by the non-null parameter values.
