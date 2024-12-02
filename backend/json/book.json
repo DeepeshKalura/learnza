@@ -152,5 +152,235 @@
         "coverImageUrl": "thumbnail/McGraw Hill Conquering ACT English, Reading, and Writing.png",
         "founded": true,
         "moreImageUrl": []
+    },
+    {
+        "id": "190dcaeb-96a7-412b-af2b-1d730d9d4774",
+        "isbm": "9789937255974",
+        "code": null,
+        "bookTitle": "नेपाली - नेवा:भाषा शब्दावली",
+        "bookUrl" : "books/नेपाली - नेवा_भाषा शब्दावली.pdf",
+        "description": "नेपाली - नेवा:भाषा शब्दावली\" (Nepali - Newa Bhasha Shabdavali) by बालकृष्ण हलवाई (Bal Krishna Halwai) is a comprehensive dictionary that serves as a valuable resource for understanding the Newar language, also known as Nepal Bhasa. This glossary includes a wide range of terms relevant to Newar culture and language, contributing to the preservation and promotion of this rich linguistic heritage. The work, published in 2069 BS (2012 AD), is part of an open-source collection, making it accessible for those interested in linguistics, anthropology, and cultural studies related to the Newar community in Nepal. The document is available for free download, allowing users to explore the nuances of Nepal Bhasa and its vocabulary.",
+        "language" : "ne",
+        "author": ["Krishna Halwai"],
+        "categories" : [
+    "ravi", "shakya", "newar", "newari", "newars", "nepalbhasa", "nepalbhasha", "nepal bhasha", "dictionary", "nepal", "nepali", "nepalese", "glossary"
+        ],
+        "publisher": "Newa Bhasha Shabdavali",
+        "isActive": true,
+        "identifier": [
+            {
+                "type": "ISBN_13",
+                "value": "9789937255974"
+            }, 
+            {
+                "type": "ISBN_10",
+                "value": "993725597X"
+            }
+        ],
+        "createdAt": "",
+        "updatedAt": "",
+        "coverImageUrl": "thumbnail/नेपाली - नेवा_भाषा शब्दावली.png",
+        "founded": true,
+        "moreImageUrl": [] 
+    },
+    {
+        "id": "4f0da8b7-c20e-43bd-8f61-f0fa4c3ee58b",
+        "isbm": "",
+        "code": null,
+        "bookTitle": "नेपाली कक्षा १०", 
+        "bookUrl": "books/नेपाली कक्षा १०.pdf",
+        "description": "नेपाली कक्षा १०\" (Nepali Class 10) is a textbook published by the Curriculum Development Centre in 2068 BS (2011 AD) for Grade 10 students in Nepal. It covers essential aspects of the Nepali language, including grammar, literature, and composition, aimed at enhancing students' language proficiency. Available in PDF format, this educational resource is easily accessible for learners preparing for their examinations.",
+        "language": "ne",
+        "author": ["पाठ्यक्रम विकास केन्द्र"],
+        "categories": ["Grammar",  "Vocabulary Development", "Writing Skills", "Poetry", "Prose", "Drama", "Passage Analysis", "Critical Thinking Questions", "Nepali Traditions and Customs", "Historical Context", "Guides for Teachers and Students"], 
+        "publisher": "पाठ्यक्रम विकास केन्द्र",
+        "isActive": true, 
+        "identifier": [
+            {
+                "type": "ISBN_13",
+                "value": null
+            },
+            {
+                "type": "ISBN_10",
+                "value": null
+            }
+        ], 
+        "createdAt": "",
+        "updatedAt": "",
+        "coverImageUrl": "thumbnail/नेपाली कक्षा १०.png",
+        "founded": true,
+        "moreImageUrl": [] 
+    },
+    {
+        "id": "b298ce5c-e115-42bb-b9ee-3f027d39a71d",
+        "isbm" :"978-0134461366",
+        "code": null, 
+        "bookTitle": "Econometric analysis",
+        "bookUrl": "books/Econometric analysis.pdf",
+        "description": "For a one-year graduate course in Econometrics. This text has two objectives. The first is to introduce students to applied econometrics, including basic techniques in regression analysis and some of the rich variety of models that are used when the linear model proves inadequate or inappropriate. The second is to present students with sufficient theoretical background that they will recognize new variants of the models learned about here as merely natural extensions that fit within a common body of principles. The Fifth Edition features a complete update of techniques and developments, a reorganization of material for improved presentation, and new material and applications.",
+        "language": "en", 
+        "author": ["William Greene"],
+        "categories": ["Econometrics"],
+        "publisher": "Pearson",
+        "isActive": true,
+        "identifier": [
+            {
+                "type": "ISBN_13",
+                "value": "978-0134461366"
+            },
+            {
+                "type": "ISBN_10",
+                "value": "0134461363"
+            }
+        ],
+        "createdAt": "",
+        "updatedAt": "",
+        "coverImageUrl": "thumbnail/Econometric analysis.png",
+        "founded": true,
+        "moreImageUrl": []
+    },
+    {
+        "id": "b1014a47-272b-49c9-b911-7d27e814f682",
+        "isbn": "9780070611931",
+        "code": null, 
+        "bookTitle": "Quantitative Techniques in Management",
+        "bookUrl": "books/Quantitative_Techniques_in_Management.pdf",
+
+        "description": "The new edition continues in the tradition of application of various quantitative techniques in managerial decision making. Comprehensive treatment of the concepts in the MS/OR area and a large number of solved problems and exercises are the main pillars of the text.",
+        "language": "en",
+        "author": ["N. D. Vohra"],
+        "categories": ["Management", "Quantitative Techniques"],
+        "publisher": "Tata McGraw-Hill",
+        "isActive": true,
+        "identifier": [
+            {
+                "type": "ISBN_10",
+                "value": "0070611939"
+            },
+            {
+                "type": "ISBN_13",
+                "value": "9780070611931"
+            }
+        ],
+        
+        "createdAt": "",
+        "updatedAt": "",
+        "coverImageUrl": "thumbnail/Quantitative_Techniques_in_Management.png",
+        "founded": true,
+        "moreImageUrl": []
+    },
+    {
+        "id": "de6a58fe-7691-41da-870e-8e9ac3caa6cd",
+        "isbn": "9780787972448",
+        "identifier": [
+            {
+                "type": "ISBN_10",
+                "value": "0787972444"
+            },
+            {
+                "type": "ISBN_10",
+                "value": "0787973858"
+            },
+            {
+                "type": "ISBN_13",
+                "value": "9780787972448"
+            },
+            {
+                "type": "ISBN_13",
+                "value": "9780787973858"
+            }
+        ],
+        "bookTitle": "Derryberry's Educating for Health: A Foundation for Contemporary Health Education Practice",
+        "bookUrl": "books/Derryberry_Educating_for_Health.pdf",
+        "description": "Derryberry's Educating for Health includes the complete original text of his classic book with new chapters by current experts and teachers in the field of health education and promotion. The book is organized into six sections covering various aspects of health education.",
+        "language": "en",
+        "author": [
+            "Mayhew Derryberry",
+            "John P. Allegrante",
+            "David Sleet"
+        ],
+        "categories": ["Health Education", "Public Health"],
+        "publisher": "Jossey-Bass",
+        "isActive": true,
+        "createdAt": "",
+        "updatedAt": "",
+        "coverImageUrl": "thumbnail/Derryberry_Educating_for_Health.png",
+        "founded": true,
+        "moreImageUrl": []
+    },
+    {
+        "id": "8cbd6c7b-b0b6-446e-ba73-bd4f78c1c1b2",
+        "isbn": "9781266287022",
+        "identifier": [
+            {
+                "type": "ISBN_10",
+                "value": "1266287027"
+            },
+            {
+                "type": "ISBN_10",
+                "value": "1266378480"
+            },
+            {
+                "type": "ISBN_13",
+                "value": "9781266287022"
+            },
+            {
+                "type": "ISBN_13",
+                "value": "9781266378485"
+            }
+        ],
+        "bookTitle": "Foundations of Physical Education, Exercise Science, and Sport",
+        "bookUrl": "books/Foundations_of_Physical_Education.pdf",
+        "description": "Foundations of Physical Education, Exercise Science, and Sport provides readers with up-to-date information about physical activity, physical education, and sport. It challenges students to commit to ongoing development and growth as professionals, advocates for quality physical education, and values diversity. The book inspires collaboration to address contemporary issues and the potential of physical education to positively impact lives.",
+        "language": "en",
+        "author": [
+            "Jennifer L. Walton-Fisette",
+            "Deborah A. Wuest"
+        ],
+        "categories": ["Physical Education", "Exercise Science", "Sports"],
+        "publisher": "McGraw-Hill Education",
+        "isActive": true,
+        "createdAt": "",
+        "updatedAt": "",
+        "coverImageUrl": "thumbnail/Foundations_of_Physical_Education.png",
+        "founded": true,
+        "moreImageUrl": []
+    },
+    {
+        "id": "0e720c05-8603-4b97-b127-426499f55672",
+        "isbn": "9780262047579",
+        "identifier": [
+            {
+                "type": "ISBN_10",
+                "value": "0262047578"
+            },
+            {
+                "type": "ISBN_10",
+                "value": "0262372576"
+            },
+            {
+                "type": "ISBN_13",
+                "value": "9780262047579"
+            },
+            {
+                "type": "ISBN_13",
+                "value": "9780262372572"
+            }
+        ],
+        "bookTitle": "The Foundations of Population Genetics",
+        "bookUrl": "books/The_Foundations_of_Population_Genetics.pdf",
+        "description": "An accessible but rigorous treatment of the theoretical foundations of population genetics. Population genetics—the branch of evolutionary biology concerned with understanding how and why populations’ genetic compositions change over time—rests on a well-developed theoretical foundation that draws on genetics, mathematics, and computer science. This textbook provides an approachable but rigorous treatment for advanced undergraduate and graduate students interested in building a quantitative understanding of the genetics of evolution. Existing texts either assume very mathematically advanced readers, or avoid much of the underlying theory, instead focusing on current methods of data analysis. In contrast, The Foundations of Population Genetics develops the theory from first principles. Requiring only confidence in algebra, this self-contained, student-friendly book illustrates the conceptual framework, terminology, and methods of mathematical modeling. It progressively introduces concepts from genetics as needed, while emphasizing biological implications throughout. As a result, readers come away with a deep understanding of the structure of population genetics without needing to master its mathematics.",
+        "language": "en",
+        "author": [
+            "Daniel M. Weinreich"
+        ],
+        "categories": ["Population Genetics", "Evolutionary Biology", "Mathematics"],
+        "publisher": "The MIT Press",
+        "isActive": true,
+        "createdAt": "",
+        "updatedAt": "",
+        "coverImageUrl": "thumbnail/The_Foundations_of_Population_Genetics.png",
+        "founded": true,
+        "moreImageUrl": []
     }
 ]
