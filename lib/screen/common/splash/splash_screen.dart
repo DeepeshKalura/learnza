@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 import '../../../gen/assets.gen.dart';
 import '../../../router/app_urls.dart';
 
@@ -59,12 +61,12 @@ class _SplashScreenState extends State<SplashScreen>
                     width: logoWidth,
                   ),
                   SizedBox(
-                    height: isWeb ? 24.h : 12.h,
+                    height: isWeb ? 24 : 12.h,
                   ),
                   Text(
-                    "Lernza",
+                    AppLocalizations.of(context)?.appName ?? "Lernza",
                     style: ShadTheme.of(context).textTheme.h1.copyWith(
-                          fontSize: isWeb ? 48.sp : 32.sp,
+                          fontSize: isWeb ? 48 : 32.sp,
                         ),
                   ),
                 ],
@@ -78,9 +80,10 @@ class _SplashScreenState extends State<SplashScreen>
             child: Column(
               children: [
                 Text(
-                  "Made by ❤️ Deepesh Kalura ❤️",
+                  AppLocalizations.of(context)?.madeBy ??
+                      "Made by ❤️ Deepesh Kalura ❤️",
                   style: ShadTheme.of(context).textTheme.h1.copyWith(
-                        fontSize: isWeb ? 16.sp : 12.sp,
+                        fontSize: isWeb ? 16 : 12.sp,
                       ),
                 ),
                 SizedBox(height: 4.h),

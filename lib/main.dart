@@ -1,7 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:learnza/locator/injector.dart' as di;
@@ -10,6 +13,7 @@ import 'package:provider/provider.dart';
 // I will remove add app check
 
 import 'firebase_options.dart';
+import 'l10n/l10n.dart';
 import 'providers/admin_provider.dart';
 import 'providers/auth_provider.dart';
 import 'providers/book_provider.dart';
@@ -36,6 +40,11 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
   await di.init();
   runApp(const MyApp());
 }
@@ -105,6 +114,14 @@ class MyApp extends StatelessWidget {
             }),
           ],
           child: ShadApp.router(
+            debugShowCheckedModeBanner: false,
+            localizationsDelegates: const [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: L10n.all,
             title: 'Learnza',
             darkTheme: lightThemData,
             routerConfig: AppRouters.router,

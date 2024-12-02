@@ -4,11 +4,13 @@ import 'package:learnza/gen/assets.gen.dart';
 import 'package:provider/provider.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../model/app_enums.dart';
 import '../../../providers/auth_provider.dart';
 import '../../../router/app_urls.dart';
 import '../../../utils/form_validator.dart';
+import '../../../utils/theme.dart';
 
 class LoginAuthCommonScreen extends StatefulWidget {
   const LoginAuthCommonScreen({super.key});
@@ -38,9 +40,8 @@ class _LoginAuthCommonScreenState extends State<LoginAuthCommonScreen> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-
-  bool _isLoading = false;
-  bool obscure = true;
+  final FocusNode _emailFocusNode = FocusNode();
+  final FocusNode _passwordFocusNode = FocusNode();
 
   final formKey = GlobalKey<ShadFormState>();
 
@@ -48,13 +49,13 @@ class _LoginAuthCommonScreenState extends State<LoginAuthCommonScreen> {
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
+    _emailFocusNode.dispose();
+    _passwordFocusNode.dispose();
     super.dispose();
   }
 
   void _handleLogin() async {
     if (_formKey.currentState!.validate()) {
-      setState(() => _isLoading = true);
-
       try {
         await context.read<AuthProvider>().login(
               _emailController.text,
@@ -68,8 +69,13 @@ class _LoginAuthCommonScreenState extends State<LoginAuthCommonScreen> {
         if (mounted) {
           ShadToaster.of(context).show(
             ShadToast.destructive(
-              title: const Text('Uh oh! Something went wrong'),
-              description: Text(e.toString()),
+              title: Text(
+                AppLocalizations.of(context)?.errorTitle ??
+                    'Uh oh! Something went wrong',
+              ),
+              description: Text(
+                e.toString(),
+              ),
               action: ShadButton.destructive(
                 decoration: ShadDecoration(
                   border: ShadBorder.all(
@@ -77,14 +83,14 @@ class _LoginAuthCommonScreenState extends State<LoginAuthCommonScreen> {
                   ),
                 ),
                 onPressed: () => ShadToaster.of(context).hide(),
-                child: const Text('Try again'),
+                child: Text(
+                  AppLocalizations.of(context)?.tryAgain ?? 'Try again',
+                ),
               ),
             ),
           );
         }
       }
-
-      setState(() => _isLoading = false);
     }
   }
 
@@ -96,83 +102,116 @@ class _LoginAuthCommonScreenState extends State<LoginAuthCommonScreen> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            'Welcome Back',
-            style: TextStyle(
-              fontSize: 28.sp,
-              fontWeight: FontWeight.bold,
-            ),
+            AppLocalizations.of(context)?.greeting ?? "Welcome Back!",
+            style: ShadTheme.of(context).textTheme.h1.copyWith(
+                  fontSize: 32.sp,
+                ),
             textAlign: TextAlign.center,
           ),
           SizedBox(height: 8.h),
           Text(
-            'Please enter your details to continue',
-            style: TextStyle(
-              color: Colors.grey,
-              fontSize: 16.sp,
-            ),
+            AppLocalizations.of(context)?.loginMessage ??
+                'Please enter your details to continue',
+            style: ShadTheme.of(context).textTheme.p.copyWith(
+                  color: Colors.grey,
+                  fontSize: 15.sp,
+                ),
             textAlign: TextAlign.center,
           ),
-          SizedBox(height: 32.h),
-          ShadInputFormField(
-            id: 'email',
-            label: Text('Email', style: TextStyle(fontSize: 16.sp)),
-            controller: _emailController,
-            placeholder:
-                Text('Enter your email', style: TextStyle(fontSize: 14.sp)),
-            validator: FormValidator.validateEmail,
-          ),
-          SizedBox(height: 20.h),
-          ShadInputFormField(
-            controller: _passwordController,
-            label: Text('Password', style: TextStyle(fontSize: 16.sp)),
-            placeholder:
-                Text('Enter your password', style: TextStyle(fontSize: 14.sp)),
-            obscureText: obscure,
-            prefix: Padding(
-              padding: EdgeInsets.all(4.w),
-              child: ShadImage.square(
-                size: 16.w,
-                LucideIcons.lock,
-              ),
-            ),
-            suffix: ShadButton(
-              width: 24.w,
-              height: 24.h,
-              padding: EdgeInsets.zero,
-              decoration: const ShadDecoration(
-                secondaryBorder: ShadBorder.none,
-                secondaryFocusedBorder: ShadBorder.none,
-              ),
-              icon: ShadImage.square(
-                size: 16.w,
-                obscure ? LucideIcons.eyeOff : LucideIcons.eye,
-              ),
-              onPressed: () {
-                setState(() => obscure = !obscure);
+          const SizedBox(height: 32),
+          Focus(
+            focusNode: _emailFocusNode,
+            child: ShadInputFormField(
+              autocorrect: true,
+              keyboardType: TextInputType.emailAddress,
+              onSubmitted: (value) {
+                _passwordFocusNode.requestFocus();
               },
+              id: 'email',
+              label: Text(
+                AppLocalizations.of(context)?.emailLabel ?? 'Email',
+                style: ShadTheme.of(context).textTheme.p.copyWith(
+                      fontSize: 18,
+                    ),
+              ),
+              cursorColor: primaryColor,
+              controller: _emailController,
+              placeholder: Text(
+                AppLocalizations.of(context)?.emailPlaceholder ??
+                    'Enter your email',
+              ),
+              validator: FormValidator.validateEmail,
             ),
-            validator: (value) {
-              if (value.isEmpty) {
-                return 'Please enter your password';
-              }
-              if (value.length < 6) {
-                return 'Password must be at least 6 characters';
-              }
-              return null;
-            },
           ),
-          SizedBox(height: 20.h),
+          const SizedBox(height: 20),
+          Consumer<AuthProvider>(builder: (context, authProvider, child) {
+            var obscure = authProvider.obscure;
+            return Focus(
+              focusNode: _passwordFocusNode,
+              child: ShadInputFormField(
+                controller: _passwordController,
+                label: Text(
+                  AppLocalizations.of(context)?.passwordLabel ?? 'Password',
+                  style: ShadTheme.of(context).textTheme.p.copyWith(
+                        fontSize: 18,
+                      ),
+                ),
+                placeholder: Text(
+                  AppLocalizations.of(context)?.passwordPlaceholder ??
+                      'Enter your password',
+                ),
+                obscureText: obscure,
+                prefix: Padding(
+                  padding: EdgeInsets.all(4.w),
+                  child: ShadImage.square(
+                    size: 16.w,
+                    LucideIcons.lock,
+                    color: primaryColor,
+                  ),
+                ),
+                cursorColor: primaryColor,
+                suffix: ShadButton(
+                  backgroundColor: primaryColor,
+                  width: 24.w,
+                  height: 24.h,
+                  padding: EdgeInsets.zero,
+                  decoration: const ShadDecoration(
+                    secondaryBorder: ShadBorder.none,
+                    secondaryFocusedBorder: ShadBorder.none,
+                  ),
+                  icon: ShadImage.square(
+                    size: 16.w,
+                    obscure ? LucideIcons.eyeOff : LucideIcons.eye,
+                  ),
+                  onPressed: authProvider.toggleObscure,
+                ),
+                validator: FormValidator.validatePassword,
+              ),
+            );
+          }),
+          const SizedBox(height: 20),
           Align(
             alignment: Alignment.centerRight,
             child: ShadButton.ghost(
-              child: const Text('Forgot Password?'),
+              child: Text(
+                AppLocalizations.of(context)?.forgotPassword ??
+                    'Forgot Password?',
+                style: ShadTheme.of(context).textTheme.p.copyWith(),
+              ),
               onPressed: () async {
                 if (FormValidator.validateEmail(_emailController.text) !=
                     null) {
                   ShadToaster.of(context).show(
-                    const ShadToast.destructive(
-                      title: Text('Valid Email is required'),
-                      description: Text('Please enter your email'),
+                    ShadToast.destructive(
+                      title: Text(
+                        AppLocalizations.of(context)?.emailRequired ??
+                            'Valid Email is required',
+                      ),
+                      description: Text(
+                        AppLocalizations.of(context)
+                                ?.emailRequiredDescription ??
+                            'Please enter your email',
+                      ),
                     ),
                   );
                   return;
@@ -183,11 +222,16 @@ class _LoginAuthCommonScreenState extends State<LoginAuthCommonScreen> {
 
                 if (mounted) {
                   ShadToaster.of(context).show(
-                    const ShadToast(
-                      title: Text('Password Reset Email Sent'),
+                    ShadToast(
+                      title: Text(
+                        AppLocalizations.of(context)?.passwordResetTitle ??
+                            'Password Reset Email Sent',
+                      ),
                       backgroundColor: Colors.green,
                       description: Text(
-                        'Please check your email for further instructions',
+                        AppLocalizations.of(context)
+                                ?.passwordResetDescription ??
+                            'Please check your email for further instructions',
                       ),
                     ),
                   );
@@ -195,24 +239,34 @@ class _LoginAuthCommonScreenState extends State<LoginAuthCommonScreen> {
               },
             ),
           ),
-          ShadButton(
-            onPressed: _isLoading ? null : _handleLogin,
-            child: _isLoading
-                ? SizedBox(
-                    height: 25.h,
-                    width: 20.w,
-                    child: const CircularProgressIndicator(
-                      strokeWidth: 2,
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                        Colors.white,
+          const SizedBox(height: 2),
+          Consumer<AuthProvider>(builder: (context, authProvider, child) {
+            var isLoading = authProvider.isLoading;
+            return ShadButton(
+              backgroundColor: primaryColor,
+              size: ShadButtonSize.lg,
+              onPressed: isLoading ? null : _handleLogin,
+              child: isLoading
+                  ? const Center(
+                      child: SizedBox(
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                            Colors.white,
+                          ),
+                        ),
+                      ),
+                    )
+                  : Center(
+                      child: Text(
+                        AppLocalizations.of(context)?.loginButton ?? 'Login',
+                        style: ShadTheme.of(context).textTheme.h4.copyWith(
+                              color: Colors.white,
+                            ),
                       ),
                     ),
-                  )
-                : Text(
-                    'Login',
-                    style: TextStyle(fontSize: 16.sp),
-                  ),
-          ),
+            );
+          }),
         ],
       ),
     );
@@ -222,13 +276,6 @@ class _LoginAuthCommonScreenState extends State<LoginAuthCommonScreen> {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final isDesktop = screenWidth > 768;
-
-    ScreenUtil.init(
-      context,
-      designSize: isDesktop ? const Size(1440, 900) : const Size(375, 812),
-      splitScreenMode: false,
-      minTextAdapt: true,
-    );
 
     return Scaffold(
       body: ShadForm(

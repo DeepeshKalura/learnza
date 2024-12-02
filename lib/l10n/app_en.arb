@@ -1,0 +1,56 @@
+{
+  "@@locale": "en",
+  "appName": "Lernza",
+  "appNameDescription": "The name of the application.",
+  
+  "madeBy": "Made by ❤️ Deepesh Kalura ❤️",
+  "madeByDescription": "Credits for the app creator.",
+
+  "greeting": "Welcome Back!",
+  "greetingDescription": "Greeting message for the login screen.",
+
+  "loginMessage": "Enter your details to continue",
+  "loginMessageDescription": "Message displayed on the login screen prompting the user to enter their credentials.",
+
+  "emailLabel": "Email",
+  "emailLabelDescription": "Label for the email input field.",
+
+  "emailPlaceholder": "Enter your email",
+  "emailPlaceholderDescription": "Placeholder text for the email input field.",
+
+  "passwordLabel": "Password",
+  "passwordLabelDescription": "Label for the password input field.",
+
+  "passwordPlaceholder": "Enter your password",
+  "passwordPlaceholderDescription": "Placeholder text for the password input field.",
+
+  "forgotPassword": "Forgot Password?",
+  "forgotPasswordDescription": "Label for the forgot password button.",
+
+  "loginButton": "Login",
+  "loginButtonDescription": "Label for the login button.",
+
+  "errorTitle": "Uh oh! Something went wrong",
+  "errorTitleDescription": "Title of the error message shown on login failure.",
+
+  "tryAgain": "Try again",
+  "tryAgainDescription": "Label for the retry button in error messages.",
+
+  "emailRequired": "Valid Email is required",
+  "emailRequiredDescription": "Message displayed when email is missing or invalid.",
+
+  "emailRequiredDescriptionLong": "Please enter your email",
+  "emailRequiredDescriptionLongDescription": "Detailed explanation for the email required error.",
+
+  "passwordEmptyError": "Please enter your password",
+  "passwordEmptyErrorDescription": "Error message shown when password field is empty.",
+
+  "passwordLengthError": "Password must be at least 6 characters",
+  "passwordLengthErrorDescription": "Error message shown when the password is too short.",
+
+  "passwordResetTitle": "Password Reset Email Sent",
+  "passwordResetTitleDescription": "Message shown when a password reset email is successfully sent.",
+
+  "passwordResetDescription": "Please check your email for further instructions",
+  "passwordResetDescriptionDescription": "Detailed description of what to do after a password reset email is sent."
+}

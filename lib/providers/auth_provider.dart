@@ -4,6 +4,7 @@ import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:learnza/model/app_enums.dart';
 import 'package:learnza/service/firebase_service.dart';
 import 'package:http/http.dart' as http;
@@ -20,6 +21,15 @@ class AuthProvider extends ChangeNotifier {
   UsersModel? _user;
 
   UsersModel? get user => _user;
+
+  bool obscure = true;
+
+  bool isLoading = false;
+
+  void toggleObscure() {
+    obscure = !obscure;
+    notifyListeners();
+  }
 
   Future<void> getUser(String uid) async {
     try {
@@ -40,6 +50,8 @@ class AuthProvider extends ChangeNotifier {
 
   Future<UsersModel?> login(String email, String password) async {
     try {
+      isLoading = true;
+      notifyListeners();
       final UserCredential userCredential = await firebaseService.auth
           .signInWithEmailAndPassword(email: email, password: password);
 
@@ -66,6 +78,9 @@ class AuthProvider extends ChangeNotifier {
       developer.log(e.toString());
       developer.log(s.toString());
       rethrow;
+    } finally {
+      isLoading = false;
+      notifyListeners();
     }
   }
 
@@ -144,7 +159,6 @@ class AuthProvider extends ChangeNotifier {
         isOnline: false,
       );
 
-      print(jsonEncode({"user": newTeacherModel.toJson()}));
       var response = await http.post(
         headers: {
           'Content-Type': 'application/json',
