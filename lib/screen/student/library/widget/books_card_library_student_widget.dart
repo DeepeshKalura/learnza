@@ -58,7 +58,7 @@ class BooksCardLibraryStudentWidgetState
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(12),
                     child: CachedNetworkImage(
-                      imageUrl: widget.booksModel.coverImageUrl,
+                      imageUrl: widget.booksModel.coverImageUrl ?? "",
                       width: 150,
                       height: 250,
                       fit: BoxFit.cover,
@@ -191,7 +191,7 @@ class BooksCardLibraryStudentWidgetState
               background: Hero(
                 tag: 'book_cover_${widget.booksModel.id}',
                 child: CachedNetworkImage(
-                  imageUrl: widget.booksModel.coverImageUrl,
+                  imageUrl: widget.booksModel.coverImageUrl ?? "",
                   width: double.infinity,
                   fit: BoxFit.cover,
                 ),

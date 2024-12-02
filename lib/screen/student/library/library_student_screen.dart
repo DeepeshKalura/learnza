@@ -42,6 +42,7 @@ class _LibraryStudentScreenState extends State<LibraryStudentScreen> {
     isbm: "9780743273565",
     language: "en",
     updatedAt: DateTime.now(),
+    founded: true,
   );
 
   @override

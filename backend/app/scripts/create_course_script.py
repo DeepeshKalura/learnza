@@ -13,5 +13,5 @@ def create_course_script():
         current_time = datetime.utcnow().isoformat() + 'Z'  # ISO 8601 format with 'Z' for UTC time
         course['createdAt'] = current_time
         course['updatedAt'] = current_time
-        database.collection('courses').add(course)
+        database.collection('courses').document(course["id"]).set(course)
 
