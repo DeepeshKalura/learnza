@@ -3,7 +3,6 @@ import 'package:go_router/go_router.dart';
 import 'package:learnza/gen/assets.gen.dart';
 import 'package:provider/provider.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../model/app_enums.dart';
@@ -103,18 +102,15 @@ class _LoginAuthCommonScreenState extends State<LoginAuthCommonScreen> {
         children: [
           Text(
             AppLocalizations.of(context)?.greeting ?? "Welcome Back!",
-            style: ShadTheme.of(context).textTheme.h1.copyWith(
-                  fontSize: 32.sp,
-                ),
+            style: ShadTheme.of(context).textTheme.h1,
             textAlign: TextAlign.center,
           ),
-          SizedBox(height: 8.h),
+          const SizedBox(height: 8),
           Text(
             AppLocalizations.of(context)?.loginMessage ??
                 'Please enter your details to continue',
             style: ShadTheme.of(context).textTheme.p.copyWith(
                   color: Colors.grey,
-                  fontSize: 15.sp,
                 ),
             textAlign: TextAlign.center,
           ),
@@ -161,26 +157,23 @@ class _LoginAuthCommonScreenState extends State<LoginAuthCommonScreen> {
                       'Enter your password',
                 ),
                 obscureText: obscure,
-                prefix: Padding(
-                  padding: EdgeInsets.all(4.w),
-                  child: ShadImage.square(
-                    size: 16.w,
-                    LucideIcons.lock,
-                    color: primaryColor,
-                  ),
+                prefix: const ShadImage.square(
+                  size: 16,
+                  LucideIcons.lock,
+                  color: primaryColor,
                 ),
                 cursorColor: primaryColor,
                 suffix: ShadButton(
                   backgroundColor: primaryColor,
-                  width: 24.w,
-                  height: 24.h,
+                  width: 24,
+                  height: 24,
                   padding: EdgeInsets.zero,
                   decoration: const ShadDecoration(
                     secondaryBorder: ShadBorder.none,
                     secondaryFocusedBorder: ShadBorder.none,
                   ),
                   icon: ShadImage.square(
-                    size: 16.w,
+                    size: 16,
                     obscure ? LucideIcons.eyeOff : LucideIcons.eye,
                   ),
                   onPressed: authProvider.toggleObscure,
@@ -300,14 +293,14 @@ class _LoginAuthCommonScreenState extends State<LoginAuthCommonScreen> {
                     child: Center(
                       child: SingleChildScrollView(
                         child: Container(
-                          constraints: BoxConstraints(
-                            maxWidth: 600.w,
-                            minWidth: 400.w,
+                          constraints: const BoxConstraints(
+                            maxWidth: 600,
+                            minWidth: 400,
                           ),
-                          padding: EdgeInsets.all(32.w),
+                          padding: const EdgeInsets.all(32),
                           child: ShadCard(
                             child: Padding(
-                              padding: EdgeInsets.all(32.w),
+                              padding: const EdgeInsets.all(32),
                               child: _buildLoginForm(),
                             ),
                           ),
@@ -320,10 +313,10 @@ class _LoginAuthCommonScreenState extends State<LoginAuthCommonScreen> {
             : Center(
                 child: SingleChildScrollView(
                   child: Padding(
-                    padding: EdgeInsets.all(16.w),
+                    padding: const EdgeInsets.all(16),
                     child: Card(
                       child: Padding(
-                        padding: EdgeInsets.all(24.w),
+                        padding: const EdgeInsets.all(24),
                         child: _buildLoginForm(),
                       ),
                     ),

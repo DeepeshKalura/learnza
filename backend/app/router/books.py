@@ -75,3 +75,21 @@ def popular_books(course: str, request: Request):
         raise HTTPException(status_code=500, detail=f"Error fetching popular books: {str(e)}")
 
     return {"course": course, "popular_books": results}
+
+
+@router.get(path="")
+async def gather_books(db= Depends(get_firestore), auth = Depends(get_auth) ):
+
+    try:
+        result  =  db.collection('books').get()
+
+        books = [doc.to_dict() for doc in result]
+        return books
+
+    except Exception as e: 
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to fetch books: {str(e)}"
+        )
+
+

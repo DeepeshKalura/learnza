@@ -10,6 +10,7 @@ class AppUrls {
   static const String homeStudentScreen = 'homeStudentScreen';
   static const String profileStudentScreen = 'profileStudentScreen';
   static const String libraryStudentScreen = 'libraryStudentScreen';
+  static const String readBookReadScreen = 'readBookReadScreen';
   // students --> groups
   static const String groupsStudentScreen = 'groupsStudentScreen';
   static const String groupDetailStudentScreen = 'groupDetailStudentScreen';

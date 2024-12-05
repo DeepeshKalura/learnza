@@ -21,26 +21,26 @@ BooksModel _$BooksModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$BooksModel {
   String get id => throw _privateConstructorUsedError;
-  String get isbm =>
-      throw _privateConstructorUsedError; // 13 digits for easier usage
-  String get bookTitle => throw _privateConstructorUsedError;
-  String get description => throw _privateConstructorUsedError;
+  String? get isbn => throw _privateConstructorUsedError;
+  String? get bookTitle => throw _privateConstructorUsedError;
+  String? get description => throw _privateConstructorUsedError;
   String? get code => throw _privateConstructorUsedError;
   String? get bookUrl => throw _privateConstructorUsedError;
-  List<String> get author => throw _privateConstructorUsedError;
-  List<String> get category =>
-      throw _privateConstructorUsedError; // Defaults to an empty list
-  String? get publisher => throw _privateConstructorUsedError;
-  List<IndustryIdentifiers>? get identifier =>
-      throw _privateConstructorUsedError;
+  String? get thumbnail => throw _privateConstructorUsedError;
+  String get language => throw _privateConstructorUsedError;
+  List<String>? get author =>
+      throw _privateConstructorUsedError; // Changed to nullable
+  List<String> get categories =>
+      throw _privateConstructorUsedError; // Kept as non-nullable with default
+  String? get publisher =>
+      throw _privateConstructorUsedError; // Changed to nullable
   bool get isActive => throw _privateConstructorUsedError;
   DateTime get createdAt => throw _privateConstructorUsedError;
   DateTime? get updatedAt => throw _privateConstructorUsedError;
   DateTime? get publishedAt => throw _privateConstructorUsedError;
-  String get language => throw _privateConstructorUsedError;
-  String? get coverImageUrl => throw _privateConstructorUsedError;
   bool get founded => throw _privateConstructorUsedError;
-  List<String>? get moreImageUrl => throw _privateConstructorUsedError;
+  String? get editor => throw _privateConstructorUsedError;
+  List<String> get moreImageUrl => throw _privateConstructorUsedError;
 
   /// Serializes this BooksModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -60,23 +60,23 @@ abstract class $BooksModelCopyWith<$Res> {
   @useResult
   $Res call(
       {String id,
-      String isbm,
-      String bookTitle,
-      String description,
+      String? isbn,
+      String? bookTitle,
+      String? description,
       String? code,
       String? bookUrl,
-      List<String> author,
-      List<String> category,
+      String? thumbnail,
+      String language,
+      List<String>? author,
+      List<String> categories,
       String? publisher,
-      List<IndustryIdentifiers>? identifier,
       bool isActive,
       DateTime createdAt,
       DateTime? updatedAt,
       DateTime? publishedAt,
-      String language,
-      String? coverImageUrl,
       bool founded,
-      List<String>? moreImageUrl});
+      String? editor,
+      List<String> moreImageUrl});
 }
 
 /// @nodoc
@@ -95,41 +95,41 @@ class _$BooksModelCopyWithImpl<$Res, $Val extends BooksModel>
   @override
   $Res call({
     Object? id = null,
-    Object? isbm = null,
-    Object? bookTitle = null,
-    Object? description = null,
+    Object? isbn = freezed,
+    Object? bookTitle = freezed,
+    Object? description = freezed,
     Object? code = freezed,
     Object? bookUrl = freezed,
-    Object? author = null,
-    Object? category = null,
+    Object? thumbnail = freezed,
+    Object? language = null,
+    Object? author = freezed,
+    Object? categories = null,
     Object? publisher = freezed,
-    Object? identifier = freezed,
     Object? isActive = null,
     Object? createdAt = null,
     Object? updatedAt = freezed,
     Object? publishedAt = freezed,
-    Object? language = null,
-    Object? coverImageUrl = freezed,
     Object? founded = null,
-    Object? moreImageUrl = freezed,
+    Object? editor = freezed,
+    Object? moreImageUrl = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      isbm: null == isbm
-          ? _value.isbm
-          : isbm // ignore: cast_nullable_to_non_nullable
-              as String,
-      bookTitle: null == bookTitle
+      isbn: freezed == isbn
+          ? _value.isbn
+          : isbn // ignore: cast_nullable_to_non_nullable
+              as String?,
+      bookTitle: freezed == bookTitle
           ? _value.bookTitle
           : bookTitle // ignore: cast_nullable_to_non_nullable
-              as String,
-      description: null == description
+              as String?,
+      description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       code: freezed == code
           ? _value.code
           : code // ignore: cast_nullable_to_non_nullable
@@ -138,22 +138,26 @@ class _$BooksModelCopyWithImpl<$Res, $Val extends BooksModel>
           ? _value.bookUrl
           : bookUrl // ignore: cast_nullable_to_non_nullable
               as String?,
-      author: null == author
+      thumbnail: freezed == thumbnail
+          ? _value.thumbnail
+          : thumbnail // ignore: cast_nullable_to_non_nullable
+              as String?,
+      language: null == language
+          ? _value.language
+          : language // ignore: cast_nullable_to_non_nullable
+              as String,
+      author: freezed == author
           ? _value.author
           : author // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      category: null == category
-          ? _value.category
-          : category // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      categories: null == categories
+          ? _value.categories
+          : categories // ignore: cast_nullable_to_non_nullable
               as List<String>,
       publisher: freezed == publisher
           ? _value.publisher
           : publisher // ignore: cast_nullable_to_non_nullable
               as String?,
-      identifier: freezed == identifier
-          ? _value.identifier
-          : identifier // ignore: cast_nullable_to_non_nullable
-              as List<IndustryIdentifiers>?,
       isActive: null == isActive
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
@@ -170,22 +174,18 @@ class _$BooksModelCopyWithImpl<$Res, $Val extends BooksModel>
           ? _value.publishedAt
           : publishedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      language: null == language
-          ? _value.language
-          : language // ignore: cast_nullable_to_non_nullable
-              as String,
-      coverImageUrl: freezed == coverImageUrl
-          ? _value.coverImageUrl
-          : coverImageUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
       founded: null == founded
           ? _value.founded
           : founded // ignore: cast_nullable_to_non_nullable
               as bool,
-      moreImageUrl: freezed == moreImageUrl
+      editor: freezed == editor
+          ? _value.editor
+          : editor // ignore: cast_nullable_to_non_nullable
+              as String?,
+      moreImageUrl: null == moreImageUrl
           ? _value.moreImageUrl
           : moreImageUrl // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
+              as List<String>,
     ) as $Val);
   }
 }
@@ -200,23 +200,23 @@ abstract class _$$BooksModelImplCopyWith<$Res>
   @useResult
   $Res call(
       {String id,
-      String isbm,
-      String bookTitle,
-      String description,
+      String? isbn,
+      String? bookTitle,
+      String? description,
       String? code,
       String? bookUrl,
-      List<String> author,
-      List<String> category,
+      String? thumbnail,
+      String language,
+      List<String>? author,
+      List<String> categories,
       String? publisher,
-      List<IndustryIdentifiers>? identifier,
       bool isActive,
       DateTime createdAt,
       DateTime? updatedAt,
       DateTime? publishedAt,
-      String language,
-      String? coverImageUrl,
       bool founded,
-      List<String>? moreImageUrl});
+      String? editor,
+      List<String> moreImageUrl});
 }
 
 /// @nodoc
@@ -233,41 +233,41 @@ class __$$BooksModelImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? isbm = null,
-    Object? bookTitle = null,
-    Object? description = null,
+    Object? isbn = freezed,
+    Object? bookTitle = freezed,
+    Object? description = freezed,
     Object? code = freezed,
     Object? bookUrl = freezed,
-    Object? author = null,
-    Object? category = null,
+    Object? thumbnail = freezed,
+    Object? language = null,
+    Object? author = freezed,
+    Object? categories = null,
     Object? publisher = freezed,
-    Object? identifier = freezed,
     Object? isActive = null,
     Object? createdAt = null,
     Object? updatedAt = freezed,
     Object? publishedAt = freezed,
-    Object? language = null,
-    Object? coverImageUrl = freezed,
     Object? founded = null,
-    Object? moreImageUrl = freezed,
+    Object? editor = freezed,
+    Object? moreImageUrl = null,
   }) {
     return _then(_$BooksModelImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      isbm: null == isbm
-          ? _value.isbm
-          : isbm // ignore: cast_nullable_to_non_nullable
-              as String,
-      bookTitle: null == bookTitle
+      isbn: freezed == isbn
+          ? _value.isbn
+          : isbn // ignore: cast_nullable_to_non_nullable
+              as String?,
+      bookTitle: freezed == bookTitle
           ? _value.bookTitle
           : bookTitle // ignore: cast_nullable_to_non_nullable
-              as String,
-      description: null == description
+              as String?,
+      description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       code: freezed == code
           ? _value.code
           : code // ignore: cast_nullable_to_non_nullable
@@ -276,22 +276,26 @@ class __$$BooksModelImplCopyWithImpl<$Res>
           ? _value.bookUrl
           : bookUrl // ignore: cast_nullable_to_non_nullable
               as String?,
-      author: null == author
+      thumbnail: freezed == thumbnail
+          ? _value.thumbnail
+          : thumbnail // ignore: cast_nullable_to_non_nullable
+              as String?,
+      language: null == language
+          ? _value.language
+          : language // ignore: cast_nullable_to_non_nullable
+              as String,
+      author: freezed == author
           ? _value._author
           : author // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      category: null == category
-          ? _value._category
-          : category // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      categories: null == categories
+          ? _value._categories
+          : categories // ignore: cast_nullable_to_non_nullable
               as List<String>,
       publisher: freezed == publisher
           ? _value.publisher
           : publisher // ignore: cast_nullable_to_non_nullable
               as String?,
-      identifier: freezed == identifier
-          ? _value._identifier
-          : identifier // ignore: cast_nullable_to_non_nullable
-              as List<IndustryIdentifiers>?,
       isActive: null == isActive
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
@@ -308,22 +312,18 @@ class __$$BooksModelImplCopyWithImpl<$Res>
           ? _value.publishedAt
           : publishedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      language: null == language
-          ? _value.language
-          : language // ignore: cast_nullable_to_non_nullable
-              as String,
-      coverImageUrl: freezed == coverImageUrl
-          ? _value.coverImageUrl
-          : coverImageUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
       founded: null == founded
           ? _value.founded
           : founded // ignore: cast_nullable_to_non_nullable
               as bool,
-      moreImageUrl: freezed == moreImageUrl
+      editor: freezed == editor
+          ? _value.editor
+          : editor // ignore: cast_nullable_to_non_nullable
+              as String?,
+      moreImageUrl: null == moreImageUrl
           ? _value._moreImageUrl
           : moreImageUrl // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
+              as List<String>,
     ));
   }
 }
@@ -333,26 +333,25 @@ class __$$BooksModelImplCopyWithImpl<$Res>
 class _$BooksModelImpl implements _BooksModel {
   const _$BooksModelImpl(
       {required this.id,
-      required this.isbm,
-      required this.bookTitle,
-      required this.description,
+      this.isbn,
+      this.bookTitle,
+      this.description,
       this.code,
       this.bookUrl,
-      required final List<String> author,
-      final List<String> category = const [],
+      this.thumbnail,
+      required this.language,
+      final List<String>? author,
+      final List<String> categories = const [],
       this.publisher,
-      final List<IndustryIdentifiers>? identifier,
       required this.isActive,
       required this.createdAt,
       this.updatedAt,
       this.publishedAt,
-      required this.language,
-      this.coverImageUrl,
       required this.founded,
-      final List<String>? moreImageUrl})
+      this.editor,
+      final List<String> moreImageUrl = const []})
       : _author = author,
-        _category = category,
-        _identifier = identifier,
+        _categories = categories,
         _moreImageUrl = moreImageUrl;
 
   factory _$BooksModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -361,46 +360,44 @@ class _$BooksModelImpl implements _BooksModel {
   @override
   final String id;
   @override
-  final String isbm;
-// 13 digits for easier usage
+  final String? isbn;
   @override
-  final String bookTitle;
+  final String? bookTitle;
   @override
-  final String description;
+  final String? description;
   @override
   final String? code;
   @override
   final String? bookUrl;
-  final List<String> _author;
   @override
-  List<String> get author {
-    if (_author is EqualUnmodifiableListView) return _author;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_author);
-  }
-
-  final List<String> _category;
+  final String? thumbnail;
   @override
-  @JsonKey()
-  List<String> get category {
-    if (_category is EqualUnmodifiableListView) return _category;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_category);
-  }
-
-// Defaults to an empty list
+  final String language;
+  final List<String>? _author;
   @override
-  final String? publisher;
-  final List<IndustryIdentifiers>? _identifier;
-  @override
-  List<IndustryIdentifiers>? get identifier {
-    final value = _identifier;
+  List<String>? get author {
+    final value = _author;
     if (value == null) return null;
-    if (_identifier is EqualUnmodifiableListView) return _identifier;
+    if (_author is EqualUnmodifiableListView) return _author;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
   }
 
+// Changed to nullable
+  final List<String> _categories;
+// Changed to nullable
+  @override
+  @JsonKey()
+  List<String> get categories {
+    if (_categories is EqualUnmodifiableListView) return _categories;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_categories);
+  }
+
+// Kept as non-nullable with default
+  @override
+  final String? publisher;
+// Changed to nullable
   @override
   final bool isActive;
   @override
@@ -410,24 +407,21 @@ class _$BooksModelImpl implements _BooksModel {
   @override
   final DateTime? publishedAt;
   @override
-  final String language;
-  @override
-  final String? coverImageUrl;
-  @override
   final bool founded;
-  final List<String>? _moreImageUrl;
   @override
-  List<String>? get moreImageUrl {
-    final value = _moreImageUrl;
-    if (value == null) return null;
+  final String? editor;
+  final List<String> _moreImageUrl;
+  @override
+  @JsonKey()
+  List<String> get moreImageUrl {
     if (_moreImageUrl is EqualUnmodifiableListView) return _moreImageUrl;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
+    return EqualUnmodifiableListView(_moreImageUrl);
   }
 
   @override
   String toString() {
-    return 'BooksModel(id: $id, isbm: $isbm, bookTitle: $bookTitle, description: $description, code: $code, bookUrl: $bookUrl, author: $author, category: $category, publisher: $publisher, identifier: $identifier, isActive: $isActive, createdAt: $createdAt, updatedAt: $updatedAt, publishedAt: $publishedAt, language: $language, coverImageUrl: $coverImageUrl, founded: $founded, moreImageUrl: $moreImageUrl)';
+    return 'BooksModel(id: $id, isbn: $isbn, bookTitle: $bookTitle, description: $description, code: $code, bookUrl: $bookUrl, thumbnail: $thumbnail, language: $language, author: $author, categories: $categories, publisher: $publisher, isActive: $isActive, createdAt: $createdAt, updatedAt: $updatedAt, publishedAt: $publishedAt, founded: $founded, editor: $editor, moreImageUrl: $moreImageUrl)';
   }
 
   @override
@@ -436,19 +430,22 @@ class _$BooksModelImpl implements _BooksModel {
         (other.runtimeType == runtimeType &&
             other is _$BooksModelImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.isbm, isbm) || other.isbm == isbm) &&
+            (identical(other.isbn, isbn) || other.isbn == isbn) &&
             (identical(other.bookTitle, bookTitle) ||
                 other.bookTitle == bookTitle) &&
             (identical(other.description, description) ||
                 other.description == description) &&
             (identical(other.code, code) || other.code == code) &&
             (identical(other.bookUrl, bookUrl) || other.bookUrl == bookUrl) &&
+            (identical(other.thumbnail, thumbnail) ||
+                other.thumbnail == thumbnail) &&
+            (identical(other.language, language) ||
+                other.language == language) &&
             const DeepCollectionEquality().equals(other._author, _author) &&
-            const DeepCollectionEquality().equals(other._category, _category) &&
+            const DeepCollectionEquality()
+                .equals(other._categories, _categories) &&
             (identical(other.publisher, publisher) ||
                 other.publisher == publisher) &&
-            const DeepCollectionEquality()
-                .equals(other._identifier, _identifier) &&
             (identical(other.isActive, isActive) ||
                 other.isActive == isActive) &&
             (identical(other.createdAt, createdAt) ||
@@ -457,11 +454,8 @@ class _$BooksModelImpl implements _BooksModel {
                 other.updatedAt == updatedAt) &&
             (identical(other.publishedAt, publishedAt) ||
                 other.publishedAt == publishedAt) &&
-            (identical(other.language, language) ||
-                other.language == language) &&
-            (identical(other.coverImageUrl, coverImageUrl) ||
-                other.coverImageUrl == coverImageUrl) &&
             (identical(other.founded, founded) || other.founded == founded) &&
+            (identical(other.editor, editor) || other.editor == editor) &&
             const DeepCollectionEquality()
                 .equals(other._moreImageUrl, _moreImageUrl));
   }
@@ -471,22 +465,22 @@ class _$BooksModelImpl implements _BooksModel {
   int get hashCode => Object.hash(
       runtimeType,
       id,
-      isbm,
+      isbn,
       bookTitle,
       description,
       code,
       bookUrl,
+      thumbnail,
+      language,
       const DeepCollectionEquality().hash(_author),
-      const DeepCollectionEquality().hash(_category),
+      const DeepCollectionEquality().hash(_categories),
       publisher,
-      const DeepCollectionEquality().hash(_identifier),
       isActive,
       createdAt,
       updatedAt,
       publishedAt,
-      language,
-      coverImageUrl,
       founded,
+      editor,
       const DeepCollectionEquality().hash(_moreImageUrl));
 
   /// Create a copy of BooksModel
@@ -508,23 +502,23 @@ class _$BooksModelImpl implements _BooksModel {
 abstract class _BooksModel implements BooksModel {
   const factory _BooksModel(
       {required final String id,
-      required final String isbm,
-      required final String bookTitle,
-      required final String description,
+      final String? isbn,
+      final String? bookTitle,
+      final String? description,
       final String? code,
       final String? bookUrl,
-      required final List<String> author,
-      final List<String> category,
+      final String? thumbnail,
+      required final String language,
+      final List<String>? author,
+      final List<String> categories,
       final String? publisher,
-      final List<IndustryIdentifiers>? identifier,
       required final bool isActive,
       required final DateTime createdAt,
       final DateTime? updatedAt,
       final DateTime? publishedAt,
-      required final String language,
-      final String? coverImageUrl,
       required final bool founded,
-      final List<String>? moreImageUrl}) = _$BooksModelImpl;
+      final String? editor,
+      final List<String> moreImageUrl}) = _$BooksModelImpl;
 
   factory _BooksModel.fromJson(Map<String, dynamic> json) =
       _$BooksModelImpl.fromJson;
@@ -532,23 +526,25 @@ abstract class _BooksModel implements BooksModel {
   @override
   String get id;
   @override
-  String get isbm; // 13 digits for easier usage
+  String? get isbn;
   @override
-  String get bookTitle;
+  String? get bookTitle;
   @override
-  String get description;
+  String? get description;
   @override
   String? get code;
   @override
   String? get bookUrl;
   @override
-  List<String> get author;
+  String? get thumbnail;
   @override
-  List<String> get category; // Defaults to an empty list
+  String get language;
   @override
-  String? get publisher;
+  List<String>? get author; // Changed to nullable
   @override
-  List<IndustryIdentifiers>? get identifier;
+  List<String> get categories; // Kept as non-nullable with default
+  @override
+  String? get publisher; // Changed to nullable
   @override
   bool get isActive;
   @override
@@ -558,188 +554,16 @@ abstract class _BooksModel implements BooksModel {
   @override
   DateTime? get publishedAt;
   @override
-  String get language;
-  @override
-  String? get coverImageUrl;
-  @override
   bool get founded;
   @override
-  List<String>? get moreImageUrl;
+  String? get editor;
+  @override
+  List<String> get moreImageUrl;
 
   /// Create a copy of BooksModel
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$BooksModelImplCopyWith<_$BooksModelImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-IndustryIdentifiers _$IndustryIdentifiersFromJson(Map<String, dynamic> json) {
-  return _IndustryIdentifiers.fromJson(json);
-}
-
-/// @nodoc
-mixin _$IndustryIdentifiers {
-  BookIdentityType get type => throw _privateConstructorUsedError;
-  String get identifier => throw _privateConstructorUsedError;
-
-  /// Serializes this IndustryIdentifiers to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of IndustryIdentifiers
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $IndustryIdentifiersCopyWith<IndustryIdentifiers> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $IndustryIdentifiersCopyWith<$Res> {
-  factory $IndustryIdentifiersCopyWith(
-          IndustryIdentifiers value, $Res Function(IndustryIdentifiers) then) =
-      _$IndustryIdentifiersCopyWithImpl<$Res, IndustryIdentifiers>;
-  @useResult
-  $Res call({BookIdentityType type, String identifier});
-}
-
-/// @nodoc
-class _$IndustryIdentifiersCopyWithImpl<$Res, $Val extends IndustryIdentifiers>
-    implements $IndustryIdentifiersCopyWith<$Res> {
-  _$IndustryIdentifiersCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of IndustryIdentifiers
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? type = null,
-    Object? identifier = null,
-  }) {
-    return _then(_value.copyWith(
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as BookIdentityType,
-      identifier: null == identifier
-          ? _value.identifier
-          : identifier // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
-  }
-}
-
-/// @nodoc
-abstract class _$$IndustryIdentifiersImplCopyWith<$Res>
-    implements $IndustryIdentifiersCopyWith<$Res> {
-  factory _$$IndustryIdentifiersImplCopyWith(_$IndustryIdentifiersImpl value,
-          $Res Function(_$IndustryIdentifiersImpl) then) =
-      __$$IndustryIdentifiersImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({BookIdentityType type, String identifier});
-}
-
-/// @nodoc
-class __$$IndustryIdentifiersImplCopyWithImpl<$Res>
-    extends _$IndustryIdentifiersCopyWithImpl<$Res, _$IndustryIdentifiersImpl>
-    implements _$$IndustryIdentifiersImplCopyWith<$Res> {
-  __$$IndustryIdentifiersImplCopyWithImpl(_$IndustryIdentifiersImpl _value,
-      $Res Function(_$IndustryIdentifiersImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of IndustryIdentifiers
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? type = null,
-    Object? identifier = null,
-  }) {
-    return _then(_$IndustryIdentifiersImpl(
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as BookIdentityType,
-      identifier: null == identifier
-          ? _value.identifier
-          : identifier // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$IndustryIdentifiersImpl implements _IndustryIdentifiers {
-  const _$IndustryIdentifiersImpl(
-      {required this.type, required this.identifier});
-
-  factory _$IndustryIdentifiersImpl.fromJson(Map<String, dynamic> json) =>
-      _$$IndustryIdentifiersImplFromJson(json);
-
-  @override
-  final BookIdentityType type;
-  @override
-  final String identifier;
-
-  @override
-  String toString() {
-    return 'IndustryIdentifiers(type: $type, identifier: $identifier)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$IndustryIdentifiersImpl &&
-            (identical(other.type, type) || other.type == type) &&
-            (identical(other.identifier, identifier) ||
-                other.identifier == identifier));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode => Object.hash(runtimeType, type, identifier);
-
-  /// Create a copy of IndustryIdentifiers
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$IndustryIdentifiersImplCopyWith<_$IndustryIdentifiersImpl> get copyWith =>
-      __$$IndustryIdentifiersImplCopyWithImpl<_$IndustryIdentifiersImpl>(
-          this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$IndustryIdentifiersImplToJson(
-      this,
-    );
-  }
-}
-
-abstract class _IndustryIdentifiers implements IndustryIdentifiers {
-  const factory _IndustryIdentifiers(
-      {required final BookIdentityType type,
-      required final String identifier}) = _$IndustryIdentifiersImpl;
-
-  factory _IndustryIdentifiers.fromJson(Map<String, dynamic> json) =
-      _$IndustryIdentifiersImpl.fromJson;
-
-  @override
-  BookIdentityType get type;
-  @override
-  String get identifier;
-
-  /// Create a copy of IndustryIdentifiers
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$IndustryIdentifiersImplCopyWith<_$IndustryIdentifiersImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

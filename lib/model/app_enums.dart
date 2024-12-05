@@ -21,6 +21,4 @@ enum AttachmentType { image, video, audio, document, other }
 
 enum Environment { development, production }
 
-enum BookIdentityType { isbn_10, isbn_13 }
-
 enum PostVisibility { public, private, restricted, draft }

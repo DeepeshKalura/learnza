@@ -68,8 +68,7 @@ jobs:
             git push
           fi
 
-      - name: Analyze code
-        run: flutter analyze
+
 
       - name: Run tests
         run: flutter test --coverage

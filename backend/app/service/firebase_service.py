@@ -9,10 +9,12 @@ class FirebaseService:
     def __init__(self):
         if not firebase_admin._apps:
             cred = credentials.Certificate('serviceAccountKey.json')
-            firebase_admin.initialize_app(cred)
+            firebase_admin.initialize_app(cred, {
+                'storageBucket': 'learnza.firebasestorage.app'
+            })
         self.db = firestore.client()
         self.auth = auth
-        self.storage = storage
+        self.storage = storage.bucket()
 
     @property
     def firestore(self):

@@ -12,7 +12,6 @@ import '../../../model/groups/groups_model.dart';
 import '../../../providers/auth_provider.dart';
 import '../../../providers/groups_provider.dart';
 import '../../../router/app_urls.dart';
-import '../menu_widget.dart';
 
 class GroupsStudentScreen extends StatefulWidget {
   const GroupsStudentScreen({super.key});
@@ -413,7 +412,7 @@ class _GroupsStudentScreenState extends State<GroupsStudentScreen> {
           SliverAppBar(
             automaticallyImplyLeading: true,
             leading: kIsWeb
-                ? const MenuWidget()
+                ? null
                 : IconButton(
                     icon: const Icon(LucideIcons.menu),
                     onPressed: () {

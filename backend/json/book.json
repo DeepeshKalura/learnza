@@ -1,7 +1,7 @@
 [
     {
         "id": "66802c8c-6186-414d-9745-1eb95711d3cd",
-        "isbm": "9789937936583",
+        "isbn": "9789937936583",
         "bookTitle": "अनिवार्य नेपाली",
         "description": "अनिवार्य नेपाली (Aniwarya Nepali Byakaran, Bodh, Abhibyakti ra Samikshya)\" by Dr. Narayan Prasad Sharma Gaire is a vital textbook for Nursing and Health Science students under the CTEVT curriculum. It provides a comprehensive exploration of the Nepali language, covering grammar (Byakaran), comprehension (Bodh), expression (Abhibyakti), and critical analysis (Samikshya). Designed to enhance linguistic proficiency, the book equips students with essential communication skills necessary for their professional fields, fostering both effective interaction and a deeper understanding of cultural nuances in healthcare.",
         "code": "401",
@@ -19,25 +19,15 @@
             }
         ], 
         "isActive": true,
+        "coverImageUrl": null,
         "createdAt": "",
         "updatedAt": "",
-        "coverImageUrl": null,
         "founded": false,
-        "moreImageUrl": [] 
-    }, 
+        "moreImageUrl": []
+    },
     {
         "id": "ab937d00-36a9-4835-9a4a-f3bf494f5ccb",
-        "isbm": "978-9351768449",
-        "bookTitle": "Objective General English",
-        "description": "An essential book that would brush up the language skills of any aspirants who is working towards clearing the competitive examinations for Hotel Management, B Ed, MBA, MCA courses held by many prestigious institutes and university or those conducted by UPSC for many openings for civil and armed forces positions.",
-        "code": null,
-        "bookUrl": "books/Objective General English.pdf",
-        "language": "en",
-        "author": ["S. P. Bakshi"],
-        "categories": [
-            "Verbal Ability","English", "Comprehension Skills", "Practical Grammar", "Foundation Module"
-        ],
-        "publisher": "Arihant Publications",
+        "isbn": "978-9351768449",
         "identifier": [
             {
                 "type": "ISBN_13",
@@ -48,6 +38,16 @@
                 "value": "8176030295"
             }
         ], 
+        "bookTitle": "Objective General English",
+        "bookUrl": "books/Objective General English.pdf",
+        "author": ["S. P. Bakshi"],
+        "description": "An essential book that would brush up the language skills of any aspirants who is working towards clearing the competitive examinations for Hotel Management, B Ed, MBA, MCA courses held by many prestigious institutes and university or those conducted by UPSC for many openings for civil and armed forces positions.",
+        "code": null,
+        "language": "en",
+        "categories": [
+            "Verbal Ability","English", "Comprehension Skills", "Practical Grammar", "Foundation Module"
+        ],
+        "publisher": "Arihant Publications",
         "isActive": true,
         "createdAt": "",
         "updatedAt": "",
@@ -382,5 +382,257 @@
         "coverImageUrl": "thumbnail/The_Foundations_of_Population_Genetics.png",
         "founded": true,
         "moreImageUrl": []
-    }
+    },
+
+    {
+        "id": "8c15c530-f2b3-4598-aa6c-7dbee550caee",
+        "isbn": "9780805836820",
+        "identifier": [
+            {
+                "type": "ISBN_10",
+                "value": "0805836829"
+            },
+            {
+                "type": "ISBN_13",
+                "value": "9780805836820"
+            }
+        ],
+        "bookTitle": "Educational Psychology: A Century of Contributions",
+        "bookUrl": "books/Educational_Psychology_A_Century_of_Contributions.pdf",
+        "description": "Educational Psychology: A Century of Contributions examines the historic contributions of 16 leading psychologists, as well as others, who influenced the field of educational psychology from its origins in the late 19th century to its current scientific standing in the 21st century. The book is divided into three sections covering the founding period (1880s–1920), the rise to prominence period (1920–1960), and the modern period (1960–present). Each section includes overview chapters discussing major theoretical, methodological, and instructional contributions, followed by biographical chapters highlighting key figures' legacies in shaping educational psychology.",
+        "language": "en",
+        "author": [
+            "Barry J. Zimmerman",
+            "Dale H. Schunk"
+        ],
+        "categories": ["Educational Psychology", "Psychology", "Education"],
+        "publisher": "Routledge",
+        "isActive": true,
+        "createdAt": "",
+        "updatedAt": "",
+        "coverImageUrl": "thumbnail/Educational_Psychology_A_Century_of_Contributions.png",
+        "founded": true,
+        "moreImageUrl": []
+    },
+    {
+        "id": "57d110a9-3e83-4746-ad8f-19e8f032ebe0",
+        "isbn": "9786239608927",
+        "identifier": [
+            {
+                "type": "ISBN_10",
+                "value": "6239608920"
+            },
+            {
+                "type": "ISBN_13",
+                "value": "9786239608927"
+            }
+        ],
+        "bookTitle": "English for Communication 1: Purpose of the Study",
+        "bookUrl": "books/English_for_Communication_1_Purpose_of_the_Study.pdf",
+        "description": "English for Communication 1: Purpose of the Study is a resource for developing effective English communication skills. Published by Yayasan Prima Agus Teknik in 2020, it serves as a guide for learners aiming to improve their language proficiency, particularly in a professional and academic context.",
+        "language": "id",
+        "author": [
+            "Dr. Agus Wibowo, M.Kom., M.Si., M.M."
+        ],
+        "categories": ["English Communication", "Language Learning", "Education"],
+        "publisher": "Yayasan Prima Agus Teknik",
+        "isActive": true,
+        "createdAt": "",
+        "updatedAt": "",
+        "coverImageUrl": "thumbnail/English_for_Communication_1_Purpose_of_the_Study.png",
+        "founded": true,
+        "moreImageUrl": []
+    },
+    {
+        "id": "15027798-978f-4e80-a60d-e5f68e9d84c5",
+        "isbn": "9780131933958",
+        "identifier": [
+            {
+                "type": "ISBN_10",
+                "value": "0131933957"
+            },
+            {
+                "type": "ISBN_13",
+                "value": "9780131933958"
+            }
+        ],
+        "bookTitle": "Introduction to Academic Writing, Third Edition",
+        "bookUrl": "books/Introduction_to_Academic_Writing_Third_Edition.pdf",
+        "description": "The Third Edition of 'Introduction to Academic Writing' by Alice Oshima and Ann Hogue helps students master standard organizational patterns of paragraphs and essays. It integrates rhetorical patterns with sentence structure and mechanics, offering extensive practice for academic success.",
+        "language": "en",
+        "author": [
+            "Alice Oshima",
+            "Ann Hogue"
+        ],
+        "categories": ["Academic Writing", "Education", "Language Learning"],
+        "publisher": "Pearson Longman",
+        "edition": "3rd Edition",
+        "isActive": true,
+        "createdAt": "",
+        "updatedAt": "",
+        "coverImageUrl": "thumbnail/Introduction_to_Academic_Writing_Third_Edition.png",
+        "founded": true,
+        "moreImageUrl": []
+    },
+    {
+        "id": "5ad0c371-1941-4d62-b2a5-7255eef149a4",
+        "isbn": "9788182813854",
+        "identifier": [
+            {
+                "type": "ISBN_10",
+                "value": "8182813859"
+            },
+            {
+                "type": "ISBN_13",
+                "value": "9788182813854"
+            }
+        ],
+        "bookTitle": "The Economics of Development and Planning",
+        "bookUrl": "books/The_Economics_of_Development_and_Planning.pdf",
+        "description": "Now running in its 40th Edition, this highly acclaimed, popular and best-selling textbook provides a comprehensive analysis of development economics and planning. It is widely used in India and abroad.",
+        "language": ["en", "hi"],
+        "author": ["M.L. Jhingan"],
+        "categories": ["Economics", "Development Studies", "Planning"],
+        "publisher": "Vrinda Publications P Ltd., India",
+        "edition": "40th Revised and Enlarged Edition",
+        "isActive": true,
+        "createdAt": "",
+        "updatedAt": "",
+        "coverImageUrl": "thumbnail/The_Economics_of_Development_and_Planning.png",
+        "founded": true,
+        "moreImageUrl": []
+    },
+
+    {
+        "id": "4d705041-d593-468d-b48d-ac0a3877b08c",
+        "isbn": "9780470496633",
+        "identifier": [
+            {
+                "type": "ISBN_10",
+                "value": "0470496630"
+            },
+            {
+                "type": "ISBN_13",
+                "value": "9780470496633"
+            }
+        ],
+        "bookTitle": "To Improve Health and Health Care: The Robert Wood Johnson Foundation Anthology, Volume XIII",
+        "bookUrl": "books/To_Improve_Health_and_Health_Care_Volume_XIII.pdf",
+        "description": "Since 1972, The Robert Wood Johnson Foundation has been the nation’s largest philanthropy devoted exclusively to health. Their premier annual review of public health and health care research, To Improve Health and Health Care Vol. XIII: The Robert Wood Johnson Foundation Anthology focuses on the pressing health and health care issues facing our country. This volume provides an in-depth look into the programs it funds, offering valuable lessons for leaders, educators, policymakers, and practitioners.",
+        "language": ["en"],
+        "author": ["Stephen L. Isaacs", "David C. Colby", "Robert Wood Johnson Foundation"],
+        "categories": ["Public Health", "Health Services", "Health Care Policy", "Research"],
+        "publisher": "Jossey-Bass, John Wiley & Sons, Inc.",
+        "edition": "1st edition",
+        "isActive": true,
+        "createdAt": "",
+        "updatedAt": "",
+        "coverImageUrl": "thumbnail/To_Improve_Health_and_Health_Care_Volume_XIII.png",
+        "founded": true,
+        "moreImageUrl": []
+    },
+    {
+        "id": "d76dff32-37f1-48b1-9984-330ecc3d1880",
+        "isbn": "9781412957410",
+        "identifier": [
+            {
+                "type": "ISBN_10",
+                "value": "1412957419"
+            },
+            {
+                "type": "ISBN_13",
+                "value": "9781412957410"
+            }
+        ],
+        "bookTitle": "The Art of Educational Leadership: Balancing Performance and Accountability",
+        "bookUrl": "books/The_Art_of_Educational_Leadership_Balancing_Performance_and_Accountability.pdf",
+        "description": "The Art of Educational Leadership: Balancing Performance and Accountability stresses the human side of leadership, arguing that leadership is an art. It exemplifies the balance between the science and the art of educational leadership, helping readers reflect on the connection between theory, practice, and self-discovery. The book includes exercises for personal reflection, film suggestions, and portrays multicultural leadership in action.",
+        "language": ["en"],
+        "author": ["Fenwick W. English"],
+        "categories": ["Educational Leadership", "Leadership Theory", "Management in Education", "School Administration"],
+        "publisher": "SAGE Publications, Inc.",
+        "edition": "1st edition",
+        "isActive": true,
+        "createdAt": "",
+        "updatedAt": "",
+        "coverImageUrl": "thumbnail/The_Art_of_Educational_Leadership.png",
+        "founded": true,
+        "moreImageUrl": []
+    },
+
+    {
+        "id": "2b1e7bcb-f030-4a93-af5e-0b5f238fa3c6",
+        "isbn": "9780736083232",
+        "identifier": [
+            {
+                "type": "ISBN_10",
+                "value": "0736083235"
+            },
+            {
+                "type": "ISBN_13",
+                "value": "9780736083232"
+            }
+        ],
+        "bookTitle": "Foundations of Sport and Exercise Psychology, 5th Edition",
+        "bookUrl": "books/Foundations_of_Sport_and_Exercise_Psychology_5th_Edition.pdf",
+        "description": "The latest edition of the best-selling sport and exercise psychology book on the market, Foundations of Sport and Exercise Psychology, Fifth Edition, provides a thorough introduction to the key concepts in the field. Written by internationally respected authors, it offers students and new practitioners a comprehensive view of sport and exercise psychology, bridges the gap between research and practice, and captures the excitement of the world of sport and exercise.",
+        "language": ["en"],
+        "author": ["Robert S. Weinberg", "Daniel Gould"],
+        "categories": ["Psychology", "Sports Psychology", "Exercise Science"],
+        "publisher": "Human Kinetics",
+        "edition": "5th Edition",
+        "isActive": true,
+        "createdAt": "",
+        "updatedAt": "",
+        "coverImageUrl": "thumbnail/Foundations_of_Sport_and_Exercise_Psychology_5th_Edition.png",
+        "founded": true,
+        "moreImageUrl": []
+    },
+    
+    {
+        "id": "5f144ebd-3d84-4eee-8698-2e8d9a80d619",
+        "isbn": "9783319651415",
+        "identifier": [
+            {
+                "type": "ISBN_10",
+                "value": "3319651420"
+            },
+            {
+                "type": "ISBN_10",
+                "value": "3319651412"
+            },
+            {
+                "type": "ISBN_13",
+                "value": "9783319651422"
+            },
+            {
+                "type": "ISBN_13",
+                "value": "9783319651415"
+            }
+        ],
+        "bookTitle": "Exploring the Health State of a Population by Dynamic Modeling Methods",
+        "bookUrl": "books/Exploring_the_Health_State_of_a_Population_by_Dynamic_Modeling_Methods.pdf",
+        "author": [
+          "Christos H. Skiadas",
+          "Charilaos Skiadas"
+        ],
+        "publisher": "Springer International Publishing",
+        "edition": "1st ed. 2018",
+        
+
+        "language": "en",
+        "categories": [
+          "Medical / Public Health",
+          "Demography",
+          "Statistics"
+        ],
+        "description": "This book introduces and applies the stochastic modeling techniques and the first exit time theory in demography through describing the theory related to the health state of a population and the introduced health state function. The book provides the derivation and classification of the human development stages. The data fitting techniques and related programs are also presented. Many new and old terms are explored and quantitatively estimated, especially the health state or 'vitality' of a population, the deterioration and related functions, as well as healthy life expectancy. The book provides the appropriate comparative applications and statistics as connecting tools accompanied by the existing literature, and as such it will be a valuable source to demographers, health scientists, statisticians, economists, and sociologists.",
+        "isActive": true,
+        "createdAt": "",
+        "updatedAt": "",
+        "coverImageUrl": "thumbnail/Exploring_the_Health_State_of_a_Population_by_Dynamic_Modeling_Methods.png",
+        "founded": true,
+        "moreImageUrl": []  
+      }
+    
 ]

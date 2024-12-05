@@ -5,6 +5,8 @@ import 'package:go_router/go_router.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
 import '../../../../model/books/books_model.dart';
+import '../../../../router/app_urls.dart';
+import '../../../../utils/theme.dart';
 
 class BooksCardLibraryStudentWidget extends StatefulWidget {
   const BooksCardLibraryStudentWidget({
@@ -21,132 +23,127 @@ class BooksCardLibraryStudentWidget extends StatefulWidget {
 
 class BooksCardLibraryStudentWidgetState
     extends State<BooksCardLibraryStudentWidget> {
-  bool _isLiked = false;
-  bool _isBookmarked = false;
-
   @override
   Widget build(BuildContext context) {
     return OpenContainer(
       closedBuilder: (context, action) => _buildBookTile(),
-      openBuilder: (context, action) => _buildBookDetailsPage(),
+      openBuilder: (context, action) => widget.booksModel.founded
+          ? _buildBookDetailsPage()
+          : _showNotAvailableDialog(),
       transitionType: ContainerTransitionType.fade,
+    );
+  }
+
+  Widget _showNotAvailableDialog() {
+    return ShadDialog(
+      title: const Text('Book Not Available'),
+      description: const Text(
+        'Sorry, this book is currently not available in the library.',
+      ),
+      actions: [
+        ShadButton(
+          backgroundColor: primaryColor,
+          onPressed: () => context.pop(),
+          child: const Text('Close'),
+        ),
+      ],
     );
   }
 
   Widget _buildBookTile() {
     return Padding(
-      padding: const EdgeInsets.all(12.0),
-      child: Stack(
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              // Book Image
-              Container(
-                decoration: BoxDecoration(
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Colors.black38,
-                      blurRadius: 8,
-                      offset: Offset(0, 0.2),
+      padding: const EdgeInsets.all(8.0),
+      child: ShadCard(
+        backgroundColor:
+            widget.booksModel.founded ? Colors.white : Colors.red.shade200,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Hero(
+              tag: 'book_cover_${widget.booksModel.id}',
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: CachedNetworkImage(
+                  imageUrl: widget.booksModel.thumbnail ??
+                      "https://covers.openlibrary.org/b/id/14825735-L.jpg",
+                  width: 150,
+                  height: 250,
+                  fit: BoxFit.cover,
+                  placeholder: (context, url) => Container(
+                    color: widget.booksModel.founded
+                        ? Colors.grey.shade200
+                        : Colors.red.shade50,
+                    child: Center(
+                      child: CircularProgressIndicator(
+                        color: widget.booksModel.founded
+                            ? Colors.blue.shade200
+                            : Colors.red.shade200,
+                      ),
                     ),
-                  ],
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Hero(
-                  tag: 'book_cover_${widget.booksModel.id}',
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
-                    child: CachedNetworkImage(
-                      imageUrl: widget.booksModel.coverImageUrl ?? "",
-                      width: 150,
-                      height: 250,
-                      fit: BoxFit.cover,
-                      placeholder: (context, url) => Container(
-                        color: Colors.grey.shade200,
-                        child: Center(
-                          child: CircularProgressIndicator(
-                            color: Colors.blue.shade200,
-                          ),
-                        ),
-                      ),
-                      errorWidget: (context, url, error) => Container(
-                        color: Colors.grey.shade200,
-                        child: Icon(
-                          Icons.book_outlined,
-                          size: 50,
-                          color: Colors.grey.shade500,
-                        ),
-                      ),
+                  ),
+                  errorWidget: (context, url, error) => Container(
+                    color: widget.booksModel.founded
+                        ? Colors.grey.shade200
+                        : Colors.red.shade50,
+                    child: Icon(
+                      Icons.book_outlined,
+                      size: 50,
+                      color: widget.booksModel.founded
+                          ? Colors.grey.shade500
+                          : Colors.red.shade300,
                     ),
                   ),
                 ),
               ),
-
-              // Book Title
-              Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: Text(
-                  widget.booksModel.bookTitle,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-            ],
-          ),
-
-          // Positioned Interaction Buttons
-          Positioned(
-            top: 10,
-            right: 10,
-            child: Row(
-              children: [
-                // Like Button
-                CircleAvatar(
-                  radius: 20,
-                  backgroundColor: Colors.white.withOpacity(0.7),
-                  child: IconButton(
-                    icon: Icon(
-                      _isLiked ? Icons.favorite : Icons.favorite_border,
-                      color: _isLiked ? Colors.red : Colors.black,
-                      size: 20,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        _isLiked = !_isLiked;
-                      });
-                    },
-                  ),
-                ),
-
-                const SizedBox(width: 8),
-
-                // Bookmark Button
-                CircleAvatar(
-                  radius: 20,
-                  backgroundColor: Colors.white.withOpacity(0.7),
-                  child: IconButton(
-                    icon: Icon(
-                      _isBookmarked ? Icons.bookmark : Icons.bookmark_border,
-                      color: _isBookmarked ? Colors.blue : Colors.black,
-                      size: 20,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        _isBookmarked = !_isBookmarked;
-                      });
-                    },
-                  ),
-                ),
-              ],
             ),
-          ),
-        ],
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.5 - 10,
+                    child: Text(
+                      widget.booksModel.bookTitle ?? "No title available",
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: ShadTheme.of(context).textTheme.h4.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: widget.booksModel.founded
+                                ? Colors.black
+                                : Colors.red.shade900,
+                          ),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.5 - 10,
+                    child: Text(
+                      widget.booksModel.description ??
+                          "No description available",
+                      maxLines: 5,
+                      overflow: TextOverflow.ellipsis,
+                      style: ShadTheme.of(context).textTheme.p.copyWith(
+                            color: widget.booksModel.founded
+                                ? Colors.grey
+                                : Colors.red.shade700,
+                          ),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    "by ${widget.booksModel.author?.first ?? "Anonymous"}",
+                    style: ShadTheme.of(context).textTheme.p.copyWith(
+                          color: widget.booksModel.founded
+                              ? Colors.black
+                              : Colors.red.shade800,
+                        ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -173,25 +170,12 @@ class BooksCardLibraryStudentWidgetState
             ),
             expandedHeight: 500,
             pinned: true,
-            actions: [
-              IconButton(
-                icon: const CircleAvatar(
-                  backgroundColor: Colors.black54,
-                  child: Icon(
-                    Icons.share,
-                    color: Colors.white,
-                  ),
-                ),
-                onPressed: () {
-                  // Implement share functionality
-                },
-              ),
-            ],
             flexibleSpace: FlexibleSpaceBar(
               background: Hero(
                 tag: 'book_cover_${widget.booksModel.id}',
                 child: CachedNetworkImage(
-                  imageUrl: widget.booksModel.coverImageUrl ?? "",
+                  imageUrl: widget.booksModel.thumbnail ??
+                      "https://covers.openlibrary.org/b/id/14825735-L.jpg",
                   width: double.infinity,
                   fit: BoxFit.cover,
                 ),
@@ -207,8 +191,8 @@ class BooksCardLibraryStudentWidgetState
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    widget.booksModel.bookTitle,
-                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                    widget.booksModel.bookTitle ?? "No title available",
+                    style: ShadTheme.of(context).textTheme.p.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
                   ),
@@ -223,7 +207,7 @@ class BooksCardLibraryStudentWidgetState
 
                   // Book Description
                   Text(
-                    widget.booksModel.description,
+                    widget.booksModel.description ?? "No description available",
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ],
@@ -235,38 +219,19 @@ class BooksCardLibraryStudentWidgetState
 
       // Bottom Action Bar
       bottomNavigationBar: BottomAppBar(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            IconButton(
-              icon: Icon(
-                _isLiked ? Icons.favorite : Icons.favorite_border,
-                color: _isLiked ? Colors.red : Colors.grey,
-              ),
-              onPressed: () {
-                setState(() {
-                  _isLiked = !_isLiked;
-                });
-              },
-            ),
-            IconButton(
-              icon: Icon(
-                _isBookmarked ? Icons.bookmark : Icons.bookmark_border,
-                color: _isBookmarked ? Colors.blue : Colors.grey,
-              ),
-              onPressed: () {
-                setState(() {
-                  _isBookmarked = !_isBookmarked;
-                });
-              },
-            ),
-            IconButton(
-              icon: const Icon(Icons.share),
-              onPressed: () {
-                // Implement share functionality
-              },
-            ),
-          ],
+        child: ShadButton(
+          backgroundColor: primaryColor,
+          onPressed: widget.booksModel.founded
+              ? () {
+                  context.pushNamed(
+                    AppUrls.readBookReadScreen,
+                    extra: {
+                      'book': widget.booksModel,
+                    },
+                  );
+                }
+              : null,
+          child: const Text('Read Now'),
         ),
       ),
     );

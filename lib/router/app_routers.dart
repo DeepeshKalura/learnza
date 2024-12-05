@@ -3,12 +3,14 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import 'package:learnza/locator/injector.dart' as di;
+import '../model/books/books_model.dart';
 import '../model/groups/groups_model.dart';
 import '../model/posts/posts_model.dart';
 import '../screen/common/splash/splash_screen.dart';
 import '../screen/student/groups/groups_detail_screen.dart';
 import '../screen/student/library/library_student_screen.dart';
 import '../screen/student/blogs/deatail_blog_student.dart';
+import '../screen/student/library/read_book_read_screen.dart';
 import '../screen/student/profile/profile_student_screen.dart';
 import '../service/firebase_service.dart';
 import '/model/app_enums.dart';
@@ -90,6 +92,17 @@ class AppRouters {
             name: AppUrls.libraryStudentScreen,
             builder: (context, state) {
               return const LibraryStudentScreen();
+            },
+          ),
+
+          GoRoute(
+            path: '/read-book',
+            name: AppUrls.readBookReadScreen,
+            builder: (context, state) {
+              var args = state.extra! as Map<String, dynamic>;
+              return ReadBookReadScreen(
+                book: args['book'] as BooksModel,
+              );
             },
           ),
 

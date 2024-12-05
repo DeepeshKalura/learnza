@@ -7,6 +7,7 @@ const Color secondaryColor = Color(0xFFEEF2FE);
 const Color successColor = Color(0xFF28a745);
 const Color warningColor = Color(0xFFffc107);
 const Color dangerColor = Color(0xFFdc3545);
+const Color hintColor = Color(0xFF6c757d);
 
 final lightThemData = ShadThemeData(
   brightness: Brightness.light,

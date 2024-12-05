@@ -1,0 +1,625 @@
+[
+    {
+      "id": "66802c8c-6186-414d-9745-1eb95711d3cd",
+      "isbn": "9789937936583",
+      "bookTitle": "अनिवार्य नेपाली",
+      "description": "अनिवार्य नेपाली (Aniwarya Nepali Byakaran, Bodh, Abhibyakti ra Samikshya)\" by Dr. Narayan Prasad Sharma Gaire is a vital textbook for Nursing and Health Science students under the CTEVT curriculum. It provides a comprehensive exploration of the Nepali language, covering grammar (Byakaran), comprehension (Bodh), expression (Abhibyakti), and critical analysis (Samikshya). Designed to enhance linguistic proficiency, the book equips students with essential communication skills necessary for their professional fields, fostering both effective interaction and a deeper understanding of cultural nuances in healthcare.",
+      "code": "401",
+      "bookUrl": null,
+      "thumbnail": null,
+      "language": "ne",
+      "author": ["Dr. Narayan Prasad Sharma Gaire"],
+      "categories": ["Nursing", "CTEVT", "Nepali", "Health Science First Year"],
+      "publisher": "Heritage Publishers & Distributors Pvt. Ltd.",
+      "identifier": [
+        {
+          "type": "ISBN_13",
+          "value": "9789937936583"
+        }
+      ],
+      "isActive": true,
+      "createdAt": "",
+      "updatedAt": "",
+      "founded": false,
+      "editor": null,
+      "moreImageUrl": []
+    },
+    {
+      "id": "ab937d00-36a9-4835-9a4a-f3bf494f5ccb",
+      "isbn": "978-9351768449",
+      "bookTitle": "Objective General English",
+      "bookUrl": "books/Objective_General_English.pdf",
+      "thumbnail": "thumbnail/Objective_General_English.png",
+      "author": ["S. P. Bakshi"],
+      "description": "An essential book that would brush up the language skills of any aspirants who is working towards clearing the competitive examinations for Hotel Management, B Ed, MBA, MCA courses held by many prestigious institutes and university or those conducted by UPSC for many openings for civil and armed forces positions.",
+      "code": null,
+      "language": "en",
+      "categories": ["Verbal Ability", "English", "Comprehension Skills", "Practical Grammar", "Foundation Module"],
+      "publisher": "Arihant Publications",
+      "identifier": [
+        {
+          "type": "ISBN_13",
+          "value": "978-9351768449"
+        },
+        {
+          "type": "ISBN_10",
+          "value": "8176030295"
+        }
+      ],
+      "isActive": true,
+      "createdAt": "",
+      "updatedAt": "",
+      "founded": true,
+      "editor": null,
+      "moreImageUrl": []
+    },
+    {
+      "id": "41f1937e-cdd5-4e26-a3c0-e3b47a043a4e",
+      "isbn": "9788184884845",
+      "bookTitle": "Philosophical and Sociological Foundations of Education",
+      "bookUrl": "books/Philosophical_Sociological_Foundations_of_Education.pdf",
+      "thumbnail": "thumbnail/Philosophical_Sociological_Foundations_of_Education.png",
+      "author": ["M.S. Talawar", "T. Pradeep Kumar"],
+      "description": "Philosophy is to preceive the original source of certain ideas from which the practical matters of education are held to be derived by a series of logical inferences. Philosophy and education are like two faces of the same coin. Similarly, Social ideologies have their own impact on educational theories and practices. The aims and methods of education vary considerable due to varied conceptions of social organization. Education is an instrument of social control and social change. Education is a means for social transformation. Both the knowledge of philosophy and Sociology plays a vital role in the Classroom teaching ? learning process and hence giving a wide range of scope for teachers as well as students.",
+      "code": null,
+      "language": "en",
+      "categories": ["Philosophy", "Sociology", "Education", "B.Ed"],
+      "publisher": "Himalaya Publishing House",
+      "identifier": [
+        {
+          "type": "ISBN_13",
+          "value": "9789350440551"
+        },
+        {
+          "type": "ISBN_10",
+          "value": "8184884842"
+        },
+        {
+          "type": "ISBN_10",
+          "value": "9350440555"
+        },
+        {
+          "type": "ISBN_13",
+          "value": "9788184884845"
+        }
+      ],
+      "isActive": true,
+      "coverImageUrl": "thumbnail/Philosophical & Sociological Foundations of Education.png",
+      "createdAt": "1970-01-01T00:00:00Z",
+      "updatedAt": "1970-01-01T00:00:00Z",
+      "founded": true,
+      "editor": null,
+      "moreImageUrl": []
+    },
+    {
+      "id": "313ab7af-3092-466e-9f18-2c309225d2a3",
+      "isbn": "978-3110622973",
+      "bookTitle": "Cognitive Linguistics - Foundations of Language",
+      "bookUrl": "books/Cognitive_Linguistics_Foundations_of_Language.pdf",
+      "thumbnail": "thumbnail/Cognitive_Linguistics_Foundations_of_Language.png",
+      "author": ["Ewa Dąbrowska", "Dagmar Divjak"],
+      "description": "Cognitive foundations of language introduces the reader to the abilities and processes in which research in Cognitive Linguistics is grounded. The book looks at key concepts, such as embodiment, salience, entrenchment, construal, categorization, and collaborative communication, and discusses their genesis and implications for cognitive linguistic research.",
+      "code": null,
+      "language": "en",
+      "categories": ["Language and languages", "Biolinguistics, Language", "Language Development", "Verbal Behavior", "Langage et langues", "Biolinguistique", "LANGUAGE ARTS & DISCIPLINES", "Linguistics", "Psycholinguistics", "Denken", "Psycholinguistik", "Sprache", "Kognition", "Taalpsychologie", "LINGUISTICS"],
+      "publisher": "De Gruyter Mouton",
+      "identifier": [
+        {
+          "type": "ISBN_13",
+          "value": "978-3110622973"
+        },
+        {
+          "type": "ISBN_10",
+          "value": "3110622971"
+        }
+      ],
+      "isActive": true,
+      "createdAt": "",
+      "updatedAt": "",
+      "founded": true,
+      "editor": null,
+      "moreImageUrl": []
+    },
+    {
+      "id": "cf8c088b-10bc-4600-945d-1bfa383de2ea",
+      "isbn": "978-1265141417",
+      "bookTitle": "McGraw Hill Conquering ACT English, Reading, and Writing",
+      "bookUrl": "books/McGraw_Hill_Conquering_ACT_English_Reading_and_Writing.pdf",
+      "thumbnail": "thumbnail/McGraw_Hill_Conquering_ACT_English_Reading_and_Writing.png",
+      "author": ["Steven W. Dulan", "Amy Dulan"],
+      "description": "The most intensive ACT English, Reading, and Writing prep you can get―with drills, strategies, and 15 full-length practice tests with explanations to help boost your ACT score!",
+      "code": null,
+      "language": "en",
+      "categories": ["English", "Reading", "Writing", "ACT", "Test Preparation"],
+      "publisher": "McGraw Hill",
+      "identifier": [
+        {
+          "type": "ISBN_13",
+          "value": "9781265141417"
+        },
+        {
+          "type": "ISBN_10",
+          "value": "126514141X"
+        }
+      ],
+      "isActive": true,
+      "createdAt": "",
+      "updatedAt": "",
+      "founded": true,
+      "editor": null,
+      "moreImageUrl": []
+    },
+    {
+      "id": "190dcaeb-96a7-412b-af2b-1d730d9d4774",
+      "isbn": "9789937255974",
+      "bookTitle": "नेपाली - नेवा:भाषा शब्दावली",
+      "bookUrl": "books/नेपाली_नेवा_भाषा_शब्दावली.pdf",
+      "thumbnail": "thumbnail/नेपाली_नेवा_भाषा_शब्दावली.png",
+      "author": ["Krishna Halwai"],
+      "description": "नेपाली - नेवा:भाषा शब्दावली\" (Nepali - Newa Bhasha Shabdavali) by बालकृष्ण हलवाई (Bal Krishna Halwai) is a comprehensive dictionary that serves as a valuable resource for understanding the Newar language, also known as Nepal Bhasa. This glossary includes a wide range of terms relevant to Newar culture and language, contributing to the preservation and promotion of this rich linguistic heritage. The work, published in 2069 BS (2012 AD), is part of an open-source collection, making it accessible for those interested in linguistics, anthropology, and cultural studies related to the Newar community in Nepal. The document is available for free download, allowing users to explore the nuances of Nepal Bhasa and its vocabulary.",
+      "code": null,
+      "language": "ne",
+      "categories": ["ravi", "shakya", "newar", "newari", "newars", "nepalbhasa", "nepalbhasha", "nepal bhasha", "dictionary", "nepal", "nepali", "nepalese", "glossary"],
+      "publisher": "Newa Bhasha Shabdavali",
+      "identifier": [
+        {
+          "type": "ISBN_13",
+          "value": "9789937255974"
+        },
+        {
+          "type": "ISBN_10",
+          "value": "993725597X"
+        }
+      ],
+      "isActive": true,
+      "createdAt": "",
+      "updatedAt": "",
+      "founded": true,
+      "editor": null,
+      "moreImageUrl": []
+    },
+    {
+      "id": "4f0da8b7-c20e-43bd-8f61-f0fa4c3ee58b",
+      "isbn": null,
+      "bookTitle": "नेपाली कक्षा १०",
+      "bookUrl": "books/नेपाली_कक्षा.pdf",
+      "thumbnail": "thumbnail/नेपाली_कक्षा.png",
+      "author": ["पाठ्यक्रम विकास केन्द्र"],
+      "description": "नेपाली कक्षा १०\" (Nepali Class 10) is a textbook published by the Curriculum Development Centre in 2068 BS (2011 AD) for Grade 10 students in Nepal. It covers essential aspects of the Nepali language, including grammar, literature, and composition, aimed at enhancing students' language proficiency. Available in PDF format, this educational resource is easily accessible for learners preparing for their examinations.",
+      "code": null,
+      "language": "ne",
+      "categories": ["Grammar", "Vocabulary Development", "Writing Skills", "Poetry", "Prose", "Drama", "Passage Analysis", "Critical Thinking Questions", "Nepali Traditions and Customs", "Historical Context", "Guides for Teachers and Students"],
+      "publisher": "पाठ्यक्रम विकास केन्द्र",
+      "identifier": [
+        {
+          "type": "ISBN_13",
+          "value": null
+        },
+        {
+          "type": "ISBN_10",
+          "value": null
+        }
+      ],
+      "isActive": true,
+      "createdAt": "",
+      "updatedAt": "",
+      "founded": true,
+      "editor": null,
+      "moreImageUrl": []
+    },
+    {
+      "id": "b298ce5c-e115-42bb-b9ee-3f027d39a71d",
+      "isbn": "978-0134461366",
+      "bookTitle": "Econometric analysis",
+      "bookUrl": "books/Econometric_analysis.pdf",
+      "thumbnail": "thumbnail/Econometric_analysis.png",
+      "author": ["William Greene"],
+      "description": "For a one-year graduate course in Econometrics. This text has two objectives. The first is to introduce students to applied econometrics, including basic techniques in regression analysis and some of the rich variety of models that are used when the linear model proves inadequate or inappropriate. The second is to present students with sufficient theoretical background that they will recognize new variants of the models learned about here as merely natural extensions that fit within a common body of principles. The Fifth Edition features a complete update of techniques and developments, a reorganization of material for improved presentation, and new material and applications.",
+      "code": null,
+      "language": "en",
+      "categories": ["Econometrics"],
+      "publisher": "Pearson",
+      "identifier": [
+        {
+          "type": "ISBN_13",
+          "value": "978-0134461366"
+        },
+        {
+          "type": "ISBN_10",
+          "value": "0134461363"
+        }
+      ],
+      "isActive": true,
+      "createdAt": "",
+      "updatedAt": "",
+      "founded": true,
+      "editor": null,
+      "moreImageUrl": []
+    },
+    {
+      "id": "b1014a47-272b-49c9-b911-7d27e814f682",
+      "isbn": "9780070611931",
+      "bookTitle": "Quantitative Techniques in Management",
+      "bookUrl": "books/Quantitative_Techniques_in_Management.pdf",
+      "thumbnail": "thumbnail/Quantitative_Techniques_in_Management.png",
+      "author": ["N. D. Vohra"],
+      "description": "The new edition continues in the tradition of application of various quantitative techniques in managerial decision making. Comprehensive treatment of the concepts in the MS/OR area and a large number of solved problems and exercises are the main pillars of the text.",
+      "code": null,
+      "language": "en",
+      "categories": ["Management", "Quantitative Techniques"],
+      "publisher": "Tata McGraw-Hill",
+      "identifier": [
+        {
+          "type": "ISBN_10",
+          "value": "0070611939"
+        },
+        {
+          "type": "ISBN_13",
+          "value": "9780070611931"
+        }
+      ],
+      "isActive": true,
+      "createdAt": "",
+      "updatedAt": "",
+      "founded": true,
+      "editor": null,
+      "moreImageUrl": []
+    },
+    {
+      "id": "de6a58fe-7691-41da-870e-8e9ac3caa6cd",
+      "isbn": "9780787972448",
+      "bookTitle": "Derryberry's Educating for Health: A Foundation for Contemporary Health Education Practice",
+      "bookUrl": "books/Derryberry_Educating_for_Health.pdf",
+      "thumbnail": "thumbnail/Derryberry_Educating_for_Health.png",
+      "author": ["Mayhew Derryberry", "John P. Allegrante", "David Sleet"],
+      "description": "Derryberry's Educating for Health includes the complete original text of his classic book with new chapters by current experts and teachers in the field of health education and promotion. The book is organized into six sections covering various aspects of health education.",
+      "code": null,
+      "language": "en",
+      "categories": ["Health Education", "Public Health"],
+      "publisher": "Jossey-Bass",
+      "identifier": [
+        {
+          "type": "ISBN_10",
+          "value": "0787972444"
+        },
+        {
+          "type": "ISBN_10",
+          "value": "0787973858"
+        },
+        {
+          "type": "ISBN_13",
+          "value": "9780787972448"
+        },
+        {
+          "type": "ISBN_13",
+          "value": "9780787973858"
+        }
+      ],
+      "isActive": true,
+      "createdAt": "1970-01-01T00:00:00Z",
+      "updatedAt": "1970-01-01T00:00:00Z",
+      "founded": true,
+      "editor": null,
+      "moreImageUrl": []
+    },
+    {
+      "id": "8cbd6c7b-b0b6-446e-ba73-bd4f78c1c1b2",
+      "isbn": "9781266287022",
+      "bookTitle": "Foundations of Physical Education, Exercise Science, and Sport",
+      "bookUrl": "books/Foundations_of_Physical_Education.pdf",
+      "thumbnail": "thumbnail/Foundations_of_Physical_Education.png",
+      "author": ["Jennifer L. Walton-Fisette", "Deborah A. Wuest"],
+      "description": "Foundations of Physical Education, Exercise Science, and Sport provides readers with up-to-date information about physical activity, physical education, and sport. It challenges students to commit to ongoing development and growth as professionals, advocates for quality physical education, and values diversity. The book inspires collaboration to address contemporary issues and the potential of physical education to positively impact lives.",
+      "code": null,
+      "language": "en",
+      "categories": ["Physical Education", "Exercise Science", "Sports"],
+      "publisher": "McGraw-Hill Education",
+      "identifier": [
+        {
+          "type": "ISBN_10",
+          "value": "1266287027"
+        },
+        {
+          "type": "ISBN_10",
+          "value": "1266378480"
+        },
+        {
+          "type": "ISBN_13",
+          "value": "9781266287022"
+        },
+        {
+          "type": "ISBN_13",
+          "value": "9781266378485"
+        }
+      ],
+      "isActive": true,
+      "createdAt": "1970-01-01T00:00:00Z",
+      "updatedAt": "1970-01-01T00:00:00Z",
+      "founded": true,
+      "editor": null,
+      "moreImageUrl": []
+    },
+    {
+      "id": "0e720c05-8603-4b97-b127-426499f55672",
+      "isbn": "9780262047579",
+      "bookTitle": "The Foundations of Population Genetics",
+      "bookUrl": "books/The_Foundations_of_Population_Genetics.pdf",
+      "thumbnail": "thumbnail/The_Foundations_of_Population_Genetics.png",
+      "author": ["Daniel M. Weinreich"],
+      "description": "An accessible but rigorous treatment of the theoretical foundations of population genetics. Population genetics—the branch of evolutionary biology concerned with understanding how and why populations’ genetic compositions change over time—rests on a well-developed theoretical foundation that draws on genetics, mathematics, and computer science. This textbook provides an approachable but rigorous treatment for advanced undergraduate and graduate students interested in building a quantitative understanding of the genetics of evolution. Existing texts either assume very mathematically advanced readers, or avoid much of the underlying theory, instead focusing on current methods of data analysis. In contrast, The Foundations of Population Genetics develops the theory from first principles. Requiring only confidence in algebra, this self-contained, student-friendly book illustrates the conceptual framework, terminology, and methods of mathematical modeling. It progressively introduces concepts from genetics as needed, while emphasizing biological implications throughout. As a result, readers come away with a deep understanding of the structure of population genetics without needing to master its mathematics.",
+      "code": null,
+      "language": "en",
+      "categories": ["Population Genetics", "Evolutionary Biology", "Mathematics"],
+      "publisher": "The MIT Press",
+      "identifier": [
+        {
+          "type": "ISBN_10",
+          "value": "0262047578"
+        },
+        {
+          "type": "ISBN_10",
+          "value": "0262372576"
+        },
+        {
+          "type": "ISBN_13",
+          "value": "9780262047579"
+        },
+        {
+          "type": "ISBN_13",
+          "value": "9780262372572"
+        }
+      ],
+      "isActive": true,
+      "createdAt": "1970-01-01T00:00:00Z",
+      "updatedAt": "1970-01-01T00:00:00Z",
+      "founded": true,
+      "editor": null,
+      "moreImageUrl": []
+    },
+    {
+      "id": "8c15c530-f2b3-4598-aa6c-7dbee550caee",
+      "isbn": "9780805836820",
+      "bookTitle": "Educational Psychology: A Century of Contributions",
+      "bookUrl": "books/Educational_Psychology_A_Century_of_Contributions.pdf",
+      "thumbnail": "thumbnail/Educational_Psychology_A_Century_of_Contributions.png",
+      "author": ["Barry J. Zimmerman", "Dale H. Schunk"],
+      "description": "Educational Psychology: A Century of Contributions examines the historic contributions of 16 leading psychologists, as well as others, who influenced the field of educational psychology from its origins in the late 19th century to its current scientific standing in the 21st century. The book is divided into three sections covering the founding period (1880s–1920), the rise to prominence period (1920–1960), and the modern period (1960–present). Each section includes overview chapters discussing major theoretical, methodological, and instructional contributions, followed by biographical chapters highlighting key figures' legacies in shaping educational psychology.",
+      "code": null,
+      "language": "en",
+      "categories": ["Educational Psychology", "Psychology", "Education"],
+      "publisher": "Routledge",
+      "identifier": [
+        {
+          "type": "ISBN_10",
+          "value": "0805836829"
+        },
+        {
+          "type": "ISBN_13",
+          "value": "9780805836820"
+        }
+      ],
+      "isActive": true,
+      "createdAt": "1970-01-01T00:00:00Z",
+      "updatedAt": "1970-01-01T00:00:00Z",
+      "founded": true,
+      "editor": null,
+      "moreImageUrl": []
+    },
+    {
+      "id": "57d110a9-3e83-4746-ad8f-19e8f032ebe0",
+      "isbn": "9786239608927",
+      "bookTitle": "English for Communication 1: Purpose of the Study",
+      "bookUrl": "books/English_for_Communication_1_Purpose_of_the_Study.pdf",
+      "thumbnail": "thumbnail/English_for_Communication_1_Purpose_of_the_Study.png",
+      "author": ["Dr. Agus Wibowo, M.Kom., M.Si., M.M."],
+      "description": "English for Communication 1: Purpose of the Study is a resource for developing effective English communication skills. Published by Yayasan Prima Agus Teknik in 2020, it serves as a guide for learners aiming to improve their language proficiency, particularly in a professional and academic context.",
+      "code": null,
+      "language": "id",
+      "categories": ["English Communication", "Language Learning", "Education"],
+      "publisher": "Yayasan Prima Agus Teknik",
+      "identifier": [
+        {
+          "type": "ISBN_10",
+          "value": "6239608920"
+        },
+        {
+          "type": "ISBN_13",
+          "value": "9786239608927"
+        }
+      ],
+      "isActive": true,
+      "createdAt": "1970-01-01T00:00:00Z",
+      "updatedAt": "1970-01-01T00:00:00Z",
+      "founded": true,
+      "editor": null,
+      "moreImageUrl": []
+    },
+    {
+      "id": "15027798-978f-4e80-a60d-e5f68e9d84c5",
+      "isbn": "9780131933958",
+      "bookTitle": "Introduction to Academic Writing, Third Edition",
+      "bookUrl": "books/Introduction_to_Academic_Writing_Third_Edition.pdf",
+      "thumbnail": "thumbnail/Introduction_to_Academic_Writing_Third_Edition.png",
+      "author": ["Alice Oshima", "Ann Hogue"],
+      "description": "The Third Edition of 'Introduction to Academic Writing' by Alice Oshima and Ann Hogue helps students master standard organizational patterns of paragraphs and essays. It integrates rhetorical patterns with sentence structure and mechanics, offering extensive practice for academic success.",
+      "code": null,
+      "language": "en",
+      "categories": ["Academic Writing", "Education", "Language Learning"],
+      "publisher": "Pearson Longman",
+      "edition": "3rd Edition",
+      "identifier": [
+        {
+          "type": "ISBN_10",
+          "value": "0131933957"
+        },
+        {
+          "type": "ISBN_13",
+          "value": "9780131933958"
+        }
+      ],
+      "isActive": true,
+      "createdAt": "1970-01-01T00:00:00Z",
+      "updatedAt": "1970-01-01T00:00:00Z",
+      "founded": true,
+      "editor": null,
+      "moreImageUrl": []
+    },
+    {
+      "id": "5ad0c371-1941-4d62-b2a5-7255eef149a4",
+      "isbn": "9788182813854",
+      "bookTitle": "The Economics of Development and Planning",
+      "bookUrl": "books/The_Economics_of_Development_and_Planning.pdf",
+      "thumbnail": "thumbnail/The_Economics_of_Development_and_Planning.png",
+      "author": ["M.L. Jhingan"],
+      "description": "Now running in its 40th Edition, this highly acclaimed, popular and best-selling textbook provides a comprehensive analysis of development economics and planning. It is widely used in India and abroad.",
+      "code": null,
+      "language": "en",
+      "categories": ["Economics", "Development Studies", "Planning"],
+      "publisher": "Vrinda Publications P Ltd., India",
+      "edition": "40th Revised and Enlarged Edition",
+      "identifier": [
+        {
+          "type": "ISBN_10",
+          "value": "8182813859"
+        },
+        {
+          "type": "ISBN_13",
+          "value": "9788182813854"
+        }
+      ],
+      "isActive": true,
+      "createdAt": "1970-01-01T00:00:00Z",
+      "updatedAt": "1970-01-01T00:00:00Z",
+      "founded": true,
+      "editor": null,
+      "moreImageUrl": []
+    },
+    {
+      "id": "4d705041-d593-468d-b48d-ac0a3877b08c",
+      "isbn": "9780470496633",
+      "bookTitle": "To Improve Health and Health Care: The Robert Wood Johnson Foundation Anthology, Volume XIII",
+      "bookUrl": "books/To_Improve_Health_and_Health_Care_Volume_XIII.pdf",
+      "thumbnail": "thumbnail/To_Improve_Health_and_Health_Care_Volume_XIII.png",
+      "author": ["Stephen L. Isaacs", "David C. Colby", "Robert Wood Johnson Foundation"],
+      "description": "Since 1972, The Robert Wood Johnson Foundation has been the nation’s largest philanthropy devoted exclusively to health. Their premier annual review of public health and health care research, To Improve Health and Health Care Vol. XIII: The Robert Wood Johnson Foundation Anthology focuses on the pressing health and health care issues facing our country. This volume provides an in-depth look into the programs it funds, offering valuable lessons for leaders, educators, policymakers, and practitioners.",
+      "code": null,
+      "language": "en",
+      "categories": ["Public Health", "Health Services", "Health Care Policy", "Research"],
+      "publisher": "Jossey-Bass, John Wiley & Sons, Inc.",
+      "edition": "1st edition",
+      "identifier": [
+        {
+          "type": "ISBN_10",
+          "value": "0470496630"
+        },
+        {
+          "type": "ISBN_13",
+          "value": "9780470496633"
+        }
+      ],
+      "isActive": true,
+      "createdAt": "1970-01-01T00:00:00Z",
+      "updatedAt": "1970-01-01T00:00:00Z",
+      "founded": true,
+      "editor": null,
+      "moreImageUrl": []
+    },
+    {
+      "id": "d76dff32-37f1-48b1-9984-330ecc3d1880",
+      "isbn": "9781412957410",
+      "bookTitle": "The Art of Educational Leadership: Balancing Performance and Accountability",
+      "bookUrl": "books/The_Art_of_Educational_Leadership_Balancing_Performance_and_Accountability.pdf",
+      "thumbnail": "thumbnail/The_Art_of_Educational_Leadership.png",
+      "author": ["Fenwick W. English"],
+      "description": "The Art of Educational Leadership: Balancing Performance and Accountability stresses the human side of leadership, arguing that leadership is an art. It exemplifies the balance between the science and the art of educational leadership, helping readers reflect on the connection between theory, practice, and self-discovery. The book includes exercises for personal reflection, film suggestions, and portrays multicultural leadership in action.",
+      "code": null,
+      "language": "en",
+      "categories": ["Educational Leadership", "Leadership Theory", "Management in Education", "School Administration"],
+      "publisher": "SAGE Publications, Inc.",
+      "edition": "1st edition",
+      "identifier": [
+        {
+          "type": "ISBN_10",
+          "value": "1412957"
+        },
+                {
+        "type": "ISBN_13",
+        "value": "9781412957410"
+      }
+    ],
+    "isActive": true,
+    "createdAt": "1970-01-01T00:00:00Z",
+    "updatedAt": "1970-01-01T00:00:00Z",
+    "founded": true,
+    "editor": null,
+    "moreImageUrl": []
+  },
+  {
+    "id": "2b1e7bcb-f030-4a93-af5e-0b5f238fa3c6",
+    "isbn": "9780736083232",
+    "bookTitle": "Foundations of Sport and Exercise Psychology, 5th Edition",
+    "bookUrl": "books/Foundations_of_Sport_and_Exercise_Psychology_5th_Edition.pdf",
+    "thumbnail": "thumbnail/Foundations_of_Sport_and_Exercise_Psychology_5th_Edition.png",
+    "author": ["Robert S. Weinberg", "Daniel Gould"],
+    "description": "The latest edition of the best-selling sport and exercise psychology book on the market, Foundations of Sport and Exercise Psychology, Fifth Edition, provides a thorough introduction to the key concepts in the field. Written by internationally respected authors, it offers students and new practitioners a comprehensive view of sport and exercise psychology, bridges the gap between research and practice, and captures the excitement of the world of sport and exercise.",
+    "code": null,
+    "language": "en",
+    "categories": ["Psychology", "Sports Psychology", "Exercise Science"],
+    "publisher": "Human Kinetics",
+    "edition": "5th Edition",
+    "identifier": [
+      {
+        "type": "ISBN_10",
+        "value": "0736083235"
+      },
+      {
+        "type": "ISBN_13",
+        "value": "9780736083232"
+      }
+    ],
+    "isActive": true,
+    "createdAt": "1970-01-01T00:00:00Z",
+    "updatedAt": "1970-01-01T00:00:00Z",
+    "founded": true,
+    "editor": null,
+    "moreImageUrl": []
+  },
+  {
+    "id": "5f144ebd-3d84-4eee-8698-2e8d9a80d619",
+    "isbn": "9783319651415",
+    "bookTitle": "Exploring the Health State of a Population by Dynamic Modeling Methods",
+    "bookUrl": "books/Exploring_the_Health_State_of_a_Population_by_Dynamic_Modeling_Methods.pdf",
+    "thumbnail": "thumbnail/Exploring_the_Health_State_of_a_Population_by_Dynamic_Modeling_Methods.png",
+    "author": ["Christos H. Skiadas", "Charilaos Skiadas"],
+    "description": "This book introduces and applies the stochastic modeling techniques and the first exit time theory in demography through describing the theory related to the health state of a population and the introduced health state function. The book provides the derivation and classification of the human development stages. The data fitting techniques and related programs are also presented. Many new and old terms are explored and quantitatively estimated, especially the health state or 'vitality' of a population, the deterioration and related functions, as well as healthy life expectancy. The book provides the appropriate comparative applications and statistics as connecting tools accompanied by the existing literature, and as such it will be a valuable source to demographers, health scientists, statisticians, economists, and sociologists.",
+    "code": null,
+    "language": "en",
+    "categories": ["Medical / Public Health", "Demography", "Statistics"],
+    "publisher": "Springer International Publishing",
+    "edition": "1st ed. 2018",
+    "identifier": [
+      {
+        "type": "ISBN_10",
+        "value": "3319651420"
+      },
+      {
+        "type": "ISBN_10",
+        "value": "3319651412"
+      },
+      {
+        "type": "ISBN_13",
+        "value": "9783319651422"
+      },
+      {
+        "type": "ISBN_13",
+        "value": "9783319651415"
+      }
+    ],
+    "isActive": true,
+    "createdAt": "1970-01-01T00:00:00Z",
+    "updatedAt": "1970-01-01T00:00:00Z",
+    "founded": true,
+    "editor": null,
+    "moreImageUrl": []
+  }
+]

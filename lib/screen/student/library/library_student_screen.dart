@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
 import '../../../model/books/books_model.dart';
+import '../../../providers/book_provider.dart';
 import '../../../providers/student_provider.dart';
 import '../../common/widget/drawer_widget.dart';
 
@@ -16,7 +17,7 @@ class LibraryStudentScreen extends StatefulWidget {
 }
 
 class _LibraryStudentScreenState extends State<LibraryStudentScreen> {
-  final GlobalKey<ScaffoldState> _scafoldKey = GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final _shadPopoverController = ShadPopoverController();
 
   final List<String> get = [
@@ -30,145 +31,112 @@ class _LibraryStudentScreenState extends State<LibraryStudentScreen> {
     _shadPopoverController.dispose();
   }
 
-  final booksModel = BooksModel(
-    id: '1',
-    bookTitle: "The Great Gatsby",
-    author: ["F. Scott Fitzgerald"],
-    coverImageUrl: "https://covers.openlibrary.org/b/id/14825735-L.jpg",
-    createdAt: DateTime.now(),
-    description:
-        "The Great Gatsby is a 1925 novel by American writer F. Scott Fitzgerald. Set in the Jazz Age on Long Island, near New York City, the novel depicts first-person narrator Nick Carraway's interactions with mysterious millionaire Jay Gatsby and Gatsby's obsession to reunite with his former lover, Daisy Buchanan.",
-    isActive: true,
-    isbm: "9780743273565",
-    language: "en",
-    updatedAt: DateTime.now(),
-    founded: true,
-  );
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scafoldKey,
-      appBar: AppBar(
-        title: Consumer<StudentProvider>(
-          builder: (context, value, child) {
-            if (value.isSearch) {
-              return
-                  // const Row(
-                  // children: [
-                  // ShadSelect<String>(
-                  //   controller: _shadPopoverController,
-                  //   options: [
-                  //     ...get.map(
-                  //       (dept) => ShadOption(
-                  //         value: dept,
-                  //         child: Text(dept),
-                  //       ),
-                  //     ),
-                  //   ],
-                  //   selectedOptionBuilder: (context, value) {
-                  //     context.read<StudentProvider>()
-                  //   },
-                  // ),
-                  const ShadInput(
-                decoration: ShadDecoration(
-                  color: Colors.white,
-                ),
-                placeholder: Text(
-                  'Search Library',
-                  style: TextStyle(
-                    color: Colors.grey,
-                  ),
-                ),
-              );
-            } else {
-              return const Text(
-                'Personlized Library',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
-              );
-            }
-          },
-        ),
-        leading: IconButton(
-          icon: const Icon(LucideIcons.menu),
-          onPressed: () {
-            _scafoldKey.currentState!.openDrawer();
-          },
-        ),
-        actions: [
-          Consumer<StudentProvider>(
-            builder: (context, value, child) {
-              if (value.isSearch) {
-                return IconButton(
-                  icon: const Icon(LucideIcons.searchX),
-                  onPressed: () {
-                    value.toggleSearch();
-                  },
-                );
-              } else {
-                return IconButton(
-                  icon: const Icon(LucideIcons.search),
-                  onPressed: () {
-                    value.toggleSearch();
-                  },
-                );
-              }
-            },
-            child: IconButton(
-              icon: const Icon(LucideIcons.search),
-              onPressed: () {},
-            ),
-          ),
-        ],
-      ),
+      key: _scaffoldKey,
       drawer: kIsWeb
           ? null
           : const DrawerWidget(
               currentIndex: 1,
             ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 22, vertical: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Course Books",
-                  style: TextStyle(
-                    fontSize: 22,
-                    color: Colors.black,
-                    fontWeight: FontWeight.w500,
+      body: CustomScrollView(slivers: [
+        SliverAppBar(
+          pinned: true,
+          floating: true,
+          snap: false,
+          title: Consumer<StudentProvider>(
+            builder: (context, value, child) {
+              if (value.isSearch) {
+                return const TextField(
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.white,
+                    hintText: 'Search Library',
+                    hintStyle: TextStyle(color: Colors.grey),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                      borderSide: BorderSide.none,
+                    ),
+                    contentPadding: EdgeInsets.symmetric(
+                      vertical: 0,
+                      horizontal: 12.0,
+                    ),
                   ),
-                ),
-                // TODO: Add a button to view all books when clicked
-                // InkWell(
-                //   onTap: () {},
-                //   child: const Icon(
-                //     Icons.arrow_forward_ios_outlined,
-                //     color: Colors.black,
-                //   ),
-                // ),
-              ],
-            ),
+                );
+              } else {
+                return const Text(
+                  'Personalized Library',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                );
+              }
+            },
           ),
-          SizedBox(
-            height: 310,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              shrinkWrap: true,
-              children: [
-                BooksCardLibraryStudentWidget(booksModel: booksModel),
-                BooksCardLibraryStudentWidget(booksModel: booksModel),
-                BooksCardLibraryStudentWidget(booksModel: booksModel),
-              ],
-            ),
+          leading: IconButton(
+            icon: const Icon(Icons.menu),
+            onPressed: () {
+              _scaffoldKey.currentState!.openDrawer();
+            },
           ),
-        ],
-      ),
+          actions: [
+            Consumer<StudentProvider>(
+              builder: (context, value, child) {
+                return IconButton(
+                  icon: Icon(
+                    value.isSearch ? Icons.close : Icons.search,
+                  ),
+                  onPressed: () {
+                    value.toggleSearch();
+                  },
+                );
+              },
+            ),
+          ],
+        ),
+        SliverFillRemaining(
+          child: StreamBuilder(
+            stream:
+                context.read<BookProvider>().getBooksWithPagination(limit: 20),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+
+              if (snapshot.hasError) {
+                return Center(
+                  child: Text('Error: ${snapshot.error}'),
+                );
+              }
+
+              final List<BooksModel>? books = snapshot.data;
+
+              if (books == null) {
+                return const Center(
+                  child: Text('Ah Null Why?'),
+                );
+              }
+
+              if (books.isEmpty) {
+                return const Center(
+                  child: Text('No books found'),
+                );
+              }
+              return ListView.builder(
+                itemCount: books.length,
+                itemBuilder: (context, index) {
+                  return BooksCardLibraryStudentWidget(
+                    booksModel: books[index],
+                  );
+                },
+              );
+            },
+          ),
+        ),
+      ]),
     );
   }
 }
