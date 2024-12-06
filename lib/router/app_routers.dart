@@ -11,6 +11,7 @@ import '../screen/student/groups/groups_detail_screen.dart';
 import '../screen/student/library/library_student_screen.dart';
 import '../screen/student/blogs/deatail_blog_student.dart';
 import '../screen/student/library/read_book_read_screen.dart';
+import '../screen/student/library/search_book_student_screen.dart';
 import '../screen/student/profile/profile_student_screen.dart';
 import '../service/firebase_service.dart';
 import '/model/app_enums.dart';
@@ -86,7 +87,6 @@ class AppRouters {
             name: AppUrls.profileStudentScreen,
             builder: (context, state) => const ProfileStudentScreen(),
           ),
-
           GoRoute(
             path: '/library',
             name: AppUrls.libraryStudentScreen,
@@ -94,7 +94,6 @@ class AppRouters {
               return const LibraryStudentScreen();
             },
           ),
-
           GoRoute(
             path: '/read-book',
             name: AppUrls.readBookReadScreen,
@@ -105,7 +104,6 @@ class AppRouters {
               );
             },
           ),
-
           GoRoute(
             path: '/groups-message',
             name: AppUrls.groupDetailStudentScreen,
@@ -116,13 +114,17 @@ class AppRouters {
               );
             },
           ),
-          // GoRoute(
-          //   path: '/edit-blog',
-          //   name: AppUrls.editBlogStudentScreen,
-          //   builder: (context, state) {
-          //     return const EditBlogStudentScreen();
-          //   },
-          // ),
+          GoRoute(
+            path: '/search',
+            name: AppUrls.searchBooksStudentScreen,
+            builder: (context, state) {
+              var args = state.extra! as Map<String, dynamic>;
+              return SearchBookStudentScreen(
+                searchQuery: args["searchQuery"] as String,
+                books: args["books"] as List<BooksModel>,
+              );
+            },
+          ),
           GoRoute(
             path: '/detail-blog',
             name: AppUrls.detailBlogStudentScreen,

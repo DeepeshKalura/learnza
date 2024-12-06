@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+// import 'package:learnza/utils/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:feedback_github/feedback_github.dart';
@@ -66,6 +67,30 @@ class DrawerWidget extends StatelessWidget {
                       gitHubToken: githubtoken,
                       deviceInfo: true,
                       packageInfo: true,
+                      labels: ['feedback', 'issue', 'enhancement', 'bug'],
+                      extraData: StackTrace.current.toString(),
+
+                      // onSucces: (_) {
+                      //   ShadToaster.of(context).show(
+                      //     const ShadToast(
+                      //       backgroundColor: successColor,
+                      //       title: Text("Feedback Sent"),
+                      //       description: Text(
+                      //         "Thank you for your feedback",
+                      //       ),
+                      //     ),
+                      //   );
+                      // },
+                      // onError: (_) {
+                      //   ShadToaster.of(context).show(
+                      //     const ShadToast.destructive(
+                      //       title: Text("Feedback Error"),
+                      //       description: Text(
+                      //         "Something went wrong while sending feedback",
+                      //       ),
+                      //     ),
+                      //   );
+                      // }
                     );
                   },
                 ),

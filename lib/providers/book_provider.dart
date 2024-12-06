@@ -75,4 +75,34 @@ class BookProvider extends ChangeNotifier {
       yield [];
     }
   }
+
+  Future<List<BooksModel>> searchBooks(String searchQuery) async {
+    final List<BooksModel> searchResults = [];
+
+    try {
+      // Convert the searchQuery to lowercase for case-insensitive matching
+      final queryLower = searchQuery.toLowerCase();
+
+      // Use Firestore's "startAt" and "endAt" for prefix-based search
+      QuerySnapshot<Map<String, dynamic>> booksSnapshot = await FirebaseFirestore
+          .instance
+          .collection('books')
+          .orderBy(
+              'bookTitleLower') // Ensure a lowercase version of the title exists in the database
+          .startAt([queryLower]).endAt(
+              ['$queryLower\uf8ff']) // Matches anything starting with the query
+          .get();
+
+      // Map the query results to the BooksModel list
+      searchResults.addAll(
+        booksSnapshot.docs
+            .map((doc) => BooksModel.fromJson(doc.data()))
+            .toList(),
+      );
+    } catch (e, s) {
+      developer.log('Error fetching books: $e\nStacktrace: $s');
+    }
+
+    return searchResults;
+  }
 }
