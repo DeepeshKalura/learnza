@@ -23,6 +23,7 @@ import 'providers/department_provider.dart';
 import 'providers/groups_provider.dart';
 import 'providers/message_provider.dart';
 import 'providers/post_provider.dart';
+import 'providers/state/student/libary_student_state_provider.dart';
 import 'providers/student_provider.dart';
 import 'providers/teacher_provider.dart';
 import 'router/app_routers.dart';
@@ -50,6 +51,7 @@ Future<void> main() async {
   await di.injector.get<AppConfig>().setup();
   runApp(
     BetterFeedback(
+      mode: FeedbackMode.navigate,
       theme: FeedbackThemeData(
         background: Colors.green[50]!,
         feedbackSheetColor: Colors.grey[50]!,
@@ -128,6 +130,11 @@ class MyApp extends StatelessWidget {
                 firebaseService: di.injector.get<FirebaseService>(),
               );
             }),
+            ChangeNotifierProvider(
+              create: (context) {
+                return LibaryStudentStateProvider();
+              },
+            ),
           ],
           child: ShadApp.router(
             debugShowCheckedModeBanner: false,

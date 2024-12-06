@@ -315,6 +315,8 @@ class _PostStudentScreenState extends State<PostStudentScreen> {
                 ShadInputFormField(
                   id: 'titleOfPost',
                   label: const Text("Title"),
+                  autofocus: true,
+                  keyboardType: TextInputType.text,
                   placeholder: const Text(
                     "Write a Title for post here",
                   ),

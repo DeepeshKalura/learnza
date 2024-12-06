@@ -513,7 +513,6 @@ class _CourseEditDialogState extends State<_CourseEditDialog> {
   final _formKey = GlobalKey<ShadFormState>();
   late String _selectedDepartmentId;
   late TextEditingController _nameController;
-  Map<String, dynamic>? _courseSettings;
   late bool _isActive;
 
   final _shadPopoverController = ShadPopoverController();
