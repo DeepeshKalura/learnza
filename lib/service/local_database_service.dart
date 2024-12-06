@@ -1,6 +1,7 @@
-// import 'dart:io' as io;
-// import 'dart:html' as html;
-// import 'package:sqflite/sqflite.dart';
+import 'package:universal_io/io.dart';
+import 'package:sqflite/sqflite.dart';
+
+// import '../model/books/books_model.dart';
 
 // class MyLibraryDb {
 //   static final MyLibraryDb instance = MyLibraryDb._internal();
@@ -18,7 +19,7 @@
 //   Future<Database> _initDatabase() async {
 //     final databasePath = await getDatabasesPath();
 //     final path = '$databasePath/mylibrary.db';
-//     final bool isMobile = io.Platform.isAndroid || io.Platform.isIOS;
+//     final bool isMobile = Platform.isAndroid || Platform.isIOS;
 
 //     return await openDatabase(
 //       path,
@@ -74,11 +75,11 @@
 //   // Database dbInstance;
 //   String tableName = 'mybooks';
 
-//   Future<void> insert(MyBook book) async {
+//   Future<void> insert(BooksModel book) async {
 //     final dbInstance = await instance.database;
 //     await dbInstance.insert(
 //       tableName,
-//       book.toMap(),
+//       book.toJson(),
 //       conflictAlgorithm: ConflictAlgorithm.replace,
 //     );
 //   }
@@ -92,11 +93,11 @@
 //     );
 //   }
 
-//   Future<MyBook?> getId(String id) async {
+//   Future<BooksModel?> getId(String id) async {
 //     final dbInstance = await instance.database;
 //     List<Map<String, dynamic>> data =
 //         await dbInstance.query(tableName, where: 'id = ?', whereArgs: [id]);
-//     List<MyBook> book = listMapToMyBook(data);
+//     List<BooksModel> book = listMapToMyBook(data);
 //     if (book.isNotEmpty) {
 //       return book.first;
 //     }
@@ -107,24 +108,24 @@
 //     final dbInstance = await instance.database;
 //     List<Map<String, dynamic>> data =
 //         await dbInstance.query(tableName, where: 'id = ?', whereArgs: [id]);
-//     List<MyBook> book = listMapToMyBook(data);
+//     List<BooksModel> book = listMapToMyBook(data);
 //     if (book.isNotEmpty) {
 //       return true;
 //     }
 //     return false;
 //   }
 
-//   Future<List<MyBook>> getAll() async {
+//   Future<List<BooksModel>> getAll() async {
 //     final dbInstance = await instance.database;
 //     final List<Map<String, dynamic>> maps = await dbInstance.query(tableName);
 //     return listMapToMyBook(maps);
 //   }
 
-//   List<MyBook> listMapToMyBook(List<Map<String, dynamic>> maps) {
-//     List<MyBook> myBookList = List.generate(maps.length, (i) {
-//       return MyBook(
+//   List<BooksModel> listMapToMyBook(List<Map<String, dynamic>> maps) {
+//     List<BooksModel> myBookList = List.generate(maps.length, (i) {
+//       return BooksModel(
 //           id: maps[i]['id'],
-//           title: maps[i]['title'],
+//           bookTitle: maps[i]['bookTitle'],
 //           author: maps[i]['author'],
 //           thumbnail: maps[i]['thumbnail'],
 //           link: maps[i]['link'],
@@ -228,4 +229,3 @@
 //     }
 //   }
 // }
-

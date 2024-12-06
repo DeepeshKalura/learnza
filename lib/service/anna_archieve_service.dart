@@ -2,7 +2,6 @@ import 'dart:developer' as developer;
 
 import 'package:html/parser.dart' show parse;
 
-import 'package:uuid/uuid.dart';
 import 'package:http/http.dart' as http;
 
 import '../model/books/books_model.dart';
@@ -20,7 +19,7 @@ class AnnasArchieveService {
     return md5;
   }
 
-  List<BooksModel> _parser(resData, String fileType) {
+  Future<List<BooksModel>> _parser(resData, String fileType) async {
     var document =
         parse(resData.toString().replaceAll(RegExp(r"<!--|-->"), ''));
     var books = document.querySelectorAll('a');
@@ -46,7 +45,12 @@ class AnnasArchieveService {
                 .querySelector(
                     'div[class="line-clamp-[2] leading-[1.2] text-[10px] lg:text-xs text-gray-500"]')
                 ?.text ??
-            ''
+            '',
+        'description': element
+                .querySelector('div[class="mb-1"]')
+                ?.text
+                .replaceFirst("description", '') ??
+            " "
       };
 
       if ((data['title'] != null && data['title'] != '') &&
@@ -69,7 +73,7 @@ class AnnasArchieveService {
         developer.log('Found book: $link');
 
         BooksModel book = BooksModel(
-          id: const Uuid().v1(),
+          id: getMd5(data['link'].toString()),
           bookTitle: data['title'].toString(),
           author: data['author']?.split(","),
           thumbnail: data['thumbnail'],
