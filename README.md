@@ -45,3 +45,5 @@ I decide to use PostgresSql but I am not been able to do so because of prising, 
 so basically I switch to firebase realtime database.
 
 
+## Shoutout
+1. TanahAir Studio and Streamline for there amazing illustrations.

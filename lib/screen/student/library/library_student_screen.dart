@@ -8,6 +8,8 @@ import '../../../model/books/books_model.dart';
 import '../../../providers/book_provider.dart';
 import '../../../providers/student_provider.dart';
 import '../../common/widget/drawer_widget.dart';
+import 'widget/error/books_snapshot_error_widget.dart';
+import 'widget/error/no_books_found_error_widget.dart';
 
 class LibraryStudentScreen extends StatefulWidget {
   const LibraryStudentScreen({super.key});
@@ -42,9 +44,9 @@ class _LibraryStudentScreenState extends State<LibraryStudentScreen> {
             ),
       body: CustomScrollView(slivers: [
         SliverAppBar(
-          pinned: true,
+          pinned: false,
+          snap: true,
           floating: true,
-          snap: false,
           title: Consumer<StudentProvider>(
             builder: (context, value, child) {
               if (value.isSearch) {
@@ -66,7 +68,7 @@ class _LibraryStudentScreenState extends State<LibraryStudentScreen> {
                 );
               } else {
                 return const Text(
-                  'Personalized Library',
+                  'Lernza Library',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                   ),
@@ -107,23 +109,21 @@ class _LibraryStudentScreenState extends State<LibraryStudentScreen> {
               }
 
               if (snapshot.hasError) {
-                return Center(
-                  child: Text('Error: ${snapshot.error}'),
+                return BooksSnapshotErrorWidget(
+                  errorMessage: snapshot.error.toString(),
                 );
               }
 
               final List<BooksModel>? books = snapshot.data;
 
               if (books == null) {
-                return const Center(
-                  child: Text('Ah Null Why?'),
+                return const BooksSnapshotErrorWidget(
+                  errorMessage: "Can't find any books right now",
                 );
               }
 
               if (books.isEmpty) {
-                return const Center(
-                  child: Text('No books found'),
-                );
+                return const NoBooksFoundErrorWidget();
               }
               return ListView.builder(
                 itemCount: books.length,

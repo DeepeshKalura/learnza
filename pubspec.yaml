@@ -104,6 +104,7 @@ flutter:
   assets:
     - assets/images/common/auth/
     - assets/images/common/splash/
+    - assets/icons/student/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
