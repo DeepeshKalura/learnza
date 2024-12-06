@@ -1,8 +1,12 @@
+import 'dart:developer' as developer;
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
+import 'package:feedback_github/feedback_github.dart';
+import 'package:learnza/locator/injector.dart' as di;
 
+import '../../../app_config.dart';
 import '../../../providers/auth_provider.dart';
 import '../../../router/app_urls.dart';
 
@@ -50,6 +54,23 @@ class DrawerWidget extends StatelessWidget {
           Expanded(
             child: ListView(
               children: [
+                ListTile(
+                  leading: const Icon(
+                    Icons.feedback,
+                  ),
+                  title: const Text('Feedback'),
+                  onTap: () {
+                    final githubtoken = di.injector<AppConfig>().githubToken;
+                    final repoUrl = di.injector<AppConfig>().repoUrl;
+                    BetterFeedback.of(context).showAndUploadToGitHub(
+                      repoUrl: repoUrl,
+                      gitHubToken: githubtoken,
+                      deviceInfo: true,
+                      packageInfo: true,
+                    );
+                  },
+                ),
+
                 ListTile(
                   leading: const Icon(
                     LucideIcons.logOut,

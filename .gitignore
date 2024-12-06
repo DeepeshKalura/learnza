@@ -49,3 +49,4 @@ secret
 
 # Adding for the docs
 .venv/
+.env

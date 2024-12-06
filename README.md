@@ -47,3 +47,11 @@ so basically I switch to firebase realtime database.
 
 ## Shoutout
 1. TanahAir Studio and Streamline for there amazing illustrations.
+
+
+
+For web build
+```bash
+ flutter build web --web-renderer canvaskit
+```
+due to feeback package

@@ -4,6 +4,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:feedback_github/feedback_github.dart';
+import 'package:learnza/app_config.dart';
 
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:learnza/locator/injector.dart' as di;
@@ -33,7 +35,7 @@ Future<void> main() async {
   // await FirebaseAppCheck.instance.activate(
   //   webProvider: ReCaptchaV3Provider('recaptcha-v3-site-key'),
   //   androidProvider: AndroidProvider.debug,
-  //   appleProvider: AppleProvider.appAttest,
+  //   appleProvider: AppleProvider.appAttest,s
   // );
 
   await Firebase.initializeApp(
@@ -45,7 +47,22 @@ Future<void> main() async {
   //   DeviceOrientation.portraitDown,
   // ]);
   await di.init();
-  runApp(const MyApp());
+  await di.injector.get<AppConfig>().setup();
+  runApp(
+    BetterFeedback(
+      theme: FeedbackThemeData(
+        background: Colors.green[50]!,
+        feedbackSheetColor: Colors.grey[50]!,
+        drawColors: [
+          Colors.red,
+          Colors.green,
+          Colors.blue,
+          Colors.yellow,
+        ],
+      ),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
