@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../app_enums.dart';
+import '../comment/comments_model.dart';
 import '../metrics/post_metrics.dart';
 
 part 'posts_model.freezed.dart';
@@ -30,6 +31,7 @@ class PostsModel with _$PostsModel {
     String? categoryId,
     @Default(false) bool isPinned,
     @Default(false) bool isFeatured,
+    @Default([]) List<CommentsModel> comments,
   }) = _PostsModel;
 
   factory PostsModel.fromJson(Map<String, dynamic> json) =>

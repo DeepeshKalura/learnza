@@ -4,7 +4,7 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 
 from app.router import authentication, books
-from app.scripts import create_book
+from app.scripts import create_defaullt_global_mertics
 
 app = FastAPI(title="Lernza")
 
@@ -38,4 +38,5 @@ def read_root():
 
 if __name__ == "__main__":
     # create_course_script.create_course_script()
-    create_book.main()
+    # create_book.main()
+    create_defaullt_global_mertics.main()

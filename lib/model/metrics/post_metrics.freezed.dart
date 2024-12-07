@@ -25,26 +25,18 @@ mixin _$PostEngagementMetrics {
   int get totalViews => throw _privateConstructorUsedError;
   int get uniqueViews => throw _privateConstructorUsedError; // Reaction Metrics
   int get likes => throw _privateConstructorUsedError;
-  int get dislikes => throw _privateConstructorUsedError;
-  Map<String, int> get reactionBreakdown =>
+  int get dislikes =>
       throw _privateConstructorUsedError; // Comment and Discussion Metrics
   int get totalComments => throw _privateConstructorUsedError;
   int get activeDiscussions => throw _privateConstructorUsedError;
   int get topLevelComments => throw _privateConstructorUsedError;
   int get nestedComments =>
       throw _privateConstructorUsedError; // Sharing and Distribution
-  int get shares => throw _privateConstructorUsedError;
-  Map<String, int> get shareChannels =>
-      throw _privateConstructorUsedError; // e.g., 'facebook': 10, 'twitter': 5
-// Performance Metrics
+  int get shares => throw _privateConstructorUsedError; // Performance Metrics
   double get engagementRate => throw _privateConstructorUsedError;
   double get reachRate =>
-      throw _privateConstructorUsedError; // Temporal Engagement Tracking
-  Map<String, int> get dailyEngagement => throw _privateConstructorUsedError;
-  Map<String, int> get hourlyEngagement =>
       throw _privateConstructorUsedError; // User Interaction Details
-  int get uniqueInteractors => throw _privateConstructorUsedError;
-  List<String> get topInteractors =>
+  int get uniqueInteractors =>
       throw _privateConstructorUsedError; // Content Performance
   double get averageReadTime => throw _privateConstructorUsedError;
   int get scrollDepth => throw _privateConstructorUsedError;
@@ -70,19 +62,14 @@ abstract class $PostEngagementMetricsCopyWith<$Res> {
       int uniqueViews,
       int likes,
       int dislikes,
-      Map<String, int> reactionBreakdown,
       int totalComments,
       int activeDiscussions,
       int topLevelComments,
       int nestedComments,
       int shares,
-      Map<String, int> shareChannels,
       double engagementRate,
       double reachRate,
-      Map<String, int> dailyEngagement,
-      Map<String, int> hourlyEngagement,
       int uniqueInteractors,
-      List<String> topInteractors,
       double averageReadTime,
       int scrollDepth});
 }
@@ -107,19 +94,14 @@ class _$PostEngagementMetricsCopyWithImpl<$Res,
     Object? uniqueViews = null,
     Object? likes = null,
     Object? dislikes = null,
-    Object? reactionBreakdown = null,
     Object? totalComments = null,
     Object? activeDiscussions = null,
     Object? topLevelComments = null,
     Object? nestedComments = null,
     Object? shares = null,
-    Object? shareChannels = null,
     Object? engagementRate = null,
     Object? reachRate = null,
-    Object? dailyEngagement = null,
-    Object? hourlyEngagement = null,
     Object? uniqueInteractors = null,
-    Object? topInteractors = null,
     Object? averageReadTime = null,
     Object? scrollDepth = null,
   }) {
@@ -140,10 +122,6 @@ class _$PostEngagementMetricsCopyWithImpl<$Res,
           ? _value.dislikes
           : dislikes // ignore: cast_nullable_to_non_nullable
               as int,
-      reactionBreakdown: null == reactionBreakdown
-          ? _value.reactionBreakdown
-          : reactionBreakdown // ignore: cast_nullable_to_non_nullable
-              as Map<String, int>,
       totalComments: null == totalComments
           ? _value.totalComments
           : totalComments // ignore: cast_nullable_to_non_nullable
@@ -164,10 +142,6 @@ class _$PostEngagementMetricsCopyWithImpl<$Res,
           ? _value.shares
           : shares // ignore: cast_nullable_to_non_nullable
               as int,
-      shareChannels: null == shareChannels
-          ? _value.shareChannels
-          : shareChannels // ignore: cast_nullable_to_non_nullable
-              as Map<String, int>,
       engagementRate: null == engagementRate
           ? _value.engagementRate
           : engagementRate // ignore: cast_nullable_to_non_nullable
@@ -176,22 +150,10 @@ class _$PostEngagementMetricsCopyWithImpl<$Res,
           ? _value.reachRate
           : reachRate // ignore: cast_nullable_to_non_nullable
               as double,
-      dailyEngagement: null == dailyEngagement
-          ? _value.dailyEngagement
-          : dailyEngagement // ignore: cast_nullable_to_non_nullable
-              as Map<String, int>,
-      hourlyEngagement: null == hourlyEngagement
-          ? _value.hourlyEngagement
-          : hourlyEngagement // ignore: cast_nullable_to_non_nullable
-              as Map<String, int>,
       uniqueInteractors: null == uniqueInteractors
           ? _value.uniqueInteractors
           : uniqueInteractors // ignore: cast_nullable_to_non_nullable
               as int,
-      topInteractors: null == topInteractors
-          ? _value.topInteractors
-          : topInteractors // ignore: cast_nullable_to_non_nullable
-              as List<String>,
       averageReadTime: null == averageReadTime
           ? _value.averageReadTime
           : averageReadTime // ignore: cast_nullable_to_non_nullable
@@ -218,19 +180,14 @@ abstract class _$$PostEngagementMetricsImplCopyWith<$Res>
       int uniqueViews,
       int likes,
       int dislikes,
-      Map<String, int> reactionBreakdown,
       int totalComments,
       int activeDiscussions,
       int topLevelComments,
       int nestedComments,
       int shares,
-      Map<String, int> shareChannels,
       double engagementRate,
       double reachRate,
-      Map<String, int> dailyEngagement,
-      Map<String, int> hourlyEngagement,
       int uniqueInteractors,
-      List<String> topInteractors,
       double averageReadTime,
       int scrollDepth});
 }
@@ -253,19 +210,14 @@ class __$$PostEngagementMetricsImplCopyWithImpl<$Res>
     Object? uniqueViews = null,
     Object? likes = null,
     Object? dislikes = null,
-    Object? reactionBreakdown = null,
     Object? totalComments = null,
     Object? activeDiscussions = null,
     Object? topLevelComments = null,
     Object? nestedComments = null,
     Object? shares = null,
-    Object? shareChannels = null,
     Object? engagementRate = null,
     Object? reachRate = null,
-    Object? dailyEngagement = null,
-    Object? hourlyEngagement = null,
     Object? uniqueInteractors = null,
-    Object? topInteractors = null,
     Object? averageReadTime = null,
     Object? scrollDepth = null,
   }) {
@@ -286,10 +238,6 @@ class __$$PostEngagementMetricsImplCopyWithImpl<$Res>
           ? _value.dislikes
           : dislikes // ignore: cast_nullable_to_non_nullable
               as int,
-      reactionBreakdown: null == reactionBreakdown
-          ? _value._reactionBreakdown
-          : reactionBreakdown // ignore: cast_nullable_to_non_nullable
-              as Map<String, int>,
       totalComments: null == totalComments
           ? _value.totalComments
           : totalComments // ignore: cast_nullable_to_non_nullable
@@ -310,10 +258,6 @@ class __$$PostEngagementMetricsImplCopyWithImpl<$Res>
           ? _value.shares
           : shares // ignore: cast_nullable_to_non_nullable
               as int,
-      shareChannels: null == shareChannels
-          ? _value._shareChannels
-          : shareChannels // ignore: cast_nullable_to_non_nullable
-              as Map<String, int>,
       engagementRate: null == engagementRate
           ? _value.engagementRate
           : engagementRate // ignore: cast_nullable_to_non_nullable
@@ -322,22 +266,10 @@ class __$$PostEngagementMetricsImplCopyWithImpl<$Res>
           ? _value.reachRate
           : reachRate // ignore: cast_nullable_to_non_nullable
               as double,
-      dailyEngagement: null == dailyEngagement
-          ? _value._dailyEngagement
-          : dailyEngagement // ignore: cast_nullable_to_non_nullable
-              as Map<String, int>,
-      hourlyEngagement: null == hourlyEngagement
-          ? _value._hourlyEngagement
-          : hourlyEngagement // ignore: cast_nullable_to_non_nullable
-              as Map<String, int>,
       uniqueInteractors: null == uniqueInteractors
           ? _value.uniqueInteractors
           : uniqueInteractors // ignore: cast_nullable_to_non_nullable
               as int,
-      topInteractors: null == topInteractors
-          ? _value._topInteractors
-          : topInteractors // ignore: cast_nullable_to_non_nullable
-              as List<String>,
       averageReadTime: null == averageReadTime
           ? _value.averageReadTime
           : averageReadTime // ignore: cast_nullable_to_non_nullable
@@ -358,26 +290,16 @@ class _$PostEngagementMetricsImpl implements _PostEngagementMetrics {
       this.uniqueViews = 0,
       this.likes = 0,
       this.dislikes = 0,
-      final Map<String, int> reactionBreakdown = const {},
       this.totalComments = 0,
       this.activeDiscussions = 0,
       this.topLevelComments = 0,
       this.nestedComments = 0,
       this.shares = 0,
-      final Map<String, int> shareChannels = const {},
       this.engagementRate = 0,
       this.reachRate = 0,
-      final Map<String, int> dailyEngagement = const {},
-      final Map<String, int> hourlyEngagement = const {},
       this.uniqueInteractors = 0,
-      final List<String> topInteractors = const [],
       this.averageReadTime = 0,
-      this.scrollDepth = 0})
-      : _reactionBreakdown = reactionBreakdown,
-        _shareChannels = shareChannels,
-        _dailyEngagement = dailyEngagement,
-        _hourlyEngagement = hourlyEngagement,
-        _topInteractors = topInteractors;
+      this.scrollDepth = 0});
 
   factory _$PostEngagementMetricsImpl.fromJson(Map<String, dynamic> json) =>
       _$$PostEngagementMetricsImplFromJson(json);
@@ -396,16 +318,6 @@ class _$PostEngagementMetricsImpl implements _PostEngagementMetrics {
   @override
   @JsonKey()
   final int dislikes;
-  final Map<String, int> _reactionBreakdown;
-  @override
-  @JsonKey()
-  Map<String, int> get reactionBreakdown {
-    if (_reactionBreakdown is EqualUnmodifiableMapView)
-      return _reactionBreakdown;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(_reactionBreakdown);
-  }
-
 // Comment and Discussion Metrics
   @override
   @JsonKey()
@@ -423,16 +335,6 @@ class _$PostEngagementMetricsImpl implements _PostEngagementMetrics {
   @override
   @JsonKey()
   final int shares;
-  final Map<String, int> _shareChannels;
-  @override
-  @JsonKey()
-  Map<String, int> get shareChannels {
-    if (_shareChannels is EqualUnmodifiableMapView) return _shareChannels;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(_shareChannels);
-  }
-
-// e.g., 'facebook': 10, 'twitter': 5
 // Performance Metrics
   @override
   @JsonKey()
@@ -440,39 +342,10 @@ class _$PostEngagementMetricsImpl implements _PostEngagementMetrics {
   @override
   @JsonKey()
   final double reachRate;
-// Temporal Engagement Tracking
-  final Map<String, int> _dailyEngagement;
-// Temporal Engagement Tracking
-  @override
-  @JsonKey()
-  Map<String, int> get dailyEngagement {
-    if (_dailyEngagement is EqualUnmodifiableMapView) return _dailyEngagement;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(_dailyEngagement);
-  }
-
-  final Map<String, int> _hourlyEngagement;
-  @override
-  @JsonKey()
-  Map<String, int> get hourlyEngagement {
-    if (_hourlyEngagement is EqualUnmodifiableMapView) return _hourlyEngagement;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(_hourlyEngagement);
-  }
-
 // User Interaction Details
   @override
   @JsonKey()
   final int uniqueInteractors;
-  final List<String> _topInteractors;
-  @override
-  @JsonKey()
-  List<String> get topInteractors {
-    if (_topInteractors is EqualUnmodifiableListView) return _topInteractors;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_topInteractors);
-  }
-
 // Content Performance
   @override
   @JsonKey()
@@ -483,7 +356,7 @@ class _$PostEngagementMetricsImpl implements _PostEngagementMetrics {
 
   @override
   String toString() {
-    return 'PostEngagementMetrics(totalViews: $totalViews, uniqueViews: $uniqueViews, likes: $likes, dislikes: $dislikes, reactionBreakdown: $reactionBreakdown, totalComments: $totalComments, activeDiscussions: $activeDiscussions, topLevelComments: $topLevelComments, nestedComments: $nestedComments, shares: $shares, shareChannels: $shareChannels, engagementRate: $engagementRate, reachRate: $reachRate, dailyEngagement: $dailyEngagement, hourlyEngagement: $hourlyEngagement, uniqueInteractors: $uniqueInteractors, topInteractors: $topInteractors, averageReadTime: $averageReadTime, scrollDepth: $scrollDepth)';
+    return 'PostEngagementMetrics(totalViews: $totalViews, uniqueViews: $uniqueViews, likes: $likes, dislikes: $dislikes, totalComments: $totalComments, activeDiscussions: $activeDiscussions, topLevelComments: $topLevelComments, nestedComments: $nestedComments, shares: $shares, engagementRate: $engagementRate, reachRate: $reachRate, uniqueInteractors: $uniqueInteractors, averageReadTime: $averageReadTime, scrollDepth: $scrollDepth)';
   }
 
   @override
@@ -498,8 +371,6 @@ class _$PostEngagementMetricsImpl implements _PostEngagementMetrics {
             (identical(other.likes, likes) || other.likes == likes) &&
             (identical(other.dislikes, dislikes) ||
                 other.dislikes == dislikes) &&
-            const DeepCollectionEquality()
-                .equals(other._reactionBreakdown, _reactionBreakdown) &&
             (identical(other.totalComments, totalComments) ||
                 other.totalComments == totalComments) &&
             (identical(other.activeDiscussions, activeDiscussions) ||
@@ -509,20 +380,12 @@ class _$PostEngagementMetricsImpl implements _PostEngagementMetrics {
             (identical(other.nestedComments, nestedComments) ||
                 other.nestedComments == nestedComments) &&
             (identical(other.shares, shares) || other.shares == shares) &&
-            const DeepCollectionEquality()
-                .equals(other._shareChannels, _shareChannels) &&
             (identical(other.engagementRate, engagementRate) ||
                 other.engagementRate == engagementRate) &&
             (identical(other.reachRate, reachRate) ||
                 other.reachRate == reachRate) &&
-            const DeepCollectionEquality()
-                .equals(other._dailyEngagement, _dailyEngagement) &&
-            const DeepCollectionEquality()
-                .equals(other._hourlyEngagement, _hourlyEngagement) &&
             (identical(other.uniqueInteractors, uniqueInteractors) ||
                 other.uniqueInteractors == uniqueInteractors) &&
-            const DeepCollectionEquality()
-                .equals(other._topInteractors, _topInteractors) &&
             (identical(other.averageReadTime, averageReadTime) ||
                 other.averageReadTime == averageReadTime) &&
             (identical(other.scrollDepth, scrollDepth) ||
@@ -531,28 +394,22 @@ class _$PostEngagementMetricsImpl implements _PostEngagementMetrics {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hashAll([
-        runtimeType,
-        totalViews,
-        uniqueViews,
-        likes,
-        dislikes,
-        const DeepCollectionEquality().hash(_reactionBreakdown),
-        totalComments,
-        activeDiscussions,
-        topLevelComments,
-        nestedComments,
-        shares,
-        const DeepCollectionEquality().hash(_shareChannels),
-        engagementRate,
-        reachRate,
-        const DeepCollectionEquality().hash(_dailyEngagement),
-        const DeepCollectionEquality().hash(_hourlyEngagement),
-        uniqueInteractors,
-        const DeepCollectionEquality().hash(_topInteractors),
-        averageReadTime,
-        scrollDepth
-      ]);
+  int get hashCode => Object.hash(
+      runtimeType,
+      totalViews,
+      uniqueViews,
+      likes,
+      dislikes,
+      totalComments,
+      activeDiscussions,
+      topLevelComments,
+      nestedComments,
+      shares,
+      engagementRate,
+      reachRate,
+      uniqueInteractors,
+      averageReadTime,
+      scrollDepth);
 
   /// Create a copy of PostEngagementMetrics
   /// with the given fields replaced by the non-null parameter values.
@@ -577,19 +434,14 @@ abstract class _PostEngagementMetrics implements PostEngagementMetrics {
       final int uniqueViews,
       final int likes,
       final int dislikes,
-      final Map<String, int> reactionBreakdown,
       final int totalComments,
       final int activeDiscussions,
       final int topLevelComments,
       final int nestedComments,
       final int shares,
-      final Map<String, int> shareChannels,
       final double engagementRate,
       final double reachRate,
-      final Map<String, int> dailyEngagement,
-      final Map<String, int> hourlyEngagement,
       final int uniqueInteractors,
-      final List<String> topInteractors,
       final double averageReadTime,
       final int scrollDepth}) = _$PostEngagementMetricsImpl;
 
@@ -604,9 +456,7 @@ abstract class _PostEngagementMetrics implements PostEngagementMetrics {
   @override
   int get likes;
   @override
-  int get dislikes;
-  @override
-  Map<String, int> get reactionBreakdown; // Comment and Discussion Metrics
+  int get dislikes; // Comment and Discussion Metrics
   @override
   int get totalComments;
   @override
@@ -616,22 +466,13 @@ abstract class _PostEngagementMetrics implements PostEngagementMetrics {
   @override
   int get nestedComments; // Sharing and Distribution
   @override
-  int get shares;
-  @override
-  Map<String, int> get shareChannels; // e.g., 'facebook': 10, 'twitter': 5
-// Performance Metrics
+  int get shares; // Performance Metrics
   @override
   double get engagementRate;
   @override
-  double get reachRate; // Temporal Engagement Tracking
+  double get reachRate; // User Interaction Details
   @override
-  Map<String, int> get dailyEngagement;
-  @override
-  Map<String, int> get hourlyEngagement; // User Interaction Details
-  @override
-  int get uniqueInteractors;
-  @override
-  List<String> get topInteractors; // Content Performance
+  int get uniqueInteractors; // Content Performance
   @override
   double get averageReadTime;
   @override

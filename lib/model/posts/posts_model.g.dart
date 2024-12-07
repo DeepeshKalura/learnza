@@ -31,6 +31,10 @@ _$PostsModelImpl _$$PostsModelImplFromJson(Map<String, dynamic> json) =>
       categoryId: json['categoryId'] as String?,
       isPinned: json['isPinned'] as bool? ?? false,
       isFeatured: json['isFeatured'] as bool? ?? false,
+      comments: (json['comments'] as List<dynamic>?)
+              ?.map((e) => CommentsModel.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
     );
 
 Map<String, dynamic> _$$PostsModelImplToJson(_$PostsModelImpl instance) =>
@@ -49,6 +53,7 @@ Map<String, dynamic> _$$PostsModelImplToJson(_$PostsModelImpl instance) =>
       'categoryId': instance.categoryId,
       'isPinned': instance.isPinned,
       'isFeatured': instance.isFeatured,
+      'comments': instance.comments,
     };
 
 const _$PostVisibilityEnumMap = {

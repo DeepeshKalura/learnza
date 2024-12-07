@@ -38,6 +38,7 @@ mixin _$PostsModel {
   String? get categoryId => throw _privateConstructorUsedError;
   bool get isPinned => throw _privateConstructorUsedError;
   bool get isFeatured => throw _privateConstructorUsedError;
+  List<CommentsModel> get comments => throw _privateConstructorUsedError;
 
   /// Serializes this PostsModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -69,7 +70,8 @@ abstract class $PostsModelCopyWith<$Res> {
       PostVisibility visibility,
       String? categoryId,
       bool isPinned,
-      bool isFeatured});
+      bool isFeatured,
+      List<CommentsModel> comments});
 
   $PostEngagementMetricsCopyWith<$Res> get engagementMetrics;
 }
@@ -103,6 +105,7 @@ class _$PostsModelCopyWithImpl<$Res, $Val extends PostsModel>
     Object? categoryId = freezed,
     Object? isPinned = null,
     Object? isFeatured = null,
+    Object? comments = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -161,6 +164,10 @@ class _$PostsModelCopyWithImpl<$Res, $Val extends PostsModel>
           ? _value.isFeatured
           : isFeatured // ignore: cast_nullable_to_non_nullable
               as bool,
+      comments: null == comments
+          ? _value.comments
+          : comments // ignore: cast_nullable_to_non_nullable
+              as List<CommentsModel>,
     ) as $Val);
   }
 
@@ -198,7 +205,8 @@ abstract class _$$PostsModelImplCopyWith<$Res>
       PostVisibility visibility,
       String? categoryId,
       bool isPinned,
-      bool isFeatured});
+      bool isFeatured,
+      List<CommentsModel> comments});
 
   @override
   $PostEngagementMetricsCopyWith<$Res> get engagementMetrics;
@@ -231,6 +239,7 @@ class __$$PostsModelImplCopyWithImpl<$Res>
     Object? categoryId = freezed,
     Object? isPinned = null,
     Object? isFeatured = null,
+    Object? comments = null,
   }) {
     return _then(_$PostsModelImpl(
       id: null == id
@@ -289,6 +298,10 @@ class __$$PostsModelImplCopyWithImpl<$Res>
           ? _value.isFeatured
           : isFeatured // ignore: cast_nullable_to_non_nullable
               as bool,
+      comments: null == comments
+          ? _value._comments
+          : comments // ignore: cast_nullable_to_non_nullable
+              as List<CommentsModel>,
     ));
   }
 }
@@ -310,8 +323,10 @@ class _$PostsModelImpl implements _PostsModel {
       this.visibility = PostVisibility.public,
       this.categoryId,
       this.isPinned = false,
-      this.isFeatured = false})
-      : _tags = tags;
+      this.isFeatured = false,
+      final List<CommentsModel> comments = const []})
+      : _tags = tags,
+        _comments = comments;
 
   factory _$PostsModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$PostsModelImplFromJson(json);
@@ -360,10 +375,18 @@ class _$PostsModelImpl implements _PostsModel {
   @override
   @JsonKey()
   final bool isFeatured;
+  final List<CommentsModel> _comments;
+  @override
+  @JsonKey()
+  List<CommentsModel> get comments {
+    if (_comments is EqualUnmodifiableListView) return _comments;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_comments);
+  }
 
   @override
   String toString() {
-    return 'PostsModel(id: $id, title: $title, content: $content, authorId: $authorId, thumbnailUrl: $thumbnailUrl, createdAt: $createdAt, updatedAt: $updatedAt, scheduledAt: $scheduledAt, engagementMetrics: $engagementMetrics, tags: $tags, visibility: $visibility, categoryId: $categoryId, isPinned: $isPinned, isFeatured: $isFeatured)';
+    return 'PostsModel(id: $id, title: $title, content: $content, authorId: $authorId, thumbnailUrl: $thumbnailUrl, createdAt: $createdAt, updatedAt: $updatedAt, scheduledAt: $scheduledAt, engagementMetrics: $engagementMetrics, tags: $tags, visibility: $visibility, categoryId: $categoryId, isPinned: $isPinned, isFeatured: $isFeatured, comments: $comments)';
   }
 
   @override
@@ -394,7 +417,8 @@ class _$PostsModelImpl implements _PostsModel {
             (identical(other.isPinned, isPinned) ||
                 other.isPinned == isPinned) &&
             (identical(other.isFeatured, isFeatured) ||
-                other.isFeatured == isFeatured));
+                other.isFeatured == isFeatured) &&
+            const DeepCollectionEquality().equals(other._comments, _comments));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -414,7 +438,8 @@ class _$PostsModelImpl implements _PostsModel {
       visibility,
       categoryId,
       isPinned,
-      isFeatured);
+      isFeatured,
+      const DeepCollectionEquality().hash(_comments));
 
   /// Create a copy of PostsModel
   /// with the given fields replaced by the non-null parameter values.
@@ -447,7 +472,8 @@ abstract class _PostsModel implements PostsModel {
       final PostVisibility visibility,
       final String? categoryId,
       final bool isPinned,
-      final bool isFeatured}) = _$PostsModelImpl;
+      final bool isFeatured,
+      final List<CommentsModel> comments}) = _$PostsModelImpl;
 
   factory _PostsModel.fromJson(Map<String, dynamic> json) =
       _$PostsModelImpl.fromJson;
@@ -482,6 +508,8 @@ abstract class _PostsModel implements PostsModel {
   bool get isPinned;
   @override
   bool get isFeatured;
+  @override
+  List<CommentsModel> get comments;
 
   /// Create a copy of PostsModel
   /// with the given fields replaced by the non-null parameter values.

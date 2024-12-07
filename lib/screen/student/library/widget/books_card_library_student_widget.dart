@@ -12,9 +12,11 @@ class BooksCardLibraryStudentWidget extends StatefulWidget {
   const BooksCardLibraryStudentWidget({
     super.key,
     required this.booksModel,
+    this.isAnnaBook = false,
   });
 
   final BooksModel booksModel;
+  final bool isAnnaBook;
 
   @override
   BooksCardLibraryStudentWidgetState createState() =>
@@ -223,12 +225,16 @@ class BooksCardLibraryStudentWidgetState
           backgroundColor: primaryColor,
           onPressed: widget.booksModel.founded
               ? () {
-                  context.pushNamed(
-                    AppUrls.readBookReadScreen,
-                    extra: {
-                      'book': widget.booksModel,
-                    },
-                  );
+                  if (!widget.isAnnaBook) {
+                    context.pushNamed(
+                      AppUrls.readBookReadScreen,
+                      extra: {
+                        'book': widget.booksModel,
+                      },
+                    );
+                  } else {
+                    // logic web view
+                  }
                 }
               : null,
           child: const Text('Read Now'),

@@ -15,6 +15,9 @@ class AppUrls {
   // students --> groups
   static const String groupsStudentScreen = 'groupsStudentScreen';
   static const String groupDetailStudentScreen = 'groupDetailStudentScreen';
+  // common
+  static const String aboutCommonScreen = 'aboutCommonScreen';
+  static const String settingCommonScreen = 'settingCommonScreen';
 
   // these routes i am not using any more
   static const String editBlogStudentScreen = 'editBlogStudentScreen';

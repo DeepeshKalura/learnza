@@ -6,6 +6,7 @@ import 'package:learnza/utils/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../model/posts/posts_model.dart';
 import '../../../model/users/users_model.dart';
@@ -50,7 +51,9 @@ class _PostStudentScreenState extends State<PostStudentScreen> {
         body: CustomScrollView(
           slivers: [
             SliverAppBar(
-              automaticallyImplyLeading: false,
+              pinned: false,
+              snap: true,
+              floating: true,
               leading: isWeb
                   ? null
                   : IconButton(
@@ -59,13 +62,16 @@ class _PostStudentScreenState extends State<PostStudentScreen> {
                         scafoldKey.currentState!.openDrawer();
                       },
                     ),
-              title: const Text('Lernza'),
+              title: Text(
+                AppLocalizations.of(context)?.appName ?? 'Lernza',
+              ),
               actions: [
                 if (isWeb)
                   buildNavigationItem(
                     context,
                     icon: Icons.home_outlined,
-                    label: 'Home',
+                    label: AppLocalizations.of(context)?.homeNavigationBar ??
+                        'Home',
                     index: 0,
                     selectedIndex: 0,
                     primaryColor: primaryColor,
@@ -77,7 +83,8 @@ class _PostStudentScreenState extends State<PostStudentScreen> {
                   buildNavigationItem(
                     context,
                     icon: Icons.library_books,
-                    label: 'Library',
+                    label: AppLocalizations.of(context)?.libraryNavigationBar ??
+                        'Library',
                     index: 1,
                     selectedIndex: 0,
                     primaryColor: primaryColor,
@@ -90,7 +97,8 @@ class _PostStudentScreenState extends State<PostStudentScreen> {
                   buildNavigationItem(
                     context,
                     icon: Icons.group,
-                    label: 'Groups',
+                    label: AppLocalizations.of(context)?.groupNavigationBar ??
+                        'Groups',
                     index: 2,
                     selectedIndex: 0,
                     primaryColor: primaryColor,
@@ -147,9 +155,14 @@ class _PostStudentScreenState extends State<PostStudentScreen> {
                                 color: Colors.grey.shade200,
                                 borderRadius: BorderRadius.circular(10),
                               ),
-                              child: const Text(
-                                "What's on your mind?",
-                                style: TextStyle(color: Colors.grey),
+                              child: Text(
+                                AppLocalizations.of(context)
+                                        ?.postHeaderMessage ??
+                                    "What's on your mind?",
+                                style:
+                                    ShadTheme.of(context).textTheme.p.copyWith(
+                                          color: Colors.grey,
+                                        ),
                               ),
                             ),
                           ),
@@ -189,7 +202,9 @@ class _PostStudentScreenState extends State<PostStudentScreen> {
                                 return CardPostStudentWidget(
                                   post: post,
                                   user: user,
-                                  key: Key(post.id),
+                                  key: Key(
+                                    post.id,
+                                  ),
                                 );
                               },
                             ),
@@ -266,19 +281,19 @@ class _PostStudentScreenState extends State<PostStudentScreen> {
         child: ShadDialog(
           radius: BorderRadius.circular(10),
           actionsAxis: Axis.horizontal,
-          title: const Text(
-            'Add Post',
+          title: Text(
+            AppLocalizations.of(context)?.addPost ?? 'Add Post',
             textAlign: TextAlign.left,
           ),
           actions: [
             ShadButton.outline(
               width: 100,
-              child: const Text(
-                'Cancel',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 15,
-                ),
+              child: Text(
+                AppLocalizations.of(context)?.addPost ?? 'Cancel',
+                style: ShadTheme.of(context).textTheme.p.copyWith(
+                      color: Colors.black,
+                      fontSize: 15,
+                    ),
               ),
               onPressed: () {
                 context.pop();
@@ -295,12 +310,12 @@ class _PostStudentScreenState extends State<PostStudentScreen> {
                             color: Colors.white,
                           ),
                         )
-                      : const Text(
-                          'Post',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 15,
-                          ),
+                      : Text(
+                          AppLocalizations.of(context)?.addPost ?? 'Post',
+                          style: ShadTheme.of(context).textTheme.p.copyWith(
+                                color: Colors.white,
+                                fontSize: 15,
+                              ),
                         );
                 },
               ),
@@ -313,37 +328,45 @@ class _PostStudentScreenState extends State<PostStudentScreen> {
               children: [
                 ShadInputFormField(
                   id: 'titleOfPost',
-                  label: const Text("Title"),
+                  label: Text(AppLocalizations.of(context)?.title ?? "Title"),
                   autofocus: true,
                   keyboardType: TextInputType.text,
-                  placeholder: const Text(
-                    "Write a Title for post here",
+                  placeholder: Text(
+                    AppLocalizations.of(context)?.titlePlaceholder ??
+                        "Write a Title for post here",
                   ),
                   controller: _titleController,
-                  validator: (value) =>
-                      value.isEmpty == true ? 'Title cannot be empty' : null,
+                  validator: (value) => value.isEmpty == true
+                      ? AppLocalizations.of(context)?.validTitle ??
+                          'Title cannot be empty'
+                      : null,
                 ),
                 const SizedBox(height: 10),
                 ShadInputFormField(
-                  label: const Text("Content"),
+                  label: Text(
+                    AppLocalizations.of(context)?.content ?? "Content",
+                  ),
                   controller: _contentController,
-                  placeholder: const Text(
-                    'write a content of the post here',
+                  placeholder: Text(
+                    AppLocalizations.of(context)?.contentPlaceholder ??
+                        'write a content of the post here',
                   ),
                   maxLines: 7,
-                  validator: (value) =>
-                      value.isEmpty == true ? 'Content cannot be empty' : null,
+                  validator: (value) => value.isEmpty == true
+                      ? AppLocalizations.of(context)?.contentPlaceholder ??
+                          'Content cannot be empty'
+                      : null,
                 ),
                 const SizedBox(height: 10),
 
                 //  Image Picker Section
 
-                const Text(
-                  'Thumbnail',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                  ),
+                Text(
+                  AppLocalizations.of(context)?.thumbnail ?? 'Thumbnail',
+                  style: ShadTheme.of(context).textTheme.p.copyWith(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      ),
                 ),
                 Consumer<PostProvider>(builder: (context, postProvider, child) {
                   final thumbnail = postProvider.thumbnail;
@@ -393,8 +416,12 @@ class _PostStudentScreenState extends State<PostStudentScreen> {
                             const SizedBox(width: 8),
                             Text(
                               thumbnail == null
-                                  ? 'Select Thumbnail'
-                                  : 'Change Thumbnail',
+                                  ? AppLocalizations.of(context)
+                                          ?.selectThumbnail ??
+                                      'Select Thumbnail'
+                                  : AppLocalizations.of(context)
+                                          ?.changeThumbnail ??
+                                      'Change Thumbnail',
                             ),
                           ],
                         ),
@@ -402,11 +429,12 @@ class _PostStudentScreenState extends State<PostStudentScreen> {
                       if (thumbnail == null) ...[
                         const SizedBox(height: 8),
                         Text(
-                          'Recommended size: 1200x1200px',
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.grey.shade600,
-                          ),
+                          AppLocalizations.of(context)?.recommendedSize ??
+                              'Recommended size: 1200x1200px',
+                          style: ShadTheme.of(context).textTheme.p.copyWith(
+                                fontSize: 12,
+                                color: Colors.grey.shade600,
+                              ),
                         ),
                       ],
                     ],

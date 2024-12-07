@@ -22,3 +22,10 @@ enum AttachmentType { image, video, audio, document, other }
 enum Environment { development, production }
 
 enum PostVisibility { public, private, restricted, draft }
+
+enum CommentStatus {
+  active,
+  hidden,
+  deleted,
+  reported,
+}
