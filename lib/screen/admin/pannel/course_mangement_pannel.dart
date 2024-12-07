@@ -466,7 +466,7 @@ class _CourseCreateDialogState extends State<_CourseCreateDialog> {
       courseProvider
           .createCourse(
         name: _nameController.text,
-        year: _selectedDepartmentId!,
+        year: int.parse(_selectedDepartmentId!),
       )
           .then((_) {
         context.pop();
@@ -521,7 +521,7 @@ class _CourseEditDialogState extends State<_CourseEditDialog> {
   void initState() {
     super.initState();
     _nameController = TextEditingController(text: widget.course.name);
-    _selectedDepartmentId = widget.course.year;
+    _selectedDepartmentId = widget.course.departmentId ?? "";
     _isActive = widget.course.isActive;
   }
 

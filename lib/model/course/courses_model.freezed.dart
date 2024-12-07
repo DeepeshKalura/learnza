@@ -22,7 +22,7 @@ CoursesModel _$CoursesModelFromJson(Map<String, dynamic> json) {
 mixin _$CoursesModel {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  String get year =>
+  int get year =>
       throw _privateConstructorUsedError; // how long the year last for a given course
   String? get description => throw _privateConstructorUsedError;
   String? get shortName => throw _privateConstructorUsedError;
@@ -54,7 +54,7 @@ abstract class $CoursesModelCopyWith<$Res> {
   $Res call(
       {String id,
       String name,
-      String year,
+      int year,
       String? description,
       String? shortName,
       String? courseImageUrl,
@@ -102,7 +102,7 @@ class _$CoursesModelCopyWithImpl<$Res, $Val extends CoursesModel>
       year: null == year
           ? _value.year
           : year // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
@@ -146,7 +146,7 @@ abstract class _$$CoursesModelImplCopyWith<$Res>
   $Res call(
       {String id,
       String name,
-      String year,
+      int year,
       String? description,
       String? shortName,
       String? courseImageUrl,
@@ -192,7 +192,7 @@ class __$$CoursesModelImplCopyWithImpl<$Res>
       year: null == year
           ? _value.year
           : year // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
@@ -248,7 +248,7 @@ class _$CoursesModelImpl implements _CoursesModel {
   @override
   final String name;
   @override
-  final String year;
+  final int year;
 // how long the year last for a given course
   @override
   final String? description;
@@ -322,7 +322,7 @@ abstract class _CoursesModel implements CoursesModel {
   const factory _CoursesModel(
       {required final String id,
       required final String name,
-      required final String year,
+      required final int year,
       final String? description,
       final String? shortName,
       final String? courseImageUrl,
@@ -339,7 +339,7 @@ abstract class _CoursesModel implements CoursesModel {
   @override
   String get name;
   @override
-  String get year; // how long the year last for a given course
+  int get year; // how long the year last for a given course
   @override
   String? get description;
   @override

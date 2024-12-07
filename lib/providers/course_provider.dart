@@ -10,6 +10,8 @@ class CourseProvider extends ChangeNotifier {
 
   CourseProvider({required this.firebaseService});
 
+  CoursesModel? currentUserCourse;
+
   List<CoursesModel> _courses = [];
   final bool _isLoading = false;
   String? _error;
@@ -24,7 +26,7 @@ class CourseProvider extends ChangeNotifier {
   // Create a new course
   Future<void> createCourse({
     required String name,
-    required String year,
+    required int year,
     Map<String, dynamic>? courseSettings,
   }) async {
     try {
@@ -179,6 +181,25 @@ class CourseProvider extends ChangeNotifier {
       return _courses;
     } catch (e, s) {
       developer.log('Error fetching courses', error: e, stackTrace: s);
+      _error = e.toString();
+
+      rethrow;
+    }
+  }
+
+  Future<void> getCourseById(String courseId) async {
+    try {
+      final docSnapshot = await firebaseService.database
+          .collection("courses")
+          .doc(courseId)
+          .get();
+
+      if (docSnapshot.exists) {
+        currentUserCourse =
+            CoursesModel.fromJson(docSnapshot.data() as Map<String, dynamic>);
+      }
+    } catch (e, s) {
+      developer.log('Error fetching course', error: e, stackTrace: s);
       _error = e.toString();
 
       rethrow;
