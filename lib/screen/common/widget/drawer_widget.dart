@@ -84,7 +84,29 @@ class DrawerWidget extends StatelessWidget {
                     ),
                   ),
                   onTap: () {
-                    context.pushNamed(AppUrls.seetingStudentScreen);
+                    context.pushNamed(AppUrls.settingCommonScreen);
+                    // showShadDialog(
+                    //   context: context,
+                    //   builder: (context) => ShadDialog(
+                    //     title: const Text("Settings"),
+                    //     description:
+                    //         const Text("Make changes for you application"),
+                    //     actions: [
+                    //       ShadButton(
+                    //         icon: const Icon(LucideIcons.languages),
+                    //         onPressed: () {
+                    //           Navigator.of(context).pop();
+                    //         },
+                    //         child: const Text("Neplai"),
+                    //       ),
+                    //       ShadButton(
+                    //           icon: const Icon(Icons.close),
+                    //           onPressed: () {
+                    //             Navigator.of(context).pop();
+                    //           }),
+                    //     ],
+                    //   ),
+                    // );
                   },
                   selected: currentIndex == 1,
                 ),
@@ -146,7 +168,7 @@ class DrawerWidget extends StatelessWidget {
                     ),
                   ),
                   onTap: () {
-                    context.pushNamed(AppUrls.aboutStudentScreen);
+                    context.pushNamed(AppUrls.aboutCommonScreen);
                   },
                 ),
                 ListTile(
@@ -158,9 +180,34 @@ class DrawerWidget extends StatelessWidget {
                     'Logout',
                     style: TextStyle(color: dangerColor),
                   ),
-                  onTap: () {
-                    context.read<AuthProvider>().logout();
-                    context.pushReplacementNamed(AppUrls.authenticationScreen);
+                  onTap: () async {
+                    var result = await showShadDialog(
+                      context: context,
+                      builder: (context) => ShadDialog.alert(
+                        title: const Text('Are you absolutely sure?'),
+                        description: const Padding(
+                          padding: EdgeInsets.only(bottom: 8),
+                          child: Text(
+                            'This action will makes you logout from the application.',
+                          ),
+                        ),
+                        actions: [
+                          ShadButton.outline(
+                            child: const Text('Cancel'),
+                            onPressed: () => Navigator.of(context).pop(false),
+                          ),
+                          ShadButton(
+                            child: const Text('Continue'),
+                            onPressed: () => Navigator.of(context).pop(true),
+                          ),
+                        ],
+                      ),
+                    );
+                    if (result == true) {
+                      context.read<AuthProvider>().logout();
+                      context
+                          .pushReplacementNamed(AppUrls.authenticationScreen);
+                    }
                   },
                 ),
                 ShadImage(

@@ -53,7 +53,7 @@ Future<void> main() async {
     BetterFeedback(
       mode: FeedbackMode.navigate,
       theme: FeedbackThemeData(
-        background: Colors.green[50]!,
+        background: Colors.blue[50]!,
         feedbackSheetColor: Colors.grey[50]!,
         drawColors: [
           Colors.red,

@@ -6,6 +6,8 @@ import 'package:learnza/locator/injector.dart' as di;
 import '../model/books/books_model.dart';
 import '../model/groups/groups_model.dart';
 import '../model/posts/posts_model.dart';
+import '../screen/common/about/about_common_screen.dart';
+import '../screen/common/setting/setting_common_screen.dart';
 import '../screen/common/splash/splash_screen.dart';
 import '../screen/student/groups/groups_detail_screen.dart';
 import '../screen/student/library/library_student_screen.dart';
@@ -55,6 +57,18 @@ class AppRouters {
         name: AppUrls.authenticationScreen,
         builder: (context, state) => const LoginAuthCommonScreen(),
         redirect: roleBasedRedirect,
+      ),
+
+      GoRoute(
+        path: "/about",
+        name: AppUrls.aboutCommonScreen,
+        builder: (context, state) => const AboutCommonScreen(),
+      ),
+
+      GoRoute(
+        path: "/setting",
+        name: AppUrls.settingCommonScreen,
+        builder: (context, state) => const SettingCommonScreen(),
       ),
 
       // here will exit authenticated admin routes

@@ -27,7 +27,12 @@ class _ReadBookReadScreenState extends State<ReadBookReadScreen> {
     setState(() {
       loading = true;
       _pdfController = PdfController(
-        document: PdfDocument.openData(InternetFile.get(widget.book.bookUrl!)),
+        document: PdfDocument.openData(InternetFile.get(
+          widget.book.bookUrl!,
+          progress: (receivedLength, contentLength) {
+            // Create a progress bar
+          },
+        )),
       );
       loading = false;
     });

@@ -13,7 +13,7 @@ class HomeStudentScreen extends StatefulWidget {
 }
 
 class _HomeStudentScreenState extends State<HomeStudentScreen> {
-  int _currentIndex = 0;
+  int _currentIndex = 1;
 
   final List<Widget> _screens = [
     const PostStudentScreen(),
@@ -47,12 +47,6 @@ class _HomeStudentScreenState extends State<HomeStudentScreen> {
                       ),
                       label: 'Home',
                     ),
-                    // BottomNavigationBarItem(
-                    //   icon: Icon(
-                    //     Icons.person,
-                    //   ),
-                    //   label: 'Profile',
-                    // ),
                     BottomNavigationBarItem(
                       icon: Icon(
                         Icons.library_books,

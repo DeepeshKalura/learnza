@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:uuid/uuid.dart';
 
+import '../model/metrics/post_metrics.dart';
 import '../model/posts/posts_model.dart';
 import '../model/users/users_model.dart';
 import '../service/firebase_service.dart';
@@ -56,11 +57,50 @@ class PostProvider extends ChangeNotifier {
         createdAt: DateTime.now(),
         updatedAt: DateTime.now(),
         authorId: authorId,
+        engagementMetrics: const PostEngagementMetrics(),
       );
 
-      await firebaseService.database.collection('posts').doc(newPost.id).set(
-            newPost.toJson(),
-          );
+      final postDocRef =
+          firebaseService.database.collection('posts').doc(newPost.id);
+
+      final globalPostMertricsDocRef = firebaseService.database
+          .collection('global-post-metrics')
+          .doc("FdCccnSXO37fnGLPT7Ca");
+
+      await firebaseService.database
+          .runTransaction(
+            (transaction) async {
+              final postData = newPost.toJson();
+              // ? We have to manually convert the `engagementMetrics` to JSON because the `frezze` package is not supporting
+              postData['engagementMetrics'] =
+                  newPost.engagementMetrics.toJson();
+
+              // Convert `newGlobalPostMetrics` to JSON
+              final metricsData =
+                  await transaction.get(globalPostMertricsDocRef);
+
+              // Increment the totalPosts by 1
+              var newMetricsData = metricsData.data();
+
+              developer.log('Metrics data: $newMetricsData');
+
+              newMetricsData!['totalPosts'] = newMetricsData['totalPosts'] + 1;
+              newMetricsData['activePosts'] = newMetricsData['activePosts'] + 1;
+
+              developer.log('Metrics data: $newMetricsData');
+
+              // Write the new post
+              transaction.set(postDocRef, postData);
+              transaction.update(globalPostMertricsDocRef, newMetricsData);
+            },
+          )
+          .then(
+            (value) => developer.log('Transaction completed'),
+          )
+          .catchError((error) {
+            developer.log('Transaction failed: $error');
+            throw error;
+          });
     } catch (e, s) {
       developer.log('Error creating post: $e');
       developer.log('Stacktrace: $s');
