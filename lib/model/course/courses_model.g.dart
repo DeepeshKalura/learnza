@@ -10,7 +10,7 @@ _$CoursesModelImpl _$$CoursesModelImplFromJson(Map<String, dynamic> json) =>
     _$CoursesModelImpl(
       id: json['id'] as String,
       name: json['name'] as String,
-      year: json['year'] as String,
+      year: (json['year'] as num).toInt(),
       description: json['description'] as String?,
       shortName: json['shortName'] as String?,
       courseImageUrl: json['courseImageUrl'] as String?,

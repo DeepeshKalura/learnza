@@ -37,8 +37,12 @@ class $AssetsIconsStudentGen {
   SvgGenImage get somthingWentWrong =>
       const SvgGenImage('assets/icons/student/somthing_went_wrong.svg');
 
+  /// File path: assets/icons/student/welcome.svg
+  SvgGenImage get welcome =>
+      const SvgGenImage('assets/icons/student/welcome.svg');
+
   /// List of all assets
-  List<SvgGenImage> get values => [noBookFound, somthingWentWrong];
+  List<SvgGenImage> get values => [noBookFound, somthingWentWrong, welcome];
 }
 
 class $AssetsImagesCommonGen {
@@ -77,8 +81,12 @@ class $AssetsImagesCommonSplashGen {
 class Assets {
   Assets._();
 
+  static const String aEnv = '.env';
   static const $AssetsIconsGen icons = $AssetsIconsGen();
   static const $AssetsImagesGen images = $AssetsImagesGen();
+
+  /// List of all assets
+  static List<String> get values => [aEnv];
 }
 
 class AssetGenImage {

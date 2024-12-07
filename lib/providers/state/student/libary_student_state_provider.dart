@@ -9,56 +9,98 @@ import '../../../service/anna_archieve_service.dart';
 import '../../book_provider.dart';
 
 class LibaryStudentStateProvider extends ChangeNotifier {
+  // Library types
   List<String> typesOfLibary = [
     "Lernza Library",
     "Anna Library",
     "Offline Library",
   ];
 
+  // Current library index
   int currentLibary = 0;
 
-  var searched = false;
+  // Search-related state
+  bool searched = false;
+  bool isSearch = false;
 
+  // Anna Archive books state
+  List<BooksModel> _annaArchiveBooks = [];
+  bool _isAnnaArchiveBooksLoading = false;
+  String _annaArchiveErrorMessage = '';
+
+  // Getters
+  String get currentLibaryBook => typesOfLibary[currentLibary];
+  List<BooksModel> get annaArchiveBooks => _annaArchiveBooks;
+  bool get isAnnaArchiveBooksLoading => _isAnnaArchiveBooksLoading;
+  String get annaArchiveErrorMessage => _annaArchiveErrorMessage;
+
+  // Change library
   void chnageLibary(int index) {
     currentLibary = index;
     notifyListeners();
   }
 
-  String get currentLibaryBook => typesOfLibary[currentLibary];
-
-  var isSearch = false;
-
+  // Toggle search
   void toggleSearch() {
     isSearch = !isSearch;
     notifyListeners();
   }
 
+  // Set selected library type
   void setSelectedLibraryType(String value) {
     currentLibary = typesOfLibary.indexOf(value);
     notifyListeners();
   }
 
+  // Fetch Anna Archive books
+  Future<void> fetchAnnaArchiveBooks({String searchQuery = ''}) async {
+    try {
+      // Set loading state
+      _isAnnaArchiveBooksLoading = true;
+      _annaArchiveErrorMessage = '';
+      notifyListeners();
+
+      // Fetch books
+      final annaArchive = di.injector<AnnasArchieveService>();
+      _annaArchiveBooks = await annaArchive.searchBooks(
+        searchQuery: searchQuery,
+        fileType: 'pdf', // Configurable if needed
+      );
+
+      // Clear loading state
+      _isAnnaArchiveBooksLoading = false;
+      notifyListeners();
+    } catch (e) {
+      // Handle error
+      _isAnnaArchiveBooksLoading = false;
+      _annaArchiveErrorMessage = e.toString();
+      developer.log('Error fetching Anna Archive Books: $e');
+      notifyListeners();
+    }
+  }
+
+  // Search method
   Future<List<BooksModel>> search(
       String searchQuery, BuildContext context) async {
-    developer.log("does i reach search search: $searchQuery");
+    developer.log("Search query: $searchQuery");
     List<BooksModel> books = [];
     searched = true;
     notifyListeners();
 
     try {
       if (currentLibary == 0) {
-        // search in leanza library
-        developer.log("I am searching in a lernza");
+        // Search in Lernza library
+        developer.log("Searching in Lernza Library");
         books = await context.read<BookProvider>().searchBooks(searchQuery);
       } else if (currentLibary == 1) {
-        // search in anna library
-        developer.log("I am searching in a anna");
+        // Search in Anna library
+        developer.log("Searching in Anna Library");
         books = await di.injector<AnnasArchieveService>().searchBooks(
               searchQuery: searchQuery,
             );
       } else {
-        // search in offline library
-        developer.log("I am searching in a offline");
+        // Search in offline library
+        developer.log("Searching in Offline Library");
       }
     } catch (e, s) {
       developer.log(e.toString());

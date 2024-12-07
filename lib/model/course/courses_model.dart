@@ -8,7 +8,7 @@ class CoursesModel with _$CoursesModel {
   const factory CoursesModel({
     required String id,
     required String name,
-    required String year, // how long the year last for a given course
+    required int year, // how long the year last for a given course
     String? description,
     String? shortName,
     String? courseImageUrl,
