@@ -5,6 +5,13 @@ class HomeTeacherScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold();
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Home Teacher Screen'),
+      ),
+      body: const Center(
+        child: Text('Home Teacher Screen'),
+      ),
+    );
   }
 }

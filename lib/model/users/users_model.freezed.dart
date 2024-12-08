@@ -383,7 +383,7 @@ class _$UsersModelImpl implements _UsersModel {
       this.fatherName,
       this.lastseen,
       this.isActive = true,
-      required this.isOnline,
+      this.isOnline = false,
       final List<String> blockedUsers = const [],
       final List<String> contactUsers = const [],
       this.courseId,
@@ -427,6 +427,7 @@ class _$UsersModelImpl implements _UsersModel {
   @JsonKey()
   final bool isActive;
   @override
+  @JsonKey()
   final bool isOnline;
   final List<String> _blockedUsers;
   @override
@@ -566,7 +567,7 @@ abstract class _UsersModel implements UsersModel {
       final String? fatherName,
       final String? lastseen,
       final bool isActive,
-      required final bool isOnline,
+      final bool isOnline,
       final List<String> blockedUsers,
       final List<String> contactUsers,
       final String? courseId,

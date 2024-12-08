@@ -34,6 +34,8 @@ class LibaryStudentStateProvider extends ChangeNotifier {
   bool get isAnnaArchiveBooksLoading => _isAnnaArchiveBooksLoading;
   String get annaArchiveErrorMessage => _annaArchiveErrorMessage;
 
+  String? downloadingBookMirrorLink;
+
   // Change library
   void chnageLibary(int index) {
     currentLibary = index;

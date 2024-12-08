@@ -72,44 +72,45 @@ class DrawerWidget extends StatelessWidget {
                   },
                   selected: currentIndex == 0,
                 ),
-                ListTile(
-                  leading: const Icon(
-                    Icons.settings,
-                    color: primaryColor,
-                  ),
-                  title: const Text(
-                    'Settings',
-                    style: TextStyle(
-                      color: darkPrimaryColor,
-                    ),
-                  ),
-                  onTap: () {
-                    context.pushNamed(AppUrls.settingCommonScreen);
-                    // showShadDialog(
-                    //   context: context,
-                    //   builder: (context) => ShadDialog(
-                    //     title: const Text("Settings"),
-                    //     description:
-                    //         const Text("Make changes for you application"),
-                    //     actions: [
-                    //       ShadButton(
-                    //         icon: const Icon(LucideIcons.languages),
-                    //         onPressed: () {
-                    //           Navigator.of(context).pop();
-                    //         },
-                    //         child: const Text("Neplai"),
-                    //       ),
-                    //       ShadButton(
-                    //           icon: const Icon(Icons.close),
-                    //           onPressed: () {
-                    //             Navigator.of(context).pop();
-                    //           }),
-                    //     ],
-                    //   ),
-                    // );
-                  },
-                  selected: currentIndex == 1,
-                ),
+                // ListTile(
+                //   leading: const Icon(
+                //     Icons.settings,
+                //     color: primaryColor,
+                //   ),
+                //   title: const Text(
+                //     'Settings',
+                //     style: TextStyle(
+                //       color: darkPrimaryColor,
+                //     ),
+                //   ),
+                //   onTap: () {
+                //     context.pushNamed(AppUrls.settingCommonScreen);
+                //     // showShadDialog(
+                //     //   context: context,
+                //     //   builder: (context) => ShadDialog(
+                //     //     title: const Text("Settings"),
+                //     //     description:
+                //     //         const Text("Make changes for you application"),
+                //     //     actions: [
+                //     //       ShadButton(
+                //     //         icon: const Icon(LucideIcons.languages),
+                //     //         onPressed: () {
+                //     //           Navigator.of(context).pop();
+                //     //         },
+                //     //         child: const Text("Neplai"),
+                //     //       ),
+                //     //       ShadButton(
+                //     //           icon: const Icon(Icons.close),
+                //     //           onPressed: () {
+                //     //             Navigator.of(context).pop();
+                //     //           }),
+                //     //     ],
+                //     //   ),
+                //     // );
+                //   },
+                //   selected: currentIndex == 1,
+                // ),
+
                 ListTile(
                   leading: const Icon(
                     Icons.feedback,

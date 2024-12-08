@@ -143,4 +143,44 @@ class AnnasArchieveService {
       rethrow;
     }
   }
+
+  Future<String?> getDownloadUrl(url) async {
+    try {
+      var resData = await http.get(Uri.parse(url), headers: defaultHttpHeader);
+      var document = parse(resData.body.toString());
+      var main = document.querySelector('main[class="main"]');
+
+      developer.log("List of main $main", error: main);
+
+      var ul = main?.querySelectorAll('ul[class="list-inside mb-4 ml-1"]');
+
+      developer.log("List of ul", error: ul);
+
+      String? mirror;
+      var anchorTags = [];
+
+      if (ul != null) {
+        for (var e in ul) {
+          anchorTags.insertAll(0, e.querySelectorAll('a'));
+
+          developer.log("List of anchorTags", error: anchorTags);
+        }
+      }
+
+      for (var element in anchorTags) {
+        if (element.attributes['href'] != null &&
+            element.attributes['href']!.startsWith('/slow_download') &&
+            element.attributes['href']!.endsWith('/2')) {
+          mirror = '$baseUrl${element.attributes['href']}';
+        }
+      }
+
+      developer.log('Found mirror: $mirror');
+      return mirror;
+    } catch (e, s) {
+      developer.log(e.toString());
+      developer.log(s.toString());
+      rethrow;
+    }
+  }
 }

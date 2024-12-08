@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:animations/animations.dart';
 import 'package:go_router/go_router.dart';
+import 'package:learnza/service/anna_archieve_service.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
 import '../../../../model/books/books_model.dart';
 import '../../../../router/app_urls.dart';
 import '../../../../utils/theme.dart';
+import 'package:learnza/locator/injector.dart' as di;
 
 class BooksCardLibraryStudentWidget extends StatefulWidget {
   const BooksCardLibraryStudentWidget({
@@ -234,6 +236,46 @@ class BooksCardLibraryStudentWidgetState
                     );
                   } else {
                     // logic web view
+                    // TODO: Implement web view for Anna books
+
+                    di.injector
+                        .get<AnnasArchieveService>()
+                        .getDownloadUrl(widget.booksModel.bookUrl)
+                        .then((value) async {
+                      if (value != null) {
+                        context.pushNamed(
+                          AppUrls.annaWebViewScreen,
+                          extra: {
+                            'url': value,
+                            'book': widget.booksModel,
+                          },
+                        );
+                      } else {
+                        ShadToaster.of(context).show(
+                          ShadToast.destructive(
+                            title: const Text('Book Not Available'),
+                            description: const Text(
+                                'Sorry, this book is currently not available in the library.'),
+                            action: ShadButton.outline(
+                              child: const Text(
+                                'Ok',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                              onPressed: () => ShadToaster.of(context).hide(),
+                            ),
+                          ),
+                        );
+                      }
+                    });
+
+                    // context.pushNamed(
+                    //   AppUrls.annaWebViewScreen,
+                    //   extra: {
+                    //     'url': widget.booksModel.bookUrl,
+                    //   },
+                    // );
                   }
                 }
               : null,
