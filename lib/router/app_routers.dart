@@ -7,15 +7,19 @@ import '../model/books/books_model.dart';
 import '../model/groups/groups_model.dart';
 import '../model/posts/posts_model.dart';
 import '../screen/common/about/about_common_screen.dart';
+import '../screen/common/library/offline_libaray_common_screen.dart';
 import '../screen/common/setting/setting_common_screen.dart';
 import '../screen/common/splash/splash_screen.dart';
 import '../screen/student/groups/groups_detail_screen.dart';
+import '../screen/student/library/anna_web_view_screen.dart';
 import '../screen/student/library/library_student_screen.dart';
 import '../screen/student/blogs/deatail_blog_student.dart';
 import '../screen/student/library/read_book_read_screen.dart';
 import '../screen/student/library/search_book_student_screen.dart';
+import '../screen/student/library/widget/book_card_widget.dart';
 import '../screen/student/profile/profile_student_screen.dart';
 import '../service/firebase_service.dart';
+import '../service/internet_connectivity_service.dart';
 import '/model/app_enums.dart';
 import '../providers/auth_provider.dart';
 import '../screen/admin/home_admin_screen.dart';
@@ -69,6 +73,36 @@ class AppRouters {
         path: "/setting",
         name: AppUrls.settingCommonScreen,
         builder: (context, state) => const SettingCommonScreen(),
+      ),
+
+      GoRoute(
+        path: "/offline-library",
+        name: AppUrls.offlineLibarayCommonScreen,
+        builder: (context, state) => const OfflineLibarayCommonScreen(),
+      ),
+
+      GoRoute(
+        path: "/anna-web-view",
+        name: AppUrls.annaWebViewScreen,
+        builder: (context, state) {
+          var queryParams = state.extra as Map<String, dynamic>;
+          return AnnaWebViewScreen(
+            url: queryParams['url'] as String,
+            book: queryParams['book'] as BooksModel,
+          );
+        },
+      ),
+
+      GoRoute(
+        path: "/download-page",
+        name: AppUrls.downloadBookScreen,
+        builder: (context, state) {
+          var queryParams = state.extra as Map<String, dynamic>;
+          return BookDownloadPage(
+            bookUrl: queryParams['bookUrl'] as String,
+            booksModel: queryParams['book'] as BooksModel,
+          );
+        },
       ),
 
       // here will exit authenticated admin routes
@@ -169,22 +203,33 @@ Future<String?> roleBasedRedirect(
     BuildContext context, GoRouterState state) async {
   final firebaseUser = di.injector.get<FirebaseService>().auth.currentUser;
 
+  final authProvider = context.read<AuthProvider>();
+  final internetConnectivityService =
+      di.injector.get<InternetConnectivityService>();
+
+  if (!await internetConnectivityService.checkConnectivity()) {
+    return '/offline-library';
+  }
+
   if (firebaseUser == null) {
     return '/auth';
   }
-  final authProvider = context.read<AuthProvider>();
+
   await authProvider.getUser(firebaseUser.uid);
   var user = authProvider.user;
 
   if (user == null) {
     return '/auth';
   } else {
-    if (user.role == UserRole.admin) {
-      return '/admin';
-    } else if (user.role == UserRole.teacher) {
-      return '/teacher';
-    } else {
-      return '/student/home';
-    }
+    // ? I was thinking to make role based user screen
+    // TODO: make role based user screen and functionality
+    return '/student/home';
+    // if (user.role == UserRole.admin) {
+    //   return '/admin';
+    // } else if (user.role == UserRole.teacher) {
+    //   return '/teacher';
+    // } else {
+    //   return '/student/home';
+    // }
   }
 }

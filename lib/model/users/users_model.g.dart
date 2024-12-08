@@ -21,7 +21,7 @@ _$UsersModelImpl _$$UsersModelImplFromJson(Map<String, dynamic> json) =>
       fatherName: json['fatherName'] as String?,
       lastseen: json['lastseen'] as String?,
       isActive: json['isActive'] as bool? ?? true,
-      isOnline: json['isOnline'] as bool,
+      isOnline: json['isOnline'] as bool? ?? false,
       blockedUsers: (json['blockedUsers'] as List<dynamic>?)
               ?.map((e) => e as String)
               .toList() ??

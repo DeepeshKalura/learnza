@@ -4,6 +4,8 @@ class AppUrls {
 
   static const String loadingCommonScreen = 'loadingCommonScreen';
   static const String authenticationScreen = 'authenticationScreen';
+  static const String offlineLibarayCommonScreen = 'offlineLibarayCommonScreen';
+  static const String annaWebViewScreen = "annaWebViewScreen";
   // adminslibraryStudentScreen
   static const String homeAdminScreen = 'homeAdminScreen';
   // student
@@ -24,4 +26,5 @@ class AppUrls {
   static const String detailBlogStudentScreen = 'detailBlogStudentScreen';
   // teacher
   static const String homeTeacherScreen = 'homeTeacherScreen';
+  static const String downloadBookScreen = "downloadBookScreen";
 }

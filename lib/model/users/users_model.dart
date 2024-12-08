@@ -24,7 +24,7 @@ class UsersModel with _$UsersModel {
     // Message
     String? lastseen,
     @Default(true) bool isActive,
-    required bool isOnline,
+    @Default(false) bool isOnline,
     @Default([]) List<String> blockedUsers,
     @Default([]) List<String> contactUsers,
 
