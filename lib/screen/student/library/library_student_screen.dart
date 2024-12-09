@@ -2,6 +2,7 @@ import 'dart:developer' as developer;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:learnza/screen/common/library/offline_libaray_common_screen.dart';
 import 'package:learnza/screen/student/library/widget/books_card_library_student_widget.dart';
 import 'package:learnza/utils/theme.dart';
 import 'package:provider/provider.dart';
@@ -109,7 +110,7 @@ class _LibraryStudentScreenState extends State<LibraryStudentScreen>
           children: const [
             BookListWidget(),
             AnnaArchiveBookWidget(),
-            NoBooksFoundErrorWidget(),
+            OfflineLibraryCommonScreen(),
           ],
         ),
       ),
