@@ -1,7 +1,7 @@
 import 'package:pdfx/pdfx.dart';
 
 import 'package:flutter/material.dart';
-import 'package:internet_file/internet_file.dart';
+// import 'package:internet_file/internet_file.dart';
 
 import '../../../model/books/books_model.dart';
 
@@ -27,12 +27,9 @@ class _ReadBookReadScreenState extends State<ReadBookReadScreen> {
     setState(() {
       loading = true;
       _pdfController = PdfController(
-        document: PdfDocument.openData(InternetFile.get(
+        document: PdfDocument.openFile(
           widget.book.bookUrl!,
-          progress: (receivedLength, contentLength) {
-            // Create a progress bar
-          },
-        )),
+        ),
       );
       loading = false;
     });

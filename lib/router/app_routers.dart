@@ -78,7 +78,7 @@ class AppRouters {
       GoRoute(
         path: "/offline-library",
         name: AppUrls.offlineLibarayCommonScreen,
-        builder: (context, state) => const OfflineLibarayCommonScreen(),
+        builder: (context, state) => const OfflineLibraryCommonScreen(),
       ),
 
       GoRoute(
@@ -98,7 +98,7 @@ class AppRouters {
         name: AppUrls.downloadBookScreen,
         builder: (context, state) {
           var queryParams = state.extra as Map<String, dynamic>;
-          return BookDownloadPage(
+          return BookDownloadScreen(
             bookUrl: queryParams['bookUrl'] as String,
             booksModel: queryParams['book'] as BooksModel,
           );

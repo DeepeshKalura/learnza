@@ -6,6 +6,7 @@ import 'package:learnza/locator/injector.dart' as di;
 
 import '../../../model/books/books_model.dart';
 import '../../../service/anna_archieve_service.dart';
+import '../../../service/local_database_service.dart';
 import '../../book_provider.dart';
 
 class LibaryStudentStateProvider extends ChangeNotifier {
@@ -18,6 +19,8 @@ class LibaryStudentStateProvider extends ChangeNotifier {
 
   // Current library index
   int currentLibary = 0;
+
+  final localDatabase = LocalDatabaseService.instance;
 
   // Search-related state
   bool searched = false;
@@ -35,6 +38,26 @@ class LibaryStudentStateProvider extends ChangeNotifier {
   String get annaArchiveErrorMessage => _annaArchiveErrorMessage;
 
   String? downloadingBookMirrorLink;
+
+  // offline library books
+
+  List<BooksModel>? offlineBooks;
+  var loadingOfflineBooks = false;
+  void getBooksFromLocalDatabase() async {
+    loadingOfflineBooks = true;
+    notifyListeners();
+    try {
+      offlineBooks = await localDatabase.getAll();
+    } catch (e, s) {
+      developer.log(
+        "error has occur: ${e.toString()}",
+        error: e,
+        stackTrace: s,
+      );
+    }
+    loadingOfflineBooks = false;
+    notifyListeners();
+  }
 
   // Change library
   void chnageLibary(int index) {
