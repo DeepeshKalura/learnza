@@ -98,17 +98,18 @@ class _LoginAuthCommonScreenState extends State<LoginAuthCommonScreen> {
       key: _formKey,
       child: Column(
         mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            AppLocalizations.of(context)?.greeting ?? "Welcome Back!",
+            AppLocalizations.of(context)?.greeting ?? "Welcome To TuLib",
             style: ShadTheme.of(context).textTheme.h1,
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 8),
           Text(
             AppLocalizations.of(context)?.loginMessage ??
-                'Please enter your details to continue',
+                'Enter your credentials you get from TuLib mail and enjoy countless books',
             style: ShadTheme.of(context).textTheme.p.copyWith(
                   color: Colors.grey,
                 ),
@@ -192,43 +193,7 @@ class _LoginAuthCommonScreenState extends State<LoginAuthCommonScreen> {
                 style: ShadTheme.of(context).textTheme.p.copyWith(),
               ),
               onPressed: () async {
-                if (FormValidator.validateEmail(_emailController.text) !=
-                    null) {
-                  ShadToaster.of(context).show(
-                    ShadToast.destructive(
-                      title: Text(
-                        AppLocalizations.of(context)?.emailRequired ??
-                            'Valid Email is required',
-                      ),
-                      description: Text(
-                        AppLocalizations.of(context)
-                                ?.emailRequiredDescription ??
-                            'Please enter your email',
-                      ),
-                    ),
-                  );
-                  return;
-                }
-                await context.read<AuthProvider>().forgotPassword(
-                      _emailController.text,
-                    );
-
-                if (mounted) {
-                  ShadToaster.of(context).show(
-                    ShadToast(
-                      title: Text(
-                        AppLocalizations.of(context)?.passwordResetTitle ??
-                            'Password Reset Email Sent',
-                      ),
-                      backgroundColor: Colors.green,
-                      description: Text(
-                        AppLocalizations.of(context)
-                                ?.passwordResetDescription ??
-                            'Please check your email for further instructions',
-                      ),
-                    ),
-                  );
-                }
+                context.pushNamed(AppUrls.forgotPasswordAuthScreen);
               },
             ),
           ),
@@ -299,6 +264,15 @@ class _LoginAuthCommonScreenState extends State<LoginAuthCommonScreen> {
                           ),
                           padding: const EdgeInsets.all(32),
                           child: ShadCard(
+                            backgroundColor: secondaryColor,
+                            shadows: const [
+                              BoxShadow(
+                                color: primaryColor,
+                                spreadRadius: 1,
+                                blurRadius: 10,
+                                offset: Offset(0, 1),
+                              ),
+                            ],
                             child: Padding(
                               padding: const EdgeInsets.all(32),
                               child: _buildLoginForm(),

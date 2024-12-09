@@ -13,6 +13,7 @@ import '../../../providers/book_provider.dart';
 import '../../../providers/state/student/libary_student_state_provider.dart';
 import '../../../router/app_urls.dart';
 import '../../common/widget/drawer_widget.dart';
+import 'course_book_library_screen.dart';
 import 'widget/anna_libary_widget.dart';
 import 'widget/error/books_snapshot_error_widget.dart';
 import 'widget/error/no_books_found_error_widget.dart';
@@ -34,9 +35,9 @@ class _LibraryStudentScreenState extends State<LibraryStudentScreen>
   // Define the library types as a constant list
 
   final List<String> _libraryTypes = [
-    'Lernza Library',
     'Anna Archive',
-    'Offline Books'
+    'Course Books',
+    'Lernza Library',
   ];
 
   @override
@@ -67,7 +68,6 @@ class _LibraryStudentScreenState extends State<LibraryStudentScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      drawer: kIsWeb ? null : const DrawerWidget(currentIndex: 1),
       body: NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
@@ -77,12 +77,6 @@ class _LibraryStudentScreenState extends State<LibraryStudentScreen>
               snap: true,
               floating: true,
               title: _buildTitle(),
-              leading: IconButton(
-                icon: const Icon(LucideIcons.menu),
-                onPressed: () {
-                  _scaffoldKey.currentState!.openDrawer();
-                },
-              ),
               actions: [
                 Consumer<LibaryStudentStateProvider>(
                   builder: (context, value, child) {
@@ -108,9 +102,9 @@ class _LibraryStudentScreenState extends State<LibraryStudentScreen>
         body: TabBarView(
           controller: _tabController,
           children: const [
-            BookListWidget(),
             AnnaArchiveBookWidget(),
-            OfflineLibraryCommonScreen(),
+            CourseBookLibraryScreen(),
+            BookListWidget(),
           ],
         ),
       ),

@@ -1,12 +1,11 @@
 {
   "@@locale": "en",
-  "appName": "Lernza",
+  "appName": "LernZa",
   "appNameDescription": "The name of the application.",
   "madeBy": "Made by ❤️ Deepesh Kalura ❤️",
   "madeByDescription": "Credits for the app creator.",
-  "greeting": "Welcome Back!",
-  "greetingDescription": "Greeting message for the login screen.",
-  "loginMessage": "Enter your details to continue",
+  "greeting": "Welcome To TuLib",
+  "loginMessage": "Enter your credentials you get from TuLib mail and enjoy countless books",
   "loginMessageDescription": "Message displayed on the login screen prompting the user to enter their credentials.",
   "emailLabel": "Email",
   "emailLabelDescription": "Label for the email input field.",
@@ -39,9 +38,7 @@
   "homeNavigationBar": "Home",
   "libraryNavigationBar": "Library",
   "groupNavigationBar": "Groups",
-
   "postHeaderMessage": "What's on your mind?",
-
   "addPost": "Add Post",
   "cancel": "Cancel",
   "post": "Post",
@@ -56,5 +53,21 @@
   "validTitle": "Title cannot be empty",
   "validContent": "Content cannot be empty",
   "postSuccess": "Post has been posted successfully",
-  "loading": "Loading..."
+  "loading": "Loading...",
+  "forgotPasswordHeader": "Don't worry we got covered",
+  "encouringMessageForForgotPassword": "Just enter email and you will receive a mail to reset your password",
+  "libraryHallTitle": "TU Online Library",
+  "libraryHallDescription": "Access digital books and personal library",
+  "onlineBookStoreTitle": "Online Book Store",
+  "onlineBookStoreDescription": "Browse and download digital books from our extensive collection.",
+  "personalLibraryTitle": "{userName}'s Personal Library",
+  "@personalLibraryTitle": {
+    "placeholders": {
+      "userName": {
+        "type": "String",
+        "example": "Deepesh"
+      }
+    }
+  },
+  "personalLibraryDescription": "Read your downloaded books from here"
 }
