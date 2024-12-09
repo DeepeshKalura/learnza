@@ -7,11 +7,13 @@ import '../model/books/books_model.dart';
 import '../model/groups/groups_model.dart';
 import '../model/posts/posts_model.dart';
 import '../screen/common/about/about_common_screen.dart';
+import '../screen/common/auth/forgot_password_screen.dart';
 import '../screen/common/library/offline_libaray_common_screen.dart';
 import '../screen/common/setting/setting_common_screen.dart';
 import '../screen/common/splash/splash_screen.dart';
 import '../screen/student/groups/groups_detail_screen.dart';
 import '../screen/student/library/anna_web_view_screen.dart';
+import '../screen/student/library/library_hall_screen.dart';
 import '../screen/student/library/library_student_screen.dart';
 import '../screen/student/blogs/deatail_blog_student.dart';
 import '../screen/student/library/read_book_read_screen.dart';
@@ -80,6 +82,11 @@ class AppRouters {
         name: AppUrls.offlineLibarayCommonScreen,
         builder: (context, state) => const OfflineLibraryCommonScreen(),
       ),
+      GoRoute(
+        path: "/forgot-password",
+        name: AppUrls.forgotPasswordAuthScreen,
+        builder: (context, state) => const ForgotPasswordAuthScreen(),
+      ),
 
       GoRoute(
         path: "/anna-web-view",
@@ -118,17 +125,21 @@ class AppRouters {
         path: "/teacher",
         name: AppUrls.homeTeacherScreen,
         builder: (context, state) => const HomeTeacherScreen(),
-        redirect: roleBasedRedirect,
+        // redirect: roleBasedRedirect,
       ),
       // here will exit authenticated student routes
       GoRoute(
         path: "/student",
-        redirect: studentRoutesRedirect,
+        // redirect: studentRoutesRedirect,
+        name: AppUrls.homeStudentScreen,
+        builder: (context, state) => const HomeStudentScreen(),
         routes: [
           GoRoute(
-            path: "/home",
-            name: AppUrls.homeStudentScreen,
-            builder: (context, state) => const HomeStudentScreen(),
+            path: "/library-hall",
+            name: AppUrls.libraryHallScreen,
+            builder: (context, state) {
+              return const LibraryHallScreen();
+            },
           ),
           GoRoute(
             path: "/profile",
@@ -200,7 +211,9 @@ String? studentRoutesRedirect(BuildContext context, GoRouterState state) {
 }
 
 Future<String?> roleBasedRedirect(
-    BuildContext context, GoRouterState state) async {
+    // TODO: Implement role based redirection when you created the admin role and teacher role screen
+    BuildContext context,
+    GoRouterState state) async {
   final firebaseUser = di.injector.get<FirebaseService>().auth.currentUser;
 
   final authProvider = context.read<AuthProvider>();
@@ -223,7 +236,7 @@ Future<String?> roleBasedRedirect(
   } else {
     // ? I was thinking to make role based user screen
     // TODO: make role based user screen and functionality
-    return '/student/home';
+    return '/student';
     // if (user.role == UserRole.admin) {
     //   return '/admin';
     // } else if (user.role == UserRole.teacher) {

@@ -29,20 +29,43 @@ class $AssetsImagesGen {
 class $AssetsIconsStudentGen {
   const $AssetsIconsStudentGen();
 
+  /// File path: assets/icons/student/hi.svg
+  SvgGenImage get hi => const SvgGenImage('assets/icons/student/hi.svg');
+
+  /// File path: assets/icons/student/looking.svg
+  SvgGenImage get looking =>
+      const SvgGenImage('assets/icons/student/looking.svg');
+
   /// File path: assets/icons/student/no_book_found.svg
   SvgGenImage get noBookFound =>
       const SvgGenImage('assets/icons/student/no_book_found.svg');
 
+  /// File path: assets/icons/student/sleepy.svg
+  SvgGenImage get sleepy =>
+      const SvgGenImage('assets/icons/student/sleepy.svg');
+
   /// File path: assets/icons/student/somthing_went_wrong.svg
   SvgGenImage get somthingWentWrong =>
       const SvgGenImage('assets/icons/student/somthing_went_wrong.svg');
+
+  /// File path: assets/icons/student/under_development.svg
+  SvgGenImage get underDevelopment =>
+      const SvgGenImage('assets/icons/student/under_development.svg');
 
   /// File path: assets/icons/student/welcome.svg
   SvgGenImage get welcome =>
       const SvgGenImage('assets/icons/student/welcome.svg');
 
   /// List of all assets
-  List<SvgGenImage> get values => [noBookFound, somthingWentWrong, welcome];
+  List<SvgGenImage> get values => [
+        hi,
+        looking,
+        noBookFound,
+        sleepy,
+        somthingWentWrong,
+        underDevelopment,
+        welcome
+      ];
 }
 
 class $AssetsImagesCommonGen {
