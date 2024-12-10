@@ -69,5 +69,7 @@
       }
     }
   },
-  "personalLibraryDescription": "Read your downloaded books from here"
+  "personalLibraryDescription": "Read your downloaded books from here",
+  "onlineBookStoreQuote": "In the digital realm, every book is a gateway to infinite worlds waiting to be explored.",
+  "offlineBookStroeQuote": "Within these pages, stories breathe, characters whisper, and imagination knows no bounds."
 }

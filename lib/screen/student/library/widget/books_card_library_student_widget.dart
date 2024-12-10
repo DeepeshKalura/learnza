@@ -228,9 +228,10 @@ class BooksCardLibraryStudentWidgetState
           onPressed: widget.booksModel.founded
               ? () {
                   if (!widget.isAnnaBook) {
-                    context.pushNamed(
-                      AppUrls.readBookReadScreen,
+                    context.pushReplacementNamed(
+                      AppUrls.downloadBookScreen,
                       extra: {
+                        'bookUrl': widget.booksModel.bookUrl,
                         'book': widget.booksModel,
                       },
                     );
@@ -243,7 +244,7 @@ class BooksCardLibraryStudentWidgetState
                         .getDownloadUrl(widget.booksModel.bookUrl)
                         .then((value) async {
                       if (value != null) {
-                        context.pushNamed(
+                        context.pushReplacementNamed(
                           AppUrls.annaWebViewScreen,
                           extra: {
                             'url': value,

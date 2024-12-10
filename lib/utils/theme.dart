@@ -19,6 +19,9 @@ final lightThemData = ShadThemeData(
   textTheme: ShadTextTheme.fromGoogleFont(
     GoogleFonts.roboto,
   ),
+  primaryButtonTheme: const ShadButtonTheme(
+    backgroundColor: primaryColor,
+  ),
 );
 
 final darkThemData = ShadThemeData(

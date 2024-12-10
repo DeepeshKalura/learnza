@@ -113,20 +113,20 @@ class LibaryStudentStateProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      if (currentLibary == 0) {
-        // Search in Lernza library
-        developer.log("Searching in Lernza Library");
-        books = await context.read<BookProvider>().searchBooks(searchQuery);
-      } else if (currentLibary == 1) {
-        // Search in Anna library
-        developer.log("Searching in Anna Library");
-        books = await di.injector<AnnasArchieveService>().searchBooks(
-              searchQuery: searchQuery,
-            );
-      } else {
-        // Search in offline library
-        developer.log("Searching in Offline Library");
-      }
+      // if (currentLibary == 0) {
+      // Search in Lernza library
+      developer.log("Searching in Lernza Library");
+      // books = await context.read<BookProvider>().searchBooks(searchQuery);
+      // } else if (currentLibary == 1) {
+      // Search in Anna library
+      developer.log("Searching in Anna Library");
+      books = await di.injector<AnnasArchieveService>().searchBooks(
+            searchQuery: searchQuery,
+          );
+      // } else {
+      // Search in offline library
+      developer.log("Searching in Offline Library");
+      // }
     } catch (e, s) {
       developer.log(e.toString());
       developer.log(s.toString());
