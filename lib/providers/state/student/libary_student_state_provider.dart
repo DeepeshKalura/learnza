@@ -1,13 +1,11 @@
 import 'dart:developer' as developer;
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:learnza/locator/injector.dart' as di;
 
 import '../../../model/books/books_model.dart';
 import '../../../service/anna_archieve_service.dart';
 import '../../../service/local_database_service.dart';
-import '../../book_provider.dart';
 
 class LibaryStudentStateProvider extends ChangeNotifier {
   // Library types
