@@ -23,7 +23,7 @@ class CourseBookLibraryScreen extends StatelessWidget {
             alignment: Alignment.center,
             child: Text(
               'Currently books for ${currentUserCourse?.name ?? "your"} course not available',
-              style: ShadTheme.of(context).textTheme.h3,
+              style: ShadTheme.of(context).textTheme.h3.copyWith(),
             ),
           ),
         ],

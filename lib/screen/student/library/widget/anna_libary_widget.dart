@@ -23,7 +23,7 @@ class _AnnaArchiveBookWidgetState extends State<AnnaArchiveBookWidget> {
       if (context.read<LibaryStudentStateProvider>().annaArchiveBooks.isEmpty) {
         context
             .read<LibaryStudentStateProvider>()
-            .fetchAnnaArchiveBooks(searchQuery: "Business Studies");
+            .fetchAnnaArchiveBooks(searchQuery: "Love");
       }
     });
   }

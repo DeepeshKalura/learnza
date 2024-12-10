@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
@@ -5,7 +6,6 @@ import 'package:learnza/utils/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
-import '../../../gen/assets.gen.dart';
 import '../../../providers/auth_provider.dart';
 import '../../../router/app_urls.dart';
 import '../../common/widget/drawer_widget.dart';
@@ -36,119 +36,132 @@ class _LibraryHallScreenState extends State<LibraryHallScreen> {
           },
         ),
         title: Text(localizations.libraryHallTitle),
+        titleTextStyle: ShadTheme.of(context).textTheme.h3,
       ),
       drawer: const DrawerWidget(
         currentIndex: 1,
       ),
       body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            ShadImage(
-              Assets.icons.student.looking.path,
-            ),
-            _buildLibraryCard(
-              title: localizations.onlineBookStoreTitle,
-              description: localizations.onlineBookStoreDescription,
-              icon: Icons.cloud_download,
-              image:
-                  'https://images.unsplash.com/photo-1519681393784-d120267933ba',
-              onTap: () {
-                context.pushNamed(AppUrls.libraryStudentScreen);
-              },
-            ),
-            const SizedBox(height: 16),
-            _buildLibraryCard(
-              title: localizations.personalLibraryTitle(user?.fullName ?? "My"),
-              description: localizations.personalLibraryDescription,
-              icon: Icons.local_library,
-              image:
-                  'https://images.unsplash.com/photo-1604866830893-c13cafa515d5',
-              onTap: () {
-                context.pushNamed(AppUrls.offlineLibarayCommonScreen);
-              },
-            ),
-          ],
+        child: Container(
+          margin: const EdgeInsets.symmetric(horizontal: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 2),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              _buildLibraryCard(
+                  title: localizations.onlineBookStoreTitle,
+                  quote: localizations.onlineBookStoreQuote,
+                  image:
+                      'https://images.unsplash.com/photo-1519681393784-d120267933ba',
+                  onTap: () {
+                    context.pushNamed(AppUrls.libraryStudentScreen);
+                  },
+                  first: true),
+              const SizedBox(height: 16),
+              _buildLibraryCard(
+                title: localizations.personalLibraryTitle(
+                  user?.fullName ?? "My",
+                ),
+                quote: localizations.offlineBookStroeQuote,
+                image:
+                    'https://images.unsplash.com/photo-1604866830893-c13cafa515d5',
+                onTap: () {
+                  context.pushNamed(AppUrls.offlineLibarayCommonScreen);
+                },
+                first: false,
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  // Custom card widget for library features
   Widget _buildLibraryCard({
     required String title,
-    required String description,
-    required IconData icon,
+    required String quote,
     required String image,
     required VoidCallback onTap,
+    required bool first,
   }) {
-    return Card(
-      elevation: 4,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15),
+    return Container(
+      margin: const EdgeInsets.only(
+        bottom: 16,
       ),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(15),
-        onTap: onTap,
+      child: ShadCard(
+        border: const Border(
+            top: BorderSide(
+          width: 4,
+          color: primaryColor,
+        )),
+
+        radius: BorderRadius.circular(12),
+        // decoration: BoxDecoration(
+        //   gradient: const LinearGradient(
+        //     colors: [Color(0xFF3c8ce7), Color.fromARGB(255, 0, 174, 189)],
+        //     begin: Alignment.topLeft,
+        //     end: Alignment.bottomRight,
+        //   ),
+        //   borderRadius: BorderRadius.circular(12),
+        // ),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
             children: [
-              // Image and Icon Row
-              Row(
-                children: [
-                  // Image on the left
-                  Container(
-                    width: 100,
-                    height: 100,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      image: DecorationImage(
-                        image: NetworkImage(image),
-                        fit: BoxFit.cover,
-                      ),
+              Text(
+                title,
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 12),
+              Text(
+                '"$quote"',
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontStyle: FontStyle.italic,
+                  fontSize: 15,
+                ),
+              ),
+              const SizedBox(height: 16),
+              Container(
+                height: 150,
+                width: double.infinity,
+                clipBehavior: Clip.antiAlias,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  image: DecorationImage(
+                    image: CachedNetworkImageProvider(image),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+              SizedBox(
+                width: double.infinity,
+                child: ShadButton(
+                  onPressed: onTap,
+                  size: ShadButtonSize.lg,
+                  // style: ElevatedButton.styleFrom(
+                  //   backgroundColor: Colors.white,
+                  //   foregroundColor: const Color(0xFF0077b6),
+                  //   minimumSize: const Size(double.infinity, 50),
+                  //   shape: RoundedRectangleBorder(
+                  //     borderRadius: BorderRadius.circular(8),
+                  //   ),
+                  // ),
+                  child: Text(
+                    first ? 'Download Books' : 'Read Books',
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const SizedBox(width: 16),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Icon(
-                              icon,
-                              size: 40,
-                              color: primaryColor,
-                            ),
-                            Icon(
-                              Icons.arrow_forward_ios,
-                              color: primaryColor.withOpacity(0.5),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 12),
-                        Text(
-                          title,
-                          style: const TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          description,
-                          style: TextStyle(
-                            color: Colors.grey[600],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+                ),
               ),
             ],
           ),

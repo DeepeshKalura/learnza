@@ -6,6 +6,7 @@ import 'package:shadcn_ui/shadcn_ui.dart';
 
 import '../../../../model/posts/posts_model.dart';
 import '../../../../model/users/users_model.dart';
+import '../../../../utils/theme.dart';
 
 class CardPostStudentWidget extends StatefulWidget {
   final PostsModel post;
@@ -35,6 +36,12 @@ class CardPostStudentWidgetState extends State<CardPostStudentWidget> {
     return Container(
       margin: const EdgeInsets.only(left: 12, right: 12, bottom: 6),
       child: ShadCard(
+        border: const Border(
+          top: BorderSide(
+            color: primaryColor,
+            width: 4,
+          ),
+        ),
         radius: BorderRadius.circular(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
