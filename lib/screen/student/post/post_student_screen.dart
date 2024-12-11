@@ -1,3 +1,4 @@
+import 'dart:developer' as developer;
 import 'package:universal_io/io.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -177,13 +178,19 @@ class _PostStudentScreenState extends State<PostStudentScreen> {
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const Center(
-                          child: CircularProgressIndicator(),
+                          child: CircularProgressIndicator(
+                            color: primaryColor,
+                          ),
                         );
                       }
 
+                      developer.log("Snapshot: ${snapshot.data}");
+
                       if (!snapshot.hasData) {
                         return const Center(
-                          child: CircularProgressIndicator(),
+                          child: CircularProgressIndicator(
+                            color: dangerColor,
+                          ),
                         );
                       }
 

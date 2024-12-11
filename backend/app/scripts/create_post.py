@@ -1,5 +1,5 @@
 import traceback
-from typing import Optional
+from typing import List, Optional
 import firebase_admin.firestore
 import requests
 import random
@@ -7,13 +7,12 @@ from googletrans import Translator
 import os
 from datetime import datetime
 from dotenv import load_dotenv, find_dotenv
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 import requests
 import uuid
 import firebase_admin
 from firebase_admin import credentials, firestore, auth, storage
 from functools import lru_cache
-from google.cloud import firestore as fire
 
 
 class FirebaseService:
@@ -64,18 +63,44 @@ def get_storage():
     return service.cloud_storage
 
 
+class PostEngagementMetrics(BaseModel):
+    totalViews: int = Field(default=0)
+    uniqueViews: int = Field(default=0)
+    likes: int = Field(default=0)
+    dislikes: int = Field(default=0)
+    totalComments: int = Field(default=0)
+    activeDiscussions: int = Field(default=0)
+    topLevelComments: int = Field(default=0)
+    nestedComments: int = Field(default=0)
+    shares: int = Field(default=0)
+    engagementRate: float = Field(default=0.0)
+    reachRate: float = Field(default=0.0)
+    uniqueInteractors: int = Field(default=0)
+    averageReadTime: float = Field(default=0.0)
+    scrollDepth: int = Field(default=0)
+
+    class Config:
+        from_attributes = True
+        
 class PostModel(BaseModel):
     id: str
     title: str
     content: str
     authorId: str
-    thumbnailUrl: Optional[str]
+    thumbnailUrl: Optional[str] = None
     createdAt: str
     updatedAt: str
+    comments: List[str] = Field(default_factory=list)  
+    isFeatured: bool = False  
+    isPinned: bool = False     
+    visibility: str = "public" 
+    engagementMetrics: PostEngagementMetrics = Field(default_factory=PostEngagementMetrics)  
 
     class Config:
         from_attributes = True
         use_enum_values = True
+
+
 
 
 # load the secrets
@@ -251,7 +276,7 @@ def create_post():
             title="Fun Fact Bot Present",
             id=str(uuid.uuid1()),
             thumbnailUrl=image_url,
-            authorId="b112a345-0c7d-404d-8e0a-238a75b04c8c",
+            authorId="703b4ed3-04da-4fb8-9304-6ed4381307db",
             content=content,
             createdAt=datetime.now().isoformat(),
             updatedAt=datetime.now().isoformat(),
@@ -274,7 +299,7 @@ def save_post(post: PostModel):
         post_ref.set(post.model_dump())
         
         # Step 2: Update global post metrics
-        global_post_metrics_ref = database.collection("global-post-metrics").document("FdCccnSXO37fnGLPT7Ca")
+        global_post_metrics_ref = database.collection("global-post-metrics").document("LwOyb4Ffxn9Kj1122mqg")
         metrics_doc = global_post_metrics_ref.get()
         
         if not metrics_doc.exists:
@@ -290,7 +315,7 @@ def save_post(post: PostModel):
         }
         
         # Update global metrics
-        global_post_metrics_ref.set(updated_metrics)
+        global_post_metrics_ref.update(updated_metrics)
         
         print("Post saved successfully")
         
