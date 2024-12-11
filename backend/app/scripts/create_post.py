@@ -1,5 +1,6 @@
 import traceback
 from typing import Optional
+import firebase_admin.firestore
 import requests
 import random
 from googletrans import Translator
@@ -12,6 +13,7 @@ import uuid
 import firebase_admin
 from firebase_admin import credentials, firestore, auth, storage
 from functools import lru_cache
+from google.cloud import firestore as fire
 
 
 class FirebaseService:
@@ -224,16 +226,16 @@ def fetch_random_image():
     return None
 
 # TODO:  It has some error i create [PR#21] for enhachement 
-# def translate_to_nepali(text):
-#     try:
-#         translated = translator.translate(text, dest="ne")
-#         return translated.text
-#     except Exception as e:
-#         error_logging_function(
-#             title="Failure of Cronjob for TU university lernza application translating to Nepali",
-#             e=e,
-#         )
-#     return text
+def translate_to_nepali(text):
+    try:
+        translated = translator.translate(text, dest="ne")
+        return translated.text
+    except Exception as e:
+        error_logging_function(
+            title="Failure of Cronjob for TU university lernza application translating to Nepali",
+            e=e,
+        )
+    return text
 
 
 def create_post():
@@ -254,7 +256,7 @@ def create_post():
             createdAt=datetime.now().isoformat(),
             updatedAt=datetime.now().isoformat(),
         )
-    # TODO: Implement 30 different bots which can do different types of data
+    # TODO: Implement 30 different bots which can do different types of data[PR#24]
     # else:
     #     content = fetch_random_fact()
     #     if content is None:
@@ -263,41 +265,81 @@ def create_post():
     return post
 
 
-
-
-
-
 def save_post(post: PostModel):
     database = get_firestore()
 
-    global_post_metrics_ref = database.collection("global-post-metrics").document(
-        "FdCccnSXO37fnGLPT7Ca"
-    )
-
-
     post_ref = database.collection("posts").document(post.id)
-
-
-    @firestore.transactional
-    def update_metrics(transaction, global_post_metrics_ref):
-        metrics_doc = transaction.get(global_post_metrics_ref)
+    try:
+        # Step 1: Create the post document first
+        post_ref.set(post.model_dump())
+        
+        # Step 2: Update global post metrics
+        global_post_metrics_ref = database.collection("global-post-metrics").document("FdCccnSXO37fnGLPT7Ca")
+        metrics_doc = global_post_metrics_ref.get()
+        
         if not metrics_doc.exists:
             raise Exception("Global post metrics document does not exist")
-
-        new_metrics_data = metrics_doc.to_dict()
-        new_metrics_data["totalPosts"] = new_metrics_data.get("totalPosts", 0) + 1
-        new_metrics_data["activePosts"] = new_metrics_data.get("activePosts", 0) + 1
-
-        transaction.set(global_post_metrics_ref, new_metrics_data)
-        transaction.set(
-            post_ref, post.model_dump()
-        )
-    try:
-        transaction  = database.transaction()
-        update_metrics(transaction, global_post_metrics_ref, )
-        print("Transaction completed")
+        
+        # Retrieve current metrics
+        current_metrics = metrics_doc.to_dict()
+        if (current_metrics == None) :
+            raise Exception("Global post metrics document does not exist")
+        updated_metrics = {
+            "totalPosts": current_metrics.get("totalPosts", 0) + 1,
+            "activePosts": current_metrics.get("activePosts", 0) + 1
+        }
+        
+        # Update global metrics
+        global_post_metrics_ref.set(updated_metrics)
+        
+        print("Post saved successfully")
+        
     except Exception as e:
-        error_logging_function(title="Failure of Cronjob for TU university lernza application translating failed", e=e)
+        # Rollback mechanism
+        try:
+            # Delete the post if global metrics update fails
+            post_ref.delete()
+        except Exception as delete_error:
+            print(f"Error during rollback: {delete_error}")
+        
+        # Re-raise the original exception
+        raise Exception(f"Failed to save post: {str(e)}")
+
+
+
+# TODO: In future we need to use the transaction with google auth cloud if we need [PR#23]
+# def save_post(post: PostModel):
+#     database = get_firestore()
+
+#     global_post_metrics_ref = database.collection("global-post-metrics").document(
+#         "FdCccnSXO37fnGLPT7Ca"
+#     )
+
+
+#     post_ref = database.collection("posts").document(post.id)
+
+
+   
+#     def update_metrics(transaction, global_post_metrics_ref):
+#         metrics_doc = transaction.get(global_post_metrics_ref)
+#         if not metrics_doc.exists:
+#             raise Exception("Global post metrics document does not exist")
+
+#         new_metrics_data = metrics_doc.to_dict()
+#         new_metrics_data["totalPosts"] = new_metrics_data.get("totalPosts", 0) + 1
+#         new_metrics_data["activePosts"] = new_metrics_data.get("activePosts", 0) + 1
+
+#         transaction.set(global_post_metrics_ref, new_metrics_data)
+#         transaction.set(
+#             post_ref, post.model_dump()
+#         )
+#     try:
+#         transaction  = database.transaction()
+#         update_metrics(transaction, global_post_metrics_ref, )
+#         print("Transaction completed")
+#     except Exception as e:
+            # error_logging_function(title="Failure of Cronjob for TU university lernza application translating failed", e=e)
+#         print(f"Failure of Cronjob for TU university lernza application transaction failed {e}")
 
 
 
