@@ -1,4 +1,4 @@
-enum UserRole { admin, teacher, student }
+enum UserRole { admin, teacher, student, bot }
 
 enum GroupPrivacy { public, private, restricted }
 

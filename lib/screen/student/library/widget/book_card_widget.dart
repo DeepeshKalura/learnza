@@ -102,10 +102,14 @@ class _BookDownloadScreenState extends State<BookDownloadScreen> {
         _downloadStatus = 'Download Complete';
       });
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-            content:
-                Text('${widget.booksModel.bookTitle} downloaded successfully')),
+      ShadAlert(
+        decoration: const ShadDecoration(
+          color: successColor,
+        ),
+        iconSrc: LucideIcons.circleAlert,
+        title: const Text('Downloaded Sucessfully'),
+        description:
+            Text('${widget.booksModel.bookTitle} downloaded successfully'),
       );
     } on DioException catch (e) {
       setState(() {
