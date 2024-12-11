@@ -65,7 +65,7 @@ class PostProvider extends ChangeNotifier {
 
       final globalPostMertricsDocRef = firebaseService.database
           .collection('global-post-metrics')
-          .doc("FdCccnSXO37fnGLPT7Ca");
+          .doc("LwOyb4Ffxn9Kj1122mqg");
 
       await firebaseService.database
           .runTransaction(
@@ -157,6 +157,11 @@ class PostProvider extends ChangeNotifier {
         .limit(limit)
         .snapshots()
         .asyncMap((snapshot) async {
+      if (snapshot.docs.isEmpty) {
+        developer.log("I am just chiling");
+        return <PostsModel, UsersModel>{};
+      }
+
       final posts =
           snapshot.docs.map((doc) => PostsModel.fromJson(doc.data())).toList();
       final users = await Future.wait(posts.map((post) async {
@@ -164,6 +169,7 @@ class PostProvider extends ChangeNotifier {
             .collection('users')
             .doc(post.authorId)
             .get();
+
         return UsersModel.fromJson(userDoc.data()!);
       }));
 
