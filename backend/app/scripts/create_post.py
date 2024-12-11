@@ -223,17 +223,17 @@ def fetch_random_image():
         )
     return None
 
-
-def translate_to_nepali(text):
-    try:
-        translated = translator.translate(text, dest="ne")
-        return translated.text
-    except Exception as e:
-        error_logging_function(
-            title="Failure of Cronjob for TU university lernza application translating to Nepali",
-            e=e,
-        )
-    return text
+# TODO:  It has some error i create [PR#21] for enhachement 
+# def translate_to_nepali(text):
+#     try:
+#         translated = translator.translate(text, dest="ne")
+#         return translated.text
+#     except Exception as e:
+#         error_logging_function(
+#             title="Failure of Cronjob for TU university lernza application translating to Nepali",
+#             e=e,
+#         )
+#     return text
 
 
 def create_post():
