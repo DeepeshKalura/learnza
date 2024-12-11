@@ -66,4 +66,5 @@ const _$UserRoleEnumMap = {
   UserRole.admin: 'admin',
   UserRole.teacher: 'teacher',
   UserRole.student: 'student',
+  UserRole.bot: 'bot',
 };
