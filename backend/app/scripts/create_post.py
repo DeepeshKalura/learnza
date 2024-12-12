@@ -66,8 +66,8 @@ def get_storage():
 class PostEngagementMetrics(BaseModel):
     totalViews: int = Field(default=0)
     uniqueViews: int = Field(default=0)
-    likes: int = Field(default=0)
-    dislikes: int = Field(default=0)
+    likes: List[str] = Field(default_factory=list)  
+    dislikes: List[str] = Field(default_factory=list)  
     totalComments: int = Field(default=0)
     activeDiscussions: int = Field(default=0)
     topLevelComments: int = Field(default=0)
