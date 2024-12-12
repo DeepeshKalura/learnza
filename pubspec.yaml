@@ -98,8 +98,7 @@ flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
   image_path: "assets/images/common/splash/lernzaLogo.png"
-  min_sdk_android: 21
-  adaptive_icon_background: "#ffffff"
+  remove_alpha_ios: true
 
 flutter_gen:
   output: lib/gen/
