@@ -11,8 +11,8 @@ class PostEngagementMetrics with _$PostEngagementMetrics {
     @Default(0) int uniqueViews,
 
     // Reaction Metrics
-    @Default(0) int likes,
-    @Default(0) int dislikes,
+    @Default([]) List<String> likes,
+    @Default([]) List<String> dislikes,
 
     // Comment and Discussion Metrics
     @Default(0) int totalComments,

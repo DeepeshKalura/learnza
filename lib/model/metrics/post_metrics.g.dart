@@ -11,8 +11,13 @@ _$PostEngagementMetricsImpl _$$PostEngagementMetricsImplFromJson(
     _$PostEngagementMetricsImpl(
       totalViews: (json['totalViews'] as num?)?.toInt() ?? 0,
       uniqueViews: (json['uniqueViews'] as num?)?.toInt() ?? 0,
-      likes: (json['likes'] as num?)?.toInt() ?? 0,
-      dislikes: (json['dislikes'] as num?)?.toInt() ?? 0,
+      likes:
+          (json['likes'] as List<dynamic>?)?.map((e) => e as String).toList() ??
+              const [],
+      dislikes: (json['dislikes'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
       totalComments: (json['totalComments'] as num?)?.toInt() ?? 0,
       activeDiscussions: (json['activeDiscussions'] as num?)?.toInt() ?? 0,
       topLevelComments: (json['topLevelComments'] as num?)?.toInt() ?? 0,

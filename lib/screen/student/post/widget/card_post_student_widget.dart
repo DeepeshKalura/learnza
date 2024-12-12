@@ -6,6 +6,7 @@ import 'package:shadcn_ui/shadcn_ui.dart';
 
 import '../../../../model/posts/posts_model.dart';
 import '../../../../model/users/users_model.dart';
+import '../../../../providers/post_provider.dart';
 import '../../../../utils/theme.dart';
 
 class CardPostStudentWidget extends StatefulWidget {
@@ -22,6 +23,11 @@ class CardPostStudentWidget extends StatefulWidget {
 class CardPostStudentWidgetState extends State<CardPostStudentWidget> {
   bool _isLiked = false;
   bool _isBookmarked = false;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -96,23 +102,26 @@ class CardPostStudentWidgetState extends State<CardPostStudentWidget> {
                         ),
                         onPressed: () {
                           setState(() {
+                            // TODO: rather creating entire state again you should create a postManagementUiProvider and manage state throguht that [PR#26]
                             _isLiked = !_isLiked;
+                            // context.provider<PostProvider>().likePost(widget.post.id);
                           });
                         },
                       ),
-                      IconButton(
-                        icon: Icon(
-                          _isBookmarked
-                              ? Icons.bookmark
-                              : Icons.bookmark_border,
-                          color: _isBookmarked ? Colors.blue : Colors.grey,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            _isBookmarked = !_isBookmarked;
-                          });
-                        },
-                      ),
+                      // TODO: In future create bookmak feature to save post[PR#25]
+                      // IconButton(
+                      //   icon: Icon(
+                      //     _isBookmarked
+                      //         ? Icons.bookmark
+                      //         : Icons.bookmark_border,
+                      //     color: _isBookmarked ? Colors.blue : Colors.grey,
+                      //   ),
+                      //   onPressed: () {
+                      //     setState(() {
+                      //       _isBookmarked = !_isBookmarked;
+                      //     });
+                      //   },
+                      // ),
                     ],
                   ),
                 ],

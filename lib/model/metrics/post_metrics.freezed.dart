@@ -24,8 +24,8 @@ mixin _$PostEngagementMetrics {
 // View and Interaction Metrics
   int get totalViews => throw _privateConstructorUsedError;
   int get uniqueViews => throw _privateConstructorUsedError; // Reaction Metrics
-  int get likes => throw _privateConstructorUsedError;
-  int get dislikes =>
+  List<String> get likes => throw _privateConstructorUsedError;
+  List<String> get dislikes =>
       throw _privateConstructorUsedError; // Comment and Discussion Metrics
   int get totalComments => throw _privateConstructorUsedError;
   int get activeDiscussions => throw _privateConstructorUsedError;
@@ -60,8 +60,8 @@ abstract class $PostEngagementMetricsCopyWith<$Res> {
   $Res call(
       {int totalViews,
       int uniqueViews,
-      int likes,
-      int dislikes,
+      List<String> likes,
+      List<String> dislikes,
       int totalComments,
       int activeDiscussions,
       int topLevelComments,
@@ -117,11 +117,11 @@ class _$PostEngagementMetricsCopyWithImpl<$Res,
       likes: null == likes
           ? _value.likes
           : likes // ignore: cast_nullable_to_non_nullable
-              as int,
+              as List<String>,
       dislikes: null == dislikes
           ? _value.dislikes
           : dislikes // ignore: cast_nullable_to_non_nullable
-              as int,
+              as List<String>,
       totalComments: null == totalComments
           ? _value.totalComments
           : totalComments // ignore: cast_nullable_to_non_nullable
@@ -178,8 +178,8 @@ abstract class _$$PostEngagementMetricsImplCopyWith<$Res>
   $Res call(
       {int totalViews,
       int uniqueViews,
-      int likes,
-      int dislikes,
+      List<String> likes,
+      List<String> dislikes,
       int totalComments,
       int activeDiscussions,
       int topLevelComments,
@@ -231,13 +231,13 @@ class __$$PostEngagementMetricsImplCopyWithImpl<$Res>
           : uniqueViews // ignore: cast_nullable_to_non_nullable
               as int,
       likes: null == likes
-          ? _value.likes
+          ? _value._likes
           : likes // ignore: cast_nullable_to_non_nullable
-              as int,
+              as List<String>,
       dislikes: null == dislikes
-          ? _value.dislikes
+          ? _value._dislikes
           : dislikes // ignore: cast_nullable_to_non_nullable
-              as int,
+              as List<String>,
       totalComments: null == totalComments
           ? _value.totalComments
           : totalComments // ignore: cast_nullable_to_non_nullable
@@ -288,8 +288,8 @@ class _$PostEngagementMetricsImpl implements _PostEngagementMetrics {
   const _$PostEngagementMetricsImpl(
       {this.totalViews = 0,
       this.uniqueViews = 0,
-      this.likes = 0,
-      this.dislikes = 0,
+      final List<String> likes = const [],
+      final List<String> dislikes = const [],
       this.totalComments = 0,
       this.activeDiscussions = 0,
       this.topLevelComments = 0,
@@ -299,7 +299,9 @@ class _$PostEngagementMetricsImpl implements _PostEngagementMetrics {
       this.reachRate = 0,
       this.uniqueInteractors = 0,
       this.averageReadTime = 0,
-      this.scrollDepth = 0});
+      this.scrollDepth = 0})
+      : _likes = likes,
+        _dislikes = dislikes;
 
   factory _$PostEngagementMetricsImpl.fromJson(Map<String, dynamic> json) =>
       _$$PostEngagementMetricsImplFromJson(json);
@@ -312,12 +314,25 @@ class _$PostEngagementMetricsImpl implements _PostEngagementMetrics {
   @JsonKey()
   final int uniqueViews;
 // Reaction Metrics
+  final List<String> _likes;
+// Reaction Metrics
   @override
   @JsonKey()
-  final int likes;
+  List<String> get likes {
+    if (_likes is EqualUnmodifiableListView) return _likes;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_likes);
+  }
+
+  final List<String> _dislikes;
   @override
   @JsonKey()
-  final int dislikes;
+  List<String> get dislikes {
+    if (_dislikes is EqualUnmodifiableListView) return _dislikes;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_dislikes);
+  }
+
 // Comment and Discussion Metrics
   @override
   @JsonKey()
@@ -368,9 +383,8 @@ class _$PostEngagementMetricsImpl implements _PostEngagementMetrics {
                 other.totalViews == totalViews) &&
             (identical(other.uniqueViews, uniqueViews) ||
                 other.uniqueViews == uniqueViews) &&
-            (identical(other.likes, likes) || other.likes == likes) &&
-            (identical(other.dislikes, dislikes) ||
-                other.dislikes == dislikes) &&
+            const DeepCollectionEquality().equals(other._likes, _likes) &&
+            const DeepCollectionEquality().equals(other._dislikes, _dislikes) &&
             (identical(other.totalComments, totalComments) ||
                 other.totalComments == totalComments) &&
             (identical(other.activeDiscussions, activeDiscussions) ||
@@ -398,8 +412,8 @@ class _$PostEngagementMetricsImpl implements _PostEngagementMetrics {
       runtimeType,
       totalViews,
       uniqueViews,
-      likes,
-      dislikes,
+      const DeepCollectionEquality().hash(_likes),
+      const DeepCollectionEquality().hash(_dislikes),
       totalComments,
       activeDiscussions,
       topLevelComments,
@@ -432,8 +446,8 @@ abstract class _PostEngagementMetrics implements PostEngagementMetrics {
   const factory _PostEngagementMetrics(
       {final int totalViews,
       final int uniqueViews,
-      final int likes,
-      final int dislikes,
+      final List<String> likes,
+      final List<String> dislikes,
       final int totalComments,
       final int activeDiscussions,
       final int topLevelComments,
@@ -454,9 +468,9 @@ abstract class _PostEngagementMetrics implements PostEngagementMetrics {
   @override
   int get uniqueViews; // Reaction Metrics
   @override
-  int get likes;
+  List<String> get likes;
   @override
-  int get dislikes; // Comment and Discussion Metrics
+  List<String> get dislikes; // Comment and Discussion Metrics
   @override
   int get totalComments;
   @override
