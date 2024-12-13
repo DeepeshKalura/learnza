@@ -15,6 +15,7 @@ class AppUrls {
   static const String libraryStudentScreen = 'libraryStudentScreen';
   static const String readBookReadScreen = 'readBookReadScreen';
   static const String searchBooksStudentScreen = 'searchBooksStudentScreen';
+  static const String postStudentScreen = 'postStudentScreen';
   // students --> groups
   static const String groupsStudentScreen = 'groupsStudentScreen';
   static const String groupDetailStudentScreen = 'groupDetailStudentScreen';

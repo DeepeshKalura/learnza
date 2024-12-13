@@ -20,7 +20,7 @@ class FirebaseService:
 
     def __init__(self):
         if not firebase_admin._apps:
-            cred = credentials.Certificate("serviceAccountKey.json")
+            cred = credentials.Certificate("/home/deepesh/Development/private/freelance/learnza/backend/app/scripts/serviceAccountKey.json")
             firebase_admin.initialize_app(
                 cred, {"storageBucket": "learnza.firebasestorage.app"}
             )

@@ -9,6 +9,7 @@ import 'package:shadcn_ui/shadcn_ui.dart';
 import '../../../providers/auth_provider.dart';
 import '../../../router/app_urls.dart';
 import '../../common/widget/drawer_widget.dart';
+import '../post/widget/build_navigation.dart';
 
 class LibraryHallScreen extends StatefulWidget {
   const LibraryHallScreen({super.key});
@@ -25,57 +26,113 @@ class _LibraryHallScreenState extends State<LibraryHallScreen> {
     final user = context.read<AuthProvider>().user;
     final localizations = AppLocalizations.of(context)!;
 
-    return Scaffold(
-      key: _scaffoldKey,
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(LucideIcons.menu),
-          color: Colors.black,
-          onPressed: () {
-            _scaffoldKey.currentState!.openDrawer();
-          },
+    return LayoutBuilder(builder: (context, constrain) {
+      final isWeb = constrain.maxWidth > 600;
+      return Scaffold(
+        key: _scaffoldKey,
+        drawer: const DrawerWidget(
+          currentIndex: 1,
         ),
-        title: Text(localizations.libraryHallTitle),
-        titleTextStyle: ShadTheme.of(context).textTheme.h3,
-      ),
-      drawer: const DrawerWidget(
-        currentIndex: 1,
-      ),
-      body: SingleChildScrollView(
-        child: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 16),
-          padding: const EdgeInsets.symmetric(horizontal: 2),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              _buildLibraryCard(
-                  title: localizations.onlineBookStoreTitle,
-                  quote: localizations.onlineBookStoreQuote,
-                  image:
-                      'https://images.unsplash.com/photo-1519681393784-d120267933ba',
-                  onTap: () {
-                    context.pushNamed(AppUrls.libraryStudentScreen);
-                  },
-                  first: true),
-              const SizedBox(height: 16),
-              _buildLibraryCard(
-                title: localizations.personalLibraryTitle(
-                  user?.fullName ?? "My",
+        body: CustomScrollView(
+          slivers: [
+            SliverAppBar(
+              pinned: false,
+              snap: true,
+              floating: true,
+              leading: isWeb
+                  ? null
+                  : IconButton(
+                      icon: const Icon(LucideIcons.menu),
+                      onPressed: () {
+                        _scaffoldKey.currentState!.openDrawer();
+                      },
+                    ),
+              title: Text(localizations.libraryHallTitle),
+              titleTextStyle: ShadTheme.of(context).textTheme.h3,
+              actions: [
+                if (isWeb)
+                  buildNavigationItem(
+                    context,
+                    icon: Icons.home_outlined,
+                    label: AppLocalizations.of(context)?.homeNavigationBar ??
+                        'Home',
+                    index: 0,
+                    selectedIndex: 1,
+                    primaryColor: primaryColor,
+                    tap: () {
+                      context.pushReplacementNamed(AppUrls.postStudentScreen);
+                    },
+                  ),
+                if (isWeb)
+                  buildNavigationItem(
+                    context,
+                    icon: Icons.library_books,
+                    label: AppLocalizations.of(context)?.libraryNavigationBar ??
+                        'Library',
+                    index: 1,
+                    selectedIndex: 1,
+                    primaryColor: primaryColor,
+                    tap: () {
+                      context.pushReplacementNamed(AppUrls.libraryHallScreen);
+                    },
+                  ),
+                if (isWeb)
+                  buildNavigationItem(
+                    context,
+                    icon: Icons.group,
+                    label: AppLocalizations.of(context)?.groupNavigationBar ??
+                        'Groups',
+                    index: 2,
+                    selectedIndex: 1,
+                    primaryColor: primaryColor,
+                    tap: () {
+                      context.pushReplacementNamed(AppUrls.groupsStudentScreen);
+                    },
+                  ),
+              ],
+            ),
+            SliverFillRemaining(
+              hasScrollBody: true,
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    _buildLibraryCard(
+                      title: localizations.onlineBookStoreTitle,
+                      quote: localizations.onlineBookStoreQuote,
+                      image:
+                          'https://images.unsplash.com/photo-1519681393784-d120267933ba',
+                      onTap: () {
+                        context.pushNamed(AppUrls.libraryStudentScreen);
+                      },
+                      first: true,
+                    ),
+                    const SizedBox(height: 16),
+                    _buildLibraryCard(
+                      title: localizations.personalLibraryTitle(
+                        user?.fullName ?? "My",
+                      ),
+                      quote: localizations.offlineBookStroeQuote,
+                      image:
+                          'https://images.unsplash.com/photo-1604866830893-c13cafa515d5',
+                      onTap: () {
+                        context.pushNamed(AppUrls.offlineLibarayCommonScreen);
+                      },
+                      first: false,
+                    ),
+                  ],
                 ),
-                quote: localizations.offlineBookStroeQuote,
-                image:
-                    'https://images.unsplash.com/photo-1604866830893-c13cafa515d5',
-                onTap: () {
-                  context.pushNamed(AppUrls.offlineLibarayCommonScreen);
-                },
-                first: false,
               ),
-            ],
-          ),
+            ),
+          ],
         ),
-      ),
-    );
+      );
+    });
   }
 
   Widget _buildLibraryCard({
@@ -86,6 +143,9 @@ class _LibraryHallScreenState extends State<LibraryHallScreen> {
     required bool first,
   }) {
     return Container(
+      constraints: const BoxConstraints(
+        maxWidth: 850,
+      ),
       margin: const EdgeInsets.only(
         bottom: 16,
       ),
