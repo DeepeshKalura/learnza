@@ -77,7 +77,7 @@ class _PostStudentScreenState extends State<PostStudentScreen> {
                     selectedIndex: 0,
                     primaryColor: primaryColor,
                     tap: () {
-                      null;
+                      context.pushReplacementNamed(AppUrls.postStudentScreen);
                     },
                   ),
                 if (isWeb)
@@ -90,8 +90,7 @@ class _PostStudentScreenState extends State<PostStudentScreen> {
                     selectedIndex: 0,
                     primaryColor: primaryColor,
                     tap: () {
-                      context
-                          .pushReplacementNamed(AppUrls.libraryStudentScreen);
+                      context.pushReplacementNamed(AppUrls.libraryHallScreen);
                     },
                   ),
                 if (isWeb)
@@ -125,7 +124,7 @@ class _PostStudentScreenState extends State<PostStudentScreen> {
               child: Column(
                 children: [
                   Container(
-                    constraints: const BoxConstraints(maxWidth: 600),
+                    constraints: const BoxConstraints(maxWidth: 800),
                     height: 80,
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     decoration: const BoxDecoration(
@@ -199,7 +198,7 @@ class _PostStudentScreenState extends State<PostStudentScreen> {
                       return Expanded(
                         child: Center(
                           child: ConstrainedBox(
-                            constraints: const BoxConstraints(maxWidth: 600),
+                            constraints: const BoxConstraints(maxWidth: 800),
                             child: ListView.builder(
                               itemCount: data.length,
                               itemBuilder: (context, index) {

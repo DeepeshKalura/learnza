@@ -12,6 +12,7 @@ import '../screen/common/library/offline_libaray_common_screen.dart';
 import '../screen/common/setting/setting_common_screen.dart';
 import '../screen/common/splash/splash_screen.dart';
 import '../screen/student/groups/groups_detail_screen.dart';
+import '../screen/student/groups/groups_student_screen.dart';
 import '../screen/student/library/anna_web_view_screen.dart';
 import '../screen/student/library/library_hall_screen.dart';
 import '../screen/student/library/library_student_screen.dart';
@@ -19,6 +20,7 @@ import '../screen/student/blogs/deatail_blog_student.dart';
 import '../screen/student/library/read_book_read_screen.dart';
 import '../screen/student/library/search_book_student_screen.dart';
 import '../screen/student/library/widget/book_card_widget.dart';
+import '../screen/student/post/post_student_screen.dart';
 import '../screen/student/profile/profile_student_screen.dart';
 import '../service/firebase_service.dart';
 import '../service/internet_connectivity_service.dart';
@@ -81,6 +83,12 @@ class AppRouters {
         path: "/offline-library",
         name: AppUrls.offlineLibarayCommonScreen,
         builder: (context, state) => const OfflineLibraryCommonScreen(),
+      ),
+
+      GoRoute(
+        path: "/posts",
+        name: AppUrls.postStudentScreen,
+        builder: (context, state) => const PostStudentScreen(),
       ),
       GoRoute(
         path: "/forgot-password",
@@ -152,6 +160,11 @@ class AppRouters {
             builder: (context, state) {
               return const LibraryStudentScreen();
             },
+          ),
+          GoRoute(
+            path: "/groups",
+            name: AppUrls.groupsStudentScreen,
+            builder: (context, state) => const GroupsStudentScreen(),
           ),
           GoRoute(
             path: '/read-book',

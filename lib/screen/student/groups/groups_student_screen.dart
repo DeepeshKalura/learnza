@@ -1,17 +1,20 @@
 import 'package:universal_io/io.dart';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:uuid/uuid.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../model/app_enums.dart';
 import '../../../model/groups/groups_model.dart';
 import '../../../providers/auth_provider.dart';
 import '../../../providers/groups_provider.dart';
 import '../../../router/app_urls.dart';
+import '../../../utils/theme.dart';
+import '../../common/widget/drawer_widget.dart';
+import '../post/widget/build_navigation.dart';
 
 class GroupsStudentScreen extends StatefulWidget {
   const GroupsStudentScreen({super.key});
@@ -405,132 +408,177 @@ class _GroupsStudentScreenState extends State<GroupsStudentScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: scafoldKey,
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            automaticallyImplyLeading: true,
-            leading: kIsWeb
-                ? null
-                : IconButton(
-                    icon: const Icon(LucideIcons.menu),
-                    onPressed: () {
-                      scafoldKey.currentState!.openDrawer();
+    return LayoutBuilder(builder: (context, constrain) {
+      final isWeb = constrain.maxWidth > 600;
+      return Scaffold(
+        key: scafoldKey,
+        drawer: const DrawerWidget(
+          currentIndex: 2,
+        ),
+        body: CustomScrollView(
+          slivers: [
+            SliverAppBar(
+              automaticallyImplyLeading: true,
+              leading: IconButton(
+                icon: const Icon(LucideIcons.menu),
+                onPressed: () {
+                  scafoldKey.currentState!.openDrawer();
+                },
+              ),
+              title: const Text('Groups'),
+              actions: [
+                // TODO: add the create group button[PR#27]
+                // IconButton(
+                //   icon: const Icon(
+                //     LucideIcons.plus,
+                //     color: Colors.black,
+                //   ),
+                //   onPressed: _showCreateGroupDialog,
+                // ),
+                if (isWeb)
+                  buildNavigationItem(
+                    context,
+                    icon: Icons.home_outlined,
+                    label: AppLocalizations.of(context)?.homeNavigationBar ??
+                        'Home',
+                    index: 0,
+                    selectedIndex: 2,
+                    primaryColor: primaryColor,
+                    tap: () {
+                      context.pushReplacementNamed(AppUrls.postStudentScreen);
                     },
                   ),
-            title: const Text('Groups'),
-            actions: [
-              IconButton(
-                icon: const Icon(
-                  LucideIcons.plus,
-                  color: Colors.black,
-                ),
-                onPressed: _showCreateGroupDialog,
-              ),
-            ],
-          ),
-          SliverFillRemaining(
-            child: StreamBuilder(
-              stream: context
-                  .read<GroupsProvider>()
-                  .getGroupsWithPagination(limit: 25),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
+                if (isWeb)
+                  buildNavigationItem(
+                    context,
+                    icon: Icons.library_books,
+                    label: AppLocalizations.of(context)?.libraryNavigationBar ??
+                        'Library',
+                    index: 1,
+                    selectedIndex: 2,
+                    primaryColor: primaryColor,
+                    tap: () {
+                      context.pushReplacementNamed(AppUrls.libraryHallScreen);
+                    },
+                  ),
+                if (isWeb)
+                  buildNavigationItem(
+                    context,
+                    icon: Icons.group,
+                    label: AppLocalizations.of(context)?.groupNavigationBar ??
+                        'Groups',
+                    index: 2,
+                    selectedIndex: 2,
+                    primaryColor: primaryColor,
+                    tap: () {
+                      context.pushReplacementNamed(AppUrls.groupsStudentScreen);
+                    },
+                  ),
+              ],
+            ),
+            SliverFillRemaining(
+              child: StreamBuilder(
+                stream: context
+                    .read<GroupsProvider>()
+                    .getGroupsWithPagination(limit: 25),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
 
-                if (snapshot.hasError) {
-                  return Center(
-                    child: Text('Error: ${snapshot.error}'),
-                  );
-                }
+                  if (snapshot.hasError) {
+                    return Center(
+                      child: Text('Error: ${snapshot.error}'),
+                    );
+                  }
 
-                final groups = snapshot.data as List<GroupsModel>;
+                  final groups = snapshot.data as List<GroupsModel>;
 
-                if (groups.isEmpty) {
-                  return const Center(
-                    child: Text('No groups found'),
-                  );
-                }
+                  if (groups.isEmpty) {
+                    return const Center(
+                      child: Text('No groups found'),
+                    );
+                  }
 
-                return ListView.builder(
-                  itemCount: groups.length,
-                  itemBuilder: (context, index) {
-                    final group = groups[index];
-                    return GestureDetector(
-                      onTap: () {
-                        context.pushNamed(
-                          AppUrls.groupDetailStudentScreen,
-                          extra: {
-                            'group': group,
-                          },
-                        );
-                      },
-                      child: Container(
-                        margin: const EdgeInsets.all(12),
-                        child: ShadCard(
-                          child: Hero(
-                            tag: group.id,
-                            child: Row(
-                              children: [
-                                ShadAvatar(
-                                  size: const Size(50, 50),
-                                  group.imageUrl ??
-                                      "https://www.pngitem.com/pimgs/m/522-5220445_anonymous-profile-grey-person-sticker-glitch-empty-profile.png",
-                                  placeholder: Text(
-                                    group.name.substring(
-                                      0,
-                                      2,
+                  return ListView.builder(
+                    itemCount: groups.length,
+                    itemBuilder: (context, index) {
+                      final group = groups[index];
+                      return GestureDetector(
+                        onTap: () {
+                          context.pushNamed(
+                            AppUrls.groupDetailStudentScreen,
+                            extra: {
+                              'group': group,
+                            },
+                          );
+                        },
+                        child: Container(
+                          margin: const EdgeInsets.all(12),
+                          child: ShadCard(
+                            child: Hero(
+                              tag: group.id,
+                              child: Row(
+                                children: [
+                                  ShadAvatar(
+                                    size: const Size(50, 50),
+                                    group.imageUrl ??
+                                        "https://www.pngitem.com/pimgs/m/522-5220445_anonymous-profile-grey-person-sticker-glitch-empty-profile.png",
+                                    placeholder: Text(
+                                      group.name.substring(
+                                        0,
+                                        2,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                const SizedBox(width: 20),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      group.name,
-                                      style: const TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 5),
-                                    SizedBox(
-                                      width: 250,
-                                      child: Text(
-                                        group.description ?? 'No description',
-                                        maxLines: 3,
+                                  const SizedBox(width: 20),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        group.name,
                                         style: const TextStyle(
-                                          fontSize: 14,
-                                          color: Colors.grey,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
                                         ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                                const Spacer(),
-                                const Icon(
-                                  Icons.arrow_forward_ios,
-                                  size: 30,
-                                  color: Colors.grey,
-                                ),
-                              ],
+                                      const SizedBox(height: 5),
+                                      SizedBox(
+                                        width: 250,
+                                        child: Text(
+                                          group.description ?? 'No description',
+                                          maxLines: 3,
+                                          style: const TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const Spacer(),
+                                  const Icon(
+                                    Icons.arrow_forward_ios,
+                                    size: 30,
+                                    color: Colors.grey,
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    );
-                  },
-                );
-              },
-            ),
-          )
-        ],
-      ),
-    );
+                      );
+                    },
+                  );
+                },
+              ),
+            )
+          ],
+        ),
+      );
+    });
   }
 }

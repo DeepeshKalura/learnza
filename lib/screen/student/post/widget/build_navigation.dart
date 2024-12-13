@@ -12,7 +12,7 @@ Widget buildNavigationItem(
 }) {
   final isSelected = selectedIndex == index;
   return InkWell(
-    onTap: tap,
+    onTap: isSelected ? null : tap,
     child: Container(
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
       decoration: BoxDecoration(
