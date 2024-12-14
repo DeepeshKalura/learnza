@@ -13,8 +13,8 @@ void main() {
     expect(json, {
       'totalViews': 0,
       'uniqueViews': 0,
-      'likes': 0,
-      'dislikes': 0,
+      'likes': [],
+      'dislikes': [],
       'totalComments': 0,
       'activeDiscussions': 0,
       'topLevelComments': 0,
