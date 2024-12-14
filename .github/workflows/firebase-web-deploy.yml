@@ -169,12 +169,15 @@ jobs:
           keyAlias=${{ secrets.KEY_ALIAS }}
           storeFile=~/keystore/upload-keystore.jks
           EOF
-
-      - name: Build Web
-        run: flutter build web --release
+#! Web release for flutter is removed shall we migrated to the web[PR#28]
+      # - name: Build Web
+      #   run: flutter build web --release
 
       - name: Build Android
-        run: flutter build apk --release
+        run:
+          | 
+          flutter build apk --release --dart-define-from-file=.env
+          flutter build appbundle --release --dart-define-from-file=.env
 
       - name: Create Firebase Config
         run: |
@@ -210,7 +213,7 @@ jobs:
         with:
           name: build-artifacts
           path: |
-            build/web/**
+            build/app/outputs/bundle/release/app-release.aab
             build/app/outputs/flutter-apk/app-release.apk
             firebase.json
             .firebaserc
@@ -241,26 +244,20 @@ jobs:
         run: |
           pwd
           ls -la
-          ls -la build/web || echo "build/web not found"
+          ls -la build/app/outputs/bundle/release || echo "Bundle directory not found"
           ls -la build/app/outputs/flutter-apk || echo "APK directory not found"
 
-      - name: Deploy to Firebase Hosting
-        uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: "${{ secrets.GITHUB_TOKEN }}"
-          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT }}"
-          projectId: ${{ env.FIREBASE_PROJECT_ID }}
-          channelId: live
 
-      # - name: Create GitHub Release
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   run: |
-      #     # Verify APK exists and show its path
-      #     find . -name "app-release.apk" -type f
+        # TODO: Better Deployment process [#29]
+      - name: Create GitHub Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Verify APK exists and show its path
+          find . -name "app-release.apk" -type f
           
-      #     # Create the release with the correct APK path
-      #     gh release create "v${{ needs.version-and-build.outputs.new_version }}" \
-      #       "build/app/outputs/flutter-apk/app-release.apk" \
-      #       --title "Release v${{ needs.version-and-build.outputs.new_version }}" \
-      #       --notes "Release version ${{ needs.version-and-build.outputs.new_version }}"
+          # Create the release with the correct APK path
+          gh release create "v${{ needs.version-and-build.outputs.new_version }}" \
+            "build/app/outputs/flutter-apk/app-release.apk" \
+            --title "Release v${{ needs.version-and-build.outputs.new_version }}" \
+            --notes "Release version ${{ needs.version-and-build.outputs.new_version }}"
