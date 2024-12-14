@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:learnza/utils/theme.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../providers/state/student/libary_student_state_provider.dart';
@@ -23,7 +24,7 @@ class _AnnaArchiveBookWidgetState extends State<AnnaArchiveBookWidget> {
       if (context.read<LibaryStudentStateProvider>().annaArchiveBooks.isEmpty) {
         context
             .read<LibaryStudentStateProvider>()
-            .fetchAnnaArchiveBooks(searchQuery: "Love");
+            .fetchAnnaArchiveBooks(searchQuery: "Studies");
       }
     });
   }
@@ -34,7 +35,11 @@ class _AnnaArchiveBookWidgetState extends State<AnnaArchiveBookWidget> {
       builder: (context, libraryProvider, child) {
         // Check if loading
         if (libraryProvider.isAnnaArchiveBooksLoading) {
-          return const Center(child: CircularProgressIndicator());
+          return const Center(
+            child: CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(primaryColor),
+            ),
+          );
         }
 
         // Check for error

@@ -94,38 +94,44 @@ class _LibraryHallScreenState extends State<LibraryHallScreen> {
             SliverFillRemaining(
               hasScrollBody: true,
               child: SingleChildScrollView(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    _buildLibraryCard(
-                      title: localizations.onlineBookStoreTitle,
-                      quote: localizations.onlineBookStoreQuote,
-                      image:
-                          'https://images.unsplash.com/photo-1519681393784-d120267933ba',
-                      onTap: () {
-                        context.pushNamed(AppUrls.libraryStudentScreen);
-                      },
-                      first: true,
-                    ),
-                    const SizedBox(height: 16),
-                    _buildLibraryCard(
-                      title: localizations.personalLibraryTitle(
-                        user?.fullName ?? "My",
+                child: Container(
+                  margin: EdgeInsets.symmetric(
+                    horizontal: isWeb ? 32 : 8,
+                    vertical: 16,
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const SizedBox(
+                        height: 16,
                       ),
-                      quote: localizations.offlineBookStroeQuote,
-                      image:
-                          'https://images.unsplash.com/photo-1604866830893-c13cafa515d5',
-                      onTap: () {
-                        context.pushNamed(AppUrls.offlineLibarayCommonScreen);
-                      },
-                      first: false,
-                    ),
-                  ],
+                      _buildLibraryCard(
+                        title: localizations.onlineBookStoreTitle,
+                        quote: localizations.onlineBookStoreQuote,
+                        image:
+                            'https://images.unsplash.com/photo-1519681393784-d120267933ba',
+                        onTap: () {
+                          context.pushNamed(AppUrls.libraryStudentScreen);
+                        },
+                        first: true,
+                      ),
+                      const SizedBox(height: 16),
+                      _buildLibraryCard(
+                        title: localizations.personalLibraryTitle(
+                          user?.fullName ?? "My",
+                        ),
+                        quote: localizations.offlineBookStroeQuote,
+                        image:
+                            'https://images.unsplash.com/photo-1604866830893-c13cafa515d5',
+                        onTap: () {
+                          context.pushNamed(AppUrls.offlineLibarayCommonScreen);
+                        },
+                        first: false,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

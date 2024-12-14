@@ -15,7 +15,31 @@ class BookProvider extends ChangeNotifier {
     required this.firebaseService,
   });
 
+  var loodingBook = false;
   List<BooksModel> books = [];
+
+  Future<void> getBooksFromTheLernzaLibary() async {
+    loodingBook = true;
+    notifyListeners();
+    try {
+      final QuerySnapshot a = await firebaseService.database
+          .collection('books')
+          .where("code", isEqualTo: null)
+          .limit(40)
+          .get();
+
+      for (var element in a.docs) {
+        books.add(BooksModel.fromJson(element.data() as Map<String, dynamic>));
+      }
+    } catch (e, s) {
+      developer.log(e.toString());
+      developer.log(s.toString());
+      rethrow;
+    } finally {
+      loodingBook = false;
+      notifyListeners();
+    }
+  }
 
   Future<void> getBooksFromTheCourse(BuildContext context) async {
     try {
