@@ -46,12 +46,18 @@ jobs:
           key: ${{ runner.os }}-flutter-${{ env.FLUTTER_VERSION }}-${{ hashFiles('**/pubspec.lock') }}
           restore-keys: |
             ${{ runner.os }}-flutter-${{ env.FLUTTER_VERSION }}-
+          
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}
           cache: true
+
+      - name: Setup Env 
+        run: |
+            echo "${{ secrets.ENV }}" | base64 --decode > .env
+
 
       - name: Install dependencies
         run: flutter pub get
