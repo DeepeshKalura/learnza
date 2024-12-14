@@ -2,6 +2,7 @@ import 'dart:developer' as developer;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:universal_io/io.dart';
 
 import '../model/books/books_model.dart';
 import '../model/users/users_model.dart';
@@ -17,6 +18,35 @@ class BookProvider extends ChangeNotifier {
 
   var loodingBook = false;
   List<BooksModel> books = [];
+
+  var isDancingBook = false;
+
+  Future<BooksModel?> checkAnnaBookInLernzaLibary(String id) async {
+    try {
+      isDancingBook = true;
+      notifyListeners();
+
+      // Await the Firebase query
+      var querySnapshot = await firebaseService.database
+          .collection('books')
+          .where('id', isEqualTo: id)
+          .get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        return BooksModel.fromJson(querySnapshot.docs.first.data());
+      } else {
+        return null;
+      }
+    } catch (e, s) {
+      developer.log(e.toString());
+      developer.log(s.toString());
+      rethrow;
+    } finally {
+      // Set loading state back to false after the operation completes
+      isDancingBook = false;
+      notifyListeners();
+    }
+  }
 
   Future<void> getBooksFromTheLernzaLibary() async {
     loodingBook = true;
@@ -128,5 +158,28 @@ class BookProvider extends ChangeNotifier {
     }
 
     return searchResults;
+  }
+
+  Future<void> addBookToLernzaLibary(
+      BooksModel book, File bookFile, File pictureFile) async {
+    try {
+      final uploadTasks = await Future.wait([
+        firebaseService.storage.ref('books/${book.id}.pdf').putFile(bookFile),
+        firebaseService.storage
+            .ref('thumbnails/${book.id}.jpg')
+            .putFile(pictureFile),
+      ]);
+
+      final bookUrl = await uploadTasks[0].ref.getDownloadURL();
+      final pictureUrl = await uploadTasks[1].ref.getDownloadURL();
+
+      book = book.copyWith(bookUrl: bookUrl, thumbnail: pictureUrl);
+
+      await firebaseService.database.collection('books').add(book.toJson());
+    } catch (e, s) {
+      developer.log(e.toString());
+      developer.log(s.toString());
+      rethrow;
+    }
   }
 }

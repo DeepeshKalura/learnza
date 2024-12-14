@@ -35,7 +35,7 @@ class _AnnaWebViewScreenState extends State<AnnaWebViewScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Solve Captcha "),
+        title: const Text("Solve Captcha"),
       ),
       body: Column(
         children: <Widget>[
@@ -66,11 +66,12 @@ class _AnnaWebViewScreenState extends State<AnnaWebViewScreen> {
                     if (downloadLink != null && downloadLink.isNotEmpty) {
                       log("Download link: $downloadLink");
 
-                      Future.delayed(const Duration(milliseconds: 70), () {
-                        context.pushNamed(AppUrls.downloadBookScreen, extra: {
-                          'bookUrl': downloadLink,
-                          'book': widget.book,
-                        });
+                      Future.delayed(const Duration(milliseconds: 40), () {
+                        context.pushReplacementNamed(AppUrls.downloadBookScreen,
+                            extra: {
+                              'bookUrl': downloadLink,
+                              'book': widget.book,
+                            });
                       });
                     } else {
                       debugPrint("Download link not found.");

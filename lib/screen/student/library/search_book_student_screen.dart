@@ -23,6 +23,8 @@ class SearchBookStudentScreen extends StatelessWidget {
               itemBuilder: (context, index) {
                 return BooksCardLibraryStudentWidget(
                   booksModel: books[index],
+                  isDownloading: true,
+                  isAnnaBook: true,
                 );
               },
             ),

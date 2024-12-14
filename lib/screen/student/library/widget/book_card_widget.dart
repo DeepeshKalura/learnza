@@ -1,13 +1,16 @@
-import 'dart:io';
+import 'dart:developer' as developer;
+import 'package:universal_io/io.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:go_router/go_router.dart';
 import 'package:learnza/utils/theme.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:provider/provider.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
 import '../../../../model/books/books_model.dart';
+import '../../../../providers/book_provider.dart';
 import '../../../../router/app_urls.dart';
 import '../../../../service/local_database_service.dart';
 
@@ -67,23 +70,40 @@ class _BookDownloadScreenState extends State<BookDownloadScreen> {
 
     try {
       final filePath = await _getFilePath('${widget.booksModel.id}.pdf');
+      final picturePath = await _getFilePath('${widget.booksModel.id}.jpg');
 
-      await _dio.download(
-        widget.bookUrl,
-        filePath,
-        cancelToken: _cancelToken,
-        onReceiveProgress: (received, total) {
-          if (total != -1) {
-            setState(() {
-              _downloadProgress = received / total;
-              _downloadStatus =
-                  'Downloading: ${(_downloadProgress * 100).toStringAsFixed(0)}%';
-            });
-          }
-        },
-      );
+      Future<Response<dynamic>>? thumbnailDownload;
+      if (widget.booksModel.thumbnail != null) {
+        developer.log("URL : ${widget.booksModel.thumbnail!} ");
+        thumbnailDownload =
+            _dio.download(widget.booksModel.thumbnail!, picturePath);
+      } else {
+        setState(() {
+          _downloadStatus = 'Downloading without thumbnail...';
+        });
+      }
 
-      await LocalDatabaseService.instance.insert(BooksModel(
+      await Future.wait([
+        _dio.download(
+          widget.bookUrl,
+          filePath,
+          cancelToken: _cancelToken,
+          onReceiveProgress: (received, total) {
+            if (total != -1) {
+              if (mounted) {
+                setState(() {
+                  _downloadProgress = received / total;
+                  _downloadStatus =
+                      'Downloading: ${(_downloadProgress * 100).toStringAsFixed(0)}%';
+                });
+              }
+            }
+          },
+        ),
+        if (thumbnailDownload != null) thumbnailDownload,
+      ]);
+
+      var bookModel = BooksModel(
         id: widget.booksModel.id,
         bookTitle: widget.booksModel.bookTitle,
         bookUrl: filePath,
@@ -93,35 +113,70 @@ class _BookDownloadScreenState extends State<BookDownloadScreen> {
         createdAt: DateTime.now(),
         founded: true,
         moreImageUrl: [],
-        author: [],
-      ));
-
-      setState(() {
-        _downloadProgress = 1.0;
-        _isDownloading = false;
-        _downloadStatus = 'Download Complete';
-      });
-
-      ShadAlert(
-        decoration: const ShadDecoration(
-          color: successColor,
-        ),
-        iconSrc: LucideIcons.circleAlert,
-        title: const Text('Downloaded Sucessfully'),
-        description:
-            Text('${widget.booksModel.bookTitle} downloaded successfully'),
+        author: widget.booksModel.author,
+        thumbnail: widget.booksModel.thumbnail,
+        updatedAt: DateTime.now(),
+        publisher: widget.booksModel.publisher,
+        description: widget.booksModel.description,
       );
+
+      var pictureFile = File(picturePath);
+      var bookFile = File(filePath);
+
+      try {
+        // Add book to Lernza Library
+        await context.read<BookProvider>().addBookToLernzaLibary(
+              bookModel,
+              bookFile,
+              pictureFile,
+            );
+
+        // Insert to local database
+        await LocalDatabaseService.instance.insert(bookModel);
+
+        if (mounted) {
+          setState(() {
+            _downloadProgress = 1.0;
+            _isDownloading = false;
+            _downloadStatus = 'Download Complete';
+          });
+
+          // Show success alert
+          ShadAlert(
+            decoration: const ShadDecoration(color: successColor),
+            iconSrc: LucideIcons.circleAlert,
+            title: const Text('Downloaded Successfully'),
+            description:
+                Text('${widget.booksModel.bookTitle} downloaded successfully'),
+          );
+        }
+      } catch (e) {
+        if (mounted) {
+          setState(() {
+            _isDownloading = false;
+            _downloadStatus = 'Error saving book: ${e.toString()}';
+          });
+
+          ShadAlert.destructive(
+            iconSrc: LucideIcons.circleAlert,
+            title: const Text('Error'),
+            description: Text('Failed to save the book: ${e.toString()}'),
+          );
+        }
+      }
     } on DioException catch (e) {
-      setState(() {
-        _isDownloading = false;
-        _downloadStatus = 'Download Failed: ${e.message}';
-      });
+      if (mounted) {
+        setState(() {
+          _isDownloading = false;
+          _downloadStatus = 'Download Failed: ${e.message}';
+        });
 
-      const ShadAlert.destructive(
-        iconSrc: LucideIcons.circleAlert,
-        title: Text('Error'),
-        description: Text('Your session has expired. Please log in again.'),
-      );
+        ShadAlert.destructive(
+          iconSrc: LucideIcons.circleAlert,
+          title: const Text('Error'),
+          description: Text('Failed to download the book due to ${e.message}'),
+        );
+      }
     }
   }
 
@@ -209,6 +264,12 @@ class _BookDownloadScreenState extends State<BookDownloadScreen> {
                           ),
                           textAlign: TextAlign.center,
                         ),
+                        const SizedBox(height: 12),
+                        if (_isDownloading)
+                          const Text(
+                            "Books is under downloading, Please wait for a while",
+                            style: TextStyle(color: Colors.red),
+                          ),
                         const SizedBox(height: 12),
                         Text(
                           _downloadStatus,

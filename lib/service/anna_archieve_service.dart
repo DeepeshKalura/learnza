@@ -144,11 +144,16 @@ class AnnasArchieveService {
     }
   }
 
-  Future<String?> getDownloadUrl(url) async {
+  Future<Map<String?, String?>> getDownloadUrl(url) async {
     try {
       var resData = await http.get(Uri.parse(url), headers: defaultHttpHeader);
       var document = parse(resData.body.toString());
       var main = document.querySelector('main[class="main"]');
+      var description = main
+              ?.querySelector('div[class="mb-1"]')
+              ?.text
+              .replaceFirst("description", '') ??
+          " ";
 
       developer.log("List of main $main", error: main);
 
@@ -176,7 +181,11 @@ class AnnasArchieveService {
       }
 
       developer.log('Found mirror: $mirror');
-      return mirror;
+      developer.log('Found description: $description');
+      return {
+        "url": mirror,
+        "description": description,
+      };
     } catch (e, s) {
       developer.log(e.toString());
       developer.log(s.toString());
