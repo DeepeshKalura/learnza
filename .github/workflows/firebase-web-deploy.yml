@@ -173,6 +173,12 @@ jobs:
       # - name: Build Web
       #   run: flutter build web --release
 
+      - name: Generate .env file
+        run: |
+          echo "${{ secrets.ENV }}" | base64 --decode > .env
+          echo "Verifying .env file:"
+          ls -la .env  # List file to confirm it exists
+
       - name: Build Android
         run:
           | 
