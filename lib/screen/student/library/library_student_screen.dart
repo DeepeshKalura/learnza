@@ -6,13 +6,12 @@ import 'package:learnza/utils/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
-import '../../../model/books/books_model.dart';
 import '../../../providers/book_provider.dart';
 import '../../../providers/state/student/libary_student_state_provider.dart';
 import '../../../router/app_urls.dart';
 import 'course_book_library_screen.dart';
 import 'widget/anna_libary_widget.dart';
-import 'widget/error/books_snapshot_error_widget.dart';
+
 import 'widget/error/no_books_found_error_widget.dart';
 
 class LibraryStudentScreen extends StatefulWidget {
@@ -32,9 +31,9 @@ class _LibraryStudentScreenState extends State<LibraryStudentScreen>
   // Define the library types as a constant list
 
   final List<String> _libraryTypes = [
+    'Lernza Library',
     'Anna Archive',
     'Course Books',
-    'Lernza Library',
   ];
 
   @override
@@ -99,9 +98,9 @@ class _LibraryStudentScreenState extends State<LibraryStudentScreen>
         body: TabBarView(
           controller: _tabController,
           children: const [
+            BookListWidget(),
             AnnaArchiveBookWidget(),
             CourseBookLibraryScreen(),
-            BookListWidget(),
           ],
         ),
       ),
@@ -188,45 +187,42 @@ class _LibraryStudentScreenState extends State<LibraryStudentScreen>
 }
 
 // The BookListWidget remains the same as in the original code
-class BookListWidget extends StatelessWidget {
+class BookListWidget extends StatefulWidget {
   const BookListWidget({super.key});
 
   @override
+  State<BookListWidget> createState() => _BookListWidgetState();
+}
+
+class _BookListWidgetState extends State<BookListWidget> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      context.read<BookProvider>().getBooksFromTheLernzaLibary();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-      stream: context.read<BookProvider>().getBooksWithPagination(limit: 20),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
+    return Consumer<BookProvider>(
+      builder: (context, value, child) {
+        if (value.loodingBook) {
           return const Center(
             child: CircularProgressIndicator(),
           );
-        }
-
-        if (snapshot.hasError) {
-          return BooksSnapshotErrorWidget(
-            errorMessage: snapshot.error.toString(),
-          );
-        }
-
-        final List<BooksModel>? books = snapshot.data;
-
-        if (books == null) {
-          return const BooksSnapshotErrorWidget(
-            errorMessage: "Can't find any books right now",
-          );
-        }
-
-        if (books.isEmpty) {
+        } else if (value.books.isEmpty) {
           return const NoBooksFoundErrorWidget();
+        } else {
+          return ListView.builder(
+            itemCount: value.books.length,
+            itemBuilder: (context, index) {
+              return BooksCardLibraryStudentWidget(
+                booksModel: value.books[index],
+              );
+            },
+          );
         }
-        return ListView.builder(
-          itemCount: books.length,
-          itemBuilder: (context, index) {
-            return BooksCardLibraryStudentWidget(
-              booksModel: books[index],
-            );
-          },
-        );
       },
     );
   }
