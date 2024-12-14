@@ -6,7 +6,6 @@ import 'package:shadcn_ui/shadcn_ui.dart';
 
 import '../../../../model/posts/posts_model.dart';
 import '../../../../model/users/users_model.dart';
-import '../../../../providers/post_provider.dart';
 import '../../../../utils/theme.dart';
 
 class CardPostStudentWidget extends StatefulWidget {
