@@ -40,192 +40,209 @@ class _PostStudentScreenState extends State<PostStudentScreen> {
   @override
   Widget build(BuildContext context) {
     final scafoldKey = GlobalKey<ScaffoldState>();
-    return LayoutBuilder(builder: (context, constrain) {
-      final isWeb = constrain.maxWidth > 600;
-      return Scaffold(
-        key: scafoldKey,
-        drawer: isWeb
-            ? null
-            : const DrawerWidget(
-                currentIndex: 0,
-              ),
-        body: CustomScrollView(
-          slivers: [
-            SliverAppBar(
-              pinned: false,
-              snap: true,
-              floating: true,
-              leading: isWeb
-                  ? null
-                  : IconButton(
-                      icon: const Icon(LucideIcons.menu),
-                      onPressed: () {
-                        scafoldKey.currentState!.openDrawer();
-                      },
-                    ),
-              title: Text(
-                AppLocalizations.of(context)?.appName ?? 'Lernza',
-              ),
-              actions: [
-                if (isWeb)
-                  buildNavigationItem(
-                    context,
-                    icon: Icons.home_outlined,
-                    label: AppLocalizations.of(context)?.homeNavigationBar ??
-                        'Home',
-                    index: 0,
-                    selectedIndex: 0,
-                    primaryColor: primaryColor,
-                    tap: () {
-                      context.pushReplacementNamed(AppUrls.postStudentScreen);
-                    },
+    return LayoutBuilder(
+      builder: (context, constrain) {
+        final isWeb = constrain.maxWidth > 600;
+        return Scaffold(
+          key: scafoldKey,
+          drawer: isWeb
+              ? null
+              : const DrawerWidget(
+                  currentIndex: 0,
+                ),
+          body: NestedScrollView(
+            headerSliverBuilder:
+                (BuildContext context, bool innerBoxIsScrolled) {
+              return <Widget>[
+                SliverAppBar(
+                  pinned: false,
+                  snap: true,
+                  floating: true,
+                  leading: isWeb
+                      ? null
+                      : IconButton(
+                          icon: const Icon(LucideIcons.menu),
+                          onPressed: () {
+                            scafoldKey.currentState!.openDrawer();
+                          },
+                        ),
+                  title: Text(
+                    AppLocalizations.of(context)?.appName ?? 'Lernza',
                   ),
-                if (isWeb)
-                  buildNavigationItem(
-                    context,
-                    icon: Icons.library_books,
-                    label: AppLocalizations.of(context)?.libraryNavigationBar ??
-                        'Library',
-                    index: 1,
-                    selectedIndex: 0,
-                    primaryColor: primaryColor,
-                    tap: () {
-                      context.pushReplacementNamed(AppUrls.libraryHallScreen);
-                    },
-                  ),
-                if (isWeb)
-                  buildNavigationItem(
-                    context,
-                    icon: Icons.group,
-                    label: AppLocalizations.of(context)?.groupNavigationBar ??
-                        'Groups',
-                    index: 2,
-                    selectedIndex: 0,
-                    primaryColor: primaryColor,
-                    tap: () {
-                      context.pushReplacementNamed(AppUrls.groupsStudentScreen);
-                    },
-                  ),
-                const SizedBox(width: 10),
-                if (!isWeb)
-                  ShadButton(
-                    backgroundColor: primaryColor,
-                    icon: const Icon(
-                      LucideIcons.plus,
-                    ),
-                    onPressed: () {
-                      addPost();
-                    },
-                  ),
-                const SizedBox(width: 10),
-              ],
-            ),
-            SliverFillRemaining(
-              child: Column(
-                children: [
-                  Container(
-                    constraints: const BoxConstraints(maxWidth: 800),
-                    height: 80,
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
-                    ),
-                    child: Row(
-                      children: [
-                        ShadAvatar(
-                          context.read<AuthProvider>().user?.profileImageURL ??
-                              "https://www.pngitem.com/pimgs/m/522-5220445_anonymous-profile-grey-person-sticker-glitch-empty-profile.png",
-                          placeholder: Text(
+                  actions: [
+                    if (isWeb)
+                      buildNavigationItem(
+                        context,
+                        icon: Icons.home_outlined,
+                        label:
+                            AppLocalizations.of(context)?.homeNavigationBar ??
+                                'Home',
+                        index: 0,
+                        selectedIndex: 0,
+                        primaryColor: primaryColor,
+                        tap: () {
+                          context
+                              .pushReplacementNamed(AppUrls.postStudentScreen);
+                        },
+                      ),
+                    if (isWeb)
+                      buildNavigationItem(
+                        context,
+                        icon: Icons.library_books,
+                        label: AppLocalizations.of(context)
+                                ?.libraryNavigationBar ??
+                            'Library',
+                        index: 1,
+                        selectedIndex: 0,
+                        primaryColor: primaryColor,
+                        tap: () {
+                          context
+                              .pushReplacementNamed(AppUrls.libraryHallScreen);
+                        },
+                      ),
+                    if (isWeb)
+                      buildNavigationItem(
+                        context,
+                        icon: Icons.group,
+                        label:
+                            AppLocalizations.of(context)?.groupNavigationBar ??
+                                'Groups',
+                        index: 2,
+                        selectedIndex: 0,
+                        primaryColor: primaryColor,
+                        tap: () {
+                          context.pushReplacementNamed(
+                              AppUrls.groupsStudentScreen);
+                        },
+                      ),
+                    const SizedBox(width: 10),
+                    if (!isWeb)
+                      ShadButton(
+                        backgroundColor: primaryColor,
+                        icon: const Icon(
+                          LucideIcons.plus,
+                        ),
+                        onPressed: () {
+                          addPost();
+                        },
+                      ),
+                    const SizedBox(width: 10),
+                  ],
+                  bottom: PreferredSize(
+                    preferredSize: const Size(double.infinity, 90),
+                    child: Container(
+                      constraints: const BoxConstraints(maxWidth: 800),
+                      height: 80,
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                      ),
+                      child: Row(
+                        children: [
+                          ShadAvatar(
                             context
                                     .read<AuthProvider>()
                                     .user
-                                    ?.fullName
-                                    .substring(0, 2) ??
-                                'JD',
+                                    ?.profileImageURL ??
+                                "https://www.pngitem.com/pimgs/m/522-5220445_anonymous-profile-grey-person-sticker-glitch-empty-profile.png",
+                            placeholder: Text(
+                              context
+                                      .read<AuthProvider>()
+                                      .user
+                                      ?.fullName
+                                      .substring(0, 2) ??
+                                  'JD',
+                            ),
                           ),
-                        ),
-                        const SizedBox(width: 10),
-                        Expanded(
-                          child: InkWell(
-                            onTap: addPost,
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 16, vertical: 12),
-                              decoration: BoxDecoration(
-                                color: Colors.grey.shade200,
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Text(
-                                AppLocalizations.of(context)
-                                        ?.postHeaderMessage ??
-                                    "What's on your mind?",
-                                style:
-                                    ShadTheme.of(context).textTheme.p.copyWith(
-                                          color: Colors.grey,
-                                        ),
+                          const SizedBox(width: 10),
+                          Expanded(
+                            child: InkWell(
+                              onTap: addPost,
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 16, vertical: 12),
+                                decoration: BoxDecoration(
+                                  color: Colors.grey.shade200,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Text(
+                                  AppLocalizations.of(context)
+                                          ?.postHeaderMessage ??
+                                      "What's on your mind?",
+                                  style: ShadTheme.of(context)
+                                      .textTheme
+                                      .p
+                                      .copyWith(
+                                        color: Colors.grey,
+                                      ),
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
-                  StreamBuilder<Map<PostsModel, UsersModel>>(
-                    stream: context
-                        .read<PostProvider>()
-                        .getPostsAndUsersWithPagination(20),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(
-                          child: CircularProgressIndicator(
-                            color: primaryColor,
-                          ),
-                        );
-                      }
-
-                      developer.log("Snapshot: ${snapshot.data}");
-
-                      if (!snapshot.hasData) {
-                        return const Center(
-                          child: CircularProgressIndicator(
-                            color: dangerColor,
-                          ),
-                        );
-                      }
-
-                      Map<PostsModel, UsersModel> data = snapshot.data!;
-
-                      return Expanded(
-                        child: Center(
-                          child: ConstrainedBox(
-                            constraints: const BoxConstraints(maxWidth: 800),
-                            child: ListView.builder(
-                              itemCount: data.length,
-                              itemBuilder: (context, index) {
-                                final post = data.keys.elementAt(index);
-                                final user = data[post]!;
-
-                                return CardPostStudentWidget(
-                                  post: post,
-                                  user: user,
-                                  key: Key(
-                                    post.id,
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
+                ),
+              ];
+            },
+            body: Column(
+              children: [
+                StreamBuilder<Map<PostsModel, UsersModel>>(
+                  stream: context
+                      .read<PostProvider>()
+                      .getPostsAndUsersWithPagination(20),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(
+                        child: CircularProgressIndicator(
+                          color: primaryColor,
                         ),
                       );
-                    },
-                  ),
-                ],
-              ),
+                    }
+
+                    developer.log("Snapshot: ${snapshot.data}");
+
+                    if (!snapshot.hasData) {
+                      return const Center(
+                        child: CircularProgressIndicator(
+                          color: dangerColor,
+                        ),
+                      );
+                    }
+
+                    Map<PostsModel, UsersModel> data = snapshot.data!;
+
+                    return Expanded(
+                      child: Center(
+                        child: ConstrainedBox(
+                          constraints: const BoxConstraints(maxWidth: 800),
+                          child: ListView.builder(
+                            itemCount: data.length,
+                            itemBuilder: (context, index) {
+                              final post = data.keys.elementAt(index);
+                              final user = data[post]!;
+
+                              return CardPostStudentWidget(
+                                post: post,
+                                user: user,
+                                key: Key(
+                                  post.id,
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ],
             ),
-          ],
-        ),
-      );
-    });
+          ),
+        );
+      },
+    );
   }
 
   Widget imageWidgetOrNot(XFile thumbnail) {
