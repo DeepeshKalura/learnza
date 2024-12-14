@@ -24,7 +24,7 @@ class _AnnaArchiveBookWidgetState extends State<AnnaArchiveBookWidget> {
       if (context.read<LibaryStudentStateProvider>().annaArchiveBooks.isEmpty) {
         context
             .read<LibaryStudentStateProvider>()
-            .fetchAnnaArchiveBooks(searchQuery: "Studies");
+            .fetchAnnaArchiveBooks(searchQuery: "Bussiness");
       }
     });
   }
@@ -62,6 +62,7 @@ class _AnnaArchiveBookWidgetState extends State<AnnaArchiveBookWidget> {
             return BooksCardLibraryStudentWidget(
               booksModel: books[index],
               isAnnaBook: true,
+              isDownloading: true,
             );
           },
         );

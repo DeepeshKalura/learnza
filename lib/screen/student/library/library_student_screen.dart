@@ -219,6 +219,7 @@ class _BookListWidgetState extends State<BookListWidget> {
             itemBuilder: (context, index) {
               return BooksCardLibraryStudentWidget(
                 booksModel: value.books[index],
+                isDownloading: true,
               );
             },
           );

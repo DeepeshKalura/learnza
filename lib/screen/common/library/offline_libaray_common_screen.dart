@@ -60,6 +60,7 @@ class OfflineLibraryCommonScreenState
             itemBuilder: (context, index) {
               return BooksCardLibraryStudentWidget(
                 booksModel: provider.offlineBooks![index],
+                isDownloading: false,
               );
             },
           );

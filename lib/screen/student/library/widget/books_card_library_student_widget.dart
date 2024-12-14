@@ -3,9 +3,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:animations/animations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:learnza/service/anna_archieve_service.dart';
+import 'package:provider/provider.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
 import '../../../../model/books/books_model.dart';
+import '../../../../providers/book_provider.dart';
 import '../../../../router/app_urls.dart';
 import '../../../../utils/theme.dart';
 import 'package:learnza/locator/injector.dart' as di;
@@ -14,11 +16,13 @@ class BooksCardLibraryStudentWidget extends StatefulWidget {
   const BooksCardLibraryStudentWidget({
     super.key,
     required this.booksModel,
+    required this.isDownloading,
     this.isAnnaBook = false,
   });
 
   final BooksModel booksModel;
   final bool isAnnaBook;
+  final bool isDownloading;
 
   @override
   BooksCardLibraryStudentWidgetState createState() =>
@@ -223,64 +227,153 @@ class BooksCardLibraryStudentWidgetState
 
       // Bottom Action Bar
       bottomNavigationBar: BottomAppBar(
-        child: ShadButton(
-          backgroundColor: primaryColor,
-          onPressed: widget.booksModel.founded
-              ? () {
-                  if (!widget.isAnnaBook) {
-                    context.pushReplacementNamed(
-                      AppUrls.downloadBookScreen,
-                      extra: {
-                        'bookUrl': widget.booksModel.bookUrl,
-                        'book': widget.booksModel,
-                      },
-                    );
-                  } else {
-                    // logic web view
-                    // TODO: Implement web view for Anna books
+        child: Consumer<BookProvider>(
+          builder: (context, bookProvider, child) {
+            return ShadButton(
+              backgroundColor: primaryColor,
+              onPressed: bookProvider.isDancingBook
+                  ? null
+                  : !widget.isDownloading
+                      ? () {
+                          context.pushNamed(
+                            AppUrls.readBookReadScreen,
+                            extra: {
+                              'book': widget.booksModel,
+                            },
+                          );
+                        }
+                      : widget.booksModel.founded
+                          ? () async {
+                              if (!widget.isAnnaBook) {
+                                if (mounted) {
+                                  context.pushReplacementNamed(
+                                    AppUrls.downloadBookScreen,
+                                    extra: {
+                                      'bookUrl': widget.booksModel.bookUrl,
+                                      'book': widget.booksModel,
+                                    },
+                                  );
+                                }
+                              } else {
+                                var book = await context
+                                    .read<BookProvider>()
+                                    .checkAnnaBookInLernzaLibary(
+                                      widget.booksModel.id,
+                                    );
 
-                    di.injector
-                        .get<AnnasArchieveService>()
-                        .getDownloadUrl(widget.booksModel.bookUrl)
-                        .then((value) async {
-                      if (value != null) {
-                        context.pushReplacementNamed(
-                          AppUrls.annaWebViewScreen,
-                          extra: {
-                            'url': value,
-                            'book': widget.booksModel,
-                          },
-                        );
-                      } else {
-                        ShadToaster.of(context).show(
-                          ShadToast.destructive(
-                            title: const Text('Book Not Available'),
-                            description: const Text(
-                                'Sorry, this book is currently not available in the library.'),
-                            action: ShadButton.outline(
-                              child: const Text(
-                                'Ok',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
-                              ),
-                              onPressed: () => ShadToaster.of(context).hide(),
-                            ),
-                          ),
-                        );
-                      }
-                    });
+                                if (book == null) {
+                                  di.injector
+                                      .get<AnnasArchieveService>()
+                                      .getDownloadUrl(widget.booksModel.bookUrl)
+                                      .then((value) async {
+                                    if (value['url'] != null) {
+                                      if (mounted) {
+                                        context.pushReplacementNamed(
+                                          AppUrls.annaWebViewScreen,
+                                          extra: {
+                                            'url': value['url'],
+                                            'book': widget.booksModel.copyWith(
+                                              description: value['description'],
+                                            ),
+                                          },
+                                        );
+                                      }
+                                    } else {
+                                      ShadToaster.of(context).show(
+                                        ShadToast.destructive(
+                                          title:
+                                              const Text('Book Not Available'),
+                                          description: const Text(
+                                              'Sorry, this book is currently not available in the library.'),
+                                          action: ShadButton.outline(
+                                            child: const Text(
+                                              'Ok',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                            onPressed: () =>
+                                                ShadToaster.of(context).hide(),
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                  });
+                                } else {
+                                  if (mounted) {
+                                    context.pushReplacementNamed(
+                                      AppUrls.downloadBookScreen,
+                                      extra: {
+                                        'bookUrl': widget.booksModel.bookUrl,
+                                        'book': widget.booksModel,
+                                      },
+                                    );
+                                  }
+                                }
+                              }
+                            }
+                          : null,
+              child: bookProvider.isDancingBook
+                  ? const Center(
+                      child: CircularProgressIndicator(
+                        color: Colors.white,
+                      ),
+                    )
+                  : widget.isDownloading
+                      ? const Text("Download Book")
+                      : const Text('Read Now'),
+            );
+          },
+        ),
+      ),
+    );
+  }
 
-                    // context.pushNamed(
-                    //   AppUrls.annaWebViewScreen,
-                    //   extra: {
-                    //     'url': widget.booksModel.bookUrl,
-                    //   },
-                    // );
-                  }
-                }
-              : null,
-          child: const Text('Read Now'),
+  // TODO: Improve readability of this function and also understandbility of this code[PR#31]
+  void _handleReadNow(BuildContext context) async {
+    if (!widget.isAnnaBook) {
+      if (mounted) {
+        context.pushReplacementNamed(
+          AppUrls.downloadBookScreen,
+          extra: {
+            'bookUrl': widget.booksModel.bookUrl,
+            'book': widget.booksModel,
+          },
+        );
+      }
+    } else {
+      await _handleAnnaBook(context);
+    }
+  }
+
+  Future<void> _handleAnnaBook(BuildContext context) async {
+    var book = await context
+        .read<BookProvider>()
+        .checkAnnaBookInLernzaLibary(widget.booksModel.id);
+    if (book != null) {
+      if (mounted) {
+        // context.pushReplacementNamed(AppUrls.downloadBookScreen, extra: { ... });
+      }
+    } else {
+      var value = await di.injector
+          .get<AnnasArchieveService>()
+          .getDownloadUrl(widget.booksModel.bookUrl);
+      // context.pushReplacementNamed(AppUrls.annaWebViewScreen, extra: { ... });
+    }
+  }
+
+  void _showBookNotAvailableToast(context) {
+    ShadToaster.of(context).show(
+      ShadToast.destructive(
+        title: const Text('Book Not Available'),
+        description: const Text(
+            'Sorry, this book is currently not available in the library.'),
+        action: ShadButton.outline(
+          child: const Text(
+            'Ok',
+            style: TextStyle(color: Colors.white),
+          ),
+          onPressed: () => ShadToaster.of(context).hide(),
         ),
       ),
     );
