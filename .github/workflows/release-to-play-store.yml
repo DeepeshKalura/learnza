@@ -35,7 +35,7 @@ jobs:
       - name: Run Version Increment Script
         id: version
         run: |
-          python version_script.py ${{ github.event.inputs.version_bump }}
+          python version_script.py
           NEW_VERSION=$(grep "^version:" pubspec.yaml | awk '{print $2}')
           echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
 
