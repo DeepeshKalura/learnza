@@ -241,6 +241,11 @@ jobs:
     needs: version-and-build
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
       - name: Download build artifacts
         uses: actions/download-artifact@v3
         with:
@@ -254,17 +259,22 @@ jobs:
           ls -la build/app/outputs/bundle/release || echo "Bundle directory not found"
           ls -la build/app/outputs/flutter-apk || echo "APK directory not found"
 
-
-        # TODO: Better Deployment process [#29]
       - name: Create GitHub Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # Verify APK exists and show its path
-          find . -name "app-release.apk" -type f
+          APK_PATH=$(find . -name "app-release.apk" -type f)
+          
+          if [ -z "$APK_PATH" ]; then
+            echo "Error: No APK file found"
+            exit 1
+          fi
+          
+          echo "Found APK at: $APK_PATH"
           
           # Create the release with the correct APK path
           gh release create "v${{ needs.version-and-build.outputs.new_version }}" \
-            "build/app/outputs/flutter-apk/app-release.apk" \
+            "$APK_PATH" \
             --title "Release v${{ needs.version-and-build.outputs.new_version }}" \
             --notes "Release version ${{ needs.version-and-build.outputs.new_version }}"
