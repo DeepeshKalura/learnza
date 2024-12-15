@@ -1,4 +1,4 @@
-name: Flutter Release Workflow 🚀
+name: Flutter CI/CD Workflow 🛠️🚀
 
 on:
   push:
@@ -179,8 +179,11 @@ jobs:
 
       - name: Build Android
         run: |
-          flutter build apk --release --dart-define-from-file=.env
-          flutter build appbundle --release --dart-define-from-file=.env
+            flutter build apk --release --dart-define-from-file=.env
+            flutter build appbundle --release --dart-define-from-file=.env
+            echo "Checking build outputs:"
+            ls -R build/app/outputs/
+        
 
       - name: Archive build artifacts
         uses: actions/upload-artifact@v3
@@ -215,6 +218,11 @@ jobs:
           name: build-artifacts
           path: .
 
+      - name: Debug - List Downloaded Artifacts
+        run: |
+            echo "Listing all files in current directory:"
+            find . -type f
+
       - name: Upload to Play Store
         uses: r0adkll/upload-google-play@v1.1.3
         with:
@@ -222,7 +230,7 @@ jobs:
           packageName: "xyz.deepeshkalura.learnza"
           releaseFiles: build/app/outputs/bundle/release/app-release.aab
           mappingFile: ./build/app/outputs/mapping/release/mapping.txt
-          track: production
+          track: internal
 
   github-release:
     name: "Create GitHub Release 📦"
