@@ -184,7 +184,7 @@ jobs:
       - name: Build Android
         run: |
           flutter build apk --release --dart-define-from-file=.env
-          flutter build appbundle --release --dart-define-from-file=.env
+          
 
       - name: Create Firebase Config
         run: |
