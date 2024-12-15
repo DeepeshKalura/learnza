@@ -18,14 +18,12 @@ on:
           - build
           - feature
         default: 'build'
-
 jobs:
   prepare-release:
     runs-on: ubuntu-latest
     outputs:
       new_version: ${{ steps.version.outputs.new_version }}
     steps:
-      - uses: actions/checkout@v4
       - uses: actions/checkout@v4
       
       - name: Set up Python
