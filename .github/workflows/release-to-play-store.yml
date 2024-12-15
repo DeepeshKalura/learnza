@@ -26,11 +26,12 @@ jobs:
       new_version: ${{ steps.version.outputs.new_version }}
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
       
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.9'
+          python-version: '3.10.12'
       
       - name: Run Version Increment Script
         id: version
