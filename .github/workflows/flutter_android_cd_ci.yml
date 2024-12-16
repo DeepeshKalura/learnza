@@ -230,7 +230,7 @@ jobs:
         with:
           serviceAccountJson: ${{ secrets.SERVICE_ACCOUNT_JSON }}
           packageName: "xyz.deepeshkalura.learnza"
-          releaseFiles: downloaded-artifacts/build/app/outputs/bundle/release/app-release.aab
+          releaseFiles:  downloaded-artifacts/bundle/release/app-release.aab
           track: internal
 
   github-release:
