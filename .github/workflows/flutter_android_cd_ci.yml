@@ -85,7 +85,7 @@ jobs:
         if: success()
 
   version-and-build:
-    name: "Version Update & Build 🏗️"
+    name: "Version Update & Build 🛠️"
     needs: test
     runs-on: ubuntu-latest
     outputs:
@@ -183,7 +183,6 @@ jobs:
             flutter build appbundle --release --dart-define-from-file=.env
             echo "Checking build outputs:"
             ls -R build/app/outputs/
-        
 
       - name: Archive build artifacts
         id: artifact-upload-step
@@ -215,23 +214,30 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-
       - name: Download Artifacts
         uses: actions/download-artifact@v4.1.0
         with:
           name: build-artifacts
           path: downloaded-artifacts/
 
-      - name: List Downloaded Files
-        run: ls -R downloaded-artifacts/
-
-      - name: Upload to Play Store
-        uses: r0adkll/upload-google-play@v1.1.3
+      - name: Install Ruby and Fastlane
+        uses: ruby/setup-ruby@v1
         with:
-          serviceAccountJson: ${{ secrets.SERVICE_ACCOUNT_JSON }}
-          packageName: "xyz.deepeshkalura.learnza"
-          releaseFiles:  downloaded-artifacts/bundle/release/app-release.aab
-          track: internal
+          ruby-version: '3.1'
+
+      - name: Install Fastlane
+        run: |
+          gem install fastlane -NV
+
+      - name: Deploy to Google Play Store
+        run: |
+          cd android
+          fastlane supply \
+            --aab "../downloaded-artifacts/bundle/release/app-release.aab" \
+            --track "internal" \
+            --json_key_data '${{ secrets.SERVICE_ACCOUNT_JSON }}' \
+            --package_name "xyz.deepeshkalura.learnza"
+
 
   github-release:
     name: "Create GitHub Release 📦"
