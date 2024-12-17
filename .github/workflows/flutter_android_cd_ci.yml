@@ -249,7 +249,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Download build artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4.1.0
         with:
           name: build-artifacts
           path: downloaded-artifacts/
@@ -259,7 +259,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # Find the APK
-          APK_PATH=$(find . -name "app-release.apk")
+          APK_PATH=../downloaded-artifacts/flutter-apk/app-release.apk
           
           # Create GitHub release
           gh release create "v${{ needs.version-and-build.outputs.new_version }}" \
