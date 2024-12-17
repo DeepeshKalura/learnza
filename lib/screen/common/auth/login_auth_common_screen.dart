@@ -36,7 +36,7 @@ class _LoginAuthCommonScreenState extends State<LoginAuthCommonScreen> {
     }
   }
 
-  final _formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<ShadFormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final FocusNode _emailFocusNode = FocusNode();
@@ -94,7 +94,7 @@ class _LoginAuthCommonScreenState extends State<LoginAuthCommonScreen> {
   }
 
   Widget _buildLoginForm() {
-    return Form(
+    return ShadForm(
       key: _formKey,
       child: Column(
         mainAxisSize: MainAxisSize.min,

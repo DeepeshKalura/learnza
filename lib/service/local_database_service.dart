@@ -41,9 +41,10 @@ class LocalDatabaseService {
     final databasePath = await getDatabasesPath();
     final path = join(databasePath, 'local_database.db');
     final bool isMobile = Platform.isAndroid || Platform.isIOS;
-    return await openDatabase(path, version: 1,
+    return await openDatabase(path, version: 2,
         onCreate: (Database db, int version) async {
       await db.execute(RawSQLQueryUtils.createBooksSQLQuery);
+      await db.execute(RawSQLQueryUtils.createUserPreferenceSqlQuery);
 
       if (isMobile || true) {
         await db.execute(RawSQLQueryUtils.createBooksPositionSqlQuery);
@@ -240,6 +241,69 @@ class LocalDatabaseService {
       return maps.first['position'] as String;
     } catch (e) {
       developer.log('Error getting book position: $e');
+      rethrow;
+    }
+  }
+
+//? I think i can userPreference this can also do this job super easily
+  Future<bool> isDarkTheme() async {
+    try {
+      final dbInstance = await instance.database;
+      final List<Map<String, dynamic>> maps =
+          await dbInstance.query('userpreference');
+      if (maps.isEmpty) {
+        return false;
+      }
+      return maps.first['darkMode'] == 1;
+    } catch (e) {
+      developer.log('Error getting dark theme: $e');
+      rethrow;
+    }
+  }
+
+  Future<String> currentLanguage() async {
+    try {
+      final dbInstance = await instance.database;
+      final List<Map<String, dynamic>> maps =
+          await dbInstance.query('userpreference');
+      if (maps.isEmpty) {
+        return "en";
+      }
+      return maps.first['language'];
+    } catch (e) {
+      developer.log('Error getting dark theme: $e');
+      rethrow;
+    }
+  }
+
+  Future<void> setDarkTheme(bool isDark) async {
+    try {
+      final dbInstance = await instance.database;
+      await dbInstance.insert(
+        'userpreference',
+        {
+          'darkMode': isDark ? 1 : 0,
+        },
+        conflictAlgorithm: ConflictAlgorithm.replace,
+      );
+    } catch (e) {
+      developer.log('Error setting dark theme: $e');
+      rethrow;
+    }
+  }
+
+  Future<void> setLanguage(String language) async {
+    try {
+      final dbInstance = await instance.database;
+      await dbInstance.insert(
+        'userpreference',
+        {
+          'language': language,
+        },
+        conflictAlgorithm: ConflictAlgorithm.replace,
+      );
+    } catch (e) {
+      developer.log('Error setting language: $e');
       rethrow;
     }
   }
