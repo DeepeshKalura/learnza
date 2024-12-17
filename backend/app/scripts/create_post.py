@@ -189,7 +189,6 @@ def error_logging_function(title: str, e: Exception) -> None:
 
 
 QUOTE_API = "https://zenquotes.io/api/random"
-FACTS_API = "https://uselessfacts.jsph.pl/random.json?language=en"
 
 
 # Google Translate Setup
@@ -221,20 +220,19 @@ def fetch_random_quote():
     return None
 
 
-def fetch_random_fact():
-    try:
-        response = requests.get(FACTS_API)
-        if response.status_code == 200:
-            fact_data = response.json()
-            return fact_data["text"]
-    except Exception as e:
-        print(f"Error fetching fact: {e}")
-    return None
 
 
 IMAGE_API = "https://api.unsplash.com/photos/random"
+NATURE_IMAGE_API = "https://api.unsplash.com/"
 UNSPLASH_ACCESS_KEY = os.getenv("UNSPLASH_ACCESS_KEY")
 
+
+# TODO: BUILD A LOGIC TO Fetch RANDOM Unsplah Nature PHOTO for the Inspiration Quote [RP#37]
+
+# def fetch_nature_image():
+#     try: 
+#         headers = {"Authorization": f"Client-ID {UNSPLASH_ACCESS_KEY}"}
+#         response = requests.get(IMAGE_API, headers=headers)
 
 def fetch_random_image():
     try:
@@ -273,7 +271,7 @@ def create_post():
         if content is None:
             raise Exception("Failed to fetch content for the post")
         post = PostModel(
-            title="Fun Fact Bot Present",
+            title="Today Quote Bot Inspire Quote",
             id=str(uuid.uuid1()),
             thumbnailUrl=image_url,
             authorId="703b4ed3-04da-4fb8-9304-6ed4381307db",
