@@ -149,6 +149,11 @@ class PostProvider extends ChangeNotifier {
     });
   }
 
+  List<Map<PostsModel, UsersModel>> getPostsAndUsers(nextPosts) {
+    // TODO: Implement this method and switch from the `getPostsAndUsersWithPagination` method [PR#35]
+    return [];
+  }
+
   Stream<Map<PostsModel, UsersModel>> getPostsAndUsersWithPagination(
       int limit) {
     return firebaseService.database
