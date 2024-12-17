@@ -259,7 +259,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # Find the APK
-          APK_PATH=../downloaded-artifacts/flutter-apk/app-release.apk
+          APK_PATH=$(find . -name "app-release.apk")
           
           # Create GitHub release
           gh release create "v${{ needs.version-and-build.outputs.new_version }}" \
