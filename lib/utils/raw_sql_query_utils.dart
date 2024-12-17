@@ -31,4 +31,14 @@ CREATE TABLE bookposition (
 );
 
 """;
+
+  static const String createUserPreferenceSqlQuery = """
+
+CREATE TABLE userpreference (
+ 
+  darkMode INTEGER DEFAULT 0,
+  language TEXT DEFAULT 'en'
+);
+
+""";
 }
