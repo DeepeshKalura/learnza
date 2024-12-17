@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
+import '../../../providers/state/user_preference_provider.dart';
 import '../../../utils/theme.dart';
 
 class SettingCommonScreen extends StatefulWidget {
@@ -12,10 +14,6 @@ class SettingCommonScreen extends StatefulWidget {
 
 class _SettingCommonScreenState extends State<SettingCommonScreen> {
   bool _notificationsEnabled = true;
-  bool _darkModeEnabled = false;
-  String _selectedLanguage = 'English';
-
-  final List<String> _languages = ['English', 'Nepali'];
 
   @override
   Widget build(BuildContext context) {
@@ -68,15 +66,14 @@ class _SettingCommonScreenState extends State<SettingCommonScreen> {
                     icon: LucideIcons.moon,
                     title: 'Dark Mode',
                     subtitle: 'Toggle between light and dark themes',
-                    trailing: Switch(
-                      value: _darkModeEnabled,
-                      onChanged: (bool value) {
-                        setState(() {
-                          _darkModeEnabled = value;
-                          // TODO: Implement theme switching logic
-                        });
-                      },
-                      activeColor: primaryColor,
+                    trailing: Consumer<UserPreferenceProvider>(
+                      builder: (context, userPreference, child) => Switch(
+                        value: userPreference.isDarkMode,
+                        onChanged: (bool value) async {
+                          await userPreference.setDarkMode(value);
+                        },
+                        activeColor: primaryColor,
+                      ),
                     ),
                   ),
                 ],
@@ -85,27 +82,29 @@ class _SettingCommonScreenState extends State<SettingCommonScreen> {
               const SizedBox(height: 16),
 
               // Language Settings Card
-              _buildSettingsCard(
-                icon: LucideIcons.languages,
-                title: 'Language Preferences',
-                children: [
-                  ..._languages.map((language) => _buildSettingsTile(
+
+              Consumer<UserPreferenceProvider>(
+                builder: (context, userPreference, _) => _buildSettingsCard(
+                  icon: LucideIcons.languages,
+                  title: 'Language Preferences',
+                  children: [
+                    ...userPreference.languages.map(
+                      (language) => _buildSettingsTile(
                         icon: LucideIcons.globe,
                         title: language,
                         trailing: Radio<String>(
                           value: language,
-                          groupValue: _selectedLanguage,
-                          onChanged: (String? value) {
-                            setState(() {
-                              _selectedLanguage = value!;
-                            });
+                          groupValue: userPreference.currentLanguage,
+                          onChanged: (String? value) async {
+                            await userPreference.setLanguage(value!);
                           },
                           activeColor: primaryColor,
                         ),
-                      )),
-                ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
-
               const SizedBox(height: 16),
 
               // Account Settings Card

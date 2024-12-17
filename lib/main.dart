@@ -24,6 +24,7 @@ import 'providers/groups_provider.dart';
 import 'providers/message_provider.dart';
 import 'providers/post_provider.dart';
 import 'providers/state/student/libary_student_state_provider.dart';
+import 'providers/state/user_preference_provider.dart';
 import 'providers/student_provider.dart';
 import 'providers/teacher_provider.dart';
 import 'router/app_routers.dart';
@@ -78,6 +79,9 @@ class MyApp extends StatelessWidget {
       builder: (_, child) {
         return MultiProvider(
           providers: [
+            ChangeNotifierProvider(
+              create: (_) => UserPreferenceProvider(),
+            ),
             ChangeNotifierProvider(
               create: (_) => AuthProvider(
                 di.injector.get<FirebaseService>(),
@@ -136,18 +140,25 @@ class MyApp extends StatelessWidget {
               },
             ),
           ],
-          child: ShadApp.router(
-            debugShowCheckedModeBanner: false,
-            localizationsDelegates: const [
-              AppLocalizations.delegate,
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-            ],
-            supportedLocales: L10n.all,
-            title: 'Learnza',
-            darkTheme: lightThemData,
-            routerConfig: AppRouters.router,
+          child: Consumer<UserPreferenceProvider>(
+            builder: (context, userPreferenceProvider, _) {
+              return ShadApp.router(
+                debugShowCheckedModeBanner: false,
+                locale: Locale(userPreferenceProvider.currentLanguage),
+                localizationsDelegates: const [
+                  AppLocalizations.delegate,
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalWidgetsLocalizations.delegate,
+                  GlobalCupertinoLocalizations.delegate,
+                ],
+                supportedLocales: L10n.all,
+                title: 'Learnza',
+                theme: userPreferenceProvider.isDarkMode
+                    ? darkThemData
+                    : lightThemData,
+                routerConfig: AppRouters.router,
+              );
+            },
           ),
         );
       },
