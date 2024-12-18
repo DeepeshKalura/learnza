@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:learnza/utils/theme.dart';
-// import 'package:learnza/utils/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:feedback_github/feedback_github.dart';
 import 'package:learnza/locator/injector.dart' as di;
 
 import '../../../app_config.dart';
-import '../../../gen/assets.gen.dart';
+// import '../../../gen/assets.gen.dart';
 import '../../../providers/auth_provider.dart';
 import '../../../router/app_urls.dart';
 
@@ -24,16 +23,17 @@ class DrawerWidget extends StatelessWidget {
       child: Column(
         children: [
           UserAccountsDrawerHeader(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                colors: [Color(0xFF62cff4), Color(0xFF0077b6)],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
+            decoration: BoxDecoration(
+              color: ShadTheme.of(context).colorScheme.primary,
+              // gradient: LinearGradient(
+              //   colors: [ShadTheme.of(context).colorScheme.pr  ],
+              //   begin: Alignment.topLeft,
+              //   end: Alignment.bottomRight,
+              // ),
             ),
             currentAccountPicture: ShadAvatar(
               user?.profileImageURL ??
-                  "https://www.pngitem.com/pimgs/m/522-5220445_anonymous-profile-grey-person-sticker-glitch-empty-profile.png",
+                  "https://plus.unsplash.com/premium_vector-1722102206801-756d21ef01ca",
               placeholder: Text(
                 user?.fullName.substring(0, 2) ?? 'JD',
               ),
@@ -61,11 +61,10 @@ class DrawerWidget extends StatelessWidget {
                 ListTile(
                   leading: const Icon(
                     Icons.person,
-                    color: primaryColor,
                   ),
-                  title: const Text(
-                    'Profile',
-                    style: TextStyle(color: darkPrimaryColor),
+                  title: Text(
+                    AppLocalizations.of(context)?.profileDrawer ?? 'Profile',
+                    style: ShadTheme.of(context).textTheme.table,
                   ),
                   onTap: () {
                     context.pushNamed(AppUrls.profileStudentScreen);
@@ -75,13 +74,10 @@ class DrawerWidget extends StatelessWidget {
                 ListTile(
                   leading: const Icon(
                     Icons.settings,
-                    color: primaryColor,
                   ),
-                  title: const Text(
-                    'Settings',
-                    style: TextStyle(
-                      color: darkPrimaryColor,
-                    ),
+                  title: Text(
+                    AppLocalizations.of(context)?.settingDrawer ?? 'Settings',
+                    style: ShadTheme.of(context).textTheme.table,
                   ),
                   onTap: () {
                     context.pushNamed(AppUrls.settingCommonScreen);
@@ -113,13 +109,10 @@ class DrawerWidget extends StatelessWidget {
                 ListTile(
                   leading: const Icon(
                     Icons.feedback,
-                    color: primaryColor,
                   ),
-                  title: const Text(
-                    'Feedback',
-                    style: TextStyle(
-                      color: darkPrimaryColor,
-                    ),
+                  title: Text(
+                    AppLocalizations.of(context)?.feedbackDrawer ?? 'Feedback',
+                    style: ShadTheme.of(context).textTheme.table,
                   ),
                   onTap: () {
                     final githubtoken = di.injector<AppConfig>().githubToken;
@@ -159,13 +152,10 @@ class DrawerWidget extends StatelessWidget {
                 ListTile(
                   leading: const Icon(
                     Icons.info,
-                    color: primaryColor,
                   ),
-                  title: const Text(
-                    'About',
-                    style: TextStyle(
-                      color: darkPrimaryColor,
-                    ),
+                  title: Text(
+                    AppLocalizations.of(context)?.aboutDrawer ?? 'About',
+                    style: ShadTheme.of(context).textTheme.table,
                   ),
                   onTap: () {
                     context.pushNamed(AppUrls.aboutCommonScreen);
@@ -174,11 +164,10 @@ class DrawerWidget extends StatelessWidget {
                 ListTile(
                   leading: const Icon(
                     Icons.logout,
-                    color: dangerColor,
                   ),
-                  title: const Text(
-                    'Logout',
-                    style: TextStyle(color: dangerColor),
+                  title: Text(
+                    AppLocalizations.of(context)?.logoutDrawer ?? 'Logout',
+                    style: ShadTheme.of(context).textTheme.table,
                   ),
                   onTap: () async {
                     var result = await showShadDialog(
@@ -210,9 +199,11 @@ class DrawerWidget extends StatelessWidget {
                     }
                   },
                 ),
-                ShadImage(
-                  Assets.icons.student.welcome.path,
-                ),
+                // TODO: I don't like the application image in the drawer
+                // ShadImage(
+                //   Assets.icons.student.welcome.path,
+
+                // ),
               ],
             ),
           ),

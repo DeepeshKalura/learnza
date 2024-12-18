@@ -21,7 +21,7 @@ class CardPostStudentWidget extends StatefulWidget {
 
 class CardPostStudentWidgetState extends State<CardPostStudentWidget> {
   bool _isLiked = false;
-  bool _isBookmarked = false;
+  final bool _isBookmarked = false;
 
   @override
   void initState() {
@@ -298,41 +298,42 @@ class CardPostStudentWidgetState extends State<CardPostStudentWidget> {
       ),
 
       // Bottom Action Bar
-      bottomNavigationBar: BottomAppBar(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            IconButton(
-              icon: Icon(
-                _isLiked ? Icons.favorite : Icons.favorite_border,
-                color: _isLiked ? Colors.red : Colors.grey,
-              ),
-              onPressed: () {
-                setState(() {
-                  _isLiked = !_isLiked;
-                });
-              },
-            ),
-            IconButton(
-              icon: Icon(
-                _isBookmarked ? Icons.bookmark : Icons.bookmark_border,
-                color: _isBookmarked ? Colors.blue : Colors.grey,
-              ),
-              onPressed: () {
-                setState(() {
-                  _isBookmarked = !_isBookmarked;
-                });
-              },
-            ),
-            IconButton(
-              icon: const Icon(Icons.share),
-              onPressed: () {
-                // Implement share functionality
-              },
-            ),
-          ],
-        ),
-      ),
+      // TODO: In Future Complete the Post Navigation Bar with More Features [PR#]
+      // bottomNavigationBar: BottomAppBar(
+      //   child: Row(
+      //     mainAxisAlignment: MainAxisAlignment.spaceAround,
+      //     children: [
+      //       IconButton(
+      //         icon: Icon(
+      //           _isLiked ? Icons.favorite : Icons.favorite_border,
+      //           color: _isLiked ? Colors.red : Colors.grey,
+      //         ),
+      //         onPressed: () {
+      //           setState(() {
+      //             _isLiked = !_isLiked;
+      //           });
+      //         },
+      //       ),
+      //       IconButton(
+      //         icon: Icon(
+      //           _isBookmarked ? Icons.bookmark : Icons.bookmark_border,
+      //           color: _isBookmarked ? Colors.blue : Colors.grey,
+      //         ),
+      //         onPressed: () {
+      //           setState(() {
+      //             _isBookmarked = !_isBookmarked;
+      //           });
+      //         },
+      //       ),
+      //       IconButton(
+      //         icon: const Icon(Icons.share),
+      //         onPressed: () {
+      //           // Implement share functionality
+      //         },
+      //       ),
+      //     ],
+      //   ),
+      // ),
     );
   }
 }
