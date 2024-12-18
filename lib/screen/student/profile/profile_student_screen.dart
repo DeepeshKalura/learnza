@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:learnza/utils/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../model/course/courses_model.dart';
 import '../../../model/users/users_model.dart';
@@ -21,7 +22,9 @@ class _ProfileStudentScreenState extends State<ProfileStudentScreen> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => ProfileStudentStateProvider()),
+        ChangeNotifierProvider(
+          create: (_) => ProfileStudentStateProvider(),
+        ),
       ],
       child: Scaffold(
         appBar: AppBar(
@@ -124,6 +127,7 @@ class _ProfileStudentBodyState extends State<ProfileStudentBody> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
     final studentProvider = Provider.of<AuthProvider>(context);
 
     UsersModel? currentUser = studentProvider.user;
@@ -207,21 +211,35 @@ class _ProfileStudentBodyState extends State<ProfileStudentBody> {
 
                   // Personal Information
                   ProfileInfoCard(
-                    title: 'Personal Details',
+                    title: localizations?.personalDetailsCardTitle ??
+                        'Personal Details',
                     children: [
-                      _buildInfoRow('Full Name', currentUser?.fullName ?? 'N/A',
-                          isEditable: false),
-                      _buildInfoRow('Email', currentUser?.email ?? 'N/A',
+                      _buildInfoRow(
+                          localizations?.fullNameLabel ?? 'Full Name',
+                          currentUser?.fullName ??
+                              localizations?.placeholderNotAvailable ??
+                              'N/A',
                           isEditable: false),
                       _buildInfoRow(
-                        'Phone',
-                        currentUser?.phoneNumber ?? 'N/A',
+                        localizations?.emailLabel ?? 'Email',
+                        currentUser?.email ??
+                            localizations?.placeholderNotAvailable ??
+                            'N/A',
+                        isEditable: false,
+                      ),
+                      _buildInfoRow(
+                        localizations?.phoneLabel ?? 'Phone',
+                        currentUser?.phoneNumber ??
+                            localizations?.placeholderNotAvailable ??
+                            'N/A',
                         isEditable: profileStateProvider.isEditMode,
                         controller: profileStateProvider.phoneController,
                       ),
                       _buildInfoRow(
-                        'Address',
-                        currentUser?.address ?? 'N/A',
+                        localizations?.addressLabel ?? 'Address',
+                        currentUser?.address ??
+                            localizations?.placeholderNotAvailable ??
+                            'N/A',
                         isEditable: profileStateProvider.isEditMode,
                         controller: profileStateProvider.addressController,
                       ),
@@ -230,17 +248,22 @@ class _ProfileStudentBodyState extends State<ProfileStudentBody> {
 
                   // Family Information
                   ProfileInfoCard(
-                    title: 'Family Details',
+                    title: localizations?.familyDetailsCardTitle ??
+                        'Family Details',
                     children: [
                       _buildInfoRow(
-                        'Father\'s Name',
-                        currentUser?.fatherName ?? 'N/A',
+                        localizations?.fatherNameLabel ?? 'Father\'s Name',
+                        currentUser?.fatherName ??
+                            localizations?.placeholderNotAvailable ??
+                            'N/A',
                         isEditable: profileStateProvider.isEditMode,
                         controller: profileStateProvider.fatherNameController,
                       ),
                       _buildInfoRow(
-                        'Mother\'s Name',
-                        currentUser?.motherName ?? 'N/A',
+                        localizations?.motherNameLabel ?? 'Mother\'s Name',
+                        currentUser?.motherName ??
+                            localizations?.placeholderNotAvailable ??
+                            'N/A',
                         isEditable: profileStateProvider.isEditMode,
                         controller: profileStateProvider.motherNameController,
                       ),
@@ -249,17 +272,23 @@ class _ProfileStudentBodyState extends State<ProfileStudentBody> {
 
                   // Course Information
                   ProfileInfoCard(
-                    title: 'Course Details',
+                    title: localizations?.courseDetailsCardTitle ??
+                        'Course Details',
                     children: [
                       _buildInfoRow(
-                          'Course Name',
+                          localizations?.courseNameLabel ?? 'Course Name',
                           context
                                   .read<CourseProvider>()
                                   .currentUserCourse
                                   ?.name ??
+                              localizations?.courseNameLabel ??
                               'N/A',
                           isEditable: false),
-                      _buildInfoRow('Batch', currentUser?.batch ?? 'N/A',
+                      _buildInfoRow(
+                          localizations?.batchLabel ?? 'Batch',
+                          currentUser?.batch ??
+                              localizations?.courseNameLabel ??
+                              'N/A',
                           isEditable: false),
                     ],
                   ),
@@ -270,9 +299,10 @@ class _ProfileStudentBodyState extends State<ProfileStudentBody> {
                       width: double.infinity,
                       child: ShadButton(
                         backgroundColor: primaryColor,
-                        child: const Text(
-                          'Save Changes',
-                          style: TextStyle(color: Colors.white),
+                        child: Text(
+                          localizations?.saveChangesButtonText ??
+                              'Save Changes',
+                          style: ShadTheme.of(context).textTheme.p,
                         ),
                         onPressed: () {
                           profileStateProvider.saveChanges(currentUser!);
@@ -301,17 +331,14 @@ class _ProfileStudentBodyState extends State<ProfileStudentBody> {
         children: [
           Text(
             label,
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Colors.black87,
-            ),
+            style: ShadTheme.of(context).textTheme.p.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
           ),
           if (!isEditable)
             Text(
               value,
-              style: const TextStyle(
-                color: Colors.black54,
-              ),
+              style: ShadTheme.of(context).textTheme.p,
             ),
           if (isEditable)
             Expanded(
@@ -342,26 +369,22 @@ class ProfileInfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      shadowColor: primaryColor.withOpacity(0.2),
-      elevation: 4,
+    return Container(
       margin: const EdgeInsets.symmetric(vertical: 10),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              title,
-              style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
+      child: ShadCard(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: ShadTheme.of(context).textTheme.h4,
               ),
-            ),
-            const Divider(),
-            ...children,
-          ],
+              const Divider(),
+              ...children,
+            ],
+          ),
         ),
       ),
     );
