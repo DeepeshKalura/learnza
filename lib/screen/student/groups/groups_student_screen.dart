@@ -408,6 +408,8 @@ class _GroupsStudentScreenState extends State<GroupsStudentScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
+
     return LayoutBuilder(builder: (context, constrain) {
       final isWeb = constrain.maxWidth > 600;
       return Scaffold(
@@ -425,7 +427,7 @@ class _GroupsStudentScreenState extends State<GroupsStudentScreen> {
                   scafoldKey.currentState!.openDrawer();
                 },
               ),
-              title: const Text('Groups'),
+              title: Text(localizations?.groupsCardTitile ?? 'Groups'),
               actions: [
                 // TODO: add the create group button[PR#27]
                 // IconButton(
