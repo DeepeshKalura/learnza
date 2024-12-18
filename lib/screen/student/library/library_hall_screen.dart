@@ -122,7 +122,7 @@ class _LibraryHallScreenState extends State<LibraryHallScreen> {
                         title: localizations.personalLibraryTitle(
                           user?.fullName ?? "My",
                         ),
-                        quote: localizations.offlineBookStroeQuote,
+                        quote: localizations.offlineBookStoreQuote,
                         image:
                             'https://images.unsplash.com/photo-1604866830893-c13cafa515d5',
                         onTap: () {

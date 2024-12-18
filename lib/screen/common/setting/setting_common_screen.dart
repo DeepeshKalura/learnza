@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../providers/state/user_preference_provider.dart';
 import '../../../utils/theme.dart';
@@ -13,15 +14,16 @@ class SettingCommonScreen extends StatefulWidget {
 }
 
 class _SettingCommonScreenState extends State<SettingCommonScreen> {
-  bool _notificationsEnabled = true;
+  // bool _notificationsEnabled = true;
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
         title: Text(
-          'Settings',
+          localizations?.settingsAppBarTitle ?? 'Settings',
           style: ShadTheme.of(context).textTheme.h3.copyWith(
                 fontWeight: FontWeight.bold,
                 color: Theme.of(context).colorScheme.onSurface,
@@ -46,26 +48,29 @@ class _SettingCommonScreenState extends State<SettingCommonScreen> {
               // Application Settings Card
               _buildSettingsCard(
                 icon: LucideIcons.settings,
-                title: 'Application Settings',
+                title: localizations?.applicationSettingsCardTitle ??
+                    'Application Settings',
                 children: [
-                  _buildSettingsTile(
-                    icon: LucideIcons.bell,
-                    title: 'Notifications',
-                    subtitle: 'Receive updates and alerts',
-                    trailing: Switch(
-                      value: _notificationsEnabled,
-                      onChanged: (bool value) {
-                        setState(() {
-                          _notificationsEnabled = value;
-                        });
-                      },
-                      activeColor: primaryColor,
-                    ),
-                  ),
+                  // TODO: Notification Settings (Future Feature) [PR#44]
+                  // _buildSettingsTile(
+                  //   icon: LucideIcons.bell,
+                  //   title: 'Notifications',
+                  //   subtitle: 'Receive updates and alerts',
+                  //   trailing: Switch(
+                  //     value: _notificationsEnabled,
+                  //     onChanged: (bool value) {
+                  //       setState(() {
+                  //         _notificationsEnabled = value;
+                  //       });
+                  //     },
+                  //     activeColor: primaryColor,
+                  //   ),
+                  // ),
                   _buildSettingsTile(
                     icon: LucideIcons.moon,
-                    title: 'Dark Mode',
-                    subtitle: 'Toggle between light and dark themes',
+                    title: localizations?.darkModeTitle ?? 'Dark Mode',
+                    subtitle: localizations?.darkModeSubtitle ??
+                        'Toggle between light and dark themes',
                     trailing: Consumer<UserPreferenceProvider>(
                       builder: (context, userPreference, child) => Switch(
                         value: userPreference.isDarkMode,
@@ -86,7 +91,8 @@ class _SettingCommonScreenState extends State<SettingCommonScreen> {
               Consumer<UserPreferenceProvider>(
                 builder: (context, userPreference, _) => _buildSettingsCard(
                   icon: LucideIcons.languages,
-                  title: 'Language Preferences',
+                  title: localizations?.languagePreferencesCardTitle ??
+                      'Language Preferences',
                   children: [
                     ...userPreference.languages.map(
                       (language) => _buildSettingsTile(
@@ -110,18 +116,20 @@ class _SettingCommonScreenState extends State<SettingCommonScreen> {
               // Account Settings Card
               _buildSettingsCard(
                 icon: LucideIcons.user,
-                title: 'Account',
+                title: localizations?.accountCardTitle ?? 'Account',
                 children: [
                   _buildSettingsTile(
                     icon: LucideIcons.logOut,
-                    title: 'Logout',
-                    subtitle: 'Sign out of your account',
+                    title: localizations?.logoutTitle ?? 'Logout',
+                    subtitle: localizations?.logoutSubtitle ??
+                        'Sign out of your account',
                     onTap: _showLogoutConfirmation,
                   ),
                   _buildSettingsTile(
                     icon: LucideIcons.lock,
-                    title: 'Privacy',
-                    subtitle: 'Manage your privacy settings',
+                    title: localizations?.privacyTitle ?? 'Privacy',
+                    subtitle: localizations?.privacySubtitle ??
+                        'Manage your privacy settings',
                     onTap: () {
                       // TODO: Implement privacy settings navigation
                     },
@@ -200,22 +208,24 @@ class _SettingCommonScreenState extends State<SettingCommonScreen> {
   }
 
   void _showLogoutConfirmation() {
+    final localizations = AppLocalizations.of(context);
     showDialog(
       context: context,
       builder: (context) => ShadDialog(
-        title: const Text("Logout"),
-        description: const Text("Are you sure you want to log out?"),
+        title: Text(localizations?.logoutDialogTitle ?? "Logout"),
+        description: Text(localizations?.logoutDialogDescription ??
+            "Are you sure you want to log out?"),
         actions: [
           ShadButton.outline(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text("Cancel"),
+            child: Text(localizations?.cancelButton ?? "Cancel"),
           ),
           ShadButton.destructive(
             onPressed: () {
               // TODO: Implement logout logic
               Navigator.of(context).pop();
             },
-            child: const Text("Logout"),
+            child: Text(localizations?.logoutButton ?? "Logout"),
           ),
         ],
       ),

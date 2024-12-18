@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:learnza/locator/injector.dart' as di;
 import '../../../app_config.dart';
@@ -11,9 +12,10 @@ class AboutCommonScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Lernza"),
+        title: Text(localizations?.appName ?? "Lernza"),
         titleTextStyle: ShadTheme.of(context).textTheme.h3,
       ),
       body: SingleChildScrollView(
@@ -35,20 +37,17 @@ class AboutCommonScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "About Lernza",
+                        localizations?.aboutCardTitle ?? "About Lernza",
                         style: ShadTheme.of(context).textTheme.h4.copyWith(
                               color: primaryColor,
                               fontWeight: FontWeight.bold,
                             ),
                       ),
                       const SizedBox(height: 12),
-                      const Text(
-                        "Lernza is a comprehensive educational platform designed to empower students and teachers. Our mission is to provide a one-stop solution for all educational needs, offering a diverse range of resources including books, videos, notes, and interactive learning tools.",
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.black87,
-                          height: 1.5,
-                        ),
+                      Text(
+                        localizations?.aboutCardDescription ??
+                            "Lernza is a comprehensive educational platform designed to empower students and teachers. Our mission is to provide a one-stop solution for all educational needs, offering a diverse range of resources including books, videos, notes, and interactive learning tools.",
+                        style: ShadTheme.of(context).textTheme.p,
                         textAlign: TextAlign.justify,
                       ),
                     ],
@@ -70,7 +69,7 @@ class AboutCommonScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "App Details",
+                        localizations?.appDetailsCardTitle ?? "App Details",
                         style: ShadTheme.of(context).textTheme.h4.copyWith(
                               color: primaryColor,
                               fontWeight: FontWeight.bold,
@@ -79,12 +78,12 @@ class AboutCommonScreen extends StatelessWidget {
                       const SizedBox(height: 12),
                       _buildDetailRow(context,
                           icon: Icons.loyalty_outlined,
-                          label: "Version",
+                          label: localizations?.versionLabel ?? "Version",
                           value: di.injector<AppConfig>().packageInfo.version),
                       const Divider(height: 20, thickness: 1),
                       _buildDetailRow(context,
                           icon: Icons.language_outlined,
-                          label: "Website",
+                          label: localizations?.websiteLabel ?? "Website",
                           value: "deepeshkalura.xyz", onTap: () async {
                         final Uri uri = Uri.parse('https://deepeshkalura.xyz');
                         if (!await launchUrl(uri,
