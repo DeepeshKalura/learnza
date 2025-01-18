@@ -93,6 +93,7 @@ dev_dependencies:
   flutter_gen_runner: ^5.8.0
   freezed: ^2.5.7
   flutter_launcher_icons: ^0.14.2
+  rename_app: ^1.6.2
 
 
 flutter_gen:
