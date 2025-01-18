@@ -94,11 +94,6 @@ dev_dependencies:
   freezed: ^2.5.7
   flutter_launcher_icons: ^0.14.2
 
-flutter_launcher_icons:
-  android: "launcher_icon"
-  ios: true
-  image_path: "assets/images/common/splash/lernzaLogo.png"
-  remove_alpha_ios: true
 
 flutter_gen:
   output: lib/gen/
@@ -124,6 +119,8 @@ flutter:
     - assets/images/common/splash/
     - assets/icons/student/
     - .env
+    - assets/logo/
+    - assets/logo/adaptive_icon/Shadanda/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
