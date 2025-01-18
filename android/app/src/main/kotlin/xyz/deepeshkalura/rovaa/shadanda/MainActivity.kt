@@ -1,4 +1,4 @@
-package xyz.deepeshkalura.learnza
+package xyz.deepeshkalura.rovaa.shadanda
 
 import io.flutter.embedding.android.FlutterActivity
 
