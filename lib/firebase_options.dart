@@ -41,30 +41,33 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDu64cEpB15SjV8xTQEwi1YgoPruxL3-nU',
-    appId: '1:1081864532778:web:3cbceae7da7f9129b0a453',
+    apiKey: 'AIzaSyDlI5cB7ugfgW-lejuKzZIBM3HrXrZFlYU',
+    appId: '1:1081864532778:web:1236a891cc1e74c5b0a453',
     messagingSenderId: '1081864532778',
     projectId: 'learnza',
     authDomain: 'learnza.firebaseapp.com',
+    databaseURL: 'https://learnza-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'learnza.firebasestorage.app',
-    measurementId: 'G-GT3ZX5RMRM',
+    measurementId: 'G-TF7TW34P01',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyB-TWa5qSTg-OkydTOBrEtJuJ3cHoayjLs',
-    appId: '1:1081864532778:android:2522ac606433bc8fb0a453',
+    appId: '1:1081864532778:android:f5c018e96649690fb0a453',
     messagingSenderId: '1081864532778',
     projectId: 'learnza',
+    databaseURL: 'https://learnza-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'learnza.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyCI_2bpk0t3vvLV0HCsCO4qpgxfjo0P5c4',
-    appId: '1:1081864532778:ios:33468e20e8494b6fb0a453',
+    appId: '1:1081864532778:ios:ce43d459b317a427b0a453',
     messagingSenderId: '1081864532778',
     projectId: 'learnza',
+    databaseURL: 'https://learnza-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'learnza.firebasestorage.app',
-    iosBundleId: 'com.example.learnza',
+    iosBundleId: 'xyz.deepeshkalura.rovaa.shadanda',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
@@ -77,12 +80,14 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyDu64cEpB15SjV8xTQEwi1YgoPruxL3-nU',
-    appId: '1:1081864532778:web:2d6cad716f34d615b0a453',
+    apiKey: 'AIzaSyDlI5cB7ugfgW-lejuKzZIBM3HrXrZFlYU',
+    appId: '1:1081864532778:web:c4ef4085498120deb0a453',
     messagingSenderId: '1081864532778',
     projectId: 'learnza',
     authDomain: 'learnza.firebaseapp.com',
+    databaseURL: 'https://learnza-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'learnza.firebasestorage.app',
-    measurementId: 'G-RMLFEBKHM9',
+    measurementId: 'G-PD08TMQN8Z',
   );
+
 }
