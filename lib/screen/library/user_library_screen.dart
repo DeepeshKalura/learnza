@@ -2,12 +2,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
-import 'package:learnza/utils/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
 import '../../providers/auth_provider.dart';
 import '../../router/app_urls.dart';
+import '../../utils/theme.dart';
 import '../common/widget/drawer_widget.dart';
 import '../student/post/widget/build_navigation.dart';
 

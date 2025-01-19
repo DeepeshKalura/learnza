@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:learnza/gen/assets.gen.dart';
 import 'package:provider/provider.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../model/app_enums.dart';
 import '../../../providers/auth_provider.dart';
@@ -263,7 +263,6 @@ class _LoginAuthCommonScreenState extends State<LoginAuthCommonScreen> {
                           ),
                           padding: const EdgeInsets.all(32),
                           child: ShadCard(
-                            backgroundColor: secondaryColor,
                             shadows: const [
                               BoxShadow(
                                 color: primaryColor,

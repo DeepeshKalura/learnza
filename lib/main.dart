@@ -1,15 +1,15 @@
+import 'package:feedback_github/feedback_github.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:feedback_github/feedback_github.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:learnza/app_config.dart';
-
-import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:learnza/locator/injector.dart' as di;
 import 'package:provider/provider.dart';
+import 'package:shadcn_ui/shadcn_ui.dart';
+
 // import 'package:firebase_app_check/firebase_app_check.dart';
 // I will remove add app check
 
@@ -154,8 +154,8 @@ class MyApp extends StatelessWidget {
                 supportedLocales: L10n.all,
                 title: 'Learnza',
                 theme: userPreferenceProvider.isDarkMode
-                    ? darkThemData
-                    : lightThemData,
+                    ? darkThemeData
+                    : lightThemeData,
                 routerConfig: AppRouters.router,
               );
             },
