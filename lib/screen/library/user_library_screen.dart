@@ -9,7 +9,7 @@ import '../../providers/auth_provider.dart';
 import '../../router/app_urls.dart';
 import '../../utils/theme.dart';
 import '../common/widget/drawer_widget.dart';
-import '../student/post/widget/build_navigation.dart';
+import '../post/widget/build_navigation.dart';
 
 class UserLibraryScreen extends StatefulWidget {
   const UserLibraryScreen({super.key});

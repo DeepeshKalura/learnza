@@ -1,20 +1,21 @@
 import 'dart:developer' as developer;
-import 'package:universal_io/io.dart';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:learnza/utils/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:universal_io/io.dart';
 
-import '../../../model/posts/posts_model.dart';
-import '../../../model/users/users_model.dart';
-import '../../../providers/auth_provider.dart';
-import '../../../providers/post_provider.dart';
-import '../../../router/app_urls.dart';
-import '../../common/widget/drawer_widget.dart';
+import '../../model/posts/posts_model.dart';
+import '../../model/users/users_model.dart';
+import '../../providers/auth_provider.dart';
+import '../../providers/post_provider.dart';
+import '../../router/app_urls.dart';
+import '../common/widget/drawer_widget.dart';
 import 'widget/build_navigation.dart';
 import 'widget/card_post_student_widget.dart';
 
