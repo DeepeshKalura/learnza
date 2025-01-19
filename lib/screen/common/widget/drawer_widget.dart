@@ -1,10 +1,10 @@
+import 'package:feedback_github/feedback_github.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
+import 'package:learnza/locator/injector.dart' as di;
 import 'package:provider/provider.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:feedback_github/feedback_github.dart';
-import 'package:learnza/locator/injector.dart' as di;
 
 import '../../../app_config.dart';
 // import '../../../gen/assets.gen.dart';

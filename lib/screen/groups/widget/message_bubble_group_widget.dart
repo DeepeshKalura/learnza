@@ -21,7 +21,7 @@ class MessageBubbleGroupWidget extends StatelessWidget {
         margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
         decoration: BoxDecoration(
-          color: isCurrentUser ? Colors.blue[100] : Colors.grey[200],
+          color: isCurrentUser ? Colors.blueAccent[200] : Colors.grey[200],
           borderRadius: BorderRadius.only(
             topLeft: const Radius.circular(12),
             topRight: const Radius.circular(12),
@@ -29,11 +29,11 @@ class MessageBubbleGroupWidget extends StatelessWidget {
             bottomRight:
                 isCurrentUser ? Radius.zero : const Radius.circular(12),
           ),
-          boxShadow: [
+          boxShadow: const [
             BoxShadow(
-              color: Colors.black.withOpacity(0.1),
+              color: Colors.black12,
               blurRadius: 4,
-              offset: const Offset(0, 2),
+              offset: Offset(0, 2),
             ),
           ],
         ),
