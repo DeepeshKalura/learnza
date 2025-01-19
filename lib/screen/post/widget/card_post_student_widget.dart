@@ -1,12 +1,12 @@
-import 'package:flutter/material.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:animations/animations.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
-import '../../../../model/posts/posts_model.dart';
-import '../../../../model/users/users_model.dart';
-import '../../../../utils/theme.dart';
+import '../../../model/posts/posts_model.dart';
+import '../../../model/users/users_model.dart';
+import '../../../utils/theme.dart';
 
 class CardPostStudentWidget extends StatefulWidget {
   final PostsModel post;
