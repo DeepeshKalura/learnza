@@ -68,7 +68,7 @@ class _PostStudentScreenState extends State<PostStudentScreen> {
                           },
                         ),
                   title: Text(
-                    AppLocalizations.of(context)?.appName ?? 'Lernza',
+                    AppLocalizations.of(context)?.appName ?? 'Shadanda',
                   ),
                   actions: [
                     if (isWeb)
@@ -135,8 +135,8 @@ class _PostStudentScreenState extends State<PostStudentScreen> {
                       constraints: const BoxConstraints(maxWidth: 800),
                       height: 80,
                       padding: const EdgeInsets.symmetric(horizontal: 16),
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
+                      decoration: BoxDecoration(
+                        color: ShadTheme.of(context).colorScheme.muted,
                       ),
                       child: Row(
                         children: [
@@ -145,7 +145,7 @@ class _PostStudentScreenState extends State<PostStudentScreen> {
                                     .read<AuthProvider>()
                                     .user
                                     ?.profileImageURL ??
-                                "https://www.pngitem.com/pimgs/m/522-5220445_anonymous-profile-grey-person-sticker-glitch-empty-profile.png",
+                                "https://thumbs.dreamstime.com/b/profile-anonymous-face-icon-gray-silhouette-person-male-default-avatar-photo-placeholder-white-background-vector-illustration-106473768.jpg",
                             placeholder: Text(
                               context
                                       .read<AuthProvider>()
@@ -161,21 +161,20 @@ class _PostStudentScreenState extends State<PostStudentScreen> {
                               onTap: addPost,
                               child: Container(
                                 padding: const EdgeInsets.symmetric(
-                                    horizontal: 16, vertical: 12),
+                                  horizontal: 16,
+                                  vertical: 12,
+                                ),
                                 decoration: BoxDecoration(
-                                  color: Colors.grey.shade200,
+                                  color: ShadTheme.of(context)
+                                      .colorScheme
+                                      .mutedForeground,
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 child: Text(
                                   AppLocalizations.of(context)
                                           ?.postHeaderMessage ??
                                       "What's on your mind?",
-                                  style: ShadTheme.of(context)
-                                      .textTheme
-                                      .p
-                                      .copyWith(
-                                        color: Colors.grey,
-                                      ),
+                                  style: ShadTheme.of(context).textTheme.p,
                                 ),
                               ),
                             ),
