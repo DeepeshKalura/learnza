@@ -9,10 +9,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:provider/provider.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
-import '../../../../model/books/books_model.dart';
-import '../../../../providers/book_provider.dart';
-import '../../../../router/app_urls.dart';
-import '../../../../service/local_database_service.dart';
+import '../../../model/books/books_model.dart';
+import '../../../providers/book_provider.dart';
+import '../../../router/app_urls.dart';
+import '../../../service/local_database_service.dart';
 
 class BookDownloadScreen extends StatefulWidget {
   final String bookUrl;

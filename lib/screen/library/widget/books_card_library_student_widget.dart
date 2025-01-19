@@ -6,10 +6,10 @@ import 'package:learnza/service/anna_archieve_service.dart';
 import 'package:provider/provider.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
-import '../../../../model/books/books_model.dart';
-import '../../../../providers/book_provider.dart';
-import '../../../../router/app_urls.dart';
-import '../../../../utils/theme.dart';
+import '../../../model/books/books_model.dart';
+import '../../../providers/book_provider.dart';
+import '../../../router/app_urls.dart';
+import '../../../utils/theme.dart';
 import 'package:learnza/locator/injector.dart' as di;
 
 class BooksCardLibraryStudentWidget extends StatefulWidget {

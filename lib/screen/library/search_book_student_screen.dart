@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../model/books/books_model.dart';
+import '../../model/books/books_model.dart';
 import 'widget/books_card_library_student_widget.dart';
 import 'widget/error/no_books_found_error_widget.dart';
 

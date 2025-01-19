@@ -6,19 +6,19 @@ import 'package:learnza/utils/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
-import '../../../providers/auth_provider.dart';
-import '../../../router/app_urls.dart';
-import '../../common/widget/drawer_widget.dart';
-import '../post/widget/build_navigation.dart';
+import '../../providers/auth_provider.dart';
+import '../../router/app_urls.dart';
+import '../common/widget/drawer_widget.dart';
+import '../student/post/widget/build_navigation.dart';
 
-class LibraryHallScreen extends StatefulWidget {
-  const LibraryHallScreen({super.key});
+class UserLibraryScreen extends StatefulWidget {
+  const UserLibraryScreen({super.key});
 
   @override
-  State<LibraryHallScreen> createState() => _LibraryHallScreenState();
+  State<UserLibraryScreen> createState() => _UserLibraryScreenState();
 }
 
-class _LibraryHallScreenState extends State<LibraryHallScreen> {
+class _UserLibraryScreenState extends State<UserLibraryScreen> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -152,81 +152,73 @@ class _LibraryHallScreenState extends State<LibraryHallScreen> {
       constraints: const BoxConstraints(
         maxWidth: 850,
       ),
-      margin: const EdgeInsets.only(
-        bottom: 16,
-      ),
-      child: ShadCard(
-        border: const Border(
-            top: BorderSide(
-          width: 4,
-          color: primaryColor,
-        )),
-
-        radius: BorderRadius.circular(12),
-        // decoration: BoxDecoration(
-        //   gradient: const LinearGradient(
-        //     colors: [Color(0xFF3c8ce7), Color.fromARGB(255, 0, 174, 189)],
-        //     begin: Alignment.topLeft,
-        //     end: Alignment.bottomRight,
-        //   ),
-        //   borderRadius: BorderRadius.circular(12),
-        // ),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
+      margin: const EdgeInsets.only(bottom: 16),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(12),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: Colors.grey.shade200),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.05),
+                blurRadius: 10,
+                offset: const Offset(0, 4),
+              ),
+            ],
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
-                title,
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 12),
-              Text(
-                '"$quote"',
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontStyle: FontStyle.italic,
-                  fontSize: 15,
-                ),
-              ),
-              const SizedBox(height: 16),
+              // Image at the top
               Container(
-                height: 150,
+                height: 200,
                 width: double.infinity,
                 clipBehavior: Clip.antiAlias,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  image: DecorationImage(
-                    image: CachedNetworkImageProvider(image),
-                    fit: BoxFit.cover,
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(12),
+                    topRight: Radius.circular(12),
                   ),
                 ),
+                child: CachedNetworkImage(
+                  imageUrl: image,
+                  fit: BoxFit.cover,
+                ),
               ),
-              const SizedBox(height: 16),
-              SizedBox(
-                width: double.infinity,
-                child: ShadButton(
-                  onPressed: onTap,
-                  size: ShadButtonSize.lg,
-                  // style: ElevatedButton.styleFrom(
-                  //   backgroundColor: Colors.white,
-                  //   foregroundColor: const Color(0xFF0077b6),
-                  //   minimumSize: const Size(double.infinity, 50),
-                  //   shape: RoundedRectangleBorder(
-                  //     borderRadius: BorderRadius.circular(8),
-                  //   ),
-                  // ),
-                  child: Text(
-                    first ? 'Download Books' : 'Read Books',
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
+              // Content padding
+              Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: ShadTheme.of(context).textTheme.h3,
                     ),
-                  ),
+                    const SizedBox(height: 12),
+                    Text(
+                      '"$quote"',
+                      style: ShadTheme.of(context).textTheme.blockquote,
+                    ),
+                    const SizedBox(height: 16),
+                    Row(
+                      children: [
+                        Text(
+                          first ? 'Download Books' : 'Read Books',
+                          style: ShadTheme.of(context).textTheme.p,
+                        ),
+                        const SizedBox(width: 8),
+                        const Icon(
+                          Icons.arrow_forward,
+                          size: 20,
+                          color: primaryColor,
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
             ],
