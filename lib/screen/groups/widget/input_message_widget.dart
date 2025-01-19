@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../model/message/messages_model.dart';
-import '../../../../providers/message_provider.dart';
+import '../../../model/message/messages_model.dart';
+import '../../../providers/message_provider.dart';
 
 class InputMessageWidget extends StatefulWidget {
   final String groupId;
