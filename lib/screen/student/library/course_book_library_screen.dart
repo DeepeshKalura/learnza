@@ -16,7 +16,7 @@ class CourseBookLibraryScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          ShadImage(Assets.icons.student.underDevelopment.path),
+          ShadImage(Assets.icons.icUnderDevelopment.path),
           const SizedBox(height: 20),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 20),

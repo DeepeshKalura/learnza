@@ -82,7 +82,7 @@ class _ForgotPasswordAuthScreenState extends State<ForgotPasswordAuthScreen> {
                     Align(
                       alignment: Alignment.center,
                       child: ShadImage.square(
-                        Assets.icons.student.sleepy.path,
+                        Assets.icons.icSleepy.path,
                         size: 210,
                       ),
                     ),

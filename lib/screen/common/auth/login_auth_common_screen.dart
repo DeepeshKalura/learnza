@@ -246,8 +246,7 @@ class _LoginAuthCommonScreenState extends State<LoginAuthCommonScreen> {
                     child: Container(
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: Assets.images.common.auth.notebookImage
-                              .provider(),
+                          image: Assets.images.igNotebookImage.provider(),
                           fit: BoxFit.cover,
                         ),
                       ),

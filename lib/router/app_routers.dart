@@ -26,10 +26,8 @@ import '../service/firebase_service.dart';
 import '../service/internet_connectivity_service.dart';
 import '/model/app_enums.dart';
 import '../providers/auth_provider.dart';
-import '../screen/admin/home_admin_screen.dart';
 import '../screen/common/auth/login_auth_common_screen.dart';
 import '../screen/student/home_student_screen.dart';
-import '../screen/teacher/home_teacher_screen.dart';
 import 'app_urls.dart';
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -120,21 +118,6 @@ class AppRouters {
         },
       ),
 
-      // here will exit authenticated admin routes
-      GoRoute(
-        path: "/admin",
-        name: AppUrls.homeAdminScreen,
-        builder: (context, state) => const HomeAdminScreen(),
-        redirect: roleBasedRedirect,
-      ),
-
-      // here will exit authenticated teacher routes
-      GoRoute(
-        path: "/teacher",
-        name: AppUrls.homeTeacherScreen,
-        builder: (context, state) => const HomeTeacherScreen(),
-        // redirect: roleBasedRedirect,
-      ),
       // here will exit authenticated student routes
       GoRoute(
         path: "/student",
@@ -247,15 +230,6 @@ Future<String?> roleBasedRedirect(
   if (user == null) {
     return '/auth';
   } else {
-    // ? I was thinking to make role based user screen
-    // TODO: make role based user screen and functionality
     return '/student';
-    // if (user.role == UserRole.admin) {
-    //   return '/admin';
-    // } else if (user.role == UserRole.teacher) {
-    //   return '/teacher';
-    // } else {
-    //   return '/student/home';
-    // }
   }
 }

@@ -26,7 +26,7 @@ class BooksSnapshotErrorWidget extends StatelessWidget {
           const SizedBox(height: 20),
 
           ShadImage.square(
-            Assets.icons.student.somthingWentWrong.path,
+            Assets.icons.icSomthingWentWrong.path,
             size: 400,
           ),
 

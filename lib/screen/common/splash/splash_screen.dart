@@ -42,9 +42,8 @@ class _SplashScreenState extends State<SplashScreen>
   Widget build(BuildContext context) {
     // Adaptive width for different platforms
     final isWeb = MediaQuery.of(context).size.width > 600;
-    final logoWidth = isWeb
-        ? Assets.images.common.splash.lernzaLogo.size?.width ?? 400
-        : double.infinity;
+    final logoWidth =
+        isWeb ? Assets.images.igShadanda.size?.width ?? 400 : double.infinity;
 
     return Scaffold(
       body: Stack(
@@ -57,7 +56,7 @@ class _SplashScreenState extends State<SplashScreen>
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Image.asset(
-                    Assets.images.common.splash.lernzaLogo.path,
+                    Assets.images.igShadanda.path,
                     width: logoWidth,
                   ),
                   SizedBox(
