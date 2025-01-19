@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
 import '/utils/theme.dart';
-import '../../../../../gen/assets.gen.dart';
+import '../../../../gen/assets.gen.dart';
 
 class NoBooksFoundErrorWidget extends StatelessWidget {
   const NoBooksFoundErrorWidget({super.key});

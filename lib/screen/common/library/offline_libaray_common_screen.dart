@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../providers/state/student/libary_student_state_provider.dart';
-import '../../student/library/widget/books_card_library_student_widget.dart';
-import '../../student/library/widget/error/no_books_found_error_widget.dart';
+import '../../library/widget/books_card_library_student_widget.dart';
+import '../../library/widget/error/no_books_found_error_widget.dart';
 
 class OfflineLibraryCommonScreen extends StatefulWidget {
   const OfflineLibraryCommonScreen({super.key});

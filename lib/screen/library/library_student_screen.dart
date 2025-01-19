@@ -1,14 +1,14 @@
 import 'dart:developer' as developer;
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:learnza/screen/student/library/widget/books_card_library_student_widget.dart';
+import 'package:learnza/screen/library/widget/books_card_library_student_widget.dart';
 import 'package:learnza/utils/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
-import '../../../providers/book_provider.dart';
-import '../../../providers/state/student/libary_student_state_provider.dart';
-import '../../../router/app_urls.dart';
+import '../../providers/book_provider.dart';
+import '../../providers/state/student/libary_student_state_provider.dart';
+import '../../router/app_urls.dart';
 import 'course_book_library_screen.dart';
 import 'widget/anna_libary_widget.dart';
 

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
-import '../../../gen/assets.gen.dart';
-import '../../../providers/course_provider.dart';
+import '../../gen/assets.gen.dart';
+import '../../providers/course_provider.dart';
 
 class CourseBookLibraryScreen extends StatelessWidget {
   const CourseBookLibraryScreen({super.key});

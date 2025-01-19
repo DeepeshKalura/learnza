@@ -2,7 +2,7 @@ import 'package:pdfx/pdfx.dart';
 
 import 'package:flutter/material.dart';
 
-import '../../../model/books/books_model.dart';
+import '../../model/books/books_model.dart';
 
 class ReadBookReadScreen extends StatefulWidget {
   const ReadBookReadScreen({super.key, required this.book});

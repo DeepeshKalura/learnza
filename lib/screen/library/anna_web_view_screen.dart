@@ -8,8 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../model/books/books_model.dart';
-import '../../../router/app_urls.dart';
+import '../../model/books/books_model.dart';
+import '../../router/app_urls.dart';
 
 class AnnaWebViewScreen extends StatefulWidget {
   const AnnaWebViewScreen({

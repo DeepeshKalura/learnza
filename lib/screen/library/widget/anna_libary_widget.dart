@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:learnza/utils/theme.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../providers/state/student/libary_student_state_provider.dart';
+import '../../../providers/state/student/libary_student_state_provider.dart';
 import 'books_card_library_student_widget.dart';
 import 'error/books_snapshot_error_widget.dart';
 import 'error/no_books_found_error_widget.dart';
