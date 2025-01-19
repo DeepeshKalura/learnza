@@ -14,7 +14,7 @@ class NoBooksFoundErrorWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           ShadImage.square(
-            Assets.icons.student.noBookFound.path,
+            Assets.icons.icNoBookFound.path,
             size: 400,
           ),
 

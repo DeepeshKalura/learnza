@@ -15,90 +15,97 @@ import 'package:vector_graphics/vector_graphics.dart' as _vg;
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
-  /// Directory path: assets/icons/student
-  $AssetsIconsStudentGen get student => const $AssetsIconsStudentGen();
+  /// File path: assets/icons/ic_hi.svg
+  SvgGenImage get icHi => const SvgGenImage('assets/icons/ic_hi.svg');
+
+  /// File path: assets/icons/ic_looking.svg
+  SvgGenImage get icLooking => const SvgGenImage('assets/icons/ic_looking.svg');
+
+  /// File path: assets/icons/ic_no_book_found.svg
+  SvgGenImage get icNoBookFound =>
+      const SvgGenImage('assets/icons/ic_no_book_found.svg');
+
+  /// File path: assets/icons/ic_sleepy.svg
+  SvgGenImage get icSleepy => const SvgGenImage('assets/icons/ic_sleepy.svg');
+
+  /// File path: assets/icons/ic_somthing_went_wrong.svg
+  SvgGenImage get icSomthingWentWrong =>
+      const SvgGenImage('assets/icons/ic_somthing_went_wrong.svg');
+
+  /// File path: assets/icons/ic_under_development.svg
+  SvgGenImage get icUnderDevelopment =>
+      const SvgGenImage('assets/icons/ic_under_development.svg');
+
+  /// File path: assets/icons/ic_welcome.svg
+  SvgGenImage get icWelcome => const SvgGenImage('assets/icons/ic_welcome.svg');
+
+  /// List of all assets
+  List<SvgGenImage> get values => [
+        icHi,
+        icLooking,
+        icNoBookFound,
+        icSleepy,
+        icSomthingWentWrong,
+        icUnderDevelopment,
+        icWelcome
+      ];
 }
 
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
-  /// Directory path: assets/images/common
-  $AssetsImagesCommonGen get common => const $AssetsImagesCommonGen();
-}
+  /// File path: assets/images/ig_notebook_image.png
+  AssetGenImage get igNotebookImage =>
+      const AssetGenImage('assets/images/ig_notebook_image.png');
 
-class $AssetsIconsStudentGen {
-  const $AssetsIconsStudentGen();
-
-  /// File path: assets/icons/student/hi.svg
-  SvgGenImage get hi => const SvgGenImage('assets/icons/student/hi.svg');
-
-  /// File path: assets/icons/student/looking.svg
-  SvgGenImage get looking =>
-      const SvgGenImage('assets/icons/student/looking.svg');
-
-  /// File path: assets/icons/student/no_book_found.svg
-  SvgGenImage get noBookFound =>
-      const SvgGenImage('assets/icons/student/no_book_found.svg');
-
-  /// File path: assets/icons/student/sleepy.svg
-  SvgGenImage get sleepy =>
-      const SvgGenImage('assets/icons/student/sleepy.svg');
-
-  /// File path: assets/icons/student/somthing_went_wrong.svg
-  SvgGenImage get somthingWentWrong =>
-      const SvgGenImage('assets/icons/student/somthing_went_wrong.svg');
-
-  /// File path: assets/icons/student/under_development.svg
-  SvgGenImage get underDevelopment =>
-      const SvgGenImage('assets/icons/student/under_development.svg');
-
-  /// File path: assets/icons/student/welcome.svg
-  SvgGenImage get welcome =>
-      const SvgGenImage('assets/icons/student/welcome.svg');
+  /// File path: assets/images/ig_shadanda.png
+  AssetGenImage get igShadanda =>
+      const AssetGenImage('assets/images/ig_shadanda.png');
 
   /// List of all assets
-  List<SvgGenImage> get values => [
-        hi,
-        looking,
-        noBookFound,
-        sleepy,
-        somthingWentWrong,
-        underDevelopment,
-        welcome
-      ];
+  List<AssetGenImage> get values => [igNotebookImage, igShadanda];
 }
 
-class $AssetsImagesCommonGen {
-  const $AssetsImagesCommonGen();
+class $AssetsLogoGen {
+  const $AssetsLogoGen();
 
-  /// Directory path: assets/images/common/auth
-  $AssetsImagesCommonAuthGen get auth => const $AssetsImagesCommonAuthGen();
+  /// Directory path: assets/logo/adaptive_icon
+  $AssetsLogoAdaptiveIconGen get adaptiveIcon =>
+      const $AssetsLogoAdaptiveIconGen();
 
-  /// Directory path: assets/images/common/splash
-  $AssetsImagesCommonSplashGen get splash =>
-      const $AssetsImagesCommonSplashGen();
-}
+  /// File path: assets/logo/appstore.png
+  AssetGenImage get appstore => const AssetGenImage('assets/logo/appstore.png');
 
-class $AssetsImagesCommonAuthGen {
-  const $AssetsImagesCommonAuthGen();
-
-  /// File path: assets/images/common/auth/notebookImage.png
-  AssetGenImage get notebookImage =>
-      const AssetGenImage('assets/images/common/auth/notebookImage.png');
+  /// File path: assets/logo/playstore.png
+  AssetGenImage get playstore =>
+      const AssetGenImage('assets/logo/playstore.png');
 
   /// List of all assets
-  List<AssetGenImage> get values => [notebookImage];
+  List<AssetGenImage> get values => [appstore, playstore];
 }
 
-class $AssetsImagesCommonSplashGen {
-  const $AssetsImagesCommonSplashGen();
+class $AssetsLogoAdaptiveIconGen {
+  const $AssetsLogoAdaptiveIconGen();
 
-  /// File path: assets/images/common/splash/lernzaLogo.png
-  AssetGenImage get lernzaLogo =>
-      const AssetGenImage('assets/images/common/splash/lernzaLogo.png');
+  /// Directory path: assets/logo/adaptive_icon/Shadanda
+  $AssetsLogoAdaptiveIconShadandaGen get shadanda =>
+      const $AssetsLogoAdaptiveIconShadandaGen();
+}
+
+class $AssetsLogoAdaptiveIconShadandaGen {
+  const $AssetsLogoAdaptiveIconShadandaGen();
+
+  /// File path: assets/logo/adaptive_icon/Shadanda/ic_launcher_background.png
+  AssetGenImage get icLauncherBackground => const AssetGenImage(
+      'assets/logo/adaptive_icon/Shadanda/ic_launcher_background.png');
+
+  /// File path: assets/logo/adaptive_icon/Shadanda/ic_launcher_foreground.png.png
+  AssetGenImage get icLauncherForegroundPng => const AssetGenImage(
+      'assets/logo/adaptive_icon/Shadanda/ic_launcher_foreground.png.png');
 
   /// List of all assets
-  List<AssetGenImage> get values => [lernzaLogo];
+  List<AssetGenImage> get values =>
+      [icLauncherBackground, icLauncherForegroundPng];
 }
 
 class Assets {
@@ -107,6 +114,7 @@ class Assets {
   static const String aEnv = '.env';
   static const $AssetsIconsGen icons = $AssetsIconsGen();
   static const $AssetsImagesGen images = $AssetsImagesGen();
+  static const $AssetsLogoGen logo = $AssetsLogoGen();
 
   /// List of all assets
   static List<String> get values => [aEnv];
