@@ -32,7 +32,6 @@ class InputMessageWidgetState extends State<InputMessageWidget> {
         margin: const EdgeInsets.symmetric(horizontal: 4, vertical: 6),
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
         decoration: BoxDecoration(
-          color: Colors.white,
           border: Border(
             top: BorderSide(color: Colors.grey[300]!),
           ),
@@ -43,16 +42,19 @@ class InputMessageWidgetState extends State<InputMessageWidget> {
             if (widget.replyTo != null) _buildReplyBanner(),
             Row(
               children: [
-                IconButton(
-                  icon: const Icon(Icons.attach_file, color: Colors.grey),
-                  onPressed: _pickAttachment,
-                ),
+                // TODO: Implement attachment picker
+                // IconButton(
+                //   icon: const Icon(Icons.attach_file, color: Colors.grey),
+                //   onPressed: _pickAttachment,
+                // ),
 
                 Expanded(
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     decoration: BoxDecoration(
-                      color: Colors.grey[100],
+                      border: Border.all(
+                        color: Colors.grey[300]!,
+                      ),
                       borderRadius: BorderRadius.circular(25),
                     ),
                     child: TextField(
@@ -76,12 +78,9 @@ class InputMessageWidgetState extends State<InputMessageWidget> {
                 const SizedBox(width: 6),
                 GestureDetector(
                   onTap: _isComposing ? _sendMessage : null,
-                  child: CircleAvatar(
-                    backgroundColor:
-                        _isComposing ? Colors.blue : Colors.grey[300],
-                    child: const Icon(
+                  child: const CircleAvatar(
+                    child: Icon(
                       Icons.send,
-                      color: Colors.white,
                     ),
                   ),
                 ),
