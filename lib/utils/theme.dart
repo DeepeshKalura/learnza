@@ -1,66 +1,65 @@
 import 'package:flutter/material.dart';
-import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shadcn_ui/shadcn_ui.dart';
 
-const Color primaryColor = Color(0xFF0077b6);
-const Color secondaryColor = Color(0xFFFECFC4);
-const Color successColor = Color(0xFF28a745);
+const primaryColor = Color.fromRGBO(0, 92, 186, 1);
+const successColor = Colors.green;
 const Color warningColor = Color(0xFFffc107);
 const Color dangerColor = Color(0xFFdc3545);
 const Color hintColor = Color(0xFF6c757d);
-const Color darkPrimaryColor = Color(0xFF120071);
 
-final lightThemData = ShadThemeData(
+final lightThemeData = ShadThemeData(
   brightness: Brightness.light,
-  colorScheme: ShadSlateColorScheme.light(
-    background: Colors.white,
-    foreground: Colors.grey[900] ?? Colors.black,
-    card: Colors.white,
-    popover: Colors.white,
-    popoverForeground: Colors.grey[900] ?? Colors.black,
-    cardForeground: Colors.grey[900] ?? Colors.black,
-    primary: const Color(0xff2074AC),
-    primaryForeground: const Color(0xFF2892D7),
-    secondary: const Color(0xffF9E0DC),
-    secondaryForeground: const Color(0xFFEB9486),
-    destructive: const Color(0xFFdc3545),
-    accent: const Color(0xffFDFAED),
-    accentForeground: const Color(0xFFCAA916),
-    destructiveForeground: Colors.grey[50] ?? Colors.blueGrey,
-    border: Colors.grey[200] ?? Colors.grey,
-    input: Colors.grey[200] ?? Colors.grey,
-    ring: const Color(0xff2074AC),
-    muted: Colors.grey[100] ?? Colors.grey,
-    mutedForeground: Colors.grey,
+  colorScheme: const ShadSlateColorScheme.light(
+    background: Color.fromRGBO(250, 250, 250, 1), // HSL(0, 0%, 98%)
+    foreground: Color.fromRGBO(13, 13, 13, 1), // HSL(240, 8%, 5%)
+    card: Color.fromRGBO(250, 250, 250, 1), // Matches background
+    cardForeground: Color.fromRGBO(13, 13, 13, 1), // Matches foreground
+    popover: Color.fromRGBO(250, 250, 250, 1), // Matches background
+    popoverForeground: Color.fromRGBO(13, 13, 13, 1), // Matches foreground
+    primary: Color.fromRGBO(0, 92, 186, 1), // HSL(238, 86%, 29%)
+    primaryForeground: Color.fromRGBO(250, 250, 250, 1), // HSL(0, 0%, 98%)
+    secondary: Color.fromRGBO(240, 240, 240, 1), // HSL(240, 7%, 94%)
+    secondaryForeground: Color.fromRGBO(13, 13, 13, 1), // Matches foreground
+    muted: Color.fromRGBO(240, 240, 240, 1), // HSL(240, 7%, 94%)
+    mutedForeground: Color.fromRGBO(115, 115, 115, 1), // HSL(240, 6%, 45%)
+    accent: Color.fromRGBO(240, 240, 240, 1), // Matches muted
+    accentForeground: Color.fromRGBO(13, 13, 13, 1), // Matches foreground
+    destructive: Color.fromRGBO(255, 76, 76, 1), // HSL(0, 84%, 60%)
+    destructiveForeground: Color.fromRGBO(250, 250, 250, 1), // HSL(0, 0%, 98%)
+    border: Color.fromRGBO(232, 232, 232, 1), // HSL(240, 6%, 90%)
+    input: Color.fromRGBO(212, 212, 212, 1), // HSL(240, 6%, 83%)
+    ring: Color.fromRGBO(122, 158, 212, 1), // HSL(238, 24%, 75%)
   ),
   textTheme: ShadTextTheme.fromGoogleFont(
-    GoogleFonts.roboto,
+    GoogleFonts.robotoCondensed,
   ),
 );
 
-final darkThemData = ShadThemeData(
+final darkThemeData = ShadThemeData(
   brightness: Brightness.dark,
-  colorScheme: ShadSlateColorScheme.dark(
-    background: Colors.grey[900] ?? Colors.black,
-    foreground: Colors.grey[50] ?? Colors.blueGrey,
-    card: Colors.grey[900] ?? Colors.black,
-    popover: Colors.grey[900] ?? Colors.black,
-    popoverForeground: Colors.grey[50] ?? Colors.blueGrey,
-    primary: const Color(0xff2074AC),
-    primaryForeground: const Color.fromARGB(255, 165, 219, 255),
-    secondary: const Color(0xFF9E2B1A),
-    secondaryForeground: const Color(0xffF9E0DC),
-    muted: Colors.grey[800] ?? Colors.grey,
-    mutedForeground: Colors.grey,
-    accent: const Color(0xFFCAA916),
-    accentForeground: const Color(0xffFDFAED),
-    destructive: const Color.fromARGB(255, 224, 5, 27),
-    destructiveForeground: Colors.grey[50] ?? Colors.blueGrey,
-    border: Colors.grey[800] ?? Colors.grey,
-    input: Colors.grey[800] ?? Colors.grey,
-    ring: const Color(0xff2074AC),
+  colorScheme: const ShadSlateColorScheme.dark(
+    background: Color.fromRGBO(22, 22, 22, 1), // HSL(240, 7%, 8%)
+    foreground: Color.fromRGBO(230, 230, 230, 1), // HSL(180, 9%, 98%)
+    card: Color.fromRGBO(25, 25, 25, 1), // HSL(240, 6%, 10%)
+    cardForeground: Color.fromRGBO(230, 230, 230, 1), // Matches foreground
+    popover: Color.fromRGBO(25, 25, 25, 1), // Matches card
+    popoverForeground: Color.fromRGBO(230, 230, 230, 1), // Matches foreground
+    primary: Color.fromRGBO(0, 92, 186, 1), // HSL(238, 86%, 29%)
+    primaryForeground: Color.fromRGBO(230, 230, 230, 1), // Matches foreground
+    secondary: Color.fromRGBO(48, 48, 48, 1), // HSL(240, 8%, 19%)
+    secondaryForeground: Color.fromRGBO(230, 230, 230, 1), // Matches foreground
+    muted: Color.fromRGBO(74, 74, 74, 1), // HSL(240, 7%, 29%)
+    mutedForeground: Color.fromRGBO(126, 126, 126, 1), // HSL(237, 8%, 49%)
+    accent: Color.fromRGBO(31, 74, 132, 1), // HSL(238, 71%, 19%)
+    accentForeground: Color.fromRGBO(230, 230, 230, 1), // Matches foreground
+    destructive: Color.fromRGBO(255, 76, 76, 1), // HSL(0, 84%, 60%)
+    destructiveForeground: Color.fromRGBO(250, 250, 250, 1), // HSL(0, 0%, 98%)
+    border: Color.fromRGBO(30, 30, 30, 1), // HSL(240, 8%, 12%)
+    input: Color.fromRGBO(45, 45, 45, 1), // HSL(240, 9%, 18%)
+    ring: Color.fromRGBO(61, 119, 204, 1), // HSL(238, 86%, 40%)
   ),
   textTheme: ShadTextTheme.fromGoogleFont(
-    GoogleFonts.roboto,
+    GoogleFonts.robotoCondensed,
   ),
 );

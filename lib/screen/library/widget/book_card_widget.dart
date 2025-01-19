@@ -1,13 +1,14 @@
 import 'dart:developer' as developer;
-import 'package:universal_io/io.dart';
-import 'package:flutter/material.dart';
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:learnza/utils/theme.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:provider/provider.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
+import 'package:universal_io/io.dart';
 
 import '../../../model/books/books_model.dart';
 import '../../../providers/book_provider.dart';
@@ -268,14 +269,14 @@ class _BookDownloadScreenState extends State<BookDownloadScreen> {
                         if (_isDownloading)
                           const Text(
                             "Books is under downloading, Please wait for a while",
-                            style: TextStyle(color: Colors.red),
+                            style: TextStyle(color: dangerColor),
                           ),
                         const SizedBox(height: 12),
                         Text(
                           _downloadStatus,
                           style: TextStyle(
                             color: _downloadProgress == 1.0
-                                ? Colors.green
+                                ? successColor
                                 : Colors.black54,
                           ),
                         ),

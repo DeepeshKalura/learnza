@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:learnza/utils/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../model/course/courses_model.dart';
 import '../../../model/users/users_model.dart';
@@ -175,7 +175,7 @@ class _ProfileStudentBodyState extends State<ProfileStudentBody> {
                                   ),
                                   borderRadius: BorderRadius.circular(160),
                                   border: Border.all(
-                                    color: darkPrimaryColor,
+                                    color: primaryColor,
                                     width: 2,
                                   ),
                                 ),

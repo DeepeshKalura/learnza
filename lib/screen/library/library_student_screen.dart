@@ -68,7 +68,6 @@ class _LibraryStudentScreenState extends State<LibraryStudentScreen>
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
             SliverAppBar(
-              backgroundColor: Colors.white,
               pinned: false,
               snap: true,
               floating: true,
@@ -118,7 +117,6 @@ class _LibraryStudentScreenState extends State<LibraryStudentScreen>
                   controller: _searchController,
                   decoration: const InputDecoration(
                     filled: true,
-                    fillColor: Colors.white,
                     hintText: 'Search Library',
                     hintStyle: TextStyle(color: Colors.grey, fontSize: 20),
                     border: OutlineInputBorder(
