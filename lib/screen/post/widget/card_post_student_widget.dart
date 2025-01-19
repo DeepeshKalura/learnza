@@ -21,7 +21,8 @@ class CardPostStudentWidget extends StatefulWidget {
 
 class CardPostStudentWidgetState extends State<CardPostStudentWidget> {
   bool _isLiked = false;
-  final bool _isBookmarked = false;
+  // TODO: Create the bookmark feature to save post
+  // final bool _isBookmarked = false;
 
   @override
   void initState() {
@@ -30,163 +31,162 @@ class CardPostStudentWidgetState extends State<CardPostStudentWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return OpenContainer(
-      closedBuilder: (context, action) => _buildPostCardTile(),
-      openBuilder: (context, action) => _buildPostDetailPage(),
-      transitionType: ContainerTransitionType.fade,
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      child: OpenContainer(
+        closedBuilder: (context, action) => _buildPostCardTile(),
+        openBuilder: (context, action) => _buildPostDetailPage(),
+        transitionType: ContainerTransitionType.fade,
+      ),
     );
   }
 
   Widget _buildPostCardTile() {
-    return Container(
-      margin: const EdgeInsets.only(left: 12, right: 12, bottom: 6),
-      child: ShadCard(
-        border: const Border(
-          top: BorderSide(
-            color: primaryColor,
-            width: 4,
+    return ShadCard(
+      border: const Border(
+        top: BorderSide(
+          color: primaryColor,
+          width: 4,
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // User Info and Interactions
+          Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                // User Profile
+                Row(
+                  children: [
+                    ShadAvatar(
+                      widget.user.profileImageURL ??
+                          "https://thumbs.dreamstime.com/b/profile-anonymous-face-icon-gray-silhouette-person-male-default-avatar-photo-placeholder-white-background-vector-illustration-106473768.jpg",
+                      placeholder: Text(
+                        widget.user.fullName.substring(0, 2),
+                      ),
+                      size: const Size(50, 50),
+                    ),
+                    const SizedBox(width: 8),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          widget.user.fullName,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          'Created on ${DateFormat('MMM d, yyyy').format(widget.post.createdAt)}',
+                          style: TextStyle(
+                            color: Colors.grey[600],
+                            fontSize: 14,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+
+                // Interaction Buttons
+                Row(
+                  children: [
+                    IconButton(
+                      icon: Icon(
+                        _isLiked ? Icons.favorite : Icons.favorite_border,
+                        color: _isLiked ? Colors.red : Colors.grey,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          // TODO: rather creating entire state again you should create a postManagementUiProvider and manage state throguht that [PR#26]
+                          _isLiked = !_isLiked;
+                          // context.provider<PostProvider>().likePost(widget.post.id);
+                        });
+                      },
+                    ),
+                    // TODO: In future create bookmak feature to save post[PR#25]
+                    // IconButton(
+                    //   icon: Icon(
+                    //     _isBookmarked
+                    //         ? Icons.bookmark
+                    //         : Icons.bookmark_border,
+                    //     color: _isBookmarked ? Colors.blue : Colors.grey,
+                    //   ),
+                    //   onPressed: () {
+                    //     setState(() {
+                    //       _isBookmarked = !_isBookmarked;
+                    //     });
+                    //   },
+                    // ),
+                  ],
+                ),
+              ],
+            ),
           ),
-        ),
-        radius: BorderRadius.circular(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // User Info and Interactions
-            Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  // User Profile
-                  Row(
-                    children: [
-                      ShadAvatar(
-                        widget.user.profileImageURL ??
-                            "https://www.pngitem.com/pimgs/m/522-5220445_anonymous-profile-grey-person-sticker-glitch-empty-profile.png",
-                        placeholder: Text(
-                          widget.user.fullName.substring(0, 2),
-                        ),
-                        size: const Size(50, 50),
-                      ),
-                      const SizedBox(width: 8),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            widget.user.fullName,
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Text(
-                            'Created on ${DateFormat('MMM d, yyyy').format(widget.post.createdAt)}',
-                            style: TextStyle(
-                              color: Colors.grey[600],
-                              fontSize: 14,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
 
-                  // Interaction Buttons
-                  Row(
-                    children: [
-                      IconButton(
-                        icon: Icon(
-                          _isLiked ? Icons.favorite : Icons.favorite_border,
-                          color: _isLiked ? Colors.red : Colors.grey,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            // TODO: rather creating entire state again you should create a postManagementUiProvider and manage state throguht that [PR#26]
-                            _isLiked = !_isLiked;
-                            // context.provider<PostProvider>().likePost(widget.post.id);
-                          });
-                        },
-                      ),
-                      // TODO: In future create bookmak feature to save post[PR#25]
-                      // IconButton(
-                      //   icon: Icon(
-                      //     _isBookmarked
-                      //         ? Icons.bookmark
-                      //         : Icons.bookmark_border,
-                      //     color: _isBookmarked ? Colors.blue : Colors.grey,
-                      //   ),
-                      //   onPressed: () {
-                      //     setState(() {
-                      //       _isBookmarked = !_isBookmarked;
-                      //     });
-                      //   },
-                      // ),
-                    ],
+          // Post Content
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  widget.post.title,
+                  style: const TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
                   ),
-                ],
-              ),
-            ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  widget.post.content,
+                  style: const TextStyle(fontSize: 16),
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                ),
 
-            // Post Content
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    widget.post.title,
-                    style: const TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    widget.post.content,
-                    style: const TextStyle(fontSize: 16),
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-
-                  // Thumbnail Image
-                  if (widget.post.thumbnailUrl != null)
-                    Padding(
-                      padding: const EdgeInsets.only(top: 12.0),
-                      child: Hero(
-                        tag: 'post_image_${widget.post.id}',
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(12),
-                          child: CachedNetworkImage(
-                            imageUrl: widget.post.thumbnailUrl!,
-                            height: 200,
-                            width: double.infinity,
-                            fit: BoxFit.cover,
-                            placeholder: (context, url) => Container(
-                              color: Colors.grey.shade200,
-                              child: Center(
-                                child: CircularProgressIndicator(
-                                  color: Colors.blue.shade200,
-                                ),
+                // Thumbnail Image
+                if (widget.post.thumbnailUrl != null)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 12.0),
+                    child: Hero(
+                      tag: 'post_image_${widget.post.id}',
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(12),
+                        child: CachedNetworkImage(
+                          imageUrl: widget.post.thumbnailUrl!,
+                          height: 200,
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                          placeholder: (context, url) => Container(
+                            color: Colors.grey.shade200,
+                            child: Center(
+                              child: CircularProgressIndicator(
+                                color: Colors.blue.shade200,
                               ),
                             ),
-                            errorWidget: (context, url, error) => Container(
-                              color: Colors.grey.shade200,
-                              child: Icon(
-                                Icons.error_outline,
-                                size: 50,
-                                color: Colors.grey.shade500,
-                              ),
+                          ),
+                          errorWidget: (context, url, error) => Container(
+                            color: Colors.grey.shade200,
+                            child: Icon(
+                              Icons.error_outline,
+                              size: 50,
+                              color: Colors.grey.shade500,
                             ),
                           ),
                         ),
                       ),
                     ),
-                ],
-              ),
+                  ),
+              ],
             ),
-            const SizedBox(height: 12),
-          ],
-        ),
+          ),
+          const SizedBox(height: 12),
+        ],
       ),
     );
   }
