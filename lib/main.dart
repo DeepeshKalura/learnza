@@ -23,6 +23,7 @@ import 'providers/department_provider.dart';
 import 'providers/groups_provider.dart';
 import 'providers/message_provider.dart';
 import 'providers/post_provider.dart';
+import 'providers/state/libary/download_books_libary_state_provider.dart';
 import 'providers/state/student/libary_student_state_provider.dart';
 import 'providers/state/user_preference_provider.dart';
 import 'providers/student_provider.dart';
@@ -139,6 +140,11 @@ class MyApp extends StatelessWidget {
                 return LibaryStudentStateProvider();
               },
             ),
+            ChangeNotifierProvider(
+              create: (context) {
+                return DownloadBooksLibaryStateProvider();
+              },
+            )
           ],
           child: Consumer<UserPreferenceProvider>(
             builder: (context, userPreferenceProvider, _) {

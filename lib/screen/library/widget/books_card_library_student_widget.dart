@@ -1,7 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:animations/animations.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:learnza/locator/injector.dart' as di;
 import 'package:learnza/service/anna_archieve_service.dart';
 import 'package:provider/provider.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
@@ -10,7 +11,6 @@ import '../../../model/books/books_model.dart';
 import '../../../providers/book_provider.dart';
 import '../../../router/app_urls.dart';
 import '../../../utils/theme.dart';
-import 'package:learnza/locator/injector.dart' as di;
 
 class BooksCardLibraryStudentWidget extends StatefulWidget {
   const BooksCardLibraryStudentWidget({
@@ -33,12 +33,15 @@ class BooksCardLibraryStudentWidgetState
     extends State<BooksCardLibraryStudentWidget> {
   @override
   Widget build(BuildContext context) {
-    return OpenContainer(
-      closedBuilder: (context, action) => _buildBookTile(),
-      openBuilder: (context, action) => widget.booksModel.founded
-          ? _buildBookDetailsPage()
-          : _showNotAvailableDialog(),
-      transitionType: ContainerTransitionType.fade,
+    return Container(
+      margin: const EdgeInsets.all(8.0),
+      child: OpenContainer(
+        closedBuilder: (context, action) => _buildBookTile(),
+        openBuilder: (context, action) => widget.booksModel.founded
+            ? _buildBookDetailsPage()
+            : _showNotAvailableDialog(),
+        transitionType: ContainerTransitionType.fade,
+      ),
     );
   }
 
@@ -59,99 +62,82 @@ class BooksCardLibraryStudentWidgetState
   }
 
   Widget _buildBookTile() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: ShadCard(
-        backgroundColor:
-            widget.booksModel.founded ? Colors.white : Colors.red.shade200,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Hero(
-              tag: 'book_cover_${widget.booksModel.id}',
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(12),
-                child: CachedNetworkImage(
-                  imageUrl: widget.booksModel.thumbnail ??
-                      "https://covers.openlibrary.org/b/id/14825735-L.jpg",
-                  width: 150,
-                  height: 250,
-                  fit: BoxFit.cover,
-                  placeholder: (context, url) => Container(
-                    color: widget.booksModel.founded
-                        ? Colors.grey.shade200
-                        : Colors.red.shade50,
-                    child: Center(
-                      child: CircularProgressIndicator(
-                        color: widget.booksModel.founded
-                            ? Colors.blue.shade200
-                            : Colors.red.shade200,
-                      ),
+    return ShadCard(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Hero(
+            tag: 'book_cover_${widget.booksModel.id}',
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: CachedNetworkImage(
+                imageUrl: widget.booksModel.thumbnail ??
+                    "https://covers.openlibrary.org/b/id/14825735-L.jpg",
+                width: 150,
+                height: 250,
+                fit: BoxFit.cover,
+                placeholder: (context, url) => Container(
+                  color: widget.booksModel.founded
+                      ? Colors.grey.shade200
+                      : Colors.red.shade50,
+                  child: Center(
+                    child: CircularProgressIndicator(
+                      color: widget.booksModel.founded
+                          ? Colors.blue.shade200
+                          : Colors.red.shade200,
                     ),
                   ),
-                  errorWidget: (context, url, error) => Container(
+                ),
+                errorWidget: (context, url, error) => Container(
+                  color: widget.booksModel.founded
+                      ? Colors.grey.shade200
+                      : Colors.red.shade50,
+                  child: Icon(
+                    Icons.book_outlined,
+                    size: 50,
                     color: widget.booksModel.founded
-                        ? Colors.grey.shade200
-                        : Colors.red.shade50,
-                    child: Icon(
-                      Icons.book_outlined,
-                      size: 50,
-                      color: widget.booksModel.founded
-                          ? Colors.grey.shade500
-                          : Colors.red.shade300,
-                    ),
+                        ? Colors.grey.shade500
+                        : Colors.red.shade300,
                   ),
                 ),
               ),
             ),
-            const SizedBox(width: 16),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.5 - 10,
-                    child: Text(
-                      widget.booksModel.bookTitle ?? "No title available",
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: ShadTheme.of(context).textTheme.h4.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: widget.booksModel.founded
-                                ? Colors.black
-                                : Colors.red.shade900,
-                          ),
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.5 - 10,
-                    child: Text(
-                      widget.booksModel.description ??
-                          "No description available",
-                      maxLines: 5,
-                      overflow: TextOverflow.ellipsis,
-                      style: ShadTheme.of(context).textTheme.p.copyWith(
-                            color: widget.booksModel.founded
-                                ? Colors.grey
-                                : Colors.red.shade700,
-                          ),
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    "by ${widget.booksModel.author?.first ?? "Anonymous"}",
-                    style: ShadTheme.of(context).textTheme.p.copyWith(
-                          color: widget.booksModel.founded
-                              ? Colors.black
-                              : Colors.red.shade800,
+          ),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.5 - 10,
+                  child: Text(
+                    widget.booksModel.bookTitle ?? "No title available",
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: ShadTheme.of(context).textTheme.h4.copyWith(
+                          fontWeight: FontWeight.bold,
                         ),
                   ),
-                ],
-              ),
+                ),
+                const SizedBox(height: 8),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.5 - 10,
+                  child: Text(
+                    widget.booksModel.description ?? "No description available",
+                    maxLines: 5,
+                    overflow: TextOverflow.ellipsis,
+                    style: ShadTheme.of(context).textTheme.p.copyWith(),
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  "by ${widget.booksModel.author?.first ?? "Anonymous"}",
+                  style: ShadTheme.of(context).textTheme.p.copyWith(),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -369,10 +355,7 @@ class BooksCardLibraryStudentWidgetState
         description: const Text(
             'Sorry, this book is currently not available in the library.'),
         action: ShadButton.outline(
-          child: const Text(
-            'Ok',
-            style: TextStyle(color: Colors.white),
-          ),
+          child: Text('Ok', style: ShadTheme.of(context).textTheme.p),
           onPressed: () => ShadToaster.of(context).hide(),
         ),
       ),
