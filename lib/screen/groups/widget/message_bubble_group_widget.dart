@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../../../model/app_enums.dart';
-import '../../../../model/message/messages_model.dart';
+
+import '../../../model/app_enums.dart';
+import '../../../model/message/messages_model.dart';
 
 class MessageBubbleGroupWidget extends StatelessWidget {
   final MessagesModel message;

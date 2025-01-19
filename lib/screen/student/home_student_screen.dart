@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../utils/theme.dart';
-import 'groups/groups_student_screen.dart';
+import '../groups/groups_student_screen.dart';
 import '../library/user_library_screen.dart';
 import 'post/post_student_screen.dart';
 

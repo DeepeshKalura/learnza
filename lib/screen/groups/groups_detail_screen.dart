@@ -1,13 +1,14 @@
 import 'dart:developer' as developer;
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
-import '../../../model/groups/groups_model.dart';
-import '../../../model/message/messages_model.dart';
-import '../../../providers/auth_provider.dart';
-import '../../../providers/message_provider.dart';
+import '../../model/groups/groups_model.dart';
+import '../../model/message/messages_model.dart';
+import '../../providers/auth_provider.dart';
+import '../../providers/message_provider.dart';
 import 'widget/input_message_widget.dart';
 import 'widget/message_bubble_group_widget.dart';
 
