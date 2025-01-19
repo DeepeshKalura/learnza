@@ -99,13 +99,13 @@ class $AssetsLogoAdaptiveIconShadandaGen {
   AssetGenImage get icLauncherBackground => const AssetGenImage(
       'assets/logo/adaptive_icon/Shadanda/ic_launcher_background.png');
 
-  /// File path: assets/logo/adaptive_icon/Shadanda/ic_launcher_foreground.png.png
-  AssetGenImage get icLauncherForegroundPng => const AssetGenImage(
-      'assets/logo/adaptive_icon/Shadanda/ic_launcher_foreground.png.png');
+  /// File path: assets/logo/adaptive_icon/Shadanda/ic_launcher_foreground.png
+  AssetGenImage get icLauncherForeground => const AssetGenImage(
+      'assets/logo/adaptive_icon/Shadanda/ic_launcher_foreground.png');
 
   /// List of all assets
   List<AssetGenImage> get values =>
-      [icLauncherBackground, icLauncherForegroundPng];
+      [icLauncherBackground, icLauncherForeground];
 }
 
 class Assets {
