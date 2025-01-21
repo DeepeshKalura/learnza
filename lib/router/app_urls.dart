@@ -20,7 +20,7 @@ class AppUrls {
   static const String groupsStudentScreen = 'groupsStudentScreen';
   static const String groupDetailStudentScreen = 'groupDetailStudentScreen';
   // common
-  static const String aboutCommonScreen = 'aboutCommonScreen';
+  static const String aboutScreen = 'aboutScreen';
   static const String settingCommonScreen = 'settingCommonScreen';
 
   // these routes i am not using any more

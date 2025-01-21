@@ -8,7 +8,7 @@ import '../model/books/books_model.dart';
 import '../model/groups/groups_model.dart';
 import '../model/posts/posts_model.dart';
 import '../providers/auth_provider.dart';
-import '../screen/common/about/about_common_screen.dart';
+import '../screen/about/about_shadananda_screen.dart';
 import '../screen/common/auth/forgot_password_screen.dart';
 import '../screen/common/auth/login_auth_common_screen.dart';
 import '../screen/common/library/offline_libaray_common_screen.dart';
@@ -67,8 +67,8 @@ class AppRouters {
 
       GoRoute(
         path: "/about",
-        name: AppUrls.aboutCommonScreen,
-        builder: (context, state) => const AboutCommonScreen(),
+        name: AppUrls.aboutScreen,
+        builder: (context, state) => const AboutShadanandaScreen(),
       ),
 
       GoRoute(
