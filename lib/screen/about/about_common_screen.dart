@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 import 'package:learnza/locator/injector.dart' as di;
-import '../../../app_config.dart';
-import '../../../utils/theme.dart';
+import 'package:shadcn_ui/shadcn_ui.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+import '../../app_config.dart';
+import '../../utils/theme.dart';
 
 class AboutCommonScreen extends StatelessWidget {
   const AboutCommonScreen({super.key});
@@ -37,7 +37,7 @@ class AboutCommonScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        localizations?.aboutCardTitle ?? "About Lernza",
+                        localizations?.aboutCardTitle ?? "About Shadanda",
                         style: ShadTheme.of(context).textTheme.h4.copyWith(
                               color: primaryColor,
                               fontWeight: FontWeight.bold,

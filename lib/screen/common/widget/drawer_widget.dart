@@ -158,7 +158,7 @@ class DrawerWidget extends StatelessWidget {
                     style: ShadTheme.of(context).textTheme.table,
                   ),
                   onTap: () {
-                    context.pushNamed(AppUrls.aboutCommonScreen);
+                    context.pushNamed(AppUrls.aboutScreen);
                   },
                 ),
                 ListTile(

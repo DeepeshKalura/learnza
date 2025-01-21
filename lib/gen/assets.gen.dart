@@ -54,6 +54,14 @@ class $AssetsIconsGen {
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
+  /// File path: assets/images/ig_campus_image.png
+  AssetGenImage get igCampusImage =>
+      const AssetGenImage('assets/images/ig_campus_image.png');
+
+  /// File path: assets/images/ig_nagendra_basnet.png
+  AssetGenImage get igNagendraBasnet =>
+      const AssetGenImage('assets/images/ig_nagendra_basnet.png');
+
   /// File path: assets/images/ig_notebook_image.png
   AssetGenImage get igNotebookImage =>
       const AssetGenImage('assets/images/ig_notebook_image.png');
@@ -62,8 +70,18 @@ class $AssetsImagesGen {
   AssetGenImage get igShadanda =>
       const AssetGenImage('assets/images/ig_shadanda.png');
 
+  /// File path: assets/images/ig_student_council.png
+  AssetGenImage get igStudentCouncil =>
+      const AssetGenImage('assets/images/ig_student_council.png');
+
   /// List of all assets
-  List<AssetGenImage> get values => [igNotebookImage, igShadanda];
+  List<AssetGenImage> get values => [
+        igCampusImage,
+        igNagendraBasnet,
+        igNotebookImage,
+        igShadanda,
+        igStudentCouncil
+      ];
 }
 
 class $AssetsLogoGen {
