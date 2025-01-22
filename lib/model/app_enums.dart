@@ -29,3 +29,5 @@ enum CommentStatus {
   deleted,
   reported,
 }
+
+enum GroupRole { admin, member }

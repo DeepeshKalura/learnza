@@ -1,5 +1,3 @@
-import 'dart:developer' as developer;
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -9,6 +7,8 @@ import '../../model/groups/groups_model.dart';
 import '../../model/message/messages_model.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/message_provider.dart';
+import '../../router/app_urls.dart';
+import '../../utils/resource_util.dart';
 import 'widget/input_message_widget.dart';
 import 'widget/message_bubble_group_widget.dart';
 
@@ -53,16 +53,17 @@ class GroupsMessageScreenState extends State<GroupsMessageScreen> {
       ),
       title: GestureDetector(
         onTap: () {
-          developer.log(
-              "You didn't implement the editing and viewing of the group details");
+          context.pushNamed(
+            AppUrls.groupDetailStudentScreen,
+            extra: {'group': widget.groups},
+          );
         },
         child: Hero(
           tag: widget.groups.id,
           child: Row(
             children: [
               ShadAvatar(
-                widget.groups.imageUrl ??
-                    "https://www.pngitem.com/pimgs/m/522-5220445_anonymous-profile-grey-person-sticker-glitch-empty-profile.png",
+                widget.groups.imageUrl ?? ResourceUtil.defaultProfileImage,
                 placeholder: Text(
                   widget.groups.name.substring(0, 2),
                 ),
@@ -91,16 +92,16 @@ class GroupsMessageScreenState extends State<GroupsMessageScreen> {
           ),
         ),
       ),
-      actions: [
-        IconButton(
-          icon: const Icon(LucideIcons.search),
-          tooltip: 'Search Chat Room',
-          onPressed: () {
-            developer.log(
-              "You didn't implement the editing and viewing of the group details",
-            );
-          },
-        ),
+      actions: const [
+        // IconButton(
+        //   icon: const Icon(LucideIcons.search),
+        //   tooltip: 'Search Chat Room',
+        //   onPressed: () {
+        //     developer.log(
+        //       "You didn't implement the editing and viewing of the group details",
+        //     );
+        //   },
+        // ),
       ],
     );
   }

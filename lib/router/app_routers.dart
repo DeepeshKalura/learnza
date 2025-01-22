@@ -14,8 +14,9 @@ import '../screen/common/auth/login_auth_common_screen.dart';
 import '../screen/common/library/offline_libaray_common_screen.dart';
 import '../screen/common/setting/setting_common_screen.dart';
 import '../screen/common/splash/splash_screen.dart';
-import '../screen/groups/groups_detail_screen.dart';
+import '../screen/groups/groups_message_screen.dart';
 import '../screen/groups/groups_student_screen.dart';
+import '../screen/groups/widget/groups_details_screen.dart';
 import '../screen/library/anna_web_view_screen.dart';
 import '../screen/library/library_student_screen.dart';
 import '../screen/library/read_book_read_screen.dart';
@@ -161,11 +162,21 @@ class AppRouters {
           ),
           GoRoute(
             path: '/groups-message',
-            name: AppUrls.groupDetailStudentScreen,
+            name: AppUrls.groupMessageStudentScreen,
             builder: (context, state) {
               var args = state.extra! as Map<String, GroupsModel>;
               return GroupsMessageScreen(
                 groups: args['group'] as GroupsModel,
+              );
+            },
+          ),
+          GoRoute(
+            path: "/groups-detail",
+            name: AppUrls.groupDetailStudentScreen,
+            builder: (context, state) {
+              var args = state.extra! as Map<String, GroupsModel>;
+              return GroupDetailsScreen(
+                group: args['group'] as GroupsModel,
               );
             },
           ),

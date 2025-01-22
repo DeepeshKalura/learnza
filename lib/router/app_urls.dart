@@ -19,6 +19,8 @@ class AppUrls {
   // students --> groups
   static const String groupsStudentScreen = 'groupsStudentScreen';
   static const String groupDetailStudentScreen = 'groupDetailStudentScreen';
+  static const String groupMessageStudentScreen = 'groupMessageStudentScreen';
+
   // common
   static const String aboutScreen = 'aboutScreen';
   static const String settingCommonScreen = 'settingCommonScreen';
