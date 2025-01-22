@@ -32,6 +32,7 @@ class _BookDownloadScreenState extends State<BookDownloadScreen> {
 
   Future<void> _checkIfBookDownloaded() async {
     final provider = context.read<DownloadBooksLibaryStateProvider>();
+    print('${widget.booksModel.id}.pdf');
     await provider.hasBookBeenDownloaded('${widget.booksModel.id}.pdf');
   }
 
