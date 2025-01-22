@@ -13,10 +13,9 @@ _$GroupModelImpl _$$GroupModelImplFromJson(Map<String, dynamic> json) =>
       description: json['description'] as String?,
       imageUrl: json['imageUrl'] as String?,
       coverImageUrl: json['coverImageUrl'] as String?,
-      adminIds:
-          (json['adminIds'] as List<dynamic>).map((e) => e as String).toList(),
-      memberIds:
-          (json['memberIds'] as List<dynamic>).map((e) => e as String).toList(),
+      members: (json['members'] as List<dynamic>)
+          .map((e) => GroupMember.fromJson(e as Map<String, dynamic>))
+          .toList(),
       createdAt: DateTime.parse(json['createdAt'] as String),
       updatedAt: DateTime.parse(json['updatedAt'] as String),
       privacy: $enumDecodeNullable(_$GroupPrivacyEnumMap, json['privacy']) ??
@@ -34,8 +33,7 @@ Map<String, dynamic> _$$GroupModelImplToJson(_$GroupModelImpl instance) =>
       'description': instance.description,
       'imageUrl': instance.imageUrl,
       'coverImageUrl': instance.coverImageUrl,
-      'adminIds': instance.adminIds,
-      'memberIds': instance.memberIds,
+      'members': instance.members,
       'createdAt': instance.createdAt.toIso8601String(),
       'updatedAt': instance.updatedAt.toIso8601String(),
       'privacy': _$GroupPrivacyEnumMap[instance.privacy]!,
@@ -46,4 +44,21 @@ const _$GroupPrivacyEnumMap = {
   GroupPrivacy.public: 'public',
   GroupPrivacy.private: 'private',
   GroupPrivacy.restricted: 'restricted',
+};
+
+_$GroupMemberImpl _$$GroupMemberImplFromJson(Map<String, dynamic> json) =>
+    _$GroupMemberImpl(
+      id: json['id'] as String,
+      role: $enumDecode(_$GroupRoleEnumMap, json['role']),
+    );
+
+Map<String, dynamic> _$$GroupMemberImplToJson(_$GroupMemberImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'role': _$GroupRoleEnumMap[instance.role]!,
+    };
+
+const _$GroupRoleEnumMap = {
+  GroupRole.admin: 'admin',
+  GroupRole.member: 'member',
 };

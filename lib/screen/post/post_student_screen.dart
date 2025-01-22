@@ -191,7 +191,7 @@ class _PostStudentScreenState extends State<PostStudentScreen> {
                 StreamBuilder<Map<PostsModel, UsersModel>>(
                   stream: context
                       .read<PostProvider>()
-                      .getPostsAndUsersWithPagination(20),
+                      .getPostsAndUsersWithPagination(15),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Center(
