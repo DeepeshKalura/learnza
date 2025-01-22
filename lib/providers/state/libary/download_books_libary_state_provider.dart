@@ -1,3 +1,4 @@
+import 'dart:developer' as developer;
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -5,19 +6,19 @@ import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '../../../model/books/books_model.dart';
+import '../../../service/local_database_service.dart';
 
 enum DownloadStatus { idle, downloading, completed, failed }
 
 class DownloadBooksLibaryStateProvider extends ChangeNotifier {
-  // State variables
   double _downloadProgress = 0.0;
   bool _isDownloading = false;
   DownloadStatus _status = DownloadStatus.idle;
   String _errorMessage = '';
   CancelToken? _cancelToken;
   final Dio _dio = Dio();
-
   // Getters
+
   double get downloadProgress => _downloadProgress;
   bool get isDownloading => _isDownloading;
   DownloadStatus get status => _status;
@@ -33,29 +34,45 @@ class DownloadBooksLibaryStateProvider extends ChangeNotifier {
   }
 
   // Get file path
-  Future<String> _getFilePath(String id) async {
+  Future<String> _getFilePath(String filename) async {
     try {
       final directory = await getApplicationDocumentsDirectory();
-      return '${directory.path}/$id';
+      return '${directory.path}/$filename';
     } catch (e) {
       throw Exception('Failed to get file path: ${e.toString()}');
     }
   }
 
   // Check if book exists locally
-  Future<bool> hasBookBeenDownloaded(String filename) async {
+  Future<void> hasBookBeenDownloaded(String filename) async {
     try {
-      final localPath = await _getFilePath(filename);
-      final file = File(localPath);
-      return await file.exists();
+      final dbService = LocalDatabaseService.instance;
+      final bookId = filename.replaceAll('.pdf', '');
+
+      try {
+        await dbService.getBookById(bookId);
+        final localPath = await _getFilePath(filename);
+        final file = File(localPath);
+
+        if (await file.exists()) {
+          _status = DownloadStatus.completed;
+        } else {
+          _status = DownloadStatus.idle;
+        }
+      } catch (e) {
+        _status = DownloadStatus.idle;
+      }
+
+      notifyListeners();
     } catch (e) {
       _errorMessage = 'Error checking file existence: ${e.toString()}';
+      _status = DownloadStatus.idle;
       notifyListeners();
-      return false;
     }
   }
 
   // Cancel ongoing download
+
   void cancelDownload() {
     if (_cancelToken != null && !_cancelToken!.isCancelled) {
       _cancelToken?.cancel('Download cancelled by user');
@@ -71,7 +88,6 @@ class DownloadBooksLibaryStateProvider extends ChangeNotifier {
     if (_isDownloading) return;
 
     try {
-      // Initialize download state
       _isDownloading = true;
       _status = DownloadStatus.downloading;
       _downloadProgress = 0.0;
@@ -79,77 +95,94 @@ class DownloadBooksLibaryStateProvider extends ChangeNotifier {
       _cancelToken = CancelToken();
       notifyListeners();
 
-      // Get file paths
       final filePath = await _getFilePath('${booksModel.id}.pdf');
       final picturePath = await _getFilePath('${booksModel.id}.jpg');
 
-      // Prepare downloads
-      List<Future<void>> downloads = [];
+      // Download PDF
+      await _dio.download(
+        bookUrl,
+        filePath,
+        cancelToken: _cancelToken,
+        onReceiveProgress: (received, total) {
+          if (total != -1) {
+            _downloadProgress = (received / total) * 0.8; // 80% for PDF
+            notifyListeners();
+          }
+        },
+      );
 
-      // Add main book download
-      downloads.add(
-        _dio.download(
-          bookUrl,
-          filePath,
+      print(booksModel.thumbnail);
+      // Download thumbnail if available
+      if (booksModel.thumbnail?.isNotEmpty ?? false) {
+        await _dio.download(
+          booksModel.thumbnail!,
+          picturePath,
           cancelToken: _cancelToken,
           onReceiveProgress: (received, total) {
             if (total != -1) {
-              _downloadProgress = received / total - 0.001;
+              _downloadProgress = 0.8 + (received / total) * 0.2;
               notifyListeners();
             }
           },
-        ),
-      );
-
-      // Add thumbnail download if available
-      if (booksModel.thumbnail != null && booksModel.thumbnail!.isNotEmpty) {
-        downloads.add(
-          _dio.download(
-            booksModel.thumbnail!,
-            picturePath,
-            cancelToken: _cancelToken,
-          ),
         );
       }
 
-      // Execute downloads
-      await Future.wait(downloads);
-
-      // Update book model with local paths
       final updatedBookModel = booksModel.copyWith(
         bookUrl: filePath,
-        thumbnail: picturePath,
+        thumbnail:
+            booksModel.thumbnail?.isNotEmpty ?? false ? picturePath : null,
         updatedAt: DateTime.now(),
       );
 
-      // Save to local database
       await _saveBookToLocalStorage(updatedBookModel);
 
-      // Update state on success
       _status = DownloadStatus.completed;
       _isDownloading = false;
       _downloadProgress = 1.0;
       notifyListeners();
     } on DioException catch (e) {
       _handleError('Download failed: ${e.message}');
+      _cleanupFailedDownload(booksModel.id);
     } catch (e) {
       _handleError('Error during download: ${e.toString()}');
+      _cleanupFailedDownload(booksModel.id);
     }
+  }
+
+  Future<void> _cleanupFailedDownload(String bookId) async {
+    try {
+      final pdfPath = await _getFilePath('$bookId.pdf');
+      final imagePath = await _getFilePath('$bookId.jpg');
+
+      final pdfFile = File(pdfPath);
+      final imageFile = File(imagePath);
+
+      if (await pdfFile.exists()) await pdfFile.delete();
+      if (await imageFile.exists()) await imageFile.delete();
+    } catch (e) {
+      developer.log('Error cleaning up failed download: $e');
+    }
+  }
+
+  void _handleError(String message) {
+    _status = DownloadStatus.failed;
+    _isDownloading = false;
+    _errorMessage = message;
+    notifyListeners();
   }
 
   // Save book to local storage
   Future<void> _saveBookToLocalStorage(BooksModel book) async {
     try {
-      // Implement your local storage logic here
-      // For example:
-      // await LocalDatabaseService.instance.insert(book);
+      print(book);
+      await LocalDatabaseService.instance.insert(book);
     } catch (e) {
       throw Exception('Failed to save book to local storage: ${e.toString()}');
     }
   }
 
   // Handle errors
-  void _handleError(String message) {
+  void handleError(String message) {
     _status = DownloadStatus.failed;
     _isDownloading = false;
     _errorMessage = message;

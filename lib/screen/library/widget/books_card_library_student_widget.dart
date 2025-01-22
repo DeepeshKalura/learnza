@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:animations/animations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -45,6 +47,48 @@ class BooksCardLibraryStudentWidgetState
     );
   }
 
+  Widget _buildPlaceholder() {
+    return Container(
+      width: 150,
+      height: 250,
+      color:
+          widget.booksModel.founded ? Colors.grey.shade200 : Colors.red.shade50,
+      child: Icon(
+        Icons.book_outlined,
+        size: 50,
+        color: widget.booksModel.founded
+            ? Colors.grey.shade500
+            : Colors.red.shade300,
+      ),
+    );
+  }
+
+  Widget _buildImage(String? imagePath) {
+    if (imagePath == null) {
+      return _buildPlaceholder();
+    }
+
+    if (imagePath.startsWith('http')) {
+      return CachedNetworkImage(
+        imageUrl: imagePath,
+        width: 150,
+        height: 250,
+        fit: BoxFit.cover,
+        placeholder: (context, url) => _buildPlaceholder(),
+        errorWidget: (context, url, error) => _buildPlaceholder(),
+      );
+    }
+
+    final file = File(imagePath);
+    return Image.file(
+      file,
+      width: 150,
+      height: 250,
+      fit: BoxFit.cover,
+      errorBuilder: (context, error, stackTrace) => _buildPlaceholder(),
+    );
+  }
+
   Widget _showNotAvailableDialog() {
     return ShadDialog(
       title: const Text('Book Not Available'),
@@ -70,37 +114,7 @@ class BooksCardLibraryStudentWidgetState
             tag: 'book_cover_${widget.booksModel.id}',
             child: ClipRRect(
               borderRadius: BorderRadius.circular(12),
-              child: CachedNetworkImage(
-                imageUrl: widget.booksModel.thumbnail ??
-                    "https://covers.openlibrary.org/b/id/14825735-L.jpg",
-                width: 150,
-                height: 250,
-                fit: BoxFit.cover,
-                placeholder: (context, url) => Container(
-                  color: widget.booksModel.founded
-                      ? Colors.grey.shade200
-                      : Colors.red.shade50,
-                  child: Center(
-                    child: CircularProgressIndicator(
-                      color: widget.booksModel.founded
-                          ? Colors.blue.shade200
-                          : Colors.red.shade200,
-                    ),
-                  ),
-                ),
-                errorWidget: (context, url, error) => Container(
-                  color: widget.booksModel.founded
-                      ? Colors.grey.shade200
-                      : Colors.red.shade50,
-                  child: Icon(
-                    Icons.book_outlined,
-                    size: 50,
-                    color: widget.booksModel.founded
-                        ? Colors.grey.shade500
-                        : Colors.red.shade300,
-                  ),
-                ),
-              ),
+              child: _buildImage(widget.booksModel.thumbnail),
             ),
           ),
           const SizedBox(width: 16),
@@ -167,12 +181,7 @@ class BooksCardLibraryStudentWidgetState
             flexibleSpace: FlexibleSpaceBar(
               background: Hero(
                 tag: 'book_cover_${widget.booksModel.id}',
-                child: CachedNetworkImage(
-                  imageUrl: widget.booksModel.thumbnail ??
-                      "https://covers.openlibrary.org/b/id/14825735-L.jpg",
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                ),
+                child: _buildImage(widget.booksModel.thumbnail),
               ),
             ),
           ),
