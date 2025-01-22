@@ -11,7 +11,7 @@ class GroupsStateProvider extends ChangeNotifier {
   List<GroupsModel> groups = [];
   var isLoading = false;
   XFile? groupCoverImage;
-  XFile? groupImage;
+  XFile? groupAvatarImage;
 
   Future<void> pickGroupCoverImage() async {
     isLoading = true;
@@ -20,7 +20,7 @@ class GroupsStateProvider extends ChangeNotifier {
       final picker = ImagePicker();
       final pickedFile = await picker.pickImage(source: ImageSource.gallery);
       if (pickedFile != null) {
-        groupImage = pickedFile;
+        groupCoverImage = pickedFile;
       }
     } catch (e, s) {
       developer.log('Error picking group cover image', error: e, stackTrace: s);
@@ -30,13 +30,30 @@ class GroupsStateProvider extends ChangeNotifier {
     }
   }
 
-  void removeImage() {
-    groupCoverImage = null;
+  Future<void> pickGroupAvatarImage() async {
+    isLoading = true;
+    notifyListeners();
+    try {
+      final picker = ImagePicker();
+      final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+      if (pickedFile != null) {
+        groupAvatarImage = pickedFile;
+      }
+    } catch (e, s) {
+      developer.log('Error picking group cover image', error: e, stackTrace: s);
+    } finally {
+      isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  void removeAvatarImage() {
+    groupAvatarImage = null;
     notifyListeners();
   }
 
-  void removeGroupImage() {
-    groupImage = null;
+  void removeCoverImage() {
+    groupCoverImage = null;
     notifyListeners();
   }
 
@@ -56,20 +73,27 @@ class GroupsStateProvider extends ChangeNotifier {
     notifyListeners();
     try {
       await di.injector.get<GroupsProvider>().createGroups(groupsModel: group);
+      await getTheGroup();
     } catch (e, s) {
       developer.log(e.toString(), error: e, stackTrace: s);
     }
     notifyListeners();
   }
 
-  Future<void> updateGroup(GroupsModel group) async {
+  Future<String> uploadGroupImage(XFile imageFile, String groupId) async {
     isLoading = true;
     notifyListeners();
     try {
-      await di.injector.get<GroupsProvider>().updateGroups(groupsModel: group);
-    } catch (e, s) {
-      developer.log(e.toString(), error: e, stackTrace: s);
+      return await di.injector.get<GroupsProvider>().uploadGroupImage(
+            imageFile,
+            groupId,
+          );
+    } catch (e) {
+      developer.log('Error uploading group image', error: e);
+      rethrow;
+    } finally {
+      isLoading = false;
+      notifyListeners();
     }
-    notifyListeners();
   }
 }

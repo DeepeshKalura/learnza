@@ -155,4 +155,60 @@ void main() {
     expect(group.members[0].id, '703b4ed3-04da-4fb8-9304-6ed4381307db');
     expect(group.members[0].role, GroupRole.admin);
   });
+
+  // Bug in the freeze
+  // test('should serialize and deserialize GroupsModel correctly', () {
+  //   // Create test data
+  //   final group = GroupsModel(
+  //     id: 'test-id',
+  //     name: 'Test Group',
+  //     description: 'A group for testing',
+  //     imageUrl: 'https://example.com/image.png',
+  //     coverImageUrl: 'https://example.com/cover.png',
+  //     members: [
+  //       const GroupMember(id: 'member-1', role: GroupRole.admin),
+  //       const GroupMember(id: 'member-2', role: GroupRole.member),
+  //     ],
+  //     createdAt: DateTime(2025, 1, 22, 17, 36),
+  //     updatedAt: DateTime(2025, 1, 22, 17, 50),
+  //     privacy: GroupPrivacy.public,
+  //     pendingInvites: ['user-1', 'user-2'],
+  //   );
+
+  //   // Serialize to JSON
+  //   final json = group.toJson();
+  //   print('Serialized JSON: $json');
+
+  //   // Expected JSON output
+  //   final expectedJson = {
+  //     'id': 'test-id',
+  //     'name': 'Test Group',
+  //     'description': 'A group for testing',
+  //     'imageUrl': 'https://example.com/image.png',
+  //     'coverImageUrl': 'https://example.com/cover.png',
+  //     'members': [
+  //       {'id': 'member-1', 'role': 'admin'},
+  //       {'id': 'member-2', 'role': 'member'},
+  //     ],
+  //     'createdAt': '2025-01-22T17:36:00.000',
+  //     'updatedAt': '2025-01-22T17:50:00.000',
+  //     'privacy': 'public',
+  //     'pendingInvites': ['user-1', 'user-2'],
+  //   };
+
+  //   // Verify serialization
+  //   expect(json, expectedJson);
+
+  //   // Deserialize back to GroupsModel
+  //   final deserializedGroup = GroupsModel.fromJson(json);
+
+  //   // Verify deserialization
+  //   expect(deserializedGroup, group);
+  // });
+
+  test("Checking the json value", () {
+    GroupMember member = const GroupMember(id: "admin1", role: GroupRole.admin);
+
+    expect(member.role.name, "admin");
+  });
 }

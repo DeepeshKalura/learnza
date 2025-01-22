@@ -12,6 +12,7 @@ import '../../model/groups/groups_model.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/state/groups/groups_state_provider.dart';
 import '../../router/app_urls.dart';
+import '../../utils/theme.dart';
 import '../common/widget/drawer_widget.dart';
 import 'error/groups_error_widget.dart';
 
@@ -62,31 +63,48 @@ class _GroupsStudentScreenState extends State<GroupsStudentScreen> {
 
     final currentUser = context.read<AuthProvider>().user;
     if (currentUser == null) {
-      _showErrorSnackBar('Please log in to create a group');
+      _showErrorSnackBar(context, 'Please log in to create a group');
       return;
     }
 
     try {
-      final newGroup = GroupsModel(
-        id: const Uuid().v4(),
-        name: _groupNameController.text.trim(),
-        description: _groupDescriptionController.text.trim(),
-        members: [
-          GroupMember(id: currentUser.uid, role: GroupRole.admin),
-        ],
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now(),
-        privacy: _selectedPrivacy,
-      );
+      final String groupId = const Uuid().v4();
 
-      await _groupsProvider.createGroup(newGroup);
+      if (_groupsProvider.groupAvatarImage != null) {
+        String imageUrl = await _groupsProvider.uploadGroupImage(
+            _groupsProvider.groupAvatarImage!, groupId);
+
+        final newGroup = GroupsModel(
+          id: groupId,
+          name: _groupNameController.text.trim(),
+          description: _groupDescriptionController.text.trim(),
+          members: [
+            GroupMember(
+              id: currentUser.uid,
+              role: GroupRole.admin,
+            ),
+          ],
+          createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
+          privacy: _selectedPrivacy,
+          imageUrl: imageUrl,
+        );
+
+        await _groupsProvider.createGroup(newGroup);
+      }
       _resetForm();
       if (mounted) {
         context.pop();
-        _showSuccessSnackBar('Group "${newGroup.name}" created successfully');
+        _showSuccessSnackBar(
+          context,
+          "Group ${_groupNameController.text} created successfully",
+        );
       }
     } catch (e) {
-      _showErrorSnackBar('Failed to create group: ${e.toString()}');
+      _showErrorSnackBar(
+        context,
+        'Failed to create group: ${e.toString()}',
+      );
     }
   }
 
@@ -96,7 +114,7 @@ class _GroupsStudentScreenState extends State<GroupsStudentScreen> {
     _selectedPrivacy = GroupPrivacy.private;
     _groupsProvider
       ..groupCoverImage = null
-      ..groupImage = null;
+      ..groupAvatarImage = null;
   }
 
   void _showCreateGroupDialog() {
@@ -125,7 +143,10 @@ class _GroupsStudentScreenState extends State<GroupsStudentScreen> {
         ],
         radius: BorderRadius.circular(10),
         actionsAxis: Axis.horizontal,
-        title: const Text('Create Group', textAlign: TextAlign.left),
+        title: const Text(
+          'Create Group',
+          textAlign: TextAlign.left,
+        ),
         actions: _buildDialogActions(),
         child: _buildDialogContent(),
       ),
@@ -140,18 +161,26 @@ class _GroupsStudentScreenState extends State<GroupsStudentScreen> {
           _resetForm();
           context.pop();
         },
-        child: const Text('Cancel',
-            style: TextStyle(color: Colors.black, fontSize: 15)),
+        child: Text(
+          'Cancel',
+          style: ShadTheme.of(context).textTheme.p,
+        ),
       ),
       Consumer<GroupsStateProvider>(
         builder: (context, provider, _) => ShadButton(
           width: 100,
           onPressed: provider.isLoading ? null : () => _createGroup(),
           child: provider.isLoading
-              ? const Center(
-                  child: CircularProgressIndicator(color: Colors.white))
-              : const Text('Create',
-                  style: TextStyle(color: Colors.white, fontSize: 15)),
+              ? Center(
+                  child: CircularProgressIndicator(
+                      color: ShadTheme.of(context).colorScheme.background),
+                )
+              : Text(
+                  'Create',
+                  style: ShadTheme.of(context).textTheme.p.copyWith(
+                        color: ShadTheme.of(context).colorScheme.background,
+                      ),
+                ),
         ),
       ),
     ];
@@ -171,7 +200,7 @@ class _GroupsStudentScreenState extends State<GroupsStudentScreen> {
             const SizedBox(height: 10),
             _buildPrivacySection(),
             const SizedBox(height: 10),
-            _buildCoverImageSection(),
+            // _buildCoverImageSection(),
           ],
         ),
       ),
@@ -397,15 +426,22 @@ class _GroupsStudentScreenState extends State<GroupsStudentScreen> {
     );
   }
 
-  void _showErrorSnackBar(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message), backgroundColor: Colors.red),
+  void _showErrorSnackBar(BuildContext context, String message) {
+    ShadToaster.of(context).show(
+      ShadToast.destructive(
+        title: const Text('Uh oh! Something went wrong'),
+        description: Text(message),
+      ),
     );
   }
 
-  void _showSuccessSnackBar(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message), backgroundColor: Colors.green),
+  void _showSuccessSnackBar(BuildContext context, String message) {
+    ShadToaster.of(context).show(
+      ShadToast(
+        title: const Text('Groups Successfully Created'),
+        description: Text(message),
+        backgroundColor: successColor,
+      ),
     );
   }
 
@@ -415,15 +451,15 @@ class _GroupsStudentScreenState extends State<GroupsStudentScreen> {
       children: [
         Consumer<GroupsStateProvider>(
           builder: (context, groupsProvider, _) {
-            if (groupsProvider.groupImage != null) {
+            if (groupsProvider.groupAvatarImage != null) {
               return GestureDetector(
-                onTap: groupsProvider.removeGroupImage,
+                onTap: groupsProvider.removeAvatarImage,
                 child: Stack(
                   children: [
                     CircleAvatar(
                       maxRadius: 28,
                       backgroundImage: FileImage(
-                        File(groupsProvider.groupImage!.path),
+                        File(groupsProvider.groupAvatarImage!.path),
                       ),
                     ),
                     Positioned(
@@ -436,7 +472,7 @@ class _GroupsStudentScreenState extends State<GroupsStudentScreen> {
                           shape: BoxShape.circle,
                         ),
                         child: GestureDetector(
-                          onTap: groupsProvider.removeGroupImage,
+                          onTap: groupsProvider.removeAvatarImage,
                           child: const Icon(
                             Icons.close,
                             size: 20,
@@ -450,7 +486,7 @@ class _GroupsStudentScreenState extends State<GroupsStudentScreen> {
               );
             }
             return GestureDetector(
-              onTap: groupsProvider.pickGroupCoverImage,
+              onTap: groupsProvider.pickGroupAvatarImage,
               child: const CircleAvatar(
                 maxRadius: 28,
                 child: Icon(
@@ -624,7 +660,7 @@ class _GroupsStudentScreenState extends State<GroupsStudentScreen> {
                         top: 8,
                         right: 8,
                         child: GestureDetector(
-                          onTap: groupsProvider.removeImage,
+                          onTap: groupsProvider.removeCoverImage,
                           child: Container(
                             padding: const EdgeInsets.all(4),
                             decoration: BoxDecoration(
