@@ -53,11 +53,28 @@ class GroupsProvider {
 
   Future<void> createGroups({required GroupsModel groupsModel}) async {
     try {
+      final Map<String, dynamic> groupJson = {
+        'id': groupsModel.id,
+        'name': groupsModel.name,
+        'description': groupsModel.description,
+        'imageUrl': groupsModel.imageUrl,
+        'coverImageUrl': groupsModel.coverImageUrl,
+        'members': groupsModel.members
+            .map((member) => {
+                  'id': member.id,
+                  'role': member.role.name, // Custom serialization for enum
+                })
+            .toList(),
+        'createdAt': groupsModel.createdAt.toIso8601String(),
+        'updatedAt': groupsModel.updatedAt.toIso8601String(),
+        'privacy': groupsModel.privacy.name, // Custom serialization for enum
+        'pendingInvites': groupsModel.pendingInvites,
+      };
       await firebaseService.database
           .collection("groups")
           .doc(groupsModel.id)
           .set(
-            groupsModel.toJson(),
+            groupJson,
           );
     } catch (e, s) {
       developer.log('Error creating groups', error: e, stackTrace: s);
@@ -86,17 +103,13 @@ class GroupsProvider {
     }
   }
 
-  Future<void> uploadGroupImage(XFile imageFile, String groupId) async {
+  Future<String> uploadGroupImage(XFile imageFile, String groupId) async {
     try {
       var storageRef = firebaseService.storage.ref().child(
           'group_images/$groupId/${DateTime.now().millisecondsSinceEpoch}');
 
       await storageRef.putFile(File(imageFile.path));
-      final updateAvatorUrl = await storageRef.getDownloadURL();
-
-      await firebaseService.database.collection('groups').doc(groupId).update({
-        "coverImageUrl": updateAvatorUrl,
-      });
+      return await storageRef.getDownloadURL();
     } catch (e) {
       developer.log('Error uploading group image', error: e);
       rethrow;

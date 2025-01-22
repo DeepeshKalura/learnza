@@ -61,4 +61,5 @@ Map<String, dynamic> _$$GroupMemberImplToJson(_$GroupMemberImpl instance) =>
 const _$GroupRoleEnumMap = {
   GroupRole.admin: 'admin',
   GroupRole.member: 'member',
+  GroupRole.guest: 'guest',
 };

@@ -30,4 +30,4 @@ enum CommentStatus {
   reported,
 }
 
-enum GroupRole { admin, member }
+enum GroupRole { admin, member, guest }
