@@ -33,6 +33,8 @@ _$BooksModelImpl _$$BooksModelImplFromJson(Map<String, dynamic> json) =>
           : DateTime.parse(json['publishedAt'] as String),
       founded: json['founded'] as bool,
       editor: json['editor'] as String?,
+      courseId: json['courseId'] as String?,
+      year: (json['year'] as num?)?.toInt(),
       moreImageUrl: (json['moreImageUrl'] as List<dynamic>?)
               ?.map((e) => e as String)
               .toList() ??
@@ -58,5 +60,7 @@ Map<String, dynamic> _$$BooksModelImplToJson(_$BooksModelImpl instance) =>
       'publishedAt': instance.publishedAt?.toIso8601String(),
       'founded': instance.founded,
       'editor': instance.editor,
+      'courseId': instance.courseId,
+      'year': instance.year,
       'moreImageUrl': instance.moreImageUrl,
     };

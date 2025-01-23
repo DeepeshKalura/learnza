@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:shadcn_ui/shadcn_ui.dart';
 
-import '../../providers/course_provider.dart';
+import '../../../model/course/courses_model.dart';
+import '../../providers/state/libary/course_book_libary_state_provider.dart';
+import '../../router/app_urls.dart';
 
 class CourseBookLibraryScreen extends StatefulWidget {
   const CourseBookLibraryScreen({super.key});
@@ -11,133 +15,107 @@ class CourseBookLibraryScreen extends StatefulWidget {
       _CourseBookLibraryScreenState();
 }
 
-class _CourseBookLibraryScreenState extends State<CourseBookLibraryScreen>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<double> _scaleAnimation;
-  late Animation<double> _opacityAnimation;
-  late Animation<Offset> _slideAnimation;
-
+class _CourseBookLibraryScreenState extends State<CourseBookLibraryScreen> {
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
-      duration: const Duration(seconds: 2),
-      vsync: this,
-    )..repeat(reverse: true);
-
-    _scaleAnimation = Tween<double>(
-      begin: 0.8,
-      end: 1.0,
-    ).animate(CurvedAnimation(
-      parent: _controller,
-      curve: Curves.easeInOut,
-    ));
-
-    _opacityAnimation = Tween<double>(
-      begin: 0.6,
-      end: 1.0,
-    ).animate(CurvedAnimation(
-      parent: _controller,
-      curve: Curves.easeInOut,
-    ));
-
-    _slideAnimation = Tween<Offset>(
-      begin: const Offset(0, 0.1),
-      end: const Offset(0, 0),
-    ).animate(CurvedAnimation(
-      parent: _controller,
-      curve: Curves.easeInOut,
-    ));
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<CourseBookLibaryStateProvider>().getCourse();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    final currentUserCourse = context.read<CourseProvider>().currentUserCourse;
-
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+      body: Consumer<CourseBookLibaryStateProvider>(
+        builder: (context, provider, child) {
+          if (provider.isLoadingCourses) {
+            return const Center(child: CircularProgressIndicator());
+          }
+
+          if (provider.courses.isEmpty) {
+            return Center(
+              child: Text(
+                'No courses available',
+                style: ShadTheme.of(context).textTheme.p,
+              ),
+            );
+          }
+
+          return ListView.builder(
+            itemCount: provider.courses.length,
+            itemBuilder: (context, index) {
+              final course = provider.courses[index];
+              final isUserCourse = course.id == provider.courseId;
+
+              return _buildCourseCard(course, isUserCourse);
+            },
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildCourseCard(CoursesModel course, bool isUserCourse) {
+    return Container(
+      margin: const EdgeInsets.all(8),
+      child: ShadCard(
+        child: Stack(
           children: [
-            SlideTransition(
-              position: _slideAnimation,
-              child: ScaleTransition(
-                scale: _scaleAnimation,
-                child: FadeTransition(
-                  opacity: _opacityAnimation,
-                  child: Column(
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Icon(
-                        Icons.library_books,
-                        size: 80,
-                        color: Colors.blue,
+                      Expanded(
+                        child: Text(
+                          course.name,
+                          style: ShadTheme.of(context).textTheme.h4,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
-                      const SizedBox(height: 20),
-                      Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          SizedBox(
-                            width: 50,
-                            height: 50,
-                            child: CircularProgressIndicator(
-                              valueColor: AlwaysStoppedAnimation<Color>(
-                                Theme.of(context).primaryColor,
-                              ),
-                            ),
-                          ),
-                          const Icon(
-                            Icons.hourglass_empty,
-                            size: 24,
-                            color: Colors.blue,
-                          ),
-                        ],
-                      ),
+                      if (course.description != null)
+                        Icon(
+                          LucideIcons.info,
+                          color: ShadTheme.of(context)
+                              .colorScheme
+                              .accentForeground,
+                        ),
                     ],
                   ),
-                ),
-              ),
-            ),
-            const SizedBox(height: 30),
-            AnimatedBuilder(
-              animation: _controller,
-              builder: (context, child) {
-                return Opacity(
-                  opacity: _opacityAnimation.value,
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Column(
-                      children: [
-                        Text(
-                          'Coming Soon!',
-                          style: Theme.of(context)
-                              .textTheme
-                              .headlineSmall
-                              ?.copyWith(
-                                color: Colors.blue,
-                                fontWeight: FontWeight.bold,
-                              ),
-                        ),
-                        const SizedBox(height: 10),
-                        Text(
-                          'Books for ${currentUserCourse?.name ?? "your"} course are being prepared',
-                          textAlign: TextAlign.center,
-                          style:
-                              Theme.of(context).textTheme.titleMedium?.copyWith(
-                                    color: Colors.grey[600],
-                                  ),
-                        ),
-                      ],
+                  const SizedBox(height: 10),
+                  if (course.description != null)
+                    Text(
+                      course.description!,
+                      style: ShadTheme.of(context).textTheme.p,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  const SizedBox(height: 15),
+                  Wrap(
+                    spacing: 10,
+                    runSpacing: 10,
+                    children: List.generate(
+                      course.year,
+                      (yearIndex) => ShadButton(
+                        child: Text('Year ${yearIndex + 1}'),
+                        onPressed: () {
+                          context.pushNamed(
+                            AppUrls.courseBookListScreen,
+                            extra: {
+                              'course': course,
+                              'year': yearIndex + 1,
+                            },
+                          );
+                        },
+                      ),
                     ),
                   ),
-                );
-              },
+                ],
+              ),
             ),
           ],
         ),
