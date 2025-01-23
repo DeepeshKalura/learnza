@@ -23,6 +23,8 @@ class BooksModel with _$BooksModel {
     DateTime? publishedAt,
     required bool founded,
     String? editor,
+    String? courseId,
+    int? year,
     @Default([]) List<String> moreImageUrl,
   }) = _BooksModel;
 

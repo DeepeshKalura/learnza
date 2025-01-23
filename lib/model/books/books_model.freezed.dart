@@ -40,6 +40,8 @@ mixin _$BooksModel {
   DateTime? get publishedAt => throw _privateConstructorUsedError;
   bool get founded => throw _privateConstructorUsedError;
   String? get editor => throw _privateConstructorUsedError;
+  String? get courseId => throw _privateConstructorUsedError;
+  int? get year => throw _privateConstructorUsedError;
   List<String> get moreImageUrl => throw _privateConstructorUsedError;
 
   /// Serializes this BooksModel to a JSON map.
@@ -76,6 +78,8 @@ abstract class $BooksModelCopyWith<$Res> {
       DateTime? publishedAt,
       bool founded,
       String? editor,
+      String? courseId,
+      int? year,
       List<String> moreImageUrl});
 }
 
@@ -111,6 +115,8 @@ class _$BooksModelCopyWithImpl<$Res, $Val extends BooksModel>
     Object? publishedAt = freezed,
     Object? founded = null,
     Object? editor = freezed,
+    Object? courseId = freezed,
+    Object? year = freezed,
     Object? moreImageUrl = null,
   }) {
     return _then(_value.copyWith(
@@ -182,6 +188,14 @@ class _$BooksModelCopyWithImpl<$Res, $Val extends BooksModel>
           ? _value.editor
           : editor // ignore: cast_nullable_to_non_nullable
               as String?,
+      courseId: freezed == courseId
+          ? _value.courseId
+          : courseId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      year: freezed == year
+          ? _value.year
+          : year // ignore: cast_nullable_to_non_nullable
+              as int?,
       moreImageUrl: null == moreImageUrl
           ? _value.moreImageUrl
           : moreImageUrl // ignore: cast_nullable_to_non_nullable
@@ -216,6 +230,8 @@ abstract class _$$BooksModelImplCopyWith<$Res>
       DateTime? publishedAt,
       bool founded,
       String? editor,
+      String? courseId,
+      int? year,
       List<String> moreImageUrl});
 }
 
@@ -249,6 +265,8 @@ class __$$BooksModelImplCopyWithImpl<$Res>
     Object? publishedAt = freezed,
     Object? founded = null,
     Object? editor = freezed,
+    Object? courseId = freezed,
+    Object? year = freezed,
     Object? moreImageUrl = null,
   }) {
     return _then(_$BooksModelImpl(
@@ -320,6 +338,14 @@ class __$$BooksModelImplCopyWithImpl<$Res>
           ? _value.editor
           : editor // ignore: cast_nullable_to_non_nullable
               as String?,
+      courseId: freezed == courseId
+          ? _value.courseId
+          : courseId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      year: freezed == year
+          ? _value.year
+          : year // ignore: cast_nullable_to_non_nullable
+              as int?,
       moreImageUrl: null == moreImageUrl
           ? _value._moreImageUrl
           : moreImageUrl // ignore: cast_nullable_to_non_nullable
@@ -349,6 +375,8 @@ class _$BooksModelImpl implements _BooksModel {
       this.publishedAt,
       required this.founded,
       this.editor,
+      this.courseId,
+      this.year,
       final List<String> moreImageUrl = const []})
       : _author = author,
         _categories = categories,
@@ -410,6 +438,10 @@ class _$BooksModelImpl implements _BooksModel {
   final bool founded;
   @override
   final String? editor;
+  @override
+  final String? courseId;
+  @override
+  final int? year;
   final List<String> _moreImageUrl;
   @override
   @JsonKey()
@@ -421,7 +453,7 @@ class _$BooksModelImpl implements _BooksModel {
 
   @override
   String toString() {
-    return 'BooksModel(id: $id, isbn: $isbn, bookTitle: $bookTitle, description: $description, code: $code, bookUrl: $bookUrl, thumbnail: $thumbnail, language: $language, author: $author, categories: $categories, publisher: $publisher, isActive: $isActive, createdAt: $createdAt, updatedAt: $updatedAt, publishedAt: $publishedAt, founded: $founded, editor: $editor, moreImageUrl: $moreImageUrl)';
+    return 'BooksModel(id: $id, isbn: $isbn, bookTitle: $bookTitle, description: $description, code: $code, bookUrl: $bookUrl, thumbnail: $thumbnail, language: $language, author: $author, categories: $categories, publisher: $publisher, isActive: $isActive, createdAt: $createdAt, updatedAt: $updatedAt, publishedAt: $publishedAt, founded: $founded, editor: $editor, courseId: $courseId, year: $year, moreImageUrl: $moreImageUrl)';
   }
 
   @override
@@ -456,32 +488,38 @@ class _$BooksModelImpl implements _BooksModel {
                 other.publishedAt == publishedAt) &&
             (identical(other.founded, founded) || other.founded == founded) &&
             (identical(other.editor, editor) || other.editor == editor) &&
+            (identical(other.courseId, courseId) ||
+                other.courseId == courseId) &&
+            (identical(other.year, year) || other.year == year) &&
             const DeepCollectionEquality()
                 .equals(other._moreImageUrl, _moreImageUrl));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      isbn,
-      bookTitle,
-      description,
-      code,
-      bookUrl,
-      thumbnail,
-      language,
-      const DeepCollectionEquality().hash(_author),
-      const DeepCollectionEquality().hash(_categories),
-      publisher,
-      isActive,
-      createdAt,
-      updatedAt,
-      publishedAt,
-      founded,
-      editor,
-      const DeepCollectionEquality().hash(_moreImageUrl));
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        id,
+        isbn,
+        bookTitle,
+        description,
+        code,
+        bookUrl,
+        thumbnail,
+        language,
+        const DeepCollectionEquality().hash(_author),
+        const DeepCollectionEquality().hash(_categories),
+        publisher,
+        isActive,
+        createdAt,
+        updatedAt,
+        publishedAt,
+        founded,
+        editor,
+        courseId,
+        year,
+        const DeepCollectionEquality().hash(_moreImageUrl)
+      ]);
 
   /// Create a copy of BooksModel
   /// with the given fields replaced by the non-null parameter values.
@@ -518,6 +556,8 @@ abstract class _BooksModel implements BooksModel {
       final DateTime? publishedAt,
       required final bool founded,
       final String? editor,
+      final String? courseId,
+      final int? year,
       final List<String> moreImageUrl}) = _$BooksModelImpl;
 
   factory _BooksModel.fromJson(Map<String, dynamic> json) =
@@ -557,6 +597,10 @@ abstract class _BooksModel implements BooksModel {
   bool get founded;
   @override
   String? get editor;
+  @override
+  String? get courseId;
+  @override
+  int? get year;
   @override
   List<String> get moreImageUrl;
 

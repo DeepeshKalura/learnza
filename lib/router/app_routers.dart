@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:learnza/locator/injector.dart' as di;
+import 'package:learnza/model/course/courses_model.dart';
 import 'package:provider/provider.dart';
 
 import '/model/app_enums.dart';
@@ -18,6 +19,7 @@ import '../screen/groups/groups_message_screen.dart';
 import '../screen/groups/groups_student_screen.dart';
 import '../screen/groups/widget/groups_details_screen.dart';
 import '../screen/library/anna_web_view_screen.dart';
+import '../screen/library/course_book_list_screen.dart';
 import '../screen/library/library_student_screen.dart';
 import '../screen/library/read_book_read_screen.dart';
 import '../screen/library/search_book_student_screen.dart';
@@ -198,6 +200,17 @@ class AppRouters {
               var args = state.extra! as Map<String, PostsModel>;
               return DetailBlogStudentScreen(
                 post: args['post']!,
+              );
+            },
+          ),
+          GoRoute(
+            path: '/course-book-list',
+            name: AppUrls.courseBookListScreen,
+            builder: (context, state) {
+              var args = state.extra! as Map<String, dynamic>;
+              return CourseBookListScreen(
+                course: args['course'] as CoursesModel,
+                year: args['year'] as int,
               );
             },
           ),
