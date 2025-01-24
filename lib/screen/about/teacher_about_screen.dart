@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
 import '../../gen/assets.gen.dart';
@@ -8,10 +9,11 @@ class TeacherAboutScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Campus Faculty',
+          localizations?.teacherScreenTitle ?? 'Campus Faculty',
           style: ShadTheme.of(context).textTheme.h3,
         ),
       ),
@@ -21,7 +23,7 @@ class TeacherAboutScreen extends StatelessWidget {
             padding: const EdgeInsets.all(16),
             sliver: SliverList(
               delegate: SliverChildListDelegate([
-                _buildCampusChiefCard(context),
+                _buildCampusChiefCard(context, localizations),
                 const SizedBox(height: 16),
               ]),
             ),
@@ -31,7 +33,8 @@ class TeacherAboutScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildCampusChiefCard(BuildContext context) {
+  Widget _buildCampusChiefCard(
+      BuildContext context, AppLocalizations? localizations) {
     return ShadCard(
       child: Row(
         children: [
@@ -52,11 +55,11 @@ class TeacherAboutScreen extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               Text(
-                'Nagendra Basnet',
+                localizations?.teacherChiefName ?? 'Nagendra Basnet',
                 style: ShadTheme.of(context).textTheme.h4,
               ),
               Text(
-                'Campus Chief',
+                localizations?.teacherChiefPosition ?? 'Campus Chief',
                 style: ShadTheme.of(context).textTheme.p,
               ),
             ],
@@ -64,7 +67,8 @@ class TeacherAboutScreen extends StatelessWidget {
           const SizedBox(width: 16),
           Expanded(
             child: Text(
-              'Mr. Nagendra Basnet serves as the Campus Chief, leading our institution with dedication and vision towards academic excellence.',
+              localizations?.teacherChiefDescription ??
+                  'Mr. Nagendra Basnet serves as the Campus Chief, leading our institution with dedication and vision towards academic excellence.',
               style: ShadTheme.of(context).textTheme.p,
               maxLines: 5,
             ),

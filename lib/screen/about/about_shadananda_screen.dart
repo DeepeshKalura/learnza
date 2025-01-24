@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
 import '../../gen/assets.gen.dart';
+import '../../utils/theme.dart';
 
 class AboutShadanandaScreen extends StatelessWidget {
   const AboutShadanandaScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+
     return Scaffold(
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
             title: Text(
-              'About Shadananda',
+              localizations.aboutShadanandaTitle,
               style: ShadTheme.of(context).textTheme.h3,
             ),
             centerTitle: false,
@@ -41,19 +45,16 @@ class AboutShadanandaScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 20),
                       _buildInfoCard(
-                        title: 'Introduction',
+                        title: localizations.aboutShadanandaIntroductionTitle,
                         content:
-                            'Shadananda Multiple Campus was established in 2067 BS in Dingla, Bhojpur, affiliated with Tribhuvan University.\n\n'
-                            'It is named after education reformer Balaguru Shadananda, who established Nepal\'s first community-run school. '
-                            'From this inspiration, we created an online library to support students and the community.\n',
+                            localizations.aboutShadanandaIntroductionContent,
                         icon: Icons.history_edu,
                         context: context,
                       ),
                       const SizedBox(height: 16),
                       _buildInfoCard(
-                        title: 'Objective',
-                        content:
-                            'The main objective is to provide quality higher education to residents of remote and northern areas of Bhojpur district, with special focus on women, Dalits, indigenous people, and marginalized groups.',
+                        title: localizations.aboutShadanandaObjectiveTitle,
+                        content: localizations.aboutShadanandaObjectiveContent,
                         icon: Icons.track_changes,
                         context: context,
                       ),
@@ -73,6 +74,8 @@ class AboutShadanandaScreen extends StatelessWidget {
   }
 
   Widget _buildFacultiesCard(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+
     return Card(
       elevation: 4,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -83,37 +86,51 @@ class AboutShadanandaScreen extends StatelessWidget {
           children: [
             ListTile(
               leading: const Icon(Icons.school, size: 32, color: Colors.blue),
-              title: Text('Academic Faculties',
+              title: Text(localizations.aboutShadanandaFacultiesTitle,
                   style: ShadTheme.of(context).textTheme.h4),
             ),
             ExpansionTile(
               title: Text(
-                'Education',
+                localizations.aboutShadanandaEducationFaculty,
                 style: ShadTheme.of(context)
                     .textTheme
                     .p
                     .copyWith(fontWeight: FontWeight.w600),
               ),
-              children: const [
-                ListTile(title: Text('• English')),
-                ListTile(title: Text('• Nepali')),
-                ListTile(title: Text('• Economics')),
-                ListTile(title: Text('• Health')),
-                ListTile(title: Text('• Population Studies')),
+              children: [
+                ListTile(
+                  title: Text(
+                      '• ${localizations.aboutShadanandaEducationSubject1}'),
+                ),
+                ListTile(
+                    title: Text(
+                        '• ${localizations.aboutShadanandaEducationSubject2}')),
+                ListTile(
+                  title: Text(
+                      '• ${localizations.aboutShadanandaEducationSubject3}'),
+                ),
+                ListTile(
+                  title: Text(
+                      '• ${localizations.aboutShadanandaEducationSubject4}'),
+                ),
+                ListTile(
+                  title: Text(
+                      '• ${localizations.aboutShadanandaEducationSubject5}'),
+                ),
               ],
             ),
             ExpansionTile(
               title: Text(
-                'Management',
+                localizations.aboutShadanandaManagementFaculty,
                 style: ShadTheme.of(context)
                     .textTheme
                     .p
                     .copyWith(fontWeight: FontWeight.w600),
               ),
-              children: const [
+              children: [
                 ListTile(
                   title: Text(
-                    '• Bachelor Level Courses',
+                    '• ${localizations.aboutShadanandaManagementCourses}',
                   ),
                 ),
               ],
@@ -125,13 +142,7 @@ class AboutShadanandaScreen extends StatelessWidget {
   }
 
   Widget _buildServicesCard(BuildContext context) {
-    const services = [
-      'Quality Education with focus on student academic excellence',
-      'Annual and Internal Examination System',
-      'Well-equipped Computer Lab with basic computer education',
-      'Library and E-Library Services',
-      'Free higher education for eligible first-year students',
-    ];
+    final localizations = AppLocalizations.of(context)!;
 
     return Card(
       elevation: 4,
@@ -144,30 +155,101 @@ class AboutShadanandaScreen extends StatelessWidget {
             ListTile(
               leading: const Icon(Icons.star, size: 32, color: Colors.amber),
               title: Text(
-                'Our Services',
+                localizations.aboutShadanandaServicesTitle,
                 style: ShadTheme.of(context)
                     .textTheme
                     .h4
                     .copyWith(fontWeight: FontWeight.w600),
               ),
             ),
-            ...services.map((service) => Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8),
-                  child: Row(
-                    children: [
-                      const Icon(Icons.check_circle, color: Colors.green),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: Text(
-                          service,
-                          style: ShadTheme.of(context).textTheme.p.copyWith(
-                                fontWeight: FontWeight.w600,
-                              ),
-                        ),
-                      ),
-                    ],
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              child: Row(
+                children: [
+                  const Icon(Icons.check_circle, color: Colors.green),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      localizations.aboutShadanandaService1,
+                      style: ShadTheme.of(context).textTheme.p.copyWith(
+                            fontWeight: FontWeight.w600,
+                          ),
+                    ),
                   ),
-                )),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              child: Row(
+                children: [
+                  const Icon(
+                    Icons.check_circle,
+                    color: successColor,
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      localizations.aboutShadanandaService2,
+                      style: ShadTheme.of(context).textTheme.p.copyWith(
+                            fontWeight: FontWeight.w600,
+                          ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              child: Row(
+                children: [
+                  const Icon(Icons.check_circle, color: Colors.green),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      localizations.aboutShadanandaService3,
+                      style: ShadTheme.of(context).textTheme.p.copyWith(
+                            fontWeight: FontWeight.w600,
+                          ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              child: Row(
+                children: [
+                  const Icon(Icons.check_circle, color: Colors.green),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      localizations.aboutShadanandaService4,
+                      style: ShadTheme.of(context).textTheme.p.copyWith(
+                            fontWeight: FontWeight.w600,
+                          ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              child: Row(
+                children: [
+                  const Icon(Icons.check_circle, color: Colors.green),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      localizations.aboutShadanandaService5,
+                      style: ShadTheme.of(context).textTheme.p.copyWith(
+                            fontWeight: FontWeight.w600,
+                          ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
