@@ -4,7 +4,52 @@ import json
 import os
 from datetime import datetime, timedelta
 
-from app.service.firebase_service import get_storage, get_firestore
+import firebase_admin
+from firebase_admin import credentials, firestore, auth, storage
+from functools import lru_cache
+
+class FirebaseService:
+    _instance = None
+
+    def __init__(self):
+        if not firebase_admin._apps:
+            cred = credentials.Certificate('serviceAccountKey.json')
+            firebase_admin.initialize_app(cred, {
+                'storageBucket': 'learnza.firebasestorage.app'
+            })
+        self.db = firestore.client()
+        self.auth = auth
+        self.storage = storage.bucket()
+
+    @property
+    def firestore(self):
+        return self.db
+    
+    @property
+    def authentication(self) :
+        return self.auth
+    
+    @property
+    def cloud_storage(self) :
+        return self.storage
+
+# To make it singlethon instance 
+@lru_cache()
+def get_firebase_service() -> FirebaseService:
+    return FirebaseService()
+
+# Dependency
+def get_firestore():
+    service = get_firebase_service()
+    return service.firestore
+
+def get_auth():
+    service = get_firebase_service()
+    return service.authentication
+
+def get_storage():
+    service = get_firebase_service()
+    return service.cloud_storage
 
 def upload_to_storage(local_path, remote_path):
     """Uploads a file to Firebase storage."""
@@ -12,33 +57,18 @@ def upload_to_storage(local_path, remote_path):
     blob = bucket.blob(remote_path)
     blob.upload_from_filename(local_path)
     download_url = blob.generate_signed_url(
-        expiration=datetime.utcnow() + timedelta(days=700),  # Set expiry duration
+        expiration=datetime.utcnow() + timedelta(days=2000),  # Set expiry duration
         method="GET",
     )
     return download_url
 
-
-def create_csv(data, csv_file_path):
-    """Creates a CSV file from the provided data."""
-    with open(csv_file_path, mode='w+', newline='', encoding='utf-8') as csv_file:
-        writer = csv.writer(csv_file)
-        headers = [
-            'isbn', 'bookTitle', 'author',
-        ]
-        writer.writerow(headers)
-        for book in data:
-            writer.writerow([
-                book.get('isbn'),
-                book.get('bookTitle'),
-                ", ".join(book.get('author', [])),
-            ])
 
 
 
 def main():
     # Load book data from JSON file
     firestore = get_firestore()
-    with open('json/book2.json', 'r') as f:
+    with open('json/newBooks.json', 'r') as f:
         books = json.load(f)
 
     for book in books:
@@ -63,11 +93,27 @@ def main():
 
         firestore.collection('books').document(book["id"]).set(book)
     # Create a CSV file
-    create_csv(books, 'books.csv')
 
 
 
     print("Process completed successfully. Files uploaded and CSV created.")
 
+
+def uploadImage():
+    with open('json/newBooks.json', 'r') as f:
+        books = json.load(f)
+    
+
+    for book in books: 
+        if (book['thumbnail'] != None):
+            if(os.path.exists(book['thumbnail'])):
+
+                print(book['thumbnail'])
+                book['thumbnail'] = upload_to_storage(book['thumbnail'], f"thumbnails/{os.path.basename(book['thumbnail'])}")
+                print(book['thumbnail'])
+
+
+
 if __name__ == "__main__":
     main()
+    # uploadImage()
