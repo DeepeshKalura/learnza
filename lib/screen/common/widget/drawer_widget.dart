@@ -7,9 +7,9 @@ import 'package:provider/provider.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
 import '../../../app_config.dart';
-// import '../../../gen/assets.gen.dart';
 import '../../../providers/auth_provider.dart';
 import '../../../router/app_urls.dart';
+import '../../../utils/resource_util.dart';
 
 class DrawerWidget extends StatelessWidget {
   const DrawerWidget({super.key, required this.currentIndex});
@@ -25,15 +25,9 @@ class DrawerWidget extends StatelessWidget {
           UserAccountsDrawerHeader(
             decoration: BoxDecoration(
               color: ShadTheme.of(context).colorScheme.primary,
-              // gradient: LinearGradient(
-              //   colors: [ShadTheme.of(context).colorScheme.pr  ],
-              //   begin: Alignment.topLeft,
-              //   end: Alignment.bottomRight,
-              // ),
             ),
             currentAccountPicture: ShadAvatar(
-              user?.profileImageURL ??
-                  "https://plus.unsplash.com/premium_vector-1722102206801-756d21ef01ca",
+              user?.profileImageURL ?? ResourceUtil.defaultProfileImage,
               placeholder: Text(
                 user?.fullName.substring(0, 2) ?? 'JD',
               ),
@@ -42,15 +36,14 @@ class DrawerWidget extends StatelessWidget {
               user?.fullName ?? 'John Doe',
               style: ShadTheme.of(context).textTheme.h4.copyWith(
                     fontWeight: FontWeight.bold,
-                    fontSize: 18,
-                    color: Colors.white,
+                    color: ShadTheme.of(context).colorScheme.background,
                   ),
             ),
             accountEmail: Text(
               user?.email ?? 'johndoe@example.com',
               style: ShadTheme.of(context).textTheme.p.copyWith(
                     fontSize: 14,
-                    color: Colors.white,
+                    color: ShadTheme.of(context).colorScheme.background,
                   ),
             ),
           ),
@@ -60,7 +53,7 @@ class DrawerWidget extends StatelessWidget {
               children: [
                 ListTile(
                   leading: const Icon(
-                    Icons.person,
+                    LucideIcons.user,
                   ),
                   title: Text(
                     AppLocalizations.of(context)?.profileDrawer ?? 'Profile',
@@ -73,7 +66,7 @@ class DrawerWidget extends StatelessWidget {
                 ),
                 ListTile(
                   leading: const Icon(
-                    Icons.settings,
+                    LucideIcons.settings,
                   ),
                   title: Text(
                     AppLocalizations.of(context)?.settingDrawer ?? 'Settings',
@@ -81,34 +74,11 @@ class DrawerWidget extends StatelessWidget {
                   ),
                   onTap: () {
                     context.pushNamed(AppUrls.settingCommonScreen);
-                    //     // showShadDialog(
-                    //     //   context: context,
-                    //     //   builder: (context) => ShadDialog(
-                    //     //     title: const Text("Settings"),
-                    //     //     description:
-                    //     //         const Text("Make changes for you application"),
-                    //     //     actions: [
-                    //     //       ShadButton(
-                    //     //         icon: const Icon(LucideIcons.languages),
-                    //     //         onPressed: () {
-                    //     //           Navigator.of(context).pop();
-                    //     //         },
-                    //     //         child: const Text("Neplai"),
-                    //     //       ),
-                    //     //       ShadButton(
-                    //     //           icon: const Icon(Icons.close),
-                    //     //           onPressed: () {
-                    //     //             Navigator.of(context).pop();
-                    //     //           }),
-                    //     //     ],
-                    //     //   ),
-                    //     // );
                   },
-                  //   selected: currentIndex == 1,
                 ),
                 ListTile(
                   leading: const Icon(
-                    Icons.feedback,
+                    LucideIcons.messageSquare,
                   ),
                   title: Text(
                     AppLocalizations.of(context)?.feedbackDrawer ?? 'Feedback',
@@ -124,34 +94,37 @@ class DrawerWidget extends StatelessWidget {
                       packageInfo: true,
                       labels: ['feedback', 'issue', 'enhancement', 'bug'],
                       extraData: StackTrace.current.toString(),
-
-                      // onSucces: (_) {
-                      //   ShadToaster.of(context).show(
-                      //     const ShadToast(
-                      //       backgroundColor: successColor,
-                      //       title: Text("Feedback Sent"),
-                      //       description: Text(
-                      //         "Thank you for your feedback",
-                      //       ),
-                      //     ),
-                      //   );
-                      // },
-                      // onError: (_) {
-                      //   ShadToaster.of(context).show(
-                      //     const ShadToast.destructive(
-                      //       title: Text("Feedback Error"),
-                      //       description: Text(
-                      //         "Something went wrong while sending feedback",
-                      //       ),
-                      //     ),
-                      //   );
-                      // }
                     );
                   },
                 ),
                 ListTile(
                   leading: const Icon(
-                    Icons.info,
+                    LucideIcons.loaderPinwheel,
+                  ),
+                  title: Text(
+                    AppLocalizations.of(context)?.teacherDrawer ?? 'Teacher',
+                    style: ShadTheme.of(context).textTheme.table,
+                  ),
+                  onTap: () {
+                    context.pushNamed(AppUrls.teacherAboutScreen);
+                  },
+                ),
+                ListTile(
+                  leading: const Icon(
+                    LucideIcons.shell,
+                  ),
+                  title: Text(
+                    AppLocalizations.of(context)?.studentUnionDrawer ??
+                        'Student Union',
+                    style: ShadTheme.of(context).textTheme.table,
+                  ),
+                  onTap: () {
+                    context.pushNamed(AppUrls.studentUnionAboutScreen);
+                  },
+                ),
+                ListTile(
+                  leading: const Icon(
+                    LucideIcons.badgeInfo,
                   ),
                   title: Text(
                     AppLocalizations.of(context)?.aboutDrawer ?? 'About',
@@ -199,11 +172,6 @@ class DrawerWidget extends StatelessWidget {
                     }
                   },
                 ),
-                // TODO: I don't like the application image in the drawer
-                // ShadImage(
-                //   Assets.icons.student.welcome.path,
-
-                // ),
               ],
             ),
           ),
