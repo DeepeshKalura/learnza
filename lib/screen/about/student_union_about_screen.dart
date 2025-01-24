@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
 import '../../gen/assets.gen.dart';
@@ -8,10 +9,11 @@ class StudentUnionAboutScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Student Union',
+          localizations?.studentUnionTitle ?? 'Student Union',
           style: ShadTheme.of(context).textTheme.h3,
         ),
       ),
@@ -21,9 +23,9 @@ class StudentUnionAboutScreen extends StatelessWidget {
             padding: const EdgeInsets.all(16),
             sliver: SliverList(
               delegate: SliverChildListDelegate([
-                _buildStudentLeaderCard(context),
+                _buildStudentLeaderCard(context, localizations),
                 const SizedBox(height: 16),
-                _buildStudentCouncilTable(context),
+                _buildStudentCouncilTable(context, localizations),
               ]),
             ),
           ),
@@ -32,41 +34,51 @@ class StudentUnionAboutScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildStudentLeaderCard(BuildContext context) {
-    return Card(
-      elevation: 4,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            Container(
-              width: 150,
-              height: 150,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(75),
-                image: DecorationImage(
-                  image: Assets.images.igStudentCouncil.provider(),
-                  fit: BoxFit.cover,
+  Widget _buildStudentLeaderCard(
+      BuildContext context, AppLocalizations? localizations) {
+    return ShadCard(
+      child: Row(
+        children: [
+          Column(
+            children: [
+              Container(
+                width: 100,
+                height: 100,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(50),
+                  image: DecorationImage(
+                    image: Assets.images.igStudentCouncil.provider(),
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(height: 16),
-            Text(
-              'Girija Karki',
-              style: ShadTheme.of(context).textTheme.h4,
-            ),
-            Text(
-              'Student Union President',
+              const SizedBox(height: 16),
+              Text(
+                localizations?.studentUnionPresidentName ?? 'Girija Karki',
+                style: ShadTheme.of(context).textTheme.h4,
+              ),
+              Text(
+                localizations?.studentUnionPresidentPosition ??
+                    'Student Union President',
+                style: ShadTheme.of(context).textTheme.p,
+              ),
+            ],
+          ),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Text(
+              localizations?.studentUnionPresidentDescription ??
+                  "Girija Karki, a visionary student of ANPA-5, leads as the president of the student union for 2081. He inspires change through dedication and active participation in college initiatives.",
               style: ShadTheme.of(context).textTheme.p,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
 
-  Widget _buildStudentCouncilTable(BuildContext context) {
+  Widget _buildStudentCouncilTable(
+      BuildContext context, AppLocalizations? localizations) {
     const List<Map<String, String>> councilData = [
       {
         "S.N.": "1",
@@ -168,7 +180,7 @@ class StudentUnionAboutScreen extends StatelessWidget {
         child: Column(
           children: [
             Text(
-              'Student Council 2081',
+              localizations?.studentUnionCouncilTitle ?? 'Student Council 2081',
               style: ShadTheme.of(context)
                   .textTheme
                   .h3
@@ -200,7 +212,7 @@ class StudentUnionAboutScreen extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.all(12),
                         child: Text(
-                          'S.N',
+                          localizations?.studentUnionTableHeaderSn ?? 'S.N',
                           style: ShadTheme.of(context).textTheme.small.copyWith(
                                 fontWeight: FontWeight.w600,
                                 color: ShadTheme.of(context)
@@ -214,7 +226,7 @@ class StudentUnionAboutScreen extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.all(12),
                         child: Text(
-                          'Name',
+                          localizations?.studentUnionTableHeaderName ?? 'Name',
                           style: ShadTheme.of(context).textTheme.small.copyWith(
                                 fontWeight: FontWeight.w600,
                                 color: ShadTheme.of(context)
@@ -228,7 +240,8 @@ class StudentUnionAboutScreen extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.all(12),
                         child: Text(
-                          'Position',
+                          localizations?.studentUnionTableHeaderPosition ??
+                              'Position',
                           style: ShadTheme.of(context).textTheme.small.copyWith(
                                 fontWeight: FontWeight.w600,
                                 color: ShadTheme.of(context)
@@ -242,7 +255,8 @@ class StudentUnionAboutScreen extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.all(12),
                         child: Text(
-                          'Roll No.',
+                          localizations?.studentUnionTableHeaderRollNo ??
+                              'Roll No.',
                           style: ShadTheme.of(context).textTheme.small.copyWith(
                                 fontWeight: FontWeight.w600,
                                 color: ShadTheme.of(context)
@@ -260,25 +274,25 @@ class StudentUnionAboutScreen extends StatelessWidget {
                       TableCell(
                         child: Padding(
                           padding: const EdgeInsets.all(12),
-                          child: Text(member["S.N."]!),
+                          child: Text(member["S.N."] ?? ''),
                         ),
                       ),
                       TableCell(
                         child: Padding(
                           padding: const EdgeInsets.all(12),
-                          child: Text(member["Name"]!),
+                          child: Text(member["Name"] ?? ''),
                         ),
                       ),
                       TableCell(
                         child: Padding(
                           padding: const EdgeInsets.all(12),
-                          child: Text(member["Position"]!),
+                          child: Text(member["Position"] ?? ''),
                         ),
                       ),
                       TableCell(
                         child: Padding(
                           padding: const EdgeInsets.all(12),
-                          child: Text(member["Roll No."]!),
+                          child: Text(member["Roll No."] ?? ''),
                         ),
                       ),
                     ],

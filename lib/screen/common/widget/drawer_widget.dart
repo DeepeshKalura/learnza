@@ -134,44 +134,6 @@ class DrawerWidget extends StatelessWidget {
                     context.pushNamed(AppUrls.aboutScreen);
                   },
                 ),
-                ListTile(
-                  leading: const Icon(
-                    Icons.logout,
-                  ),
-                  title: Text(
-                    AppLocalizations.of(context)?.logoutDrawer ?? 'Logout',
-                    style: ShadTheme.of(context).textTheme.table,
-                  ),
-                  onTap: () async {
-                    var result = await showShadDialog(
-                      context: context,
-                      builder: (context) => ShadDialog.alert(
-                        title: const Text('Are you absolutely sure?'),
-                        description: const Padding(
-                          padding: EdgeInsets.only(bottom: 8),
-                          child: Text(
-                            'This action will makes you logout from the application.',
-                          ),
-                        ),
-                        actions: [
-                          ShadButton.outline(
-                            child: const Text('Cancel'),
-                            onPressed: () => Navigator.of(context).pop(false),
-                          ),
-                          ShadButton(
-                            child: const Text('Continue'),
-                            onPressed: () => Navigator.of(context).pop(true),
-                          ),
-                        ],
-                      ),
-                    );
-                    if (result == true) {
-                      context.read<AuthProvider>().logout();
-                      context
-                          .pushReplacementNamed(AppUrls.authenticationScreen);
-                    }
-                  },
-                ),
               ],
             ),
           ),
