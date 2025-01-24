@@ -10,6 +10,8 @@ import '../model/groups/groups_model.dart';
 import '../model/posts/posts_model.dart';
 import '../providers/auth_provider.dart';
 import '../screen/about/about_shadananda_screen.dart';
+import '../screen/about/student_union_about_screen.dart';
+import '../screen/about/teacher_about_screen.dart';
 import '../screen/common/auth/forgot_password_screen.dart';
 import '../screen/common/auth/login_auth_common_screen.dart';
 import '../screen/common/library/offline_libaray_common_screen.dart';
@@ -213,6 +215,18 @@ class AppRouters {
                 year: args['year'] as int,
               );
             },
+          ),
+          GoRoute(
+            path: '/about/student-union',
+            name: AppUrls.studentUnionAboutScreen,
+            builder: (context, state) {
+              return const StudentUnionAboutScreen();
+            },
+          ),
+          GoRoute(
+            path: "/about/teacher",
+            name: AppUrls.teacherAboutScreen,
+            builder: (context, state) => const TeacherAboutScreen(),
           ),
         ],
       ),
