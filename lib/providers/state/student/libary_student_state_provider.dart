@@ -13,6 +13,7 @@ class LibaryStudentStateProvider extends ChangeNotifier {
     "Lernza Library",
     "Anna Library",
     "Offline Library",
+    "Literature",
   ];
 
   // Current library index

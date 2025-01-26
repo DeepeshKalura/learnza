@@ -29,4 +29,25 @@ class BooksProvider {
       rethrow;
     }
   }
+
+  Future<List<BooksModel>> getLiteratureBooks() async {
+    try {
+      final snapShot = await firebaseService.database
+          .collection('books')
+          .where("code", isGreaterThan: "NN-")
+          .get();
+
+      if (snapShot.docs.isNotEmpty) {
+        var a =
+            snapShot.docs.map((e) => BooksModel.fromJson(e.data())).toList();
+        developer.log("Literature Books: $a");
+        return a;
+      } else {
+        return [];
+      }
+    } catch (e, s) {
+      developer.log("getLiteratureBooks", error: e, stackTrace: s);
+      rethrow;
+    }
+  }
 }

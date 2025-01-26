@@ -1,4 +1,5 @@
 import 'dart:developer' as developer;
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:learnza/screen/library/widget/books_card_library_student_widget.dart';
@@ -10,8 +11,8 @@ import '../../providers/book_provider.dart';
 import '../../providers/state/student/libary_student_state_provider.dart';
 import '../../router/app_urls.dart';
 import 'course_book_library_screen.dart';
+import 'literature_book_screen.dart';
 import 'widget/anna_libary_widget.dart';
-
 import 'widget/error/no_books_found_error_widget.dart';
 
 class LibraryStudentScreen extends StatefulWidget {
@@ -34,6 +35,7 @@ class _LibraryStudentScreenState extends State<LibraryStudentScreen>
     'Lernza Library',
     'Anna Archive',
     'Course Books',
+    "Literature",
   ];
 
   @override
@@ -100,6 +102,7 @@ class _LibraryStudentScreenState extends State<LibraryStudentScreen>
             BookListWidget(),
             AnnaArchiveBookWidget(),
             CourseBookLibraryScreen(),
+            LiteratureBookScreen(),
           ],
         ),
       ),
