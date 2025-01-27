@@ -95,7 +95,6 @@ def main():
     # Create a CSV file
 
 
-
     print("Process completed successfully. Files uploaded and CSV created.")
 
 
