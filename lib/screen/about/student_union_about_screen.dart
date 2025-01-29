@@ -1,8 +1,13 @@
+import 'package:feedback_github/feedback_github.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:learnza/locator/injector.dart' as di;
 import 'package:shadcn_ui/shadcn_ui.dart';
 
+import '../../app_config.dart';
 import '../../gen/assets.gen.dart';
+import 'widget/isu_header_card_widget.dart';
+import 'widget/student_council_member_card.dart';
 
 class StudentUnionAboutScreen extends StatelessWidget {
   const StudentUnionAboutScreen({super.key});
@@ -16,6 +21,26 @@ class StudentUnionAboutScreen extends StatelessWidget {
           localizations?.studentUnionTitle ?? 'Student Union',
           style: ShadTheme.of(context).textTheme.h3,
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(
+              LucideIcons.messageSquare,
+            ),
+            tooltip: 'Send Feedback',
+            onPressed: () {
+              final githubtoken = di.injector<AppConfig>().githubToken;
+              final repoUrl = di.injector<AppConfig>().repoUrl;
+              BetterFeedback.of(context).showAndUploadToGitHub(
+                repoUrl: repoUrl,
+                gitHubToken: githubtoken,
+                deviceInfo: true,
+                packageInfo: true,
+                labels: ['feedback', 'issue', 'enhancement', 'bug'],
+                extraData: StackTrace.current.toString(),
+              );
+            },
+          ),
+        ],
       ),
       body: CustomScrollView(
         slivers: [
@@ -23,53 +48,10 @@ class StudentUnionAboutScreen extends StatelessWidget {
             padding: const EdgeInsets.all(16),
             sliver: SliverList(
               delegate: SliverChildListDelegate([
-                _buildStudentLeaderCard(context, localizations),
+                const ISUHeaderCardWidget(),
                 const SizedBox(height: 16),
                 _buildStudentCouncilTable(context, localizations),
               ]),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildStudentLeaderCard(
-      BuildContext context, AppLocalizations? localizations) {
-    return ShadCard(
-      child: Row(
-        children: [
-          Column(
-            children: [
-              Container(
-                width: 100,
-                height: 100,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(50),
-                  image: DecorationImage(
-                    image: Assets.images.igStudentCouncil.provider(),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 16),
-              Text(
-                localizations?.studentUnionPresidentName ?? 'Girija Karki',
-                style: ShadTheme.of(context).textTheme.h4,
-              ),
-              Text(
-                localizations?.studentUnionPresidentPosition ??
-                    'Student Union President',
-                style: ShadTheme.of(context).textTheme.p,
-              ),
-            ],
-          ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Text(
-              localizations?.studentUnionPresidentDescription ??
-                  "Girija Karki, a visionary student of ANPA-5, leads as the president of the student union for 2081. He inspires change through dedication and active participation in college initiatives.",
-              style: ShadTheme.of(context).textTheme.p,
             ),
           ),
         ],
@@ -83,222 +65,140 @@ class StudentUnionAboutScreen extends StatelessWidget {
       {
         "S.N.": "1",
         "Name": "Girija Karki",
-        "Position": "President",
-        "Roll No.": "ANPA-5"
+        "Position": "Chairman",
+        "Address": "Sha. Na. Pa.-5",
+        "Contact No.": "9866467570"
       },
       {
         "S.N.": "2",
-        "Name": "Bhuvan Khatri",
+        "Name": "Bhuwan Khatri",
         "Position": "Vice President",
-        "Roll No.": "ANPA-5"
+        "Address": "Sha. Na. Pa.-8",
+        "Contact No.": "9869683330"
       },
       {
         "S.N.": "3",
         "Name": "Romila Rai",
         "Position": "Secretary",
-        "Roll No.": "ANPA-6"
+        "Address": "Sha. Na. Pa.-1",
+        "Contact No.": "9761635150"
       },
       {
         "S.N.": "4",
-        "Name": "Rekha Baral",
+        "Name": "Renuka Basnet",
         "Position": "Treasurer",
-        "Roll No.": "ANPA-5"
+        "Address": "Sha. Na. Pa.-6",
+        "Contact No.": "9861740168"
       },
       {
         "S.N.": "5",
         "Name": "Asha Katwal",
         "Position": "Joint Secretary",
-        "Roll No.": "ANPA-6"
+        "Address": "Sha. Na. Pa.-6",
+        "Contact No.": "9862819352"
       },
       {
         "S.N.": "6",
-        "Name": "Tej B. Tamang",
+        "Name": "Top B. Tamang",
         "Position": "Member",
-        "Roll No.": "ANPA-8"
+        "Address": "Sha. Na. Pa.-4",
+        "Contact No.": "9842993405"
       },
       {
         "S.N.": "7",
-        "Name": "Bhuvan Rai",
+        "Name": "Bhuwan Rai",
         "Position": "Member",
-        "Roll No.": "ANPA-6"
+        "Address": "Sha. Na. Pa.-6",
+        "Contact No.": "9863348041"
       },
       {
         "S.N.": "8",
-        "Name": "Ashmita Rai",
+        "Name": "Asmita Rai",
         "Position": "Member",
-        "Roll No.": "ANPA-7"
+        "Address": "Sha. Na. Pa.-4",
+        "Contact No.": "9765966292"
       },
       {
         "S.N.": "9",
-        "Name": "Dinesh Bishwokarma",
+        "Name": "Dinesh Bishwakarma",
         "Position": "Member",
-        "Roll No.": "ANPA-7"
+        "Address": "Sha. Na. Pa.-7",
+        "Contact No.": "9842043841"
       },
       {
         "S.N.": "10",
-        "Name": "Karina Rai",
+        "Name": "Kareena Rai",
         "Position": "Member",
-        "Roll No.": "ANPA-10"
+        "Address": "Sha. Na. Pa.-10",
+        "Contact No.": "9749927768"
       },
       {
         "S.N.": "11",
-        "Name": "Sunita Bisht",
+        "Name": "Sunita Bista",
         "Position": "Member",
-        "Roll No.": "ANPA-8"
+        "Address": "Sha. Na. Pa.-8",
+        "Contact No.": "984412977"
       },
       {
         "S.N.": "12",
-        "Name": "Bhumi Raj Dhakal",
+        "Name": "Bhumiraj Dhakal",
         "Position": "Member",
-        "Roll No.": "ANPA-6"
+        "Address": "Sha. Na. Pa.-6",
+        "Contact No.": "9865727650"
       },
       {
         "S.N.": "13",
-        "Name": "Surya Rai",
+        "Name": "Suraj Rai",
         "Position": "Member",
-        "Roll No.": "ANPA-8"
+        "Address": "Sha. Na. Pa.-4",
+        "Contact No.": "9865164330"
       },
       {
         "S.N.": "14",
         "Name": "Vijay Rai",
         "Position": "Member",
-        "Roll No.": "ANPA-5"
+        "Address": "Sha. Na. Pa.-5",
+        "Contact No.": "9742437841"
       },
       {
         "S.N.": "15",
-        "Name": "Pooja Baral",
+        "Name": "Pooja Basnet",
         "Position": "Member",
-        "Roll No.": "ANPA-7"
+        "Address": "Sha. Na. Pa.-7",
+        "Contact No.": "9823766244"
       },
     ];
 
     return Card(
-      elevation: 4,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      elevation: 1,
       child: Padding(
         padding: const EdgeInsets.all(8),
         child: Column(
           children: [
             Text(
-              localizations?.studentUnionCouncilTitle ?? 'Student Council 2081',
+              localizations?.studentUnionCouncilTitle ??
+                  'Student Union Election 2079',
               style: ShadTheme.of(context)
                   .textTheme
                   .h3
                   .copyWith(fontWeight: FontWeight.w600),
             ),
             const SizedBox(height: 20),
-            Table(
-              border: TableBorder.all(
-                color: Colors.grey.shade300,
-                borderRadius: BorderRadius.circular(8),
-              ),
-              columnWidths: const {
-                0: FlexColumnWidth(0.6),
-                1: FlexColumnWidth(2),
-                2: FlexColumnWidth(1.5),
-                3: FlexColumnWidth(1.2),
+            ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: councilData.length,
+              itemBuilder: (context, index) {
+                final member = councilData[index];
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: StudentCouncilMemberCard(
+                    memberData: member,
+                    defaultProfileImage:
+                        index == 0 ? Assets.images.igStudentCouncil.path : null,
+                  ),
+                );
               },
-              children: [
-                TableRow(
-                  decoration: const BoxDecoration(
-                    color: Colors.blue,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(8),
-                      topRight: Radius.circular(8),
-                    ),
-                  ),
-                  children: [
-                    TableCell(
-                      child: Padding(
-                        padding: const EdgeInsets.all(12),
-                        child: Text(
-                          localizations?.studentUnionTableHeaderSn ?? 'S.N',
-                          style: ShadTheme.of(context).textTheme.small.copyWith(
-                                fontWeight: FontWeight.w600,
-                                color: ShadTheme.of(context)
-                                    .colorScheme
-                                    .background,
-                              ),
-                        ),
-                      ),
-                    ),
-                    TableCell(
-                      child: Padding(
-                        padding: const EdgeInsets.all(12),
-                        child: Text(
-                          localizations?.studentUnionTableHeaderName ?? 'Name',
-                          style: ShadTheme.of(context).textTheme.small.copyWith(
-                                fontWeight: FontWeight.w600,
-                                color: ShadTheme.of(context)
-                                    .colorScheme
-                                    .background,
-                              ),
-                        ),
-                      ),
-                    ),
-                    TableCell(
-                      child: Padding(
-                        padding: const EdgeInsets.all(12),
-                        child: Text(
-                          localizations?.studentUnionTableHeaderPosition ??
-                              'Position',
-                          style: ShadTheme.of(context).textTheme.small.copyWith(
-                                fontWeight: FontWeight.w600,
-                                color: ShadTheme.of(context)
-                                    .colorScheme
-                                    .background,
-                              ),
-                        ),
-                      ),
-                    ),
-                    TableCell(
-                      child: Padding(
-                        padding: const EdgeInsets.all(12),
-                        child: Text(
-                          localizations?.studentUnionTableHeaderRollNo ??
-                              'Roll No.',
-                          style: ShadTheme.of(context).textTheme.small.copyWith(
-                                fontWeight: FontWeight.w600,
-                                color: ShadTheme.of(context)
-                                    .colorScheme
-                                    .background,
-                              ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                ...councilData.map(
-                  (member) => TableRow(
-                    children: [
-                      TableCell(
-                        child: Padding(
-                          padding: const EdgeInsets.all(12),
-                          child: Text(member["S.N."] ?? ''),
-                        ),
-                      ),
-                      TableCell(
-                        child: Padding(
-                          padding: const EdgeInsets.all(12),
-                          child: Text(member["Name"] ?? ''),
-                        ),
-                      ),
-                      TableCell(
-                        child: Padding(
-                          padding: const EdgeInsets.all(12),
-                          child: Text(member["Position"] ?? ''),
-                        ),
-                      ),
-                      TableCell(
-                        child: Padding(
-                          padding: const EdgeInsets.all(12),
-                          child: Text(member["Roll No."] ?? ''),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
             ),
           ],
         ),

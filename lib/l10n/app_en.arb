@@ -1,11 +1,11 @@
 {
   "@@locale": "en",
-  "appName": "Shadanda",
+  "appName": "Shadananda",
   "appNameDescription": "The name of the application.",
   "madeBy": "Made with ❤️ Miss Mongol scholarship fund- 2018 ❤️",
   "madeByDescription": "Credits for the app creator.",
-  "greeting": "Welcome To Shadanda",
-  "loginMessage": "Enter your credentials you get from TuLib mail and enjoy countless books",
+  "greeting": "Welcome To Shadananda",
+  "loginMessage": "Enter your credentials you get from Shadananda mail and enjoy countless books",
   "loginMessageDescription": "Message displayed on the login screen prompting the user to enter their credentials.",
   "emailLabel": "Email",
   "emailLabelDescription": "Label for the email input field.",
@@ -139,7 +139,7 @@
     "aboutShadanandaService5": "Free higher education for eligible first-year students",
     
       "studentUnionTitle": "Student Union",
-      "studentUnionCouncilTitle": "Student Council 2081",
+      "studentUnionCouncilTitle": "Student Union Election 2079",
       "studentUnionPresidentName": "Girija Karki",
       "studentUnionPresidentPosition": "Student Union President",
       "studentUnionPresidentDescription": "Girija Karki, a visionary student of ANPA-5, leads as the president of the student union for 2081. He inspires change through dedication and active participation in college initiatives.",
