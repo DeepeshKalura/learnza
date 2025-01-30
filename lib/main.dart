@@ -27,6 +27,7 @@ import 'providers/state/groups/groups_state_provider.dart';
 import 'providers/state/libary/course_book_libary_state_provider.dart';
 import 'providers/state/libary/download_books_libary_state_provider.dart';
 import 'providers/state/libary/literature_book_library_state_provider.dart';
+import 'providers/state/settings/settings_state_provider.dart';
 import 'providers/state/student/libary_student_state_provider.dart';
 import 'providers/state/user_preference_provider.dart';
 import 'providers/student_provider.dart';
@@ -163,9 +164,22 @@ class MyApp extends StatelessWidget {
                 return LiteratureBookLibraryStateProvider();
               },
             ),
+            ChangeNotifierProvider(create: (context) {
+              return SettingsStateProvider();
+            })
           ],
           child: Consumer<UserPreferenceProvider>(
             builder: (context, userPreferenceProvider, _) {
+              if (!userPreferenceProvider.isInitialized) {
+                return const MaterialApp(
+                  home: Scaffold(
+                    body: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  ),
+                );
+              }
+
               return ShadApp.router(
                 debugShowCheckedModeBanner: false,
                 locale: Locale(userPreferenceProvider.currentLanguage),
@@ -176,7 +190,7 @@ class MyApp extends StatelessWidget {
                   GlobalCupertinoLocalizations.delegate,
                 ],
                 supportedLocales: L10n.all,
-                title: 'Learnza',
+                title: 'Shadananda',
                 theme: userPreferenceProvider.isDarkMode
                     ? darkThemeData
                     : lightThemeData,

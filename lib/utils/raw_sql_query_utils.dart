@@ -34,8 +34,8 @@ CREATE TABLE bookposition (
 
   static const String createUserPreferenceSqlQuery = """
 
-CREATE TABLE userpreference (
- 
+CREATE TABLE userpreference ( 
+  id INTEGER PRIMARY KEY,
   darkMode INTEGER DEFAULT 0,
   language TEXT DEFAULT 'en'
 );

@@ -5,20 +5,20 @@ import 'package:learnza/gen/assets.gen.dart';
 import 'package:provider/provider.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
-import '../../../model/app_enums.dart';
-import '../../../providers/auth_provider.dart';
-import '../../../router/app_urls.dart';
-import '../../../utils/form_validator.dart';
-import '../../../utils/theme.dart';
+import '../../model/app_enums.dart';
+import '../../providers/auth_provider.dart';
+import '../../router/app_urls.dart';
+import '../../utils/form_validator.dart';
+import '../../utils/theme.dart';
 
-class LoginAuthCommonScreen extends StatefulWidget {
-  const LoginAuthCommonScreen({super.key});
+class AuthenticationScreen extends StatefulWidget {
+  const AuthenticationScreen({super.key});
 
   @override
-  State<LoginAuthCommonScreen> createState() => _LoginAuthCommonScreenState();
+  State<AuthenticationScreen> createState() => _AuthenticationScreenState();
 }
 
-class _LoginAuthCommonScreenState extends State<LoginAuthCommonScreen> {
+class _AuthenticationScreenState extends State<AuthenticationScreen> {
   void getRedirectPathByRole() {
     final authProvider = context.read<AuthProvider>();
 
@@ -36,7 +36,7 @@ class _LoginAuthCommonScreenState extends State<LoginAuthCommonScreen> {
     }
   }
 
-  final _formKey = GlobalKey<ShadFormState>();
+  final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final FocusNode _emailFocusNode = FocusNode();
@@ -94,7 +94,7 @@ class _LoginAuthCommonScreenState extends State<LoginAuthCommonScreen> {
   }
 
   Widget _buildLoginForm() {
-    return ShadForm(
+    return Form(
       key: _formKey,
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -102,15 +102,15 @@ class _LoginAuthCommonScreenState extends State<LoginAuthCommonScreen> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            AppLocalizations.of(context)?.greeting ?? "Welcome To TuLib",
-            style: ShadTheme.of(context).textTheme.h1,
+            AppLocalizations.of(context)?.greeting ?? "Welcome To Shadananda",
+            style: Theme.of(context).textTheme.headlineLarge,
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 8),
           Text(
             AppLocalizations.of(context)?.loginMessage ??
-                'Enter your credentials you get from TuLib mail and enjoy countless books',
-            style: ShadTheme.of(context).textTheme.p.copyWith(
+                'Enter your credentials you get from Shadananda mail and enjoy countless books',
+            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                   color: Colors.grey,
                 ),
             textAlign: TextAlign.center,
@@ -118,113 +118,124 @@ class _LoginAuthCommonScreenState extends State<LoginAuthCommonScreen> {
           const SizedBox(height: 32),
           Focus(
             focusNode: _emailFocusNode,
-            child: ShadInputFormField(
+            child: TextFormField(
               autocorrect: true,
               keyboardType: TextInputType.emailAddress,
-              onSubmitted: (value) {
+              onFieldSubmitted: (value) {
                 _passwordFocusNode.requestFocus();
               },
-              id: 'email',
-              label: Text(
-                AppLocalizations.of(context)?.emailLabel ?? 'Email',
-                style: ShadTheme.of(context).textTheme.p.copyWith(
+              controller: _emailController,
+              cursorColor: primaryColor,
+              decoration: InputDecoration(
+                labelText: AppLocalizations.of(context)?.emailLabel ?? 'Email',
+                labelStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
                       fontSize: 18,
                     ),
-              ),
-              cursorColor: primaryColor,
-              controller: _emailController,
-              placeholder: Text(
-                AppLocalizations.of(context)?.emailPlaceholder ??
+                hintText: AppLocalizations.of(context)?.emailPlaceholder ??
                     'Enter your email',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: const BorderSide(color: primaryColor, width: 2),
+                ),
               ),
               validator: FormValidator.validateEmail,
             ),
           ),
           const SizedBox(height: 20),
-          Consumer<AuthProvider>(builder: (context, authProvider, child) {
-            var obscure = authProvider.obscure;
-            return Focus(
-              focusNode: _passwordFocusNode,
-              child: ShadInputFormField(
-                controller: _passwordController,
-                label: Text(
-                  AppLocalizations.of(context)?.passwordLabel ?? 'Password',
-                  style: ShadTheme.of(context).textTheme.p.copyWith(
-                        fontSize: 18,
+          Consumer<AuthProvider>(
+            builder: (context, authProvider, child) {
+              return Focus(
+                focusNode: _passwordFocusNode,
+                child: TextFormField(
+                  controller: _passwordController,
+                  obscureText: authProvider.obscure,
+                  cursorColor: primaryColor,
+                  decoration: InputDecoration(
+                    labelText: AppLocalizations.of(context)?.passwordLabel ??
+                        'Password',
+                    labelStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          fontSize: 18,
+                        ),
+                    hintText:
+                        AppLocalizations.of(context)?.passwordPlaceholder ??
+                            'Enter your password',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide:
+                          const BorderSide(color: primaryColor, width: 2),
+                    ),
+                    prefixIcon: const Icon(
+                      Icons.lock_outline,
+                      color: primaryColor,
+                      size: 20,
+                    ),
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        authProvider.obscure
+                            ? Icons.visibility_off
+                            : Icons.visibility,
+                        color: primaryColor,
+                        size: 20,
                       ),
-                ),
-                placeholder: Text(
-                  AppLocalizations.of(context)?.passwordPlaceholder ??
-                      'Enter your password',
-                ),
-                obscureText: obscure,
-                prefix: const ShadImage.square(
-                  size: 16,
-                  LucideIcons.lock,
-                  color: primaryColor,
-                ),
-                cursorColor: primaryColor,
-                suffix: ShadButton(
-                  backgroundColor: primaryColor,
-                  width: 24,
-                  height: 24,
-                  padding: EdgeInsets.zero,
-                  decoration: const ShadDecoration(
-                    secondaryBorder: ShadBorder.none,
-                    secondaryFocusedBorder: ShadBorder.none,
+                      onPressed: authProvider.toggleObscure,
+                    ),
                   ),
-                  icon: ShadImage.square(
-                    size: 16,
-                    obscure ? LucideIcons.eyeOff : LucideIcons.eye,
-                  ),
-                  onPressed: authProvider.toggleObscure,
+                  validator: FormValidator.validatePassword,
                 ),
-                validator: FormValidator.validatePassword,
-              ),
-            );
-          }),
+              );
+            },
+          ),
           const SizedBox(height: 20),
           Align(
             alignment: Alignment.centerRight,
-            child: ShadButton.ghost(
+            child: TextButton(
+              onPressed: () {
+                context.pushNamed(AppUrls.forgotPasswordAuthScreen);
+              },
               child: Text(
                 AppLocalizations.of(context)?.forgotPassword ??
                     'Forgot Password?',
-                style: ShadTheme.of(context).textTheme.p.copyWith(),
+                style: Theme.of(context).textTheme.bodyLarge,
               ),
-              onPressed: () async {
-                context.pushNamed(AppUrls.forgotPasswordAuthScreen);
-              },
             ),
           ),
           const SizedBox(height: 2),
-          Consumer<AuthProvider>(builder: (context, authProvider, child) {
-            var isLoading = authProvider.isLoading;
-            return ShadButton(
-              backgroundColor: primaryColor,
-              size: ShadButtonSize.lg,
-              onPressed: isLoading ? null : _handleLogin,
-              child: isLoading
-                  ? const Center(
-                      child: SizedBox(
+          Consumer<AuthProvider>(
+            builder: (context, authProvider, child) {
+              return ElevatedButton(
+                onPressed: authProvider.isLoading ? null : _handleLogin,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: primaryColor,
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                child: authProvider.isLoading
+                    ? const SizedBox(
+                        height: 20,
+                        width: 20,
                         child: CircularProgressIndicator(
                           strokeWidth: 2,
-                          valueColor: AlwaysStoppedAnimation<Color>(
-                            Colors.white,
-                          ),
+                          valueColor:
+                              AlwaysStoppedAnimation<Color>(Colors.white),
                         ),
-                      ),
-                    )
-                  : Center(
-                      child: Text(
+                      )
+                    : Text(
                         AppLocalizations.of(context)?.loginButton ?? 'Login',
-                        style: ShadTheme.of(context).textTheme.h4.copyWith(
+                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
                               color: Colors.white,
                             ),
                       ),
-                    ),
-            );
-          }),
+              );
+            },
+          ),
         ],
       ),
     );
