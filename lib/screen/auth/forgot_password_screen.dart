@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../../../gen/assets.gen.dart';
-import '../../../providers/auth_provider.dart';
-import '../../../utils/form_validator.dart';
-import '../../../utils/theme.dart';
+import '../../gen/assets.gen.dart';
+import '../../providers/auth_provider.dart';
+import '../../utils/form_validator.dart';
+import '../../utils/theme.dart';
 
 class ForgotPasswordAuthScreen extends StatefulWidget {
   const ForgotPasswordAuthScreen({super.key});

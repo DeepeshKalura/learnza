@@ -12,10 +12,9 @@ import '../providers/auth_provider.dart';
 import '../screen/about/about_shadananda_screen.dart';
 import '../screen/about/student_union_about_screen.dart';
 import '../screen/about/teacher_about_screen.dart';
-import '../screen/common/auth/forgot_password_screen.dart';
-import '../screen/common/auth/login_auth_common_screen.dart';
+import '../screen/auth/authentication_screen.dart';
+import '../screen/auth/forgot_password_screen.dart';
 import '../screen/common/library/offline_libaray_common_screen.dart';
-import '../screen/common/setting/setting_common_screen.dart';
 import '../screen/common/splash/splash_screen.dart';
 import '../screen/groups/groups_message_screen.dart';
 import '../screen/groups/groups_student_screen.dart';
@@ -28,6 +27,7 @@ import '../screen/library/search_book_student_screen.dart';
 import '../screen/library/user_library_screen.dart';
 import '../screen/library/widget/book_card_widget.dart';
 import '../screen/post/post_student_screen.dart';
+import '../screen/setting/setting_screen.dart';
 import '../screen/student/blogs/deatail_blog_student.dart';
 import '../screen/student/home_student_screen.dart';
 import '../screen/student/profile/profile_student_screen.dart';
@@ -66,7 +66,7 @@ class AppRouters {
       GoRoute(
         path: "/auth",
         name: AppUrls.authenticationScreen,
-        builder: (context, state) => const LoginAuthCommonScreen(),
+        builder: (context, state) => const AuthenticationScreen(),
         redirect: roleBasedRedirect,
       ),
 
@@ -79,7 +79,7 @@ class AppRouters {
       GoRoute(
         path: "/setting",
         name: AppUrls.settingCommonScreen,
-        builder: (context, state) => const SettingCommonScreen(),
+        builder: (context, state) => const SettingScreen(),
       ),
 
       GoRoute(

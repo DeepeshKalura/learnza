@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-import '../../../providers/state/user_preference_provider.dart';
-import '../../../utils/theme.dart';
+import '../../providers/state/settings/settings_state_provider.dart';
+import '../../providers/state/user_preference_provider.dart';
+import '../../router/app_urls.dart';
+import '../../utils/theme.dart';
 
-class SettingCommonScreen extends StatefulWidget {
-  const SettingCommonScreen({super.key});
+class SettingScreen extends StatefulWidget {
+  const SettingScreen({super.key});
 
   @override
-  State<SettingCommonScreen> createState() => _SettingCommonScreenState();
+  State<SettingScreen> createState() => _SettingScreenState();
 }
 
-class _SettingCommonScreenState extends State<SettingCommonScreen> {
+class _SettingScreenState extends State<SettingScreen> {
   // bool _notificationsEnabled = true;
 
   @override
@@ -131,7 +135,11 @@ class _SettingCommonScreenState extends State<SettingCommonScreen> {
                     subtitle: localizations?.privacySubtitle ??
                         'Manage your privacy settings',
                     onTap: () {
-                      // TODO: Implement privacy settings navigation
+                      launchUrl(
+                        Uri.parse(
+                          'https://sites.google.com/view/shadanda/privacy',
+                        ),
+                      );
                     },
                   ),
                 ],
@@ -187,7 +195,10 @@ class _SettingCommonScreenState extends State<SettingCommonScreen> {
     VoidCallback? onTap,
   }) {
     return ListTile(
-      leading: Icon(icon, color: primaryColor),
+      leading: Icon(
+        icon,
+        color: primaryColor,
+      ),
       title: Text(
         title,
         style: const TextStyle(
@@ -211,23 +222,54 @@ class _SettingCommonScreenState extends State<SettingCommonScreen> {
     final localizations = AppLocalizations.of(context);
     showDialog(
       context: context,
-      builder: (context) => ShadDialog(
-        title: Text(localizations?.logoutDialogTitle ?? "Logout"),
-        description: Text(localizations?.logoutDialogDescription ??
-            "Are you sure you want to log out?"),
-        actions: [
-          ShadButton.outline(
-            onPressed: () => Navigator.of(context).pop(),
-            child: Text(localizations?.cancelButton ?? "Cancel"),
+      builder: (context) => Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        padding: const EdgeInsets.all(16.0),
+        child: ShadDialog(
+          title: Text(
+            localizations?.logoutDialogTitle ?? "Logout",
           ),
-          ShadButton.destructive(
-            onPressed: () {
-              // TODO: Implement logout logic
-              Navigator.of(context).pop();
-            },
-            child: Text(localizations?.logoutButton ?? "Logout"),
+          description: Text(
+            localizations?.logoutDialogDescription ??
+                "Are you sure you want to log out?",
           ),
-        ],
+          actions: [
+            ShadButton.outline(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                localizations?.cancelButton ?? "Cancel",
+              ),
+            ),
+            Consumer<SettingsStateProvider>(
+              builder: (context, settingsState, child) {
+                return ShadButton.destructive(
+                  onPressed: settingsState.isLoading
+                      ? null
+                      : () async {
+                          await settingsState.logout();
+
+                          context.goNamed(
+                            AppUrls.authenticationScreen,
+                          );
+                        },
+                  child: settingsState.isLoading
+                      ? CircularProgressIndicator(
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                            ShadTheme.of(context).colorScheme.primary,
+                          ),
+                        )
+                      : Text(
+                          localizations?.logoutButton ?? "Logout",
+                        ),
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

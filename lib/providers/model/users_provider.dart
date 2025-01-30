@@ -32,4 +32,13 @@ class UsersProvider {
       rethrow;
     }
   }
+
+  Future<void> logout() async {
+    try {
+      await firebaseService.auth.signOut();
+    } catch (e, s) {
+      developer.log('logout', error: e, stackTrace: s);
+      rethrow;
+    }
+  }
 }

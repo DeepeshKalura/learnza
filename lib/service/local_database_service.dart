@@ -1,9 +1,9 @@
-import 'dart:io';
 import 'dart:developer' as developer;
+import 'dart:io';
 
+import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:path/path.dart';
 
 import '../model/books/books_model.dart';
 import '../utils/raw_sql_query_utils.dart';
@@ -13,6 +13,8 @@ class LocalDatabaseService {
   static Database? _database;
   LocalDatabaseService._internal();
   String tableName = 'books';
+  String userpreferenceTableName = 'userpreference';
+  final defaultId = 1;
 
   Future<String> get getBookStorageDefaultDirectory async {
     try {
@@ -246,12 +248,45 @@ class LocalDatabaseService {
   }
 
 //? I think i can userPreference this can also do this job super easily
+
+  Future<void> initializePreferences() async {
+    try {
+      final dbInstance = await instance.database;
+
+      // Check if we have a preferences row
+      final List<Map<String, dynamic>> exists = await dbInstance.query(
+          userpreferenceTableName,
+          where: 'id = ?',
+          whereArgs: [defaultId]);
+
+      // If no preferences exist, insert default values
+      if (exists.isEmpty) {
+        await dbInstance.insert(
+          userpreferenceTableName,
+          {
+            'id': defaultId,
+            'darkMode': 0,
+            'language': 'en',
+          },
+        );
+      }
+    } catch (e) {
+      developer.log('Error initializing preferences: $e');
+      rethrow;
+    }
+  }
+
   Future<bool> isDarkTheme() async {
     try {
       final dbInstance = await instance.database;
-      final List<Map<String, dynamic>> maps =
-          await dbInstance.query('userpreference');
+      final List<Map<String, dynamic>> maps = await dbInstance.query(
+        userpreferenceTableName,
+        where: 'id = ?',
+        whereArgs: [defaultId],
+      );
+
       if (maps.isEmpty) {
+        await initializePreferences();
         return false;
       }
       return maps.first['darkMode'] == 1;
@@ -264,14 +299,19 @@ class LocalDatabaseService {
   Future<String> currentLanguage() async {
     try {
       final dbInstance = await instance.database;
-      final List<Map<String, dynamic>> maps =
-          await dbInstance.query('userpreference');
+      final List<Map<String, dynamic>> maps = await dbInstance.query(
+        tableName,
+        where: 'id = ?',
+        whereArgs: [defaultId],
+      );
+
       if (maps.isEmpty) {
+        await initializePreferences();
         return "en";
       }
       return maps.first['language'];
     } catch (e) {
-      developer.log('Error getting dark theme: $e');
+      developer.log('Error getting language: $e');
       rethrow;
     }
   }
@@ -279,11 +319,11 @@ class LocalDatabaseService {
   Future<void> setDarkTheme(bool isDark) async {
     try {
       final dbInstance = await instance.database;
-      await dbInstance.insert(
-        'userpreference',
-        {
-          'darkMode': isDark ? 1 : 0,
-        },
+      await dbInstance.update(
+        userpreferenceTableName,
+        {'darkMode': isDark ? 1 : 0},
+        where: 'id = ?',
+        whereArgs: [defaultId],
         conflictAlgorithm: ConflictAlgorithm.replace,
       );
     } catch (e) {
@@ -295,11 +335,11 @@ class LocalDatabaseService {
   Future<void> setLanguage(String language) async {
     try {
       final dbInstance = await instance.database;
-      await dbInstance.insert(
-        'userpreference',
-        {
-          'language': language,
-        },
+      await dbInstance.update(
+        userpreferenceTableName,
+        {'language': language},
+        where: 'id = ?',
+        whereArgs: [defaultId],
         conflictAlgorithm: ConflictAlgorithm.replace,
       );
     } catch (e) {
