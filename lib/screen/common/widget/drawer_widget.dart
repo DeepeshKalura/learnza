@@ -53,7 +53,7 @@ class DrawerWidget extends StatelessWidget {
               children: [
                 ListTile(
                   leading: const Icon(
-                    LucideIcons.user,
+                    Icons.person_outline,
                   ),
                   title: Text(
                     AppLocalizations.of(context)?.profileDrawer ?? 'Profile',
@@ -62,7 +62,6 @@ class DrawerWidget extends StatelessWidget {
                   onTap: () {
                     context.pushNamed(AppUrls.profileStudentScreen);
                   },
-                  selected: currentIndex == 0,
                 ),
                 ListTile(
                   leading: const Icon(

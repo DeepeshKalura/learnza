@@ -243,67 +243,97 @@ class _GroupsStudentScreenState extends State<GroupsStudentScreen> {
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         child: Card(
-          elevation: 1,
+          elevation: 2, // Slightly increased elevation
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(16), // More rounded corners
           ),
           child: Hero(
             tag: group.id,
             child: Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(16),
                 gradient: LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                   colors: [
                     ShadTheme.of(context).colorScheme.muted,
-                    ShadTheme.of(context).colorScheme.muted.withOpacity(0.7),
+                    ShadTheme.of(context)
+                        .colorScheme
+                        .muted
+                        .withOpacity(0.5), // More contrast
                   ],
+                  stops: const [0.2, 1.0], // Gradient distribution
                 ),
               ),
               child: Stack(
                 children: [
-                  // Privacy indicator with subtle background
+                  // Improved privacy indicator
                   Positioned(
                     top: 12,
                     right: 12,
                     child: Container(
-                      padding: const EdgeInsets.all(4),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 4),
                       decoration: BoxDecoration(
-                        color: ShadTheme.of(context)
-                            .colorScheme
-                            .muted
-                            .withOpacity(0.3),
-                        borderRadius: BorderRadius.circular(8),
+                        color: group.privacy == GroupPrivacy.private
+                            ? Colors.black.withOpacity(0.1)
+                            : Colors.green.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                          color: group.privacy == GroupPrivacy.private
+                              ? Colors.black.withOpacity(0.2)
+                              : Colors.green.withOpacity(0.2),
+                          width: 1,
+                        ),
                       ),
-                      child: Icon(
-                        group.privacy == GroupPrivacy.private
-                            ? Icons.lock_outline
-                            : Icons.public,
-                        size: 18,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            group.privacy == GroupPrivacy.private
+                                ? Icons.lock_outline
+                                : Icons.public,
+                            size: 16,
+                            color: group.privacy == GroupPrivacy.private
+                                ? Colors.black54
+                                : Colors.green,
+                          ),
+                          const SizedBox(width: 4),
+                          Text(
+                            group.privacy == GroupPrivacy.private
+                                ? 'Private'
+                                : 'Public',
+                            style: ShadTheme.of(context).textTheme.p.copyWith(
+                                  fontSize: 12,
+                                  color: group.privacy == GroupPrivacy.private
+                                      ? Colors.black54
+                                      : Colors.green,
+                                ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(20), // Increased padding
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        // Enhanced Avatar section
+                        // Enhanced Avatar with better shadow
                         Container(
                           decoration: const BoxDecoration(
                             shape: BoxShape.circle,
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.black87,
-                                blurRadius: 10,
-                                offset: Offset(0, 2),
+                                color: Colors.black12,
+                                blurRadius: 15,
+                                spreadRadius: 2,
+                                offset: Offset(0, 4),
                               ),
                             ],
                           ),
                           child: CircleAvatar(
-                            radius:
-                                28, // Slightly smaller for better proportions
+                            radius: 32, // Larger avatar
                             backgroundColor: ShadTheme.of(context)
                                 .colorScheme
                                 .primary
@@ -314,13 +344,17 @@ class _GroupsStudentScreenState extends State<GroupsStudentScreen> {
                             child: group.imageUrl == null
                                 ? Text(
                                     group.name.substring(0, 2).toUpperCase(),
-                                    style: ShadTheme.of(context).textTheme.p,
+                                    style: ShadTheme.of(context)
+                                        .textTheme
+                                        .large
+                                        .copyWith(
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                   )
                                 : null,
                           ),
                         ),
-                        const SizedBox(width: 16),
-                        // Refined Content section
+                        const SizedBox(width: 20),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -328,10 +362,16 @@ class _GroupsStudentScreenState extends State<GroupsStudentScreen> {
                             children: [
                               Text(
                                 group.name,
-                                style: ShadTheme.of(context).textTheme.large,
+                                style: ShadTheme.of(context)
+                                    .textTheme
+                                    .large
+                                    .copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18, // Larger font
+                                    ),
                               ),
                               if (group.description != null) ...[
-                                const SizedBox(height: 4),
+                                const SizedBox(height: 6),
                                 Text(
                                   group.description!,
                                   maxLines: 2,
@@ -339,16 +379,23 @@ class _GroupsStudentScreenState extends State<GroupsStudentScreen> {
                                   style: ShadTheme.of(context).textTheme.p,
                                 ),
                               ],
-                              const SizedBox(height: 8),
-                              // Enhanced stats row
+                              const SizedBox(height: 12),
                               Row(
                                 children: [
                                   _buildStat(
                                     context,
                                     Icons.people_outline,
-                                    '${group.members.length}',
+                                    '${group.members.length} members',
                                   ),
-                                  const SizedBox(width: 16),
+                                  Container(
+                                      height: 16,
+                                      width: 1,
+                                      margin: const EdgeInsets.symmetric(
+                                        horizontal: 12,
+                                      ),
+                                      color: ShadTheme.of(context)
+                                          .colorScheme
+                                          .secondary),
                                   _buildStat(
                                     context,
                                     Icons.calendar_today_outlined,
@@ -359,16 +406,17 @@ class _GroupsStudentScreenState extends State<GroupsStudentScreen> {
                             ],
                           ),
                         ),
-                        // Refined arrow icon
+                        // Improved arrow with container
                         Container(
                           padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            color: ShadTheme.of(context).colorScheme.secondary,
+                            borderRadius: BorderRadius.circular(12),
+                          ),
                           child: Icon(
-                            Icons.chevron_right_rounded,
-                            color: ShadTheme.of(context)
-                                .colorScheme
-                                .secondary
-                                .withOpacity(0.5),
-                            size: 24,
+                            Icons.arrow_forward_ios_rounded,
+                            color: ShadTheme.of(context).colorScheme.secondary,
+                            size: 20,
                           ),
                         ),
                       ],
@@ -392,10 +440,16 @@ class _GroupsStudentScreenState extends State<GroupsStudentScreen> {
           size: 16,
           color: ShadTheme.of(context).colorScheme.secondary.withOpacity(0.6),
         ),
-        const SizedBox(width: 4),
+        const SizedBox(width: 6),
         Text(
           text,
-          style: ShadTheme.of(context).textTheme.p,
+          style: ShadTheme.of(context).textTheme.p.copyWith(
+                fontSize: 13,
+                color: ShadTheme.of(context)
+                    .colorScheme
+                    .secondary
+                    .withOpacity(0.8),
+              ),
         ),
       ],
     );
@@ -521,7 +575,7 @@ class _GroupsStudentScreenState extends State<GroupsStudentScreen> {
           _scaffoldKey.currentState?.openDrawer();
         },
       ),
-      title: Text(localizations?.groupsCardTitile ?? 'Groups'),
+      title: Text(localizations?.groupsCardTitile ?? 'Messanger'),
       actions: [
         ShadButton(
           icon: const Icon(Icons.add),

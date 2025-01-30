@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../utils/theme.dart';
-import '../groups/groups_student_screen.dart';
 import '../library/user_library_screen.dart';
+import '../messenger/groups_student_screen.dart';
 import '../post/post_student_screen.dart';
 
 class HomeStudentScreen extends StatefulWidget {
@@ -56,9 +56,9 @@ class _HomeStudentScreenState extends State<HomeStudentScreen> {
                     ),
                     BottomNavigationBarItem(
                       icon: Icon(
-                        Icons.group,
+                        Icons.message,
                       ),
-                      label: 'Groups',
+                      label: 'Messanger',
                     ),
                   ],
                 ),

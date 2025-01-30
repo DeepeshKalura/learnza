@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../../../providers/state/student/libary_student_state_provider.dart';
 import '../../library/widget/books_card_library_student_widget.dart';
 import '../../library/widget/error/no_books_found_error_widget.dart';
+import '../../universal/success_universal_screen.dart';
 
 class OfflineLibraryCommonScreen extends StatefulWidget {
   const OfflineLibraryCommonScreen({super.key});
@@ -33,9 +34,18 @@ class OfflineLibraryCommonScreenState
           IconButton(
             icon: const Icon(Icons.refresh),
             onPressed: () {
-              context
-                  .read<LibaryStudentStateProvider>()
-                  .getBooksFromLocalDatabase();
+              try {
+                context
+                    .read<LibaryStudentStateProvider>()
+                    .getBooksFromLocalDatabase();
+                UniversalAlert.sucessAlert(
+                  context,
+                  "Sucessfully Loading Books from local database",
+                  "Successfully Action",
+                );
+              } catch (e) {
+                UniversalAlert.commonErrorSheet(context, e.toString());
+              }
             },
           ),
         ],
