@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
+import 'package:learnza/screen/universal/success_universal_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:uuid/uuid.dart';
@@ -222,7 +223,9 @@ class _GroupsStudentScreenState extends State<GroupsStudentScreen> {
         }
 
         if (provider.groups.isEmpty) {
-          return const Center(child: Text('No groups found'));
+          return const Center(
+            child: Text('No groups found'),
+          );
         }
 
         return ListView.builder(
@@ -257,10 +260,9 @@ class _GroupsStudentScreenState extends State<GroupsStudentScreen> {
                   end: Alignment.bottomRight,
                   colors: [
                     ShadTheme.of(context).colorScheme.muted,
-                    ShadTheme.of(context)
-                        .colorScheme
-                        .muted
-                        .withOpacity(0.5), // More contrast
+                    ShadTheme.of(context).colorScheme.muted.withOpacity(
+                          0.5,
+                        ), // More contrast
                   ],
                   stops: const [0.2, 1.0], // Gradient distribution
                 ),
@@ -438,17 +440,12 @@ class _GroupsStudentScreenState extends State<GroupsStudentScreen> {
         Icon(
           icon,
           size: 16,
-          color: ShadTheme.of(context).colorScheme.secondary.withOpacity(0.6),
         ),
         const SizedBox(width: 6),
         Text(
           text,
           style: ShadTheme.of(context).textTheme.p.copyWith(
                 fontSize: 13,
-                color: ShadTheme.of(context)
-                    .colorScheme
-                    .secondary
-                    .withOpacity(0.8),
               ),
         ),
       ],
@@ -545,7 +542,6 @@ class _GroupsStudentScreenState extends State<GroupsStudentScreen> {
                 maxRadius: 28,
                 child: Icon(
                   Icons.image,
-                  color: Colors.white,
                 ),
               ),
             );
@@ -593,7 +589,9 @@ class _GroupsStudentScreenState extends State<GroupsStudentScreen> {
       id: 'groupDescription',
       label: const Text("Description"),
       controller: _groupDescriptionController,
-      placeholder: const Text('Optional group description'),
+      placeholder: const Text(
+        'Optional group description',
+      ),
       maxLines: 4,
     );
   }
@@ -615,7 +613,9 @@ class _GroupsStudentScreenState extends State<GroupsStudentScreen> {
           alignment: Alignment.topRight,
           child: ShadSelect<GroupPrivacy>(
             controller: _popoverController,
-            placeholder: const Text('Select Privacy'),
+            placeholder: const Text(
+              'Select Privacy',
+            ),
             initialValue: _selectedPrivacy,
             options: [
               ...GroupPrivacy.values.map(
@@ -717,14 +717,13 @@ class _GroupsStudentScreenState extends State<GroupsStudentScreen> {
                           onTap: groupsProvider.removeCoverImage,
                           child: Container(
                             padding: const EdgeInsets.all(4),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
+                            decoration: const BoxDecoration(
                               shape: BoxShape.circle,
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.black.withOpacity(0.1),
+                                  color: Colors.black12,
                                   blurRadius: 4,
-                                  offset: const Offset(0, 2),
+                                  offset: Offset(0, 2),
                                 ),
                               ],
                             ),
@@ -746,12 +745,9 @@ class _GroupsStudentScreenState extends State<GroupsStudentScreen> {
                       await groupsProvider.pickGroupCoverImage();
                     } catch (e) {
                       if (mounted) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content:
-                                Text('Error picking image: ${e.toString()}'),
-                            backgroundColor: Colors.red,
-                          ),
+                        UniversalAlert.commonErrorSheet(
+                          context,
+                          e.toString(),
                         );
                       }
                     }
@@ -765,6 +761,7 @@ class _GroupsStudentScreenState extends State<GroupsStudentScreen> {
                         coverImage == null
                             ? 'Select Cover Image'
                             : 'Change Cover Image',
+                        style: ShadTheme.of(context).textTheme.p,
                       ),
                     ],
                   ),
@@ -773,17 +770,11 @@ class _GroupsStudentScreenState extends State<GroupsStudentScreen> {
                   const SizedBox(height: 8),
                   Text(
                     'Recommended size: 1200x400px',
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.grey.shade600,
-                    ),
+                    style: ShadTheme.of(context).textTheme.small,
                   ),
                   Text(
                     'Maximum size: 5MB',
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.grey.shade600,
-                    ),
+                    style: ShadTheme.of(context).textTheme.small,
                   ),
                 ],
               ],
