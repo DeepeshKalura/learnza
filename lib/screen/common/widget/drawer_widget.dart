@@ -77,7 +77,7 @@ class DrawerWidget extends StatelessWidget {
                 ),
                 ListTile(
                   leading: const Icon(
-                    LucideIcons.messageSquare,
+                    Icons.feedback_outlined,
                   ),
                   title: Text(
                     AppLocalizations.of(context)?.feedbackDrawer ?? 'Feedback',

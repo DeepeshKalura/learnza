@@ -39,6 +39,7 @@ class PostProvider {
 
       final List<String> uniqueUserIds =
           posts.map((post) => post.authorId).toSet().toList();
+
       final Map<String, UsersModel> usersByIdMap =
           await _fetchUsersByIds(uniqueUserIds);
 

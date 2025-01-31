@@ -41,9 +41,6 @@ class PostEditorStateProvider extends ChangeNotifier {
 
   Future<void> createPost(
       {required String title, required String description}) async {
-    isLoading = true;
-    notifyListeners();
-
     try {
       await di.injector<PostProvider>().createPost(
             title: title,
@@ -51,6 +48,7 @@ class PostEditorStateProvider extends ChangeNotifier {
             thumbnail: thumbnail,
           );
       isPostCreated = true;
+      reset();
     } catch (e, s) {
       error = e.toString();
       developer.log(
@@ -58,13 +56,9 @@ class PostEditorStateProvider extends ChangeNotifier {
         error: e,
         stackTrace: s,
       );
-    } finally {
-      isLoading = false;
-      notifyListeners();
     }
   }
 
-  // Method to reset state
   void reset() {
     isLoading = false;
     isPostCreated = false;
@@ -73,7 +67,11 @@ class PostEditorStateProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Cleanup
+  void setIsLoading(bool value) {
+    isLoading = value;
+    notifyListeners();
+  }
+
   @override
   void dispose() {
     reset();

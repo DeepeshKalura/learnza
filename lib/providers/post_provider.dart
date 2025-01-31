@@ -1,7 +1,8 @@
-import 'package:universal_io/io.dart';
 import 'dart:developer' as developer;
+
 import 'package:flutter/foundation.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:universal_io/io.dart';
 import 'package:uuid/uuid.dart';
 
 import '../model/metrics/post_metrics.dart';
