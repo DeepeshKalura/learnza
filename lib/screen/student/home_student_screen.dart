@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../utils/theme.dart';
 import '../library/user_library_screen.dart';
 import '../messenger/groups_student_screen.dart';
-import '../post/post_student_screen.dart';
+import '../post/posts_screen.dart';
 
 class HomeStudentScreen extends StatefulWidget {
   const HomeStudentScreen({super.key});
