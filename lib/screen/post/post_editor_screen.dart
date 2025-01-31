@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
@@ -63,12 +64,13 @@ class _PostEditorScreenState extends State<PostEditorScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
     return Consumer<PostEditorStateProvider>(
       builder: (context, provider, child) {
         return Scaffold(
           appBar: AppBar(
             title: Text(
-              'Create Post',
+              localizations?.createPostTitle ?? 'Create Post',
               style: ShadTheme.of(context).textTheme.h3.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
@@ -92,13 +94,13 @@ class _PostEditorScreenState extends State<PostEditorScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  _buildTitleTextField(provider, context),
+                  _buildTitleTextField(provider, context, localizations),
                   const SizedBox(height: 16),
-                  _buildContentTextField(provider, context),
+                  _buildContentTextField(provider, context, localizations),
                   const SizedBox(height: 16),
-                  _buildImagePickerSection(provider),
+                  _buildImagePickerSection(provider, localizations),
                   const SizedBox(height: 24),
-                  _buildActionButtons(provider, context),
+                  _buildActionButtons(provider, context, localizations),
                   if (provider.error != null)
                     _buildErrorMessage(provider, context),
                 ],
@@ -110,13 +112,13 @@ class _PostEditorScreenState extends State<PostEditorScreen> {
     );
   }
 
-  Widget _buildTitleTextField(
-      PostEditorStateProvider provider, BuildContext context) {
+  Widget _buildTitleTextField(PostEditorStateProvider provider,
+      BuildContext context, AppLocalizations? localizations) {
     return TextFormField(
       controller: _titleController,
       decoration: InputDecoration(
-        labelText: 'Post Title',
-        hintText: 'Enter an engaging title',
+        labelText: localizations?.postTitleLabel ?? 'Post Title',
+        hintText: localizations?.postContentHint ?? 'Enter an engaging title',
         prefixIcon: Icon(
           Icons.title,
           color: ShadTheme.of(context).colorScheme.primary,
@@ -156,7 +158,7 @@ class _PostEditorScreenState extends State<PostEditorScreen> {
           ),
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return 'Please enter a title';
+          return localizations?.postTitleError ?? 'Please enter a title';
         }
         return null;
       },
@@ -164,13 +166,13 @@ class _PostEditorScreenState extends State<PostEditorScreen> {
     );
   }
 
-  Widget _buildContentTextField(
-      PostEditorStateProvider provider, BuildContext context) {
+  Widget _buildContentTextField(PostEditorStateProvider provider,
+      BuildContext context, AppLocalizations? localizations) {
     return TextFormField(
       controller: _contentController,
       decoration: InputDecoration(
-        labelText: 'Post Content',
-        hintText: 'Share your thoughts...',
+        labelText: localizations?.postContentLabel ?? 'Post Content',
+        hintText: localizations?.postContentHint ?? 'Share your thoughts...',
         alignLabelWithHint: true,
         prefixIcon: Icon(
           Icons.article,
@@ -213,7 +215,7 @@ class _PostEditorScreenState extends State<PostEditorScreen> {
           ),
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return 'Please enter post content';
+          return localizations?.postContentError ?? 'Please enter post content';
         }
         return null;
       },
@@ -221,7 +223,10 @@ class _PostEditorScreenState extends State<PostEditorScreen> {
     );
   }
 
-  Widget _buildImagePickerSection(PostEditorStateProvider provider) {
+  Widget _buildImagePickerSection(
+    PostEditorStateProvider provider,
+    AppLocalizations? localizations,
+  ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -261,7 +266,9 @@ class _PostEditorScreenState extends State<PostEditorScreen> {
             Icons.image,
           ),
           child: Text(
-            provider.thumbnail != null ? 'Change Image' : 'Pick Image',
+            provider.thumbnail != null
+                ? localizations?.changeImageButton ?? 'Change Image'
+                : localizations?.pickImageButton ?? 'Pick Image',
             style: ShadTheme.of(context).textTheme.large.copyWith(
                   color: ShadTheme.of(context).colorScheme.primary,
                   fontSize: 16,
@@ -272,8 +279,8 @@ class _PostEditorScreenState extends State<PostEditorScreen> {
     );
   }
 
-  Widget _buildActionButtons(
-      PostEditorStateProvider provider, BuildContext context) {
+  Widget _buildActionButtons(PostEditorStateProvider provider,
+      BuildContext context, AppLocalizations? localizations) {
     return Row(
       children: [
         Expanded(
@@ -285,7 +292,7 @@ class _PostEditorScreenState extends State<PostEditorScreen> {
                     color: ShadTheme.of(context).colorScheme.background,
                   )
                 : Text(
-                    'Submit Post',
+                    localizations?.submitPostButton ?? 'Submit Post',
                     style: ShadTheme.of(context).textTheme.large.copyWith(
                           color: ShadTheme.of(context).colorScheme.background,
                           fontSize: 16,
@@ -299,7 +306,7 @@ class _PostEditorScreenState extends State<PostEditorScreen> {
             size: ShadButtonSize.lg,
             onPressed: provider.isLoading ? null : () => _resetForm(provider),
             child: Text(
-              'Reset',
+              localizations?.resetButton ?? 'Reset',
               style: ShadTheme.of(context).textTheme.large.copyWith(
                     color: ShadTheme.of(context).colorScheme.primary,
                   ),
