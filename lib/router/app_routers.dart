@@ -26,7 +26,7 @@ import '../screen/library/widget/book_card_widget.dart';
 import '../screen/messenger/groups_message_screen.dart';
 import '../screen/messenger/groups_student_screen.dart';
 import '../screen/messenger/widget/groups_details_screen.dart';
-import '../screen/post/post_student_screen.dart';
+import '../screen/post/posts_screen.dart';
 import '../screen/setting/setting_screen.dart';
 import '../screen/student/blogs/deatail_blog_student.dart';
 import '../screen/student/home_student_screen.dart';

@@ -20,8 +20,7 @@ class UserPreferenceProvider extends ChangeNotifier {
 
   Future<void> _initializePreferences() async {
     try {
-      await localDatabase
-          .initializePreferences(); // Make sure table exists with default values
+      await localDatabase.initializePreferences();
       _isDarkMode = await localDatabase.isDarkTheme();
       _currentLanguage = await localDatabase.currentLanguage();
       _isInitialized = true;
