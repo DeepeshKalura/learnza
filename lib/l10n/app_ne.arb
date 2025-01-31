@@ -1,8 +1,8 @@
 {
   "@@locale": "ne",
-  "appName": "षडानन्द",
+  "appName": "ई-षडानन्द",
   "appNameDescription": "अनुप्रयोगको नाम।",
-  "madeBy": "❤️ सँग बनाइएको मिस मंगोल छात्रवृत्ति कोष - २०१८ ❤️",
+  "madeBy": "❤️ मेड विथ मिस मंगोल छात्रवृत्ति कोष-२०१८ विद्यार्थी संघ ❤️",
   "madeByDescription": "अनुप्रयोग निर्माताको श्रेय।",
   "greeting": "षडानन्द स्वागत छ!",
   "loginMessage": "शदनन्द मेलबाट प्राप्त प्रमाणहरू प्रविष्ट गर्नुहोस् र अनगिन्ती पुस्तकहरूमा रमाउनुहोस्।",
@@ -151,6 +151,38 @@
   "teacherScreenTitle": "क्याम्पस शिक्षक",
   "teacherChiefName": "नगेन्द्र बस्नेत",
   "teacherChiefPosition": "क्याम्पस प्रमुख",
-  "teacherChiefDescription": "नगेन्द्र बस्नेत सर क्याम्पस प्रमुखका रूपमा सेवा प्रदान गर्दै, शैक्षिक उत्कृष्टताका लागि समर्पण र दृष्टिकोणका साथ संस्थानको नेतृत्व गर्दै हुनुहुन्छ।"
+  "teacherChiefDescription": "नगेन्द्र बस्नेत सर क्याम्पस प्रमुखका रूपमा सेवा प्रदान गर्दै, शैक्षिक उत्कृष्टताका लागि समर्पण र दृष्टिकोणका साथ संस्थानको नेतृत्व गर्दै हुनुहुन्छ।",
+  "createPostTitle": "पोस्ट सिर्जना गर्नुहोस्",
+    "createPostTitleDescription": "पोस्ट सम्पादक स्क्रिनमा देखाइने शीर्षक",
+
+    "postTitleLabel": "पोस्ट शीर्षक",
+    "postTitleLabelDescription": "पोस्ट शीर्षक प्रविष्टि फिल्डको लेबल",
+
+    "postTitleHint": "आकर्षक शीर्षक प्रविष्ट गर्नुहोस्",
+    "postTitleHintDescription": "पोस्ट शीर्षक प्रविष्टि फिल्डका लागि संकेत पाठ",
+
+    "postTitleError": "कृपया शीर्षक प्रविष्ट गर्नुहोस्",
+    "postTitleErrorDescription": "जब पोस्ट शीर्षक खाली हुन्छ, देखाइने त्रुटि सन्देश",
+
+    "postContentLabel": "पोस्ट सामग्री",
+    "postContentLabelDescription": "पोस्ट सामग्री प्रविष्टि फिल्डको लेबल",
+
+    "postContentHint": "आफ्ना विचारहरू साझा गर्नुहोस्...",
+    "postContentHintDescription": "पोस्ट सामग्री प्रविष्टि फिल्डका लागि संकेत पाठ",
+
+    "postContentError": "कृपया पोस्ट सामग्री प्रविष्ट गर्नुहोस्",
+    "postContentErrorDescription": "जब पोस्ट सामग्री खाली हुन्छ, देखाइने त्रुटि सन्देश",
+
+    "pickImageButton": "छवि चयन गर्नुहोस्",
+    "pickImageButtonDescription": "छवि चयन बटनको लेबल",
+
+    "changeImageButton": "छवि परिवर्तन गर्नुहोस्",
+    "changeImageButtonDescription": "चयन गरिएको छवि परिवर्तन गर्ने बटनको लेबल",
+
+    "submitPostButton": "पोस्ट सबमिट गर्नुहोस्",
+    "submitPostButtonDescription": "पोस्ट सबमिट गर्ने बटनको लेबल",
+
+    "resetButton": "रिसेट गर्नुहोस्",
+    "resetButtonDescription": "फारम रिसेट गर्ने बटनको लेबल"
 
 }

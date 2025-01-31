@@ -2,7 +2,7 @@
   "@@locale": "en",
   "appName": "e-Shadananda",
   "appNameDescription": "The name of the application.",
-  "madeBy": "Made with ❤️ Miss Mongol scholarship fund- 2018 ❤️",
+  "madeBy": "Made with ❤️ Miss Mongol scholarship fund-2018 by Student Union ❤️",
   "madeByDescription": "Credits for the app creator.",
   "greeting": "Welcome To Shadananda",
   "loginMessage": "Enter your credentials you get from Shadananda mail and enjoy countless books",
@@ -151,5 +151,40 @@
         "teacherScreenTitle": "Campus Faculty",
         "teacherChiefName": "Nagendra Basnet",
         "teacherChiefPosition": "Campus Chief",
-        "teacherChiefDescription": "Mr. Nagendra Basnet serves as the Campus Chief, leading our institution with dedication and vision towards academic excellence."
+        "teacherChiefDescription": "Mr. Nagendra Basnet serves as the Campus Chief, leading our institution with dedication and vision towards academic excellence.",
+        
+        
+        
+        "createPostTitle": "Create Post",
+        "createPostTitleDescription": "Title displayed in the post editor screen",
+        
+        "postTitleLabel": "Post Title",
+        "postTitleLabelDescription": "Label for the post title input field",
+        
+        "postTitleHint": "Enter an engaging title",
+        "postTitleHintDescription": "Hint text for the post title input field",
+        
+        "postTitleError": "Please enter a title",
+        "postTitleErrorDescription": "Error message when post title is empty",
+        
+        "postContentLabel": "Post Content",
+        "postContentLabelDescription": "Label for the post content input field",
+        
+        "postContentHint": "Share your thoughts...",
+        "postContentHintDescription": "Hint text for the post content input field",
+        
+        "postContentError": "Please enter post content",
+        "postContentErrorDescription": "Error message when post content is empty",
+        
+        "pickImageButton": "Pick Image",
+        "pickImageButtonDescription": "Label for the image picker button",
+        
+        "changeImageButton": "Change Image",
+        "changeImageButtonDescription": "Label for changing the selected image",
+        
+        "submitPostButton": "Submit Post",
+        "submitPostButtonDescription": "Label for the submit post button",
+        
+        "resetButton": "Reset",
+        "resetButtonDescription": "Label for the reset form button"
 }

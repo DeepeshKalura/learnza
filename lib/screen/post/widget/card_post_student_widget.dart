@@ -6,6 +6,7 @@ import 'package:shadcn_ui/shadcn_ui.dart';
 
 import '../../../model/posts/posts_model.dart';
 import '../../../model/users/users_model.dart';
+import '../../../utils/resource_util.dart';
 import '../../../utils/theme.dart';
 
 class CardPostStudentWidget extends StatefulWidget {
@@ -63,7 +64,7 @@ class CardPostStudentWidgetState extends State<CardPostStudentWidget> {
                   children: [
                     ShadAvatar(
                       widget.user.profileImageURL ??
-                          "https://thumbs.dreamstime.com/b/profile-anonymous-face-icon-gray-silhouette-person-male-default-avatar-photo-placeholder-white-background-vector-illustration-106473768.jpg",
+                          ResourceUtil.defaultProfileImage,
                       placeholder: Text(
                         widget.user.fullName.substring(0, 2),
                       ),
