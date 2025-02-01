@@ -22,7 +22,7 @@ class GroupsMessageScreen extends StatefulWidget {
 }
 
 class GroupsMessageScreenState extends State<GroupsMessageScreen> {
-  ReplyReference? _currentReply;
+  // ReplyReference? _currentReply;
 
   @override
   Widget build(BuildContext context) {
@@ -130,23 +130,25 @@ class GroupsMessageScreenState extends State<GroupsMessageScreen> {
           itemCount: snapshot.data!.length,
           itemBuilder: (context, index) {
             final message = snapshot.data![index];
-            return GestureDetector(
-              onLongPress: () {
-                setState(() {
-                  _currentReply = ReplyReference(
-                    messageId: message.id,
-                    content: message.content,
-                    senderId: message.senderId,
-                  );
-                });
-              },
-              child: MessageBubbleGroupWidget(
-                message: message,
-                isCurrentUser: message.senderId ==
-                    Provider.of<AuthProvider>(context)
-                        .user
-                        ?.uid, // Assuming you have an AuthProvider
-              ),
+            return
+                // GestureDetector(
+                // onLongPress: () {
+                // setState(() {
+                //   _currentReply = ReplyReference(
+                //     messageId: message.id,
+                //     content: message.content,
+                //     senderId: message.senderId,
+                //   );
+                // });
+                // },
+                // child:
+                MessageBubbleGroupWidget(
+              message: message,
+              isCurrentUser: message.senderId ==
+                  Provider.of<AuthProvider>(context)
+                      .user
+                      ?.uid, // Assuming you have an AuthProvider
+              // ),
             );
           },
         );
@@ -159,7 +161,7 @@ class GroupsMessageScreenState extends State<GroupsMessageScreen> {
       groupId: widget.groups.id,
       currentUserId: Provider.of<AuthProvider>(context).user?.uid ??
           '', // Assuming you have an AuthProvider
-      replyTo: _currentReply,
+      // replyTo: _currentReply,
     );
   }
 }

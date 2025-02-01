@@ -32,21 +32,18 @@ class _PostEditorScreenState extends State<PostEditorScreen> {
     if (_formKey.currentState!.validate() && !provider.isLoading) {
       provider.setIsLoading(true);
 
-      Future.delayed(const Duration(milliseconds: 700), () async {
-        await provider.createPost(
-          title: _titleController.text.trim(),
-          description: _contentController.text.trim(),
-        );
+      provider.createPost(
+        title: _titleController.text.trim(),
+        description: _contentController.text.trim(),
+      );
 
-        if (provider.isPostCreated) {
-          provider.isPostCreated = false;
-          if (mounted) {
-            context.pop();
-          }
-        }
-
+      if (provider.isPostCreated) {
+        provider.isPostCreated = false;
         provider.setIsLoading(false);
-      });
+        if (mounted) {
+          context.pop();
+        }
+      }
     }
   }
 
