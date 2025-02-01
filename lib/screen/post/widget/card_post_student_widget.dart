@@ -213,19 +213,19 @@ class CardPostStudentWidgetState extends State<CardPostStudentWidget> {
             ),
             expandedHeight: 300,
             pinned: true,
-            actions: [
-              IconButton(
-                icon: const CircleAvatar(
-                  backgroundColor: Colors.black54,
-                  child: Icon(
-                    Icons.share,
-                    color: Colors.white,
-                  ),
-                ),
-                onPressed: () {
-                  // Implement share functionality
-                },
-              ),
+            actions: const [
+              // IconButton(
+              //   icon: const CircleAvatar(
+              //     backgroundColor: Colors.black54,
+              //     child: Icon(
+              //       Icons.share,
+              //       color: Colors.white,
+              //     ),
+              //   ),
+              //   onPressed: () {
+              //     // Implement share functionality
+              //   },
+              // ),
             ],
             flexibleSpace: FlexibleSpaceBar(
               background: Hero(
