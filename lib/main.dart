@@ -8,6 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:learnza/app_config.dart';
 import 'package:learnza/locator/injector.dart' as di;
 import 'package:provider/provider.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
 // import 'package:firebase_app_check/firebase_app_check.dart';
@@ -57,20 +58,28 @@ Future<void> main() async {
   // ]);
   await di.init();
   await di.injector.get<AppConfig>().setup();
-  runApp(
-    BetterFeedback(
-      mode: FeedbackMode.navigate,
-      theme: FeedbackThemeData(
-        background: Colors.blue[50]!,
-        feedbackSheetColor: Colors.grey[50]!,
-        drawColors: [
-          Colors.red,
-          Colors.green,
-          Colors.blue,
-          Colors.yellow,
-        ],
+  // Currently Using Sentry for error logging and tracking
+  await SentryFlutter.init(
+    (options) {
+      options.dsn = di.injector.get<AppConfig>().sentryDnsUrl;
+      options.tracesSampleRate = 1.0;
+      options.profilesSampleRate = 1.0;
+    },
+    appRunner: () => runApp(
+      BetterFeedback(
+        mode: FeedbackMode.navigate,
+        theme: FeedbackThemeData(
+          background: Colors.blue[50]!,
+          feedbackSheetColor: Colors.grey[50]!,
+          drawColors: [
+            Colors.red,
+            Colors.green,
+            Colors.blue,
+            Colors.yellow,
+          ],
+        ),
+        child: const MyApp(),
       ),
-      child: const MyApp(),
     ),
   );
 }

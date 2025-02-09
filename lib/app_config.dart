@@ -9,6 +9,8 @@ class AppConfig {
 
   late PackageInfo packageInfo;
 
+  late String sentryDnsUrl;
+
   Future<void> setup() async {
     await dotenv.load(fileName: ".env");
     githubToken = dotenv.get('GITHUB_TOKEN');
@@ -17,5 +19,7 @@ class AppConfig {
     repoUrl = "https://x-access-token:$githubToken@$githubBaseUrl";
 
     packageInfo = await PackageInfo.fromPlatform();
+
+    sentryDnsUrl = dotenv.get('SENTRY_DNS_URL');
   }
 }
