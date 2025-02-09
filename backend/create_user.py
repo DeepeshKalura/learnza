@@ -251,7 +251,68 @@ async def create_teacher():
 
             print(f"{teacher.fullName} created successfully with role: {teacher.role}")
             
+async def create_student(): 
+    db = get_firestore()
+    auth = get_auth()
+
+
+    with open('pratice.json') as f:
+        data = json.load(f)
+
+        for user in data:
+            id = str(uuid.uuid4())
+            avator = create_random_avatar()
+
+            phoneNumber = user.get('phoneNumber', None)
+
+            print(f"phoneNumber is {phoneNumber}")
+            teacher = Users(
+                uid=id,
+                email=user['email'],
+                fullName=user['name'],
+                role=UserRole.STUDENT,
+                createdAt=datetime.now().isoformat(),
+                profileImageURL=avator,
+                phoneNumber=phoneNumber,
+            )
+            # it looks good
+            # print(teacher.model_dump_json())
+            password = create_random_password()
+            print(f"avatar is {avator}")
+            print(f"password is {password}")
+
+
+            auth.create_user(
+                uid=teacher.uid,
+                email=teacher.email,
+                password=password,
+                display_name=teacher.fullName,
+                email_verified=True,
+                photo_url=teacher.profileImageURL
+            )
+
+            auth.set_custom_user_claims(teacher.uid, { "role": teacher.role })
+
+            db.collection('users').document(teacher.uid).set(teacher.model_dump())
+            
+            email_sent = await email_service.send_welcome_email(
+                email=teacher.email,
+                full_name=teacher.fullName,
+                temp_password=password,
+                role=teacher.role
+            )
+
+            if not email_sent:
+                print(f"Warning: Welcome email failed to send to {teacher.email}")
+
+                auth.delete_user(teacher.uid)
+                db.collection('users').document(teacher.uid).delete()
+                exit("Email not sent")
+
+            print(f"{teacher.fullName} created successfully with role: {teacher.role}")
+
+
 
 
 if __name__ == "__main__":
-    asyncio.run(create_teacher())
+    asyncio.run(create_student())
