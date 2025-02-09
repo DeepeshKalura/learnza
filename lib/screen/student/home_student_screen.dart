@@ -20,6 +20,7 @@ class _HomeStudentScreenState extends State<HomeStudentScreen> {
     // const ProfileStudentScreen(),
     // const LibraryStudentScreen(),
     const UserLibraryScreen(),
+    // const HomeCalendarScreen(),
     const GroupsStudentScreen(),
   ];
 
@@ -54,6 +55,12 @@ class _HomeStudentScreenState extends State<HomeStudentScreen> {
                       ),
                       label: 'Library',
                     ),
+                    // BottomNavigationBarItem(
+                    //   icon: Icon(
+                    //     Icons.calendar_today,
+                    //   ),
+                    //   label: 'Calander',
+                    // ),
                     BottomNavigationBarItem(
                       icon: Icon(
                         Icons.message,
