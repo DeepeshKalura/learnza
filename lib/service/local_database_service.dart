@@ -342,8 +342,8 @@ class LocalDatabaseService {
         whereArgs: [defaultId],
         conflictAlgorithm: ConflictAlgorithm.replace,
       );
-    } catch (e) {
-      developer.log('Error setting language: $e');
+    } catch (e, s) {
+      developer.log('Error setting language:', error: e, stackTrace: s);
       rethrow;
     }
   }
