@@ -88,16 +88,16 @@ class EmailService:
         self.resend = resend 
         self.resend.api_key = Config.resend_api
     
-    async def send_welcome_email(self, email: str, full_name: str, temp_password: str, role: str):
+    async def send_welcome_email(self, email: str, full_name: str, temp_password: str, role: str, ):
 
         try:
             # Dynamic subject based on role
             subject_map = {
-                "admin": "Welcome to the Admin Portal",
-                "user": "Welcome to the User Portal",
-                "student": "Welcome to the Student Portal"
+                "admin": f"e-Shadananda Welcome to {full_name}",
+                "user": f"e-Shadananda Welcome to {full_name}",
+                "student": f"e-Shadananda Welcome to {full_name}"
             }
-            subject = subject_map.get(role, "Welcome to Our Portal")
+            subject = subject_map.get(role, f"e-Shadananda Welcome to {full_name}")
             
             # Render the template with role-specific data
             template = self.env.get_template('welcome.html')
@@ -106,7 +106,23 @@ class EmailService:
                 temp_password=temp_password,
                 role=role
             )
+
+            try:
             
+
+                self.resend.Contacts.create(
+
+                            {
+                            "first_name": full_name.split()[0],
+                            "email": email,
+                            "last_name": full_name.split()[-1],
+                            "unsubscribed": False,
+                            'audience_id': "0789145b-071e-4125-98c7-6383c653e605"
+                        })
+            except Exception as e:
+                print(f"Error creating contact: {str(e)}")
+
+
             # Send the email
             self.resend.Emails.send({
                 "from": "noreply@lernza.deepeshkalura.xyz",
@@ -196,21 +212,21 @@ async def create_teacher():
     # load json 
 
     # in production use this
-    with open('pratice_teacher.json') as f:
+    with open('students.json', "r+") as f:
         data = json.load(f)
 
         for user in data:
             id = str(uuid.uuid4())
             avator = create_random_avatar()
 
-            phoneNumber = user.get('phoneNumber', None)
+            phoneNumber = user.get('phone', None)
 
             print(f"phoneNumber is {phoneNumber}")
-            teacher = Users(
+            app_user = Users(
                 uid=id,
                 email=user['email'],
                 fullName=user['name'],
-                role=UserRole.TEACHER,
+                role=UserRole.STUDENT,
                 createdAt=datetime.now().isoformat(),
                 profileImageURL=avator,
                 phoneNumber=phoneNumber,
@@ -223,40 +239,56 @@ async def create_teacher():
 
 
             auth.create_user(
-                uid=teacher.uid,
-                email=teacher.email,
+                uid=app_user.uid,
+                email=app_user.email,
                 password=password,
-                display_name=teacher.fullName,
+                display_name=app_user.fullName,
                 email_verified=True,
-                photo_url=teacher.profileImageURL
+                photo_url=app_user.profileImageURL
             )
 
-            auth.set_custom_user_claims(teacher.uid, { "role": teacher.role })
+            auth.set_custom_user_claims(app_user.uid, { "role": app_user.role })
 
-            db.collection('users').document(teacher.uid).set(teacher.model_dump())
+            db.collection('users').document(app_user.uid).set(app_user.model_dump())
             
             email_sent = await email_service.send_welcome_email(
-                email=teacher.email,
-                full_name=teacher.fullName,
+                email=app_user.email,
+                full_name=app_user.fullName,
                 temp_password=password,
-                role=teacher.role
+                role=app_user.role,
             )
 
             if not email_sent:
-                print(f"Warning: Welcome email failed to send to {teacher.email}")
+                print(f"Warning: Welcome email failed to send to {app_user.email}")
 
-                auth.delete_user(teacher.uid)
-                db.collection('users').document(teacher.uid).delete()
+                auth.delete_user(app_user.uid)
+                db.collection('users').document(app_user.uid).delete()
                 exit("Email not sent")
 
-            print(f"{teacher.fullName} created successfully with role: {teacher.role}")
+            print(f"{app_user.fullName} created successfully with role: {app_user.role}")
+
+            with open('json/students.json', "a+") as f:
+                f.seek(0)
+                content = f.read().strip()
+                if not content:
+                    students = []
+                else:
+                    try:
+                        students = json.loads(content)
+                    except json.JSONDecodeError:
+                        students = []
+                students.append(app_user.model_dump())
+                f.seek(0)
+                f.truncate()
+                json.dump(students, f)
+                
             
 async def create_student(): 
     db = get_firestore()
     auth = get_auth()
 
 
-    with open('pratice.json') as f:
+    with open('student.json') as f:
         data = json.load(f)
 
         for user in data:
@@ -295,11 +327,12 @@ async def create_student():
 
             db.collection('users').document(teacher.uid).set(teacher.model_dump())
             
+
             email_sent = await email_service.send_welcome_email(
                 email=teacher.email,
                 full_name=teacher.fullName,
                 temp_password=password,
-                role=teacher.role
+                role=teacher.role,
             )
 
             if not email_sent:
@@ -315,4 +348,4 @@ async def create_student():
 
 
 if __name__ == "__main__":
-    asyncio.run(create_student())
+    asyncio.run(create_teacher())

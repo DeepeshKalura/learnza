@@ -9,6 +9,7 @@
             max-width: 600px;
             margin: 0 auto;
             padding: 20px;
+            background-color: #f4f4f4;
         }
         .logo {
             text-align: center;
@@ -27,6 +28,7 @@
         .content {
             padding: 20px;
             background-color: #ffffff;
+            border-radius: 5px;
         }
         .credentials {
             background-color: #f8f9fa;
@@ -49,14 +51,32 @@
             text-align: center;
             margin-top: 10px;
         }
+        .download-section {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .download-button {
+            display: inline-block;
+            background-color: #1A73E8;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
 
-    </div>
+    <!-- <div class="logo">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Google Play Store">
+    </div> -->
+
     <div class="header">
         <h1>Welcome to e-Shadananda</h1>
     </div>
+
     <div class="content">
         <p>Dear {{ full_name }},</p>
         
@@ -64,21 +84,34 @@
         
         <div class="credentials">
             <p><strong>Your login credentials:</strong></p>
-            <p>Username: {{ username }}</p>
+            <p>Username: {{ full_name }}</p>
+            <p>Email: {{ email }}</p>
             <p><strong>Temporary Password:</strong> {{ temp_password }}</p>
+        </div>
+        
+        
+        <div class="download-section">
+            <p><strong>Download the e-Shadananda app now:</strong></p>
+            <a  href="https://play.google.com/store/apps/details?id=xyz.deepeshkalura.rovaa.shadanda&pcampaignid=web_share" target="_blank">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Google Play Store">
+            </a>
         </div>
         
         <p>For your security, please change your password when you first log in.</p>
         
         <p>If you need any assistance, our support team is here to help.</p>
-        
+
+       
+
         <p>Best regards,<br>The e-Shadananda Team</p>
     </div>
+
     <div class="footer">
         <p>This is an automated message. Please do not reply to this email.</p>
         <div class="developer">
             <p>Developed by Deepesh Kalura</p>
         </div>
     </div>
+
 </body>
 </html>

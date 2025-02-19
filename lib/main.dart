@@ -1,7 +1,9 @@
-import 'package:feedback_github/feedback_github.dart';
+import 'dart:async';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -48,40 +50,39 @@ Future<void> main() async {
   //   appleProvider: AppleProvider.appAttest,s
   // );
 
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  // Catch early errors BEFORE Sentry initializes
+  FlutterError.onError = (FlutterErrorDetails details) {
+    FlutterError.presentError(details);
+    Sentry.captureException(details.exception, stackTrace: details.stack);
+  };
 
-  // await SystemChrome.setPreferredOrientations([
-  //   DeviceOrientation.portraitUp,
-  //   DeviceOrientation.portraitDown,
-  // ]);
-  await di.init();
-  await di.injector.get<AppConfig>().setup();
-  // Currently Using Sentry for error logging and tracking
-  await SentryFlutter.init(
-    (options) {
-      options.dsn = di.injector.get<AppConfig>().sentryDnsUrl;
-      options.tracesSampleRate = 1.0;
-      options.profilesSampleRate = 1.0;
-    },
-    appRunner: () => runApp(
-      BetterFeedback(
-        mode: FeedbackMode.navigate,
-        theme: FeedbackThemeData(
-          background: Colors.blue[50]!,
-          feedbackSheetColor: Colors.grey[50]!,
-          drawColors: [
-            Colors.red,
-            Colors.green,
-            Colors.blue,
-            Colors.yellow,
-          ],
-        ),
-        child: const MyApp(),
-      ),
-    ),
-  );
+  runZonedGuarded(() async {
+    try {
+      await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
+      );
+      await SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.portraitDown,
+      ]);
+      await di.init();
+      await di.injector.get<AppConfig>().setup();
+
+      // Initialize Sentry
+      await SentryFlutter.init(
+        (options) {
+          options.dsn = di.injector.get<AppConfig>().sentryDnsUrl;
+          options.tracesSampleRate = 1.0;
+          options.profilesSampleRate = 1.0;
+        },
+        appRunner: () => runApp(const MyApp()),
+      );
+    } catch (e, stackTrace) {
+      Sentry.captureException(e, stackTrace: stackTrace);
+    }
+  }, (error, stackTrace) {
+    Sentry.captureException(error, stackTrace: stackTrace);
+  });
 }
 
 class MyApp extends StatelessWidget {
