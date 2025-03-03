@@ -1,0 +1,2 @@
+/home/deepesh/Development/private/freelance/learnza/android/app/.cxx/Debug/381o694s/armeabi-v7a/CMakeFiles/edit_cache.dir
+/home/deepesh/Development/private/freelance/learnza/android/app/.cxx/Debug/381o694s/armeabi-v7a/CMakeFiles/rebuild_cache.dir

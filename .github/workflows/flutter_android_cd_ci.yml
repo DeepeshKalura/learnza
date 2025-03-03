@@ -24,7 +24,7 @@ on:
         default: false
 
 env:
-  FLUTTER_VERSION: 3.24.3
+  FLUTTER_VERSION: 3.29.0
   FIREBASE_PROJECT_ID: "learnza"
   JAVA_VERSION: '17'
 
