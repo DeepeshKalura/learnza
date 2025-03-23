@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../utils/theme.dart';
 import '../library/user_library_screen.dart';
-import '../messenger/groups_student_screen.dart';
+// import '../messenger/groups_student_screen.dart';
+import '../messenger/messenger_screen.dart';
 import '../post/posts_screen.dart';
 
 class HomeStudentScreen extends StatefulWidget {
@@ -21,7 +22,7 @@ class _HomeStudentScreenState extends State<HomeStudentScreen> {
     // const LibraryStudentScreen(),
     const UserLibraryScreen(),
     // const HomeCalendarScreen(),
-    const GroupsStudentScreen(),
+    const MessengerScreen(),
   ];
 
   @override

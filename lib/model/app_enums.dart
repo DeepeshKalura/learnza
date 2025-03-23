@@ -31,3 +31,5 @@ enum CommentStatus {
 }
 
 enum GroupRole { admin, member, guest }
+
+enum SearchType { people, groups }

@@ -30,6 +30,7 @@ import 'providers/state/groups/groups_state_provider.dart';
 import 'providers/state/libary/course_book_libary_state_provider.dart';
 import 'providers/state/libary/download_books_libary_state_provider.dart';
 import 'providers/state/libary/literature_book_library_state_provider.dart';
+import 'providers/state/messanger/messanger_state_provider.dart';
 import 'providers/state/posts/post_editor_sate_provider.dart';
 import 'providers/state/posts/posts_state_provider.dart';
 import 'providers/state/settings/settings_state_provider.dart';
@@ -42,6 +43,7 @@ import 'service/firebase_service.dart';
 import 'utils/theme.dart';
 
 Future<void> main() async {
+  // SentryFlutterWidgetsBinding.ensureInitialized();
   WidgetsFlutterBinding.ensureInitialized();
 
   // await FirebaseAppCheck.instance.activate(
@@ -189,6 +191,11 @@ class MyApp extends StatelessWidget {
             ChangeNotifierProvider(
               create: (context) {
                 return PostEditorStateProvider();
+              },
+            ),
+            ChangeNotifierProvider(
+              create: (context) {
+                return MessengerStateProvider();
               },
             )
           ],

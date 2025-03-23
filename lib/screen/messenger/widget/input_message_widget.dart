@@ -5,13 +5,13 @@ import '../../../model/message/messages_model.dart';
 import '../../../providers/message_provider.dart';
 
 class InputMessageWidget extends StatefulWidget {
-  final String groupId;
+  final String receiverId;
   final String currentUserId;
   final ReplyReference? replyTo;
 
   const InputMessageWidget({
     super.key,
-    required this.groupId,
+    required this.receiverId,
     required this.currentUserId,
     this.replyTo,
   });
@@ -126,7 +126,7 @@ class InputMessageWidgetState extends State<InputMessageWidget> {
         Provider.of<MessageProvider>(context, listen: false);
 
     messageProvider.sendMessage(
-      groupId: widget.groupId,
+      groupId: widget.receiverId,
       senderId: widget.currentUserId,
       content: _messageController.text.trim(),
       replyTo: widget.replyTo,

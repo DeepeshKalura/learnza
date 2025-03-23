@@ -8,6 +8,7 @@ import '/model/app_enums.dart';
 import '../model/books/books_model.dart';
 import '../model/groups/groups_model.dart';
 import '../model/posts/posts_model.dart';
+import '../model/users/users_model.dart';
 import '../providers/auth_provider.dart';
 import '../screen/about/about_shadananda_screen.dart';
 import '../screen/about/student_union_about_screen.dart';
@@ -25,6 +26,8 @@ import '../screen/library/user_library_screen.dart';
 import '../screen/library/widget/book_card_widget.dart';
 import '../screen/messenger/groups_message_screen.dart';
 import '../screen/messenger/groups_student_screen.dart';
+import '../screen/messenger/search_messanger_screen.dart';
+import '../screen/messenger/user_messanger_screen.dart';
 import '../screen/messenger/widget/groups_details_screen.dart';
 import '../screen/post/posts_screen.dart';
 import '../screen/setting/setting_screen.dart';
@@ -33,6 +36,7 @@ import '../screen/student/home_student_screen.dart';
 import '../screen/student/profile/profile_student_screen.dart';
 import '../service/firebase_service.dart';
 import '../service/internet_connectivity_service.dart';
+import 'animation.dart';
 import 'app_urls.dart';
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -228,6 +232,25 @@ class AppRouters {
             name: AppUrls.teacherAboutScreen,
             builder: (context, state) => const TeacherAboutScreen(),
           ),
+          GoRoute(
+            path: "/messenger/search",
+            name: AppUrls.searchMessengerScreen,
+            pageBuilder: (context, state) {
+              return SearchMessengerPage(
+                child: const SearchMessengerScreen(),
+              );
+            },
+          ),
+          GoRoute(
+            path: "messanger/users",
+            name: AppUrls.userMessageScreen,
+            builder: (context, state) {
+              var args = state.extra! as Map<String, UsersModel>;
+              return UserMessageScreen(
+                user: args['user'] as UsersModel,
+              );
+            },
+          )
         ],
       ),
     ],

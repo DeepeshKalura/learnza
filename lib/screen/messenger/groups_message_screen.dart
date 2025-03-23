@@ -158,7 +158,7 @@ class GroupsMessageScreenState extends State<GroupsMessageScreen> {
 
   Widget _buildMessageInput() {
     return InputMessageWidget(
-      groupId: widget.groups.id,
+      receiverId: widget.groups.id,
       currentUserId: Provider.of<AuthProvider>(context).user?.uid ??
           '', // Assuming you have an AuthProvider
       // replyTo: _currentReply,

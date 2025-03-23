@@ -17,13 +17,33 @@ class MessageProvider extends ChangeNotifier {
         .where('groupId', isEqualTo: groupId)
         .orderBy('timestamp', descending: true)
         .snapshots()
-        .map((snapshot) => snapshot.docs
-            .map(
-              (doc) => MessagesModel.fromJson(
-                doc.data(),
-              ),
-            )
-            .toList());
+        .map(
+          (snapshot) => snapshot.docs
+              .map(
+                (doc) => MessagesModel.fromJson(
+                  doc.data(),
+                ),
+              )
+              .toList(),
+        );
+  }
+
+  Stream<List<MessagesModel>> getStreamMessageForUser(
+      {String? userId, String? receiverId}) {
+    return firebaseService.database
+        .collection("messages")
+        .where('receiverId', isEqualTo: receiverId)
+        .orderBy('timestamp', descending: true)
+        .snapshots()
+        .map(
+          (snapshot) => snapshot.docs
+              .map(
+                (doc) => MessagesModel.fromJson(
+                  doc.data(),
+                ),
+              )
+              .toList(),
+        );
   }
 
   Future<void> sendMessage({
