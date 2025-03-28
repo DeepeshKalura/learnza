@@ -96,6 +96,8 @@ dev_dependencies:
   freezed: ^2.5.7
   flutter_launcher_icons: ^0.14.2
   rename_app: ^1.6.2
+  integration_test:
+    sdk: flutter
 
 
 flutter_gen:
