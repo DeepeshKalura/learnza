@@ -9,6 +9,7 @@ import 'dart:ui' as _i6;
 import 'package:learnza/model/users/users_model.dart' as _i5;
 import 'package:learnza/providers/auth_provider.dart' as _i3;
 import 'package:learnza/service/firebase_service.dart' as _i2;
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -25,6 +26,7 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
+@GenerateNiceMocks([MockSpec<_i3.AuthProvider>()])
 class _FakeFirebaseService_0 extends _i1.SmartFake
     implements _i2.FirebaseService {
   _FakeFirebaseService_0(
