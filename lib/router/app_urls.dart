@@ -8,7 +8,7 @@ class AppUrls {
   static const String offlineLibarayCommonScreen = 'offlineLibarayCommonScreen';
   static const String annaWebViewScreen = "annaWebViewScreen";
   // adminslibraryStudentScreen
-  static const String homeAdminScreen = 'homeAdminScreen';
+  static const String adminScreen = 'adminScreen';
   // student
   static const String homeStudentScreen = 'homeStudentScreen';
   static const String profileStudentScreen = 'profileStudentScreen';

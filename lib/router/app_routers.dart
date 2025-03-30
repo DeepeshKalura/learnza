@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:learnza/locator/injector.dart' as di;
 import 'package:learnza/model/course/courses_model.dart';
+import 'package:learnza/screen/admin/admin_screen.dart';
 import 'package:provider/provider.dart';
 
 import '/model/app_enums.dart';
@@ -70,6 +71,11 @@ class AppRouters {
         redirect: roleBasedRedirect,
       ),
 
+      GoRoute(
+        path: "/admin",
+        name: AppUrls.adminScreen,
+        builder: (context, state) => const AdminScreen(),
+      ),
       GoRoute(
         path: "/about",
         name: AppUrls.aboutScreen,
@@ -245,9 +251,7 @@ String? studentRoutesRedirect(BuildContext context, GoRouterState state) {
 }
 
 Future<String?> roleBasedRedirect(
-    // TODO: Implement role based redirection when you created the admin role and teacher role screen
-    BuildContext context,
-    GoRouterState state) async {
+    BuildContext context, GoRouterState state) async {
   final firebaseUser = di.injector.get<FirebaseService>().auth.currentUser;
 
   final authProvider = context.read<AuthProvider>();
@@ -268,6 +272,9 @@ Future<String?> roleBasedRedirect(
   if (user == null) {
     return '/auth';
   } else {
+    if (user.role == UserRole.admin) {
+      return '/admin';
+    }
     return '/student';
   }
 }

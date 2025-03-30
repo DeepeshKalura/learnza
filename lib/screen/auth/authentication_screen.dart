@@ -28,7 +28,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
     }
     final userRole = user!.role;
     if (userRole == UserRole.admin) {
-      context.pushReplacementNamed(AppUrls.homeAdminScreen);
+      context.pushReplacementNamed(AppUrls.adminScreen);
     } else if (userRole == UserRole.teacher) {
       context.pushReplacementNamed(AppUrls.homeTeacherScreen);
     } else {
