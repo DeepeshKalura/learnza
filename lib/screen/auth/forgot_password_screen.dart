@@ -67,107 +67,125 @@ class _ForgotPasswordAuthScreenState extends State<ForgotPasswordAuthScreen> {
     return Scaffold(
       appBar: AppBar(),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const SizedBox(height: 30),
-            Container(
-              margin: const EdgeInsets.symmetric(
-                horizontal: 20,
-              ),
-              child: ShadCard(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Align(
-                      alignment: Alignment.center,
-                      child: ShadImage.square(
-                        Assets.icons.icSleepy.path,
-                        size: 210,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const SizedBox(height: 30),
+              Container(
+                margin: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                ),
+                child: ShadCard(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Align(
+                        alignment: Alignment.center,
+                        child: ShadImage.square(
+                          Assets.icons.icSleepy.path,
+                          size: 210,
+                        ),
                       ),
-                    ),
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: Text(
-                        AppLocalizations.of(context)?.forgotPasswordHeader ??
-                            'Don\'t worry we got covered',
-                        style: ShadTheme.of(context).textTheme.h3,
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          AppLocalizations.of(context)?.forgotPasswordHeader ??
+                              'Don\'t worry we got covered',
+                          style: ShadTheme.of(context).textTheme.h3,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 10),
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: Text(
-                        AppLocalizations.of(context)
-                                ?.encouringMessageForForgotPassword ??
-                            'Just enter email and you will receive a mail to reset your password',
-                        style: ShadTheme.of(context).textTheme.p,
+                      const SizedBox(height: 10),
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          AppLocalizations.of(context)
+                                  ?.encouringMessageForForgotPassword ??
+                              'Just enter email and you will receive a mail to reset your password',
+                          style: ShadTheme.of(context).textTheme.p,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 20),
-                    ShadInputFormField(
-                      autocorrect: true,
-                      keyboardType: TextInputType.emailAddress,
-                      onSubmitted: (value) {},
-                      id: 'email',
-                      label: Text(
-                        AppLocalizations.of(context)?.emailLabel ?? 'Email',
-                        style: ShadTheme.of(context).textTheme.p.copyWith(
-                              fontSize: 18,
-                            ),
+                      const SizedBox(height: 20),
+                      TextField(
+                        autocorrect: true,
+                        keyboardType: TextInputType.emailAddress,
+                        onSubmitted: (value) {},
+                        cursorColor: primaryColor,
+                        decoration: InputDecoration(
+                          hintText:
+                              AppLocalizations.of(context)?.emailPlaceholder ??
+                                  'Enter your email',
+                          label: Text(
+                            AppLocalizations.of(context)?.emailLabel ?? 'Email',
+                            style: ShadTheme.of(context).textTheme.p.copyWith(
+                                  fontSize: 18,
+                                ),
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide:
+                                const BorderSide(color: primaryColor, width: 2),
+                          ),
+                          prefixIcon: const Icon(
+                            Icons.email,
+                            color: primaryColor,
+                            size: 20,
+                          ),
+                        ),
+                        controller: _emailController,
                       ),
-                      cursorColor: primaryColor,
-                      controller: _emailController,
-                      placeholder: Text(
-                        AppLocalizations.of(context)?.emailPlaceholder ??
-                            'Enter your email',
-                      ),
-                      validator: FormValidator.validateEmail,
-                    ),
-                    const SizedBox(height: 20),
-                    Consumer<AuthProvider>(
-                      builder: (context, authProvider, child) {
-                        var isLoading = authProvider.isLoading;
-                        return SizedBox(
-                          width: double.infinity,
-                          child: ShadButton(
-                            backgroundColor: primaryColor,
-                            size: ShadButtonSize.lg,
-                            onPressed: isLoading ? null : _handlePasswordReset,
-                            child: isLoading
-                                ? const Center(
-                                    child: SizedBox(
+                      const SizedBox(height: 20),
+                      Consumer<AuthProvider>(
+                        builder: (context, authProvider, child) {
+                          var isLoading = authProvider.isLoading;
+                          return SizedBox(
+                            width: double.infinity,
+                            child: ElevatedButton(
+                              onPressed:
+                                  isLoading ? null : _handlePasswordReset,
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: primaryColor,
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 16),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                              child: authProvider.isLoading
+                                  ? const SizedBox(
+                                      height: 20,
+                                      width: 20,
                                       child: CircularProgressIndicator(
                                         strokeWidth: 2,
                                         valueColor:
                                             AlwaysStoppedAnimation<Color>(
-                                          Colors.white,
-                                        ),
+                                                Colors.white),
                                       ),
-                                    ),
-                                  )
-                                : Center(
-                                    child: Text(
+                                    )
+                                  : Text(
                                       AppLocalizations.of(context)
-                                              ?.loginButton ??
-                                          'Login',
-                                      style: ShadTheme.of(context)
+                                              ?.forgotPassword ??
+                                          'Forgot Password',
+                                      style: Theme.of(context)
                                           .textTheme
-                                          .h4
-                                          .copyWith(
+                                          .titleLarge
+                                          ?.copyWith(
                                             color: Colors.white,
                                           ),
                                     ),
-                                  ),
-                          ),
-                        );
-                      },
-                    ),
-                  ],
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
