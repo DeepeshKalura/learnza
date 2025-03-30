@@ -199,7 +199,7 @@ async def test_create_new_user_by_admin(req, expected, status_code, monkeypatch)
         "email_service.EmailService.send_welcome_email", mock_send_welcome_email
     )
 
-    result = await create_new_user_by_admin(req)
+    result = create_new_user_by_admin(req)
     assert result.status_code == status_code
     response_data = result.get_json()
     assert response_data["message"] == expected

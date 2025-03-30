@@ -4,6 +4,7 @@ Handles HTTP requests and Firebase service initialization.
 """
 
 import traceback
+from datetime import datetime
 import json
 import random
 import asyncio as _asyncio
@@ -125,6 +126,7 @@ def create_new_user_by_admin(request: https_fn.Request) -> https_fn.Response:
             "email": email,
             "fullName": full_name,
             "role": role.value,
+            "createdAt": datetime.now().isoformat(),
             "isActive": True,
         }
         user_data["address"] = request_data.get("address")
