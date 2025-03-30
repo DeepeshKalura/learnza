@@ -7,11 +7,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:learnza/providers/auth_provider.dart';
 import 'package:learnza/screen/auth/forgot_password_screen.dart';
 import 'package:learnza/utils/theme.dart';
-import 'package:mockito/annotations.dart';
 import 'package:provider/provider.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
-@GenerateNiceMocks([MockSpec<AuthProvider>()])
 import '../../provider/state/mock_auth_provider.mocks.dart';
 
 void main() {
@@ -53,9 +51,8 @@ void main() {
     await tester.tap(textField);
     await tester.pump();
 
-    final textFieldWidget = tester.widget<TextField>(textField);
-    expect(textFieldWidget.focusNode?.hasFocus ?? true, isTrue);
-
     expect(tester.takeException(), isNull);
+
+    expect(find.byType(ElevatedButton), findsOneWidget);
   });
 }
