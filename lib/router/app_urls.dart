@@ -12,6 +12,7 @@ class AppUrls {
   // student
   static const String homeStudentScreen = 'homeStudentScreen';
   static const String profileStudentScreen = 'profileStudentScreen';
+  static const String userProfileScreen = 'userProfileScreen';
   static const String libraryStudentScreen = 'libraryStudentScreen';
   static const String readBookReadScreen = 'readBookReadScreen';
   static const String searchBooksStudentScreen = 'searchBooksStudentScreen';

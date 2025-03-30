@@ -32,6 +32,7 @@ import '../screen/setting/setting_screen.dart';
 import '../screen/student/blogs/deatail_blog_student.dart';
 import '../screen/student/home_student_screen.dart';
 import '../screen/student/profile/profile_student_screen.dart';
+import '../screen/student/profile/user_profile_screen.dart';
 import '../service/firebase_service.dart';
 import '../service/internet_connectivity_service.dart';
 import 'app_urls.dart';
@@ -116,6 +117,16 @@ class AppRouters {
           );
         },
       ),
+
+      GoRoute(
+          path: '/profile',
+          name: AppUrls.userProfileScreen,
+          builder: (context, state) {
+            var queryParams = state.extra as Map<String, dynamic>;
+            return UserProfileScreen(
+              user: queryParams['user'],
+            );
+          }),
 
       GoRoute(
         path: "/download-page",
@@ -272,9 +283,6 @@ Future<String?> roleBasedRedirect(
   if (user == null) {
     return '/auth';
   } else {
-    if (user.role == UserRole.admin) {
-      return '/admin';
-    }
     return '/student';
   }
 }
