@@ -9,7 +9,10 @@ import resend
 from firebase_functions.params import SecretParam
 
 resend_api =  SecretParam("RESENDAPI").value
-print("resend_api: \t",  resend_api)
+# For debugging, only print a masked version of the key if necessary
+if resend_api:
+    masked_key = resend_api[:4] + "*" * (len(resend_api) - 8) + resend_api[-4:] if len(resend_api) > 8 else "****"
+    print("resend_api configured: \t", masked_key)
 
 
 @dataclass
