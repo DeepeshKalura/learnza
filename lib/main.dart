@@ -9,6 +9,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:learnza/app_config.dart';
 import 'package:learnza/locator/injector.dart' as di;
+import 'package:learnza/providers/state/admin/admin_state_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
@@ -189,6 +190,11 @@ class MyApp extends StatelessWidget {
             ChangeNotifierProvider(
               create: (context) {
                 return PostEditorStateProvider();
+              },
+            ),
+            ChangeNotifierProvider(
+              create: (context) {
+                return AdminStateProvider();
               },
             )
           ],

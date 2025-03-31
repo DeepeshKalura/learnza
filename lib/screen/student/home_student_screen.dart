@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../model/app_enums.dart';
+import '../../providers/auth_provider.dart';
 import '../../utils/theme.dart';
+import '../admin/admin_screen.dart';
 import '../library/user_library_screen.dart';
 import '../messenger/groups_student_screen.dart';
 import '../post/posts_screen.dart';
@@ -14,19 +18,39 @@ class HomeStudentScreen extends StatefulWidget {
 
 class _HomeStudentScreenState extends State<HomeStudentScreen> {
   int _currentIndex = 1;
+  List<Widget> _screens = [];
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
 
-  final List<Widget> _screens = [
-    const PostStudentScreen(),
-    // const ProfileStudentScreen(),
-    // const LibraryStudentScreen(),
-    const UserLibraryScreen(),
-    // const HomeCalendarScreen(),
-    const GroupsStudentScreen(),
-  ];
+    if (context.read<AuthProvider>().user?.role == UserRole.admin) {
+      _screens = [
+        const PostStudentScreen(),
+        const AdminScreen(),
+        // const ProfileStudentScreen(),
+        // const LibraryStudentScreen(),
+        const UserLibraryScreen(),
+        // const HomeCalendarScreen(),
+        const GroupsStudentScreen(),
+      ];
+    } else {
+      _screens = [
+        const PostStudentScreen(),
+
+        // const ProfileStudentScreen(),
+        // const LibraryStudentScreen(),
+        const UserLibraryScreen(),
+        // const HomeCalendarScreen(),
+        const GroupsStudentScreen(),
+      ];
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     final isWeb = MediaQuery.of(context).size.width > 600;
+    final authProvider = context.read<AuthProvider>();
 
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -42,14 +66,21 @@ class _HomeStudentScreenState extends State<HomeStudentScreen> {
                   onTap: (index) => setState(() => _currentIndex = index),
                   selectedItemColor: primaryColor,
                   unselectedItemColor: hintColor,
-                  items: const [
-                    BottomNavigationBarItem(
+                  items: [
+                    const BottomNavigationBarItem(
                       icon: Icon(
                         Icons.home_filled,
                       ),
                       label: 'Home',
                     ),
-                    BottomNavigationBarItem(
+                    if (authProvider.user?.role == UserRole.admin)
+                      const BottomNavigationBarItem(
+                        icon: Icon(
+                          Icons.admin_panel_settings_outlined,
+                        ),
+                        label: 'Admin',
+                      ),
+                    const BottomNavigationBarItem(
                       icon: Icon(
                         Icons.library_books,
                       ),
@@ -61,7 +92,7 @@ class _HomeStudentScreenState extends State<HomeStudentScreen> {
                     //   ),
                     //   label: 'Calander',
                     // ),
-                    BottomNavigationBarItem(
+                    const BottomNavigationBarItem(
                       icon: Icon(
                         Icons.message,
                       ),

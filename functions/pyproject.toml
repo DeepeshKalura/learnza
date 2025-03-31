@@ -1,0 +1,22 @@
+[project]
+name = "functions"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "firebase-admin>=6.7.0",
+    "firebase-functions>=0.4.2",
+    "jinja2>=3.1.6",
+    "pip>=25.0.1",
+    "pydantic>=2.10.6",
+    "resend>=2.6.0",
+]
+
+[dependency-groups]
+dev = [
+    "pylint>=3.3.6",
+    "pytest-asyncio>=0.25.3",
+    "pytest>=8.3.5",
+    "ruff>=0.11.2",
+]

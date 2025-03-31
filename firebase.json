@@ -1,1 +1,84 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"learnza","appId":"1:1081864532778:android:f5c018e96649690fb0a453","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"learnza","configurations":{"android":"1:1081864532778:android:f5c018e96649690fb0a453","ios":"1:1081864532778:ios:ce43d459b317a427b0a453","web":"1:1081864532778:web:1236a891cc1e74c5b0a453","windows":"1:1081864532778:web:c4ef4085498120deb0a453"}}}}},"hosting":{"public":"build/web","ignore":["firebase.json","**/.*","**/node_modules/**"],"rewrites":[{"source":"**","destination":"/index.html"}]},"emulators":{"auth":{"port":9099},"firestore":{"port":8080},"database":{"port":9000},"hosting":{"port":5000},"storage":{"port":9199},"ui":{"enabled":true,"port":4000},"singleProjectMode":true}}
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "learnza",
+          "appId": "1:1081864532778:android:f5c018e96649690fb0a453",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "learnza",
+          "configurations": {
+            "android": "1:1081864532778:android:f5c018e96649690fb0a453",
+            "ios": "1:1081864532778:ios:ce43d459b317a427b0a453",
+            "web": "1:1081864532778:web:1236a891cc1e74c5b0a453",
+            "windows": "1:1081864532778:web:c4ef4085498120deb0a453"
+          }
+        }
+      }
+    }
+  },
+  "hosting": {
+    "public": "build/web",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  },
+  "emulators": {
+    "auth": {
+      "port": 9099
+    },
+    "firestore": {
+      "port": 8080
+    },
+    "database": {
+      "port": 9000
+    },
+    "hosting": {
+      "port": 5000
+    },
+    "storage": {
+      "port": 9199,
+      "rules": "storage.rules"
+    },
+    "ui": {
+      "enabled": true,
+      "port": 4000
+    },
+    "singleProjectMode": true
+  },
+  "functions": [
+    {
+      "source": "functions",
+      "codebase": "default",
+      "ignore": [
+        ".venv",
+        "venv",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "__pycache__",
+        "*.pyc",
+        "*.local"
+      ],
+      "predeploy": [
+        "python -m pip install -r \"$RESOURCE_DIR/requirements.txt\"",
+        "python -m pylint \"$RESOURCE_DIR/main.py\""
+      ]
+    }
+  ],
+  "storage": {
+    "rules": "storage.rules"
+  }
+}

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:learnza/locator/injector.dart' as di;
 import 'package:learnza/model/course/courses_model.dart';
+import 'package:learnza/screen/admin/admin_screen.dart';
 import 'package:provider/provider.dart';
 
 import '/model/app_enums.dart';
@@ -31,6 +32,7 @@ import '../screen/setting/setting_screen.dart';
 import '../screen/student/blogs/deatail_blog_student.dart';
 import '../screen/student/home_student_screen.dart';
 import '../screen/student/profile/profile_student_screen.dart';
+import '../screen/student/profile/user_profile_screen.dart';
 import '../service/firebase_service.dart';
 import '../service/internet_connectivity_service.dart';
 import 'app_urls.dart';
@@ -71,6 +73,11 @@ class AppRouters {
       ),
 
       GoRoute(
+        path: "/admin",
+        name: AppUrls.adminScreen,
+        builder: (context, state) => const AdminScreen(),
+      ),
+      GoRoute(
         path: "/about",
         name: AppUrls.aboutScreen,
         builder: (context, state) => const AboutShadanandaScreen(),
@@ -110,6 +117,16 @@ class AppRouters {
           );
         },
       ),
+
+      GoRoute(
+          path: '/profile',
+          name: AppUrls.userProfileScreen,
+          builder: (context, state) {
+            var queryParams = state.extra as Map<String, dynamic>;
+            return UserProfileScreen(
+              user: queryParams['user'],
+            );
+          }),
 
       GoRoute(
         path: "/download-page",
@@ -245,9 +262,7 @@ String? studentRoutesRedirect(BuildContext context, GoRouterState state) {
 }
 
 Future<String?> roleBasedRedirect(
-    // TODO: Implement role based redirection when you created the admin role and teacher role screen
-    BuildContext context,
-    GoRouterState state) async {
+    BuildContext context, GoRouterState state) async {
   final firebaseUser = di.injector.get<FirebaseService>().auth.currentUser;
 
   final authProvider = context.read<AuthProvider>();

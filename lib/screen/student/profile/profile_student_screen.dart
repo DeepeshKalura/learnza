@@ -9,6 +9,7 @@ import '../../../model/users/users_model.dart';
 import '../../../providers/auth_provider.dart';
 import '../../../providers/course_provider.dart';
 import '../../../providers/state/student/profile_student_state_provider.dart';
+import '../../common/widget/custom_image_widget.dart';
 
 class ProfileStudentScreen extends StatefulWidget {
   const ProfileStudentScreen({super.key});
@@ -155,12 +156,10 @@ class _ProfileStudentBodyState extends State<ProfileStudentBody> {
                     child: Stack(
                       children: [
                         (!profileStateProvider.isEditMode)
-                            ? ShadAvatar(
-                                size: const Size(160, 160),
-                                currentUser?.profileImageURL ??
-                                    "https://www.pngitem.com/pimgs/m/522-5220445_anonymous-profile-grey-person-sticker-glitch-empty-profile.png",
-                                placeholder:
-                                    const Icon(Icons.camera_alt, size: 50),
+                            ? CustomImageWidget(
+                                imageUrl: currentUser?.profileImageURL,
+                                width: 160,
+                                height: 160,
                               )
                             : Container(
                                 clipBehavior: Clip.antiAlias,

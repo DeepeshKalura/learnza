@@ -1,0 +1,6 @@
+# This docker file will contains all the things to run my application succssfully
+
+# 1. Firebase tool
+
+# I will create all the things there
+
