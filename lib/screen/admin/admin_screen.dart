@@ -7,6 +7,7 @@ import '../../providers/state/admin/admin_state_provider.dart';
 import '../../router/app_urls.dart';
 import '../common/widget/drawer_widget.dart';
 import '../common/widget/user_card_widget.dart';
+import 'widget/add_new_user_widget.dart';
 
 class AdminScreen extends StatefulWidget {
   const AdminScreen({super.key});
@@ -24,6 +25,13 @@ class _AdminScreenState extends State<AdminScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<AdminStateProvider>().getAllUser();
     });
+  }
+
+  void _showEventBottomSheet() {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) => const AddNewUserWidget(),
+    );
   }
 
   @override
@@ -50,7 +58,9 @@ class _AdminScreenState extends State<AdminScreen> {
               actions: [
                 ShadButton(
                   icon: const Icon(LucideIcons.plus),
-                  onPressed: () {},
+                  onPressed: () {
+                    _showEventBottomSheet();
+                  },
                 ),
                 const SizedBox(width: 10),
               ],

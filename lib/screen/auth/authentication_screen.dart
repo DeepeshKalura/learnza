@@ -5,7 +5,6 @@ import 'package:learnza/gen/assets.gen.dart';
 import 'package:provider/provider.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
-import '../../model/app_enums.dart';
 import '../../providers/auth_provider.dart';
 import '../../router/app_urls.dart';
 import '../../utils/form_validator.dart';
@@ -25,12 +24,6 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
     final user = authProvider.user;
     if (user == null) {
       context.pushReplacementNamed(AppUrls.authenticationScreen);
-    }
-    final userRole = user!.role;
-    if (userRole == UserRole.admin) {
-      context.pushReplacementNamed(AppUrls.adminScreen);
-    } else if (userRole == UserRole.teacher) {
-      context.pushReplacementNamed(AppUrls.homeTeacherScreen);
     } else {
       context.pushReplacementNamed(AppUrls.homeStudentScreen);
     }

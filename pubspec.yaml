@@ -79,6 +79,7 @@ dependencies:
   syncfusion_flutter_calendar: ^28.2.4
   sentry_flutter: ^8.13.0
   flutter_svg: ^2.0.17
+  cloud_functions: ^5.3.4
 
 dev_dependencies:
   flutter_test:
