@@ -73,6 +73,7 @@
   "onlineBookStoreQuote": "In the digital realm, every book is a gateway to infinite worlds waiting to be explored.",
   "offlineBookStoreQuote": "Within these pages, stories breathe, characters whisper, and imagination knows no bounds.",
   "profileDrawer": "Profile",
+  "adminDrawer": "Admin",
   "settingDrawer": "Settings",
   "logoutDrawer": "Logout",
   "aboutDrawer": "About",

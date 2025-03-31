@@ -22,7 +22,6 @@ class _PostStudentScreenState extends State<PostStudentScreen> {
   void dispose() {
     _titleController.dispose();
     _contentController.dispose();
-    _scaffoldKey.currentState?.dispose();
     super.dispose();
   }
 
