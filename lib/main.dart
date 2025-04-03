@@ -75,8 +75,13 @@ Future<void> main() async {
           options.dsn = di.injector.get<AppConfig>().sentryDnsUrl;
           options.tracesSampleRate = 1.0;
           options.profilesSampleRate = 1.0;
+          options.sendDefaultPii = true;
         },
-        appRunner: () => runApp(const MyApp()),
+        appRunner: () => runApp(
+          const SentryWidget(
+            child: MyApp(),
+          ),
+        ),
       );
     } catch (e, stackTrace) {
       Sentry.captureException(e, stackTrace: stackTrace);
