@@ -101,6 +101,8 @@ dev_dependencies:
   mockito: ^5.4.5
   integration_test:
     sdk: flutter
+  sentry_dart_plugin: ^2.4.1
+
 
 
 flutter_gen:
