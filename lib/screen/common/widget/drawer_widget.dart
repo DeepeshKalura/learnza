@@ -9,7 +9,7 @@ import 'package:shadcn_ui/shadcn_ui.dart';
 import '../../../app_config.dart';
 import '../../../providers/auth_provider.dart';
 import '../../../router/app_urls.dart';
-import '../../../utils/resource_util.dart';
+import 'custom_image_widget.dart';
 
 class DrawerWidget extends StatelessWidget {
   const DrawerWidget({super.key, required this.currentIndex});
@@ -26,11 +26,8 @@ class DrawerWidget extends StatelessWidget {
             decoration: BoxDecoration(
               color: ShadTheme.of(context).colorScheme.primary,
             ),
-            currentAccountPicture: ShadAvatar(
-              user?.profileImageURL ?? ResourceUtil.defaultProfileImage,
-              placeholder: Text(
-                user?.fullName.substring(0, 2) ?? 'JD',
-              ),
+            currentAccountPicture: CustomImageWidget(
+              imageUrl: user?.profileImageURL,
             ),
             accountName: Text(
               user?.fullName ?? 'John Doe',
@@ -63,6 +60,19 @@ class DrawerWidget extends StatelessWidget {
                     context.pushNamed(AppUrls.profileStudentScreen);
                   },
                 ),
+                // if (user?.role == UserRole.admin)
+                //   ListTile(
+                //     leading: const Icon(
+                //       Icons.supervised_user_circle_outlined,
+                //     ),
+                //     title: Text(
+                //       AppLocalizations.of(context)?.adminDrawer ?? 'Admin',
+                //       style: ShadTheme.of(context).textTheme.table,
+                //     ),
+                //     onTap: () {
+                //       context.pushNamed(AppUrls.homeStudentScreen);
+                //     },
+                //   ),
                 ListTile(
                   leading: const Icon(
                     LucideIcons.settings,

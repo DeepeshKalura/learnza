@@ -9,6 +9,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:learnza/app_config.dart';
 import 'package:learnza/locator/injector.dart' as di;
+import 'package:learnza/providers/state/admin/admin_state_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
@@ -76,8 +77,13 @@ Future<void> main() async {
           options.dsn = di.injector.get<AppConfig>().sentryDnsUrl;
           options.tracesSampleRate = 1.0;
           options.profilesSampleRate = 1.0;
+          options.sendDefaultPii = true;
         },
-        appRunner: () => runApp(const MyApp()),
+        appRunner: () => runApp(
+          const SentryWidget(
+            child: MyApp(),
+          ),
+        ),
       );
     } catch (e, stackTrace) {
       Sentry.captureException(e, stackTrace: stackTrace);
@@ -197,7 +203,10 @@ class MyApp extends StatelessWidget {
               create: (context) {
                 return MessengerStateProvider();
               },
-            )
+            ),
+            ChangeNotifierProvider(create: (context) {
+              return AdminStateProvider();
+            }),
           ],
           child: Consumer<UserPreferenceProvider>(
             builder: (context, userPreferenceProvider, _) {

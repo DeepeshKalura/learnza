@@ -51,3 +51,5 @@ secret
 .venv/
 .env
 keys/
+
+/android/app/.cxx/

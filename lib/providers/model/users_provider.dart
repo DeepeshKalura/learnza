@@ -67,6 +67,31 @@ class UsersProvider {
     return user.role;
   }
 
+  Future<List<UsersModel>> getAllUser() async {
+    try {
+      if (firebaseService.auth.currentUser == null) {
+        throw Exception('User not found');
+      }
+
+      final queryShort = await firebaseService.database
+          .collection('users')
+          .orderBy('createdAt', descending: true)
+          .limit(300)
+          .get();
+
+      if (queryShort.docs.isEmpty) {
+        throw Exception('No Usr found');
+      }
+
+      return queryShort.docs.map((e) {
+        return UsersModel.fromJson(e.data());
+      }).toList();
+    } catch (e, s) {
+      developer.log('getUser', error: e, stackTrace: s);
+      rethrow;
+    }
+  }
+
   Future<UsersModel> getUser() async {
     try {
       if (firebaseService.auth.currentUser == null) {

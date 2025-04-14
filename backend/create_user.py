@@ -80,8 +80,6 @@ class EmailService:
 
     def __init__(self):
 
-        # templates_path = os.path.join(os.path.dirname(__file__), 'templates', 'emails')
-
         self.env = Environment(
             loader=FileSystemLoader('templates/emails')
         )
