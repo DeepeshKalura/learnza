@@ -65,44 +65,26 @@ class _MessengerScreenState extends State<MessengerScreen> {
                 ),
               ],
             ),
+            SliverFillRemaining(
+              child: Consumer<MessengerStateProvider>(
+                builder: (context, provider, child) {
+                  if (provider.isLoading) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
 
-            const SliverFillRemaining(
-              child: Center(
-                child: Text("None Founds"),
+                  if (provider.searchPeopleResults.isEmpty &&
+                      provider.searchGroupsResults.isEmpty) {
+                    return const Center(
+                      child: Text("None Founds"),
+                    );
+                  }
+
+                  return const Center(
+                    child: Text("There is a children man"),
+                  );
+                },
               ),
             ),
-
-            // Consumer<MessengerStateProvider>(
-            //   builder: (context, provider, child) {
-            //     if (provider.isLoading) {
-            //       return const SliverFillRemaining(
-            //         child: Center(
-            //           child: CircularProgressIndicator(),
-            //         ),
-            //       );
-            //     }
-
-            //     if (provider.searchResults.isEmpty) {
-            //       return const SliverFillRemaining(
-            //         child: Center(
-            //           child: Text("No results found"),
-            //         ),
-            //       );
-            //     }
-
-            //     return SliverList(
-            //       delegate: SliverChildBuilderDelegate(
-            //         (context, index) {
-            //           final result = provider.searchResults[index];
-            //           return ListTile(
-            //             title: Text(result['name']),
-            //           );
-            //         },
-            //         childCount: provider.searchResults.length,
-            //       ),
-            //     );
-            //   },
-            // ),
           ],
         ),
       ),
