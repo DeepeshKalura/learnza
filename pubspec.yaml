@@ -102,6 +102,7 @@ dev_dependencies:
   integration_test:
     sdk: flutter
   sentry_dart_plugin: ^2.4.1
+  dart_pre_commit: ^5.4.3
 
 
 
