@@ -45,6 +45,11 @@ jobs:
           flutter-version: ${{ env.FLUTTER_VERSION }}
           cache: true
 
+      # ─── New: Decode .env for flutter pub get ───────────────────────────────
+      - name: Setup .env for tests
+        run: |
+          echo "${{ secrets.ENV }}" | base64 -d > .env
+
       - name: Install dependencies
         run: flutter pub get
 
@@ -88,10 +93,25 @@ jobs:
           java-version: ${{ env.JAVA_VERSION }}
           cache: gradle
 
-      - name: Install dependencies & .env
+      - name: Setup .env 
+        run: |
+          echo "${{ secrets.ENV }}" | base64 -d > .env
+
+      - name: Install dependencies
         run: |
           flutter pub get
-          echo "${{ secrets.ENV }}" | base64 -d > .env
+
+      # ─── New: Setup Android Keystore for signing ────────────────────────────
+      - name: Setup Keystore
+        run: |
+          mkdir -p android/app/keystore
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > android/app/keystore/upload-keystore.jks
+          cat <<EOF > android/key.properties
+          storePassword=${{ secrets.KEYSTORE_PASSWORD }}
+          keyPassword=${{ secrets.KEY_PASSWORD }}
+          keyAlias=${{ secrets.KEY_ALIAS }}
+          storeFile=./keystore/upload-keystore.jks
+          EOF
 
       - name: Build Android artifacts
         run: |

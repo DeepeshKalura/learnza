@@ -46,7 +46,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '1081864532778',
     projectId: 'learnza',
     authDomain: 'learnza.firebaseapp.com',
-    databaseURL: 'https://learnza-default-rtdb.asia-southeast1.firebasedatabase.app',
+    databaseURL:
+        'https://learnza-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'learnza.firebasestorage.app',
     measurementId: 'G-TF7TW34P01',
   );
@@ -56,7 +57,8 @@ class DefaultFirebaseOptions {
     appId: '1:1081864532778:android:f5c018e96649690fb0a453',
     messagingSenderId: '1081864532778',
     projectId: 'learnza',
-    databaseURL: 'https://learnza-default-rtdb.asia-southeast1.firebasedatabase.app',
+    databaseURL:
+        'https://learnza-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'learnza.firebasestorage.app',
   );
 
@@ -65,7 +67,8 @@ class DefaultFirebaseOptions {
     appId: '1:1081864532778:ios:ce43d459b317a427b0a453',
     messagingSenderId: '1081864532778',
     projectId: 'learnza',
-    databaseURL: 'https://learnza-default-rtdb.asia-southeast1.firebasedatabase.app',
+    databaseURL:
+        'https://learnza-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'learnza.firebasestorage.app',
     iosBundleId: 'xyz.deepeshkalura.rovaa.shadanda',
   );
@@ -85,9 +88,9 @@ class DefaultFirebaseOptions {
     messagingSenderId: '1081864532778',
     projectId: 'learnza',
     authDomain: 'learnza.firebaseapp.com',
-    databaseURL: 'https://learnza-default-rtdb.asia-southeast1.firebasedatabase.app',
+    databaseURL:
+        'https://learnza-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'learnza.firebasestorage.app',
     measurementId: 'G-PD08TMQN8Z',
   );
-
 }
