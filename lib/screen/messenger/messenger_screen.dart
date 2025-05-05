@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:learnza/screen/messenger/widget/messanger_list_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
@@ -16,8 +17,16 @@ class MessengerScreen extends StatefulWidget {
 
 class _MessengerScreenState extends State<MessengerScreen> {
   @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<MessengerStateProvider>().retrieveUserMessengerList();
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final provider = context.read<MessengerStateProvider>();
+    final provider = context.watch<MessengerStateProvider>();
 
     return SafeArea(
       child: Scaffold(
@@ -67,20 +76,35 @@ class _MessengerScreenState extends State<MessengerScreen> {
             ),
             SliverFillRemaining(
               child: Consumer<MessengerStateProvider>(
-                builder: (context, provider, child) {
-                  if (provider.isLoading) {
+                builder: (context, stateProvider, child) {
+                  if (stateProvider.listLoading) {
                     return const Center(child: CircularProgressIndicator());
                   }
 
-                  if (provider.searchPeopleResults.isEmpty &&
-                      provider.searchGroupsResults.isEmpty) {
-                    return const Center(
-                      child: Text("None Founds"),
-                    );
-                  }
+                  return RefreshIndicator(
+                    onRefresh: () => provider.retrieveUserMessengerList(),
+                    child: ListView.builder(
+                      itemCount: stateProvider.messengerInterface.length,
+                      itemBuilder: (context, index) {
+                        // STEP 1: Design a good messanger overlay
 
-                  return const Center(
-                    child: Text("There is a children man"),
+                        return SizedBox(
+                          child: MessengerListWidget(
+                            consumer: stateProvider.messengerInterface[index],
+                            onTap: () {
+                              context.pushNamed(
+                                AppUrls.messageConsumerScreen,
+                                extra: {
+                                  "consumer":
+                                      stateProvider.messengerInterface[index]
+                                },
+                              );
+                            },
+                          ),
+                          // onTap: () {},
+                        );
+                      },
+                    ),
                   );
                 },
               ),

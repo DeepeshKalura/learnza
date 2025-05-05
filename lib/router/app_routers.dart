@@ -6,10 +6,10 @@ import 'package:learnza/screen/admin/admin_screen.dart';
 import 'package:provider/provider.dart';
 
 import '/model/app_enums.dart';
+import '../interface/messenger_interface.dart';
 import '../model/books/books_model.dart';
 import '../model/groups/groups_model.dart';
 import '../model/posts/posts_model.dart';
-import '../model/users/users_model.dart';
 import '../providers/auth_provider.dart';
 import '../screen/about/about_shadananda_screen.dart';
 import '../screen/about/student_union_about_screen.dart';
@@ -25,10 +25,10 @@ import '../screen/library/read_book_read_screen.dart';
 import '../screen/library/search_book_student_screen.dart';
 import '../screen/library/user_library_screen.dart';
 import '../screen/library/widget/book_card_widget.dart';
+import '../screen/messenger/consumer_messenger_screen.dart';
 import '../screen/messenger/groups_message_screen.dart';
 import '../screen/messenger/groups_student_screen.dart';
 import '../screen/messenger/search_messanger_screen.dart';
-import '../screen/messenger/user_messanger_screen.dart';
 import '../screen/messenger/widget/groups_details_screen.dart';
 import '../screen/post/posts_screen.dart';
 import '../screen/setting/setting_screen.dart';
@@ -260,11 +260,11 @@ class AppRouters {
           ),
           GoRoute(
             path: "messanger/users",
-            name: AppUrls.userMessageScreen,
+            name: AppUrls.messageConsumerScreen,
             builder: (context, state) {
-              var args = state.extra! as Map<String, UsersModel>;
-              return UserMessageScreen(
-                user: args['user'] as UsersModel,
+              var args = state.extra! as Map<String, MessengerInterface>;
+              return ConsumerMessengerScreen(
+                interface: args['consumer'] as MessengerInterface,
               );
             },
           )

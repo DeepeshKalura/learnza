@@ -22,7 +22,7 @@ class AppUrls {
   static const String groupsStudentScreen = 'groupsStudentScreen';
   static const String groupDetailStudentScreen = 'groupDetailStudentScreen';
   static const String groupMessageStudentScreen = 'groupMessageStudentScreen';
-  static const String userMessageScreen = "userMessageScreen";
+  static const String messageConsumerScreen = "messageConsumerScreen";
   // About
   static const String aboutScreen = 'aboutScreen';
   static const String studentUnionAboutScreen = 'studentUnionAboutScreen';

@@ -1,28 +1,29 @@
+import 'dart:developer' as developer;
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:shadcn_ui/shadcn_ui.dart';
 
+import '../../interface/messenger_interface.dart';
 import '../../model/message/messages_model.dart';
-import '../../model/users/users_model.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/message_provider.dart';
+import '../../router/app_urls.dart';
+import '../../utils/image_utils.dart';
 import '../../utils/resource_util.dart';
 import 'widget/input_message_widget.dart';
 import 'widget/message_bubble_group_widget.dart';
 
-class UserMessageScreen extends StatefulWidget {
-  const UserMessageScreen({super.key, required this.user});
+class ConsumerMessengerScreen extends StatefulWidget {
+  const ConsumerMessengerScreen({super.key, required this.interface});
 
-  final UsersModel user;
+  final MessengerInterface interface;
 
   @override
-  UserMessageScreenState createState() => UserMessageScreenState();
+  ConsumerMessengerScreenState createState() => ConsumerMessengerScreenState();
 }
 
-class UserMessageScreenState extends State<UserMessageScreen> {
-  // ReplyReference? _currentReply;
-
+class ConsumerMessengerScreenState extends State<ConsumerMessengerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,24 +48,29 @@ class UserMessageScreenState extends State<UserMessageScreen> {
     return AppBar(
       leading: IconButton(
         icon: const Icon(Icons.arrow_back),
-        tooltip: 'Back to Conversations',
+        tooltip: 'Back',
         onPressed: () => context.pop(),
       ),
       title: GestureDetector(
         onTap: () {
-          // context.pushNamed(
-          //   AppUrls.userProfileScreen,
-          //   extra: {'user': widget.user},
-          // );
+          if (widget.interface.isGroup) {
+            context.pushNamed(
+              AppUrls.groupDetailStudentScreen,
+              extra: {'group': widget.interface.source},
+            );
+          } else {
+            // Navigate to user profile when implemented
+            // context.pushNamed(AppUrls.userProfileScreen, extra: {'user': widget.interface.source});
+          }
         },
         child: Hero(
-          tag: widget.user.uid,
+          tag: widget.interface.heroTag,
           child: Row(
             children: [
-              ShadAvatar(
-                widget.user.profileImageURL ?? ResourceUtil.defaultProfileImage,
-                placeholder: Text(
-                  widget.user.fullName.substring(0, 1),
+              CircleAvatar(
+                child: ImageUtils.load(
+                  urlOrAsset: widget.interface.imageUrl,
+                  defaultAsset: ResourceUtil.defaultProfileImage,
                 ),
               ),
               const SizedBox(width: 10),
@@ -72,37 +78,41 @@ class UserMessageScreenState extends State<UserMessageScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    widget.user.fullName,
+                    widget.interface.name,
                     style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   const SizedBox(height: 5),
-                  Row(
-                    children: [
-                      Container(
-                        width: 10,
-                        height: 10,
-                        decoration: BoxDecoration(
-                          color:
-                              widget.user.isOnline ? Colors.green : Colors.grey,
-                          shape: BoxShape.circle,
+                  widget.interface.isGroup
+                      ? const Text(
+                          "Click to view more details",
+                          style: TextStyle(fontSize: 16),
+                        )
+                      : Row(
+                          children: [
+                            Container(
+                              width: 10,
+                              height: 10,
+                              decoration: BoxDecoration(
+                                color: widget.interface.isOnline
+                                    ? Colors.green
+                                    : Colors.grey,
+                                shape: BoxShape.circle,
+                              ),
+                            ),
+                            const SizedBox(width: 5),
+                            Text(
+                              widget.interface.isOnline
+                                  ? "Online"
+                                  : (widget.interface.lastSeen != null
+                                      ? "Last seen ${widget.interface.lastSeen}"
+                                      : "Offline"),
+                              style: const TextStyle(fontSize: 14),
+                            ),
+                          ],
                         ),
-                      ),
-                      const SizedBox(width: 5),
-                      Text(
-                        widget.user.isOnline
-                            ? "Online"
-                            : (widget.user.lastseen != null
-                                ? "Last seen ${widget.user.lastseen}"
-                                : "Offline"),
-                        style: const TextStyle(
-                          fontSize: 14,
-                        ),
-                      ),
-                    ],
-                  ),
                 ],
               ),
             ],
@@ -110,24 +120,27 @@ class UserMessageScreenState extends State<UserMessageScreen> {
         ),
       ),
       actions: [
-        IconButton(
-          icon: const Icon(Icons.more_vert),
-          tooltip: 'More options',
-          onPressed: () {
-            _showUserOptions(context);
-          },
-        ),
+        if (!widget.interface.isGroup)
+          IconButton(
+            icon: const Icon(Icons.more_vert),
+            tooltip: 'More options',
+            onPressed: () {
+              _showUserOptions(context);
+            },
+          ),
       ],
     );
   }
 
   void _showUserOptions(BuildContext context) {
+    if (widget.interface.isGroup) return;
+
     showModalBottomSheet(
       context: context,
       builder: (context) {
         final authProvider = Provider.of<AuthProvider>(context, listen: false);
         final currentUserId = authProvider.user?.uid ?? '';
-        final bool isBlocked = widget.user.blockedUsers.contains(currentUserId);
+        final bool isBlocked = widget.interface.isUserBlocked(currentUserId);
 
         return SafeArea(
           child: Column(
@@ -140,7 +153,7 @@ class UserMessageScreenState extends State<UserMessageScreen> {
                   context.pop();
                   // context.pushNamed(
                   //   AppUrls.userProfileScreen,
-                  //   extra: {'user': widget.user},
+                  //   extra: {'user': widget.interface.source},
                   // );
                 },
               ),
@@ -149,7 +162,8 @@ class UserMessageScreenState extends State<UserMessageScreen> {
                 title: Text(isBlocked ? 'Unblock User' : 'Block User'),
                 onTap: () {
                   // Implement block/unblock functionality
-                  Navigator.pop(context);
+                  // Navigator.pop(context);
+                  context.pop();
                 },
               ),
               ListTile(
@@ -157,7 +171,7 @@ class UserMessageScreenState extends State<UserMessageScreen> {
                 title: const Text('Clear Chat'),
                 onTap: () {
                   // Implement clear chat functionality
-                  Navigator.pop(context);
+                  context.pop();
                 },
               ),
             ],
@@ -168,11 +182,13 @@ class UserMessageScreenState extends State<UserMessageScreen> {
   }
 
   Widget _buildMessagesList() {
-    final currentUserId = Provider.of<AuthProvider>(context).user?.uid ?? '';
+    final messageProvider = context.read<MessageProvider>();
 
     return StreamBuilder<List<MessagesModel>>(
-      stream: context.read<MessageProvider>().getStreamMessageForUser(
-          userId: currentUserId, receiverId: widget.user.uid),
+      stream: widget.interface.isGroup
+          ? messageProvider.getStreamMessageForGroups(widget.interface.id)
+          : messageProvider.getStreamMessageForUser(
+              receiverId: widget.interface.id),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
@@ -191,6 +207,7 @@ class UserMessageScreenState extends State<UserMessageScreen> {
           reverse: true,
           itemCount: snapshot.data!.length,
           itemBuilder: (context, index) {
+            final currentUserId = context.read<AuthProvider>().user?.uid;
             final message = snapshot.data![index];
             return MessageBubbleGroupWidget(
               message: message,
@@ -203,10 +220,13 @@ class UserMessageScreenState extends State<UserMessageScreen> {
   }
 
   Widget _buildMessageInput() {
-    final currentUserId = Provider.of<AuthProvider>(context).user?.uid ?? '';
-    final bool isBlocked = widget.user.blockedUsers.contains(currentUserId);
+    final currentUserId =
+        context.read<AuthProvider>().firebaseService.auth.currentUser?.uid ??
+            "";
 
-    if (isBlocked) {
+    developer.log(widget.interface.id);
+    if (!widget.interface.isGroup &&
+        widget.interface.isUserBlocked(currentUserId)) {
       return Container(
         padding: const EdgeInsets.all(16),
         color: Colors.grey[200],
@@ -220,10 +240,8 @@ class UserMessageScreenState extends State<UserMessageScreen> {
     }
 
     return InputMessageWidget(
-      receiverId: widget.user.uid,
+      receiverId: widget.interface.id,
       currentUserId: currentUserId,
-      // isDirectMessage: true,
-      // replyTo: _currentReply,
     );
   }
 }

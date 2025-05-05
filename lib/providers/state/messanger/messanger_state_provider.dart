@@ -3,11 +3,12 @@ import 'dart:developer' as developer;
 import 'package:flutter/material.dart';
 import 'package:learnza/locator/injector.dart' as di;
 
+import '../../../interface/messenger_interface.dart';
 import '../../../model/app_enums.dart';
 import '../../../model/groups/groups_model.dart';
 import '../../../model/users/users_model.dart';
 import '../../model/groups_provider.dart';
-import '../../model/messanger_provider.dart';
+import '../../model/messenger_provider.dart';
 import '../../model/users_provider.dart';
 
 class MessengerStateProvider extends ChangeNotifier {
@@ -16,6 +17,8 @@ class MessengerStateProvider extends ChangeNotifier {
   // State variables
   SearchType _currentSearchType = SearchType.people;
   String _currentQuery = '';
+
+  List<MessengerInterface> messengerInterface = [];
 
   // Search results
   List<UsersModel> _searchPeopleResults = [];
@@ -111,11 +114,37 @@ class MessengerStateProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> addPersonOrGroupToMessangerForUser(
+  Future<void> addPersonOrGroupToMessengerForUser(
       {String? userId, String? groupId}) async {
-    await di.injector<MessangerProvider>().setUserMessangerModel(
+    if (userId == null && groupId == null) {
+      throw Exception('Either userId or groupId must be provided');
+    }
+
+    await di.injector<MessengerProvider>().setUserMessengerModel(
           userId: userId,
           groupId: groupId,
         );
+  }
+
+  // First what stage this will happen
+
+  bool listLoading = false;
+
+  Future<void> retrieveUserMessengerList() async {
+    listLoading = true;
+    notifyListeners();
+    try {
+      messengerInterface =
+          await di.injector<MessengerProvider>().getUserMessengerModel();
+      developer.log(
+        "Paroo $messengerInterface",
+      );
+    } catch (e) {
+      developer.log('Error retrieving user messenger list', error: e);
+      return;
+    } finally {
+      listLoading = false;
+      notifyListeners();
+    }
   }
 }

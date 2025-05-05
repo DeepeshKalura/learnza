@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:learnza/router/app_urls.dart';
 import 'package:provider/provider.dart';
 
+import '../../interface/messenger_interface.dart';
 import '../../model/app_enums.dart' show SearchType;
 import '../../model/groups/groups_model.dart';
 import '../../model/users/users_model.dart';
 import '../../providers/state/messanger/messanger_state_provider.dart';
-import '../../utils/resource_util.dart';
+import '../../router/app_urls.dart';
+import 'widget/messanger_list_widget.dart';
 
 class SearchMessengerScreen extends StatefulWidget {
   const SearchMessengerScreen({super.key});
@@ -133,38 +134,27 @@ class _SearchMessengerScreenState extends State<SearchMessengerScreen>
     return ListView.builder(
       itemCount: results.length,
       itemBuilder: (context, index) {
-        final item = results[index];
-        return ListTile(
-          leading: CircleAvatar(
-            // Assuming both models have a way to get an avatar/image
-            backgroundImage: item is UsersModel
-                ? const NetworkImage(ResourceUtil.defaultProfileImage)
-                : NetworkImage((item as GroupsModel).coverImageUrl ??
-                    ResourceUtil.defaultProfileImage),
-          ),
-          title: Text(
-              item is UsersModel ? item.fullName : (item as GroupsModel).name),
-          subtitle: Text(item is UsersModel
-              ? item.email
-              : '${(item as GroupsModel).members.length} members'),
+        final consumer = MessengerInterface(results[index]);
+        return MessengerListWidget(
+          consumer: consumer,
           onTap: () async {
-            if (item is UsersModel) {
-              await provider.addPersonOrGroupToMessangerForUser(
-                userId: item.uid,
+            if (consumer.source is UsersModel) {
+              await provider.addPersonOrGroupToMessengerForUser(
+                userId: consumer.id,
               );
 
               context.pushNamed(
-                AppUrls.userMessageScreen,
-                extra: {'user': item},
+                AppUrls.messageConsumerScreen,
+                extra: {'consumer': consumer},
               );
-            } else if (item is GroupsModel) {
-              await provider.addPersonOrGroupToMessangerForUser(
-                groupId: item.id,
+            } else if (consumer.source is GroupsModel) {
+              await provider.addPersonOrGroupToMessengerForUser(
+                groupId: consumer.id,
               );
 
               context.pushNamed(
-                AppUrls.groupMessageStudentScreen,
-                extra: {'group': item},
+                AppUrls.messageConsumerScreen,
+                extra: {'consumer': consumer},
               );
             }
           },
