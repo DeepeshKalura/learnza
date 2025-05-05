@@ -1,44 +1,31 @@
-name: Flutter CI/CD Workflow 🛠️🚀
+name: Flutter CI/CD Pipeline 🛠️🚀
 
 on:
   push:
     branches:
+      - "**"
+  pull_request:
+    branches:
       - main
-    paths-ignore:
-      - 'pubspec.yaml'
   workflow_dispatch:
-    inputs:
-      release_type:
-        description: "Release type (patch/minor/major)"
-        required: true
-        type: choice
-        options:
-          - patch
-          - minor
-          - major
-        default: 'patch'
-      deploy_to_play_store:
-        description: "Deploy to Play Store?"
-        required: true
-        type: boolean
-        default: false
 
 env:
   FLUTTER_VERSION: 3.29.0
-  FIREBASE_PROJECT_ID: "learnza"
   JAVA_VERSION: '17'
+  FIREBASE_PROJECT_ID: learnza
 
 jobs:
-  test:
-    name: "Run Tests 🧪"
+  build-and-test:
+    name: Run Tests & Analyze 🧪
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.PAT_TOKEN }}
 
-      - name: Cache Flutter dependencies
+      - name: Cache Flutter & Gradle
         uses: actions/cache@v3
         with:
           path: |
@@ -58,38 +45,35 @@ jobs:
           flutter-version: ${{ env.FLUTTER_VERSION }}
           cache: true
 
-      - name: Setup Env 
+      # ─── New: Decode .env for flutter pub get ───────────────────────────────
+      - name: Setup .env for tests
         run: |
-          echo "${{ secrets.ENV }}" | base64 --decode > .env
+          echo "${{ secrets.ENV }}" | base64 -d > .env
 
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Run Dart Fix
-        run: |
-          dart fix --apply
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          if [[ -n $(git status --porcelain) ]]; then
-            git add .
-            git commit -m "chore: apply dart fixes"
-            git remote set-url origin https://x-access-token:${{ secrets.PAT_TOKEN }}@github.com/${{ github.repository }}.git
-            git push
-          fi
-
       - name: Run tests
         run: flutter test --coverage
 
-      - name: Upload coverage reports
+      - name: Upload coverage
         uses: codecov/codecov-action@v3
         if: success()
 
-  version-and-build:
-    name: "Version Update & Build 🛠️"
-    needs: test
+  deploy:
+    name: Build & Release 🚀
+    needs: build-and-test
     runs-on: ubuntu-latest
-    outputs:
-      new_version: ${{ steps.version.outputs.new_version }}
+    if: |
+      needs.build-and-test.result == 'success' &&
+      (
+        github.ref == 'refs/heads/main' ||
+        (github.event_name == 'pull_request' &&
+         github.event.action == 'closed' &&
+         github.event.pull_request.merged == true) ||
+        github.event_name == 'workflow_dispatch'
+      )
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -97,172 +81,77 @@ jobs:
           token: ${{ secrets.PAT_TOKEN }}
           fetch-depth: 0
 
-      - name: Setup Flutter
+      - name: Setup Flutter & Java
         uses: subosito/flutter-action@v2
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}
           cache: true
 
-      - name: Setup Java
-        uses: actions/setup-java@v3
+      - uses: actions/setup-java@v3
         with:
-          distribution: 'zulu'
+          distribution: zulu
           java-version: ${{ env.JAVA_VERSION }}
-          cache: 'gradle'
+          cache: gradle
 
-      - name: Update version
-        id: version
+      - name: Setup .env 
         run: |
-          # Determine release type (default to patch if not manual dispatch)
-          RELEASE_TYPE="${{ github.event.inputs.release_type || 'patch' }}"
-          
-          # Get current version
-          CURRENT_VERSION=$(grep "^version:" pubspec.yaml | awk '{print $2}' | tr -d '\r')
-          echo "Current version: $CURRENT_VERSION"
-          
-          # Parse current version
-          IFS='.' read -r -a version_parts <<< "$CURRENT_VERSION"
-          MAJOR="${version_parts[0]}"
-          MINOR="${version_parts[1]}"
-          PATCH_BUILD="${version_parts[2]}"
-          
-          # Extract patch and build numbers
-          PATCH=$(echo $PATCH_BUILD | cut -d+ -f1)
-          BUILD=$(echo $PATCH_BUILD | cut -d+ -f2)
-          
-          # Increment version based on release type
-          case "$RELEASE_TYPE" in
-            "major")
-              MAJOR=$((MAJOR + 1))
-              MINOR=0
-              PATCH=0
-              BUILD=$((BUILD + 1))
-              ;;
-            "minor")
-              MINOR=$((MINOR + 1))
-              PATCH=0
-              BUILD=$((BUILD + 1))
-              ;;
-            *)
-              PATCH=$((PATCH + 1))
-              BUILD=$((BUILD + 1))
-              ;;
-          esac
-          
-          # Construct new version
-          NEW_VERSION="$MAJOR.$MINOR.$PATCH+$BUILD"
-          echo "New version: $NEW_VERSION"
-          echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
-          
-          # Update pubspec.yaml
-          sed -i "s/^version: .*/version: $NEW_VERSION/" pubspec.yaml
+          echo "${{ secrets.ENV }}" | base64 -d > .env
 
       - name: Install dependencies
-        run: flutter pub get
+        run: |
+          flutter pub get
 
+      # ─── New: Setup Android Keystore for signing ────────────────────────────
       - name: Setup Keystore
         run: |
           mkdir -p android/app/keystore
           echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > android/app/keystore/upload-keystore.jks
-          cat << EOF > android/key.properties
+          cat <<EOF > android/key.properties
           storePassword=${{ secrets.KEYSTORE_PASSWORD }}
           keyPassword=${{ secrets.KEY_PASSWORD }}
           keyAlias=${{ secrets.KEY_ALIAS }}
           storeFile=./keystore/upload-keystore.jks
           EOF
 
-      - name: Generate .env file
+      - name: Build Android artifacts
         run: |
-          echo "${{ secrets.ENV }}" | base64 --decode > .env
-          echo "Verifying .env file:"
-          ls -la .env
+          flutter build apk --release --dart-define-from-file=.env
+          flutter build appbundle --release --dart-define-from-file=.env
 
-      - name: Build Android
-        run: |
-            flutter build apk --release --dart-define-from-file=.env
-            flutter build appbundle --release --dart-define-from-file=.env
-            echo "Checking build outputs:"
-            ls -R build/app/outputs/
-
-      - name: Archive build artifacts
-        id: artifact-upload-step
-        uses: actions/upload-artifact@v4.4.3
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
         with:
-          name: build-artifacts
+          name: flutter-build
           path: |
-            build/app/outputs/bundle/release/app-release.aab
             build/app/outputs/flutter-apk/app-release.apk
-          retention-days: 7
-          overwrite: true
-          if-no-files-found: error
-
-      - name: Commit version update
-        run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git add pubspec.yaml
-          git commit -m "chore: bump version to ${{ steps.version.outputs.new_version }}"
-          git remote set-url origin https://x-access-token:${{ secrets.PAT_TOKEN }}@github.com/${{ github.repository }}.git
-          git push
-
-  play-store-deploy:
-    name: "Deploy to Play Store 🚀"
-    needs: version-and-build
-    if: ${{ github.event.inputs.deploy_to_play_store == 'true' }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Download Artifacts
-        uses: actions/download-artifact@v4.1.7
-        with:
-          name: build-artifacts
-          path: downloaded-artifacts/
+            build/app/outputs/bundle/release/app-release.aab
 
       - name: Install Ruby and Fastlane
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.1'
 
-      - name: Install Fastlane
+      - name: Deploy to Play Store
         run: |
           gem install fastlane -NV
-
-      - name: Deploy to Google Play Store
-        run: |
-          cd android
           fastlane supply \
-            --aab "../downloaded-artifacts/bundle/release/app-release.aab" \
-            --track "internal" \
-            --json_key_data '${{ secrets.SERVICE_ACCOUNT_JSON }}' \
+            --aab build/app/outputs/bundle/release/app-release.aab \
+            --track internal \
+            --json_key_data "${{ secrets.SERVICE_ACCOUNT_JSON }}" \
             --package_name "xyz.deepeshkalura.rovaa.shadanda"
 
-
-  github-release:
-    name: "Create GitHub Release 📦"
-    needs: [version-and-build, play-store-deploy]
-    if: always() && (needs.play-store-deploy.result == 'success' || needs.play-store-deploy.result == 'skipped')
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Download build artifacts
-        uses: actions/download-artifact@v4.1.7
-        with:
-          name: build-artifacts
-          path: downloaded-artifacts/
+      - name: Determine version
+        id: determine_version
+        run: |
+          VERSION=$(grep "^version:" pubspec.yaml | awk '{print $2}' | cut -d+ -f1)
+          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Create GitHub Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # Find the APK
-          APK_PATH=$(find . -name "app-release.apk")
-          
-          # Create GitHub release
-          gh release create "v${{ needs.version-and-build.outputs.new_version }}" \
-            "$APK_PATH" \
-            --title "Release v${{ needs.version-and-build.outputs.new_version }}" \
-            --notes "Automated release with version ${{ needs.version-and-build.outputs.new_version }}"
+          APK=$(find build -name "*release.apk")
+          gh release create "v${{ steps.determine_version.outputs.VERSION }}" \
+            "$APK" \
+            --title "Release v${{ steps.determine_version.outputs.VERSION }}" \
+            --notes "Automated release — version ${{ steps.determine_version.outputs.VERSION }}"
