@@ -150,7 +150,6 @@ class CustomImageWidget extends StatelessWidget {
   Future<String> _loadSvgData(String url) async {
     try {
       final response = await http.get(Uri.parse(url));
-      print(response.body);
       if (response.statusCode == 200) {
         return response.body;
       } else {

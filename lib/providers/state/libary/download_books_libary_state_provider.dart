@@ -111,7 +111,6 @@ class DownloadBooksLibaryStateProvider extends ChangeNotifier {
         },
       );
 
-      print(booksModel.thumbnail);
       // Download thumbnail if available
       if (booksModel.thumbnail?.isNotEmpty ?? false) {
         await _dio.download(
@@ -174,7 +173,6 @@ class DownloadBooksLibaryStateProvider extends ChangeNotifier {
   // Save book to local storage
   Future<void> _saveBookToLocalStorage(BooksModel book) async {
     try {
-      print(book);
       await LocalDatabaseService.instance.insert(book);
     } catch (e) {
       throw Exception('Failed to save book to local storage: ${e.toString()}');
