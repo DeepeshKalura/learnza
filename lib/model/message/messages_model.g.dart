@@ -9,7 +9,8 @@ part of 'messages_model.dart';
 _$MessagesModelImpl _$$MessagesModelImplFromJson(Map<String, dynamic> json) =>
     _$MessagesModelImpl(
       id: json['id'] as String,
-      groupId: json['groupId'] as String,
+      groupId: json['groupId'] as String?,
+      receiverId: json['receiverId'] as String?,
       senderId: json['senderId'] as String,
       content: json['content'] as String,
       type: $enumDecodeNullable(_$MessageTypeEnumMap, json['type']) ??
@@ -38,6 +39,7 @@ Map<String, dynamic> _$$MessagesModelImplToJson(_$MessagesModelImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'groupId': instance.groupId,
+      'receiverId': instance.receiverId,
       'senderId': instance.senderId,
       'content': instance.content,
       'type': _$MessageTypeEnumMap[instance.type]!,

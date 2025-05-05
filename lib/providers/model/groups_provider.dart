@@ -1,5 +1,6 @@
 // import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:developer' as developer;
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -114,5 +115,34 @@ class GroupsProvider {
       developer.log('Error uploading group image', error: e);
       rethrow;
     }
+  }
+
+  Future<List<GroupsModel>> searchGroupsByName(String query,
+      {int limit = 100}) async {
+    if (query.isEmpty) return [];
+
+    query = query.toLowerCase().trim();
+
+    try {
+      final allGroups = await _fetchAllGroups();
+
+      return allGroups
+          .where((group) => group.name.toLowerCase().contains(query))
+          .take(limit)
+          .toList();
+    } catch (e) {
+      log('Error searching groups: $e');
+      return [];
+    }
+  }
+
+  Future<List<GroupsModel>> _fetchAllGroups() async {
+    final snapshot =
+        await firebaseService.database.collection('groups').limit(100).get();
+
+    final groups =
+        snapshot.docs.map((doc) => GroupsModel.fromJson(doc.data())).toList();
+
+    return groups;
   }
 }

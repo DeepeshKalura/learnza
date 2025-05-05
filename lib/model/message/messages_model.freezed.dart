@@ -21,7 +21,8 @@ MessagesModel _$MessagesModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$MessagesModel {
   String get id => throw _privateConstructorUsedError;
-  String get groupId => throw _privateConstructorUsedError;
+  String? get groupId => throw _privateConstructorUsedError;
+  String? get receiverId => throw _privateConstructorUsedError;
   String get senderId => throw _privateConstructorUsedError;
   String get content => throw _privateConstructorUsedError;
   MessageType get type => throw _privateConstructorUsedError;
@@ -50,7 +51,8 @@ abstract class $MessagesModelCopyWith<$Res> {
   @useResult
   $Res call(
       {String id,
-      String groupId,
+      String? groupId,
+      String? receiverId,
       String senderId,
       String content,
       MessageType type,
@@ -80,7 +82,8 @@ class _$MessagesModelCopyWithImpl<$Res, $Val extends MessagesModel>
   @override
   $Res call({
     Object? id = null,
-    Object? groupId = null,
+    Object? groupId = freezed,
+    Object? receiverId = freezed,
     Object? senderId = null,
     Object? content = null,
     Object? type = null,
@@ -96,10 +99,14 @@ class _$MessagesModelCopyWithImpl<$Res, $Val extends MessagesModel>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      groupId: null == groupId
+      groupId: freezed == groupId
           ? _value.groupId
           : groupId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
+      receiverId: freezed == receiverId
+          ? _value.receiverId
+          : receiverId // ignore: cast_nullable_to_non_nullable
+              as String?,
       senderId: null == senderId
           ? _value.senderId
           : senderId // ignore: cast_nullable_to_non_nullable
@@ -164,7 +171,8 @@ abstract class _$$MessagesModelImplCopyWith<$Res>
   @useResult
   $Res call(
       {String id,
-      String groupId,
+      String? groupId,
+      String? receiverId,
       String senderId,
       String content,
       MessageType type,
@@ -193,7 +201,8 @@ class __$$MessagesModelImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? groupId = null,
+    Object? groupId = freezed,
+    Object? receiverId = freezed,
     Object? senderId = null,
     Object? content = null,
     Object? type = null,
@@ -209,10 +218,14 @@ class __$$MessagesModelImplCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      groupId: null == groupId
+      groupId: freezed == groupId
           ? _value.groupId
           : groupId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
+      receiverId: freezed == receiverId
+          ? _value.receiverId
+          : receiverId // ignore: cast_nullable_to_non_nullable
+              as String?,
       senderId: null == senderId
           ? _value.senderId
           : senderId // ignore: cast_nullable_to_non_nullable
@@ -258,7 +271,8 @@ class __$$MessagesModelImplCopyWithImpl<$Res>
 class _$MessagesModelImpl implements _MessagesModel {
   const _$MessagesModelImpl(
       {required this.id,
-      required this.groupId,
+      this.groupId,
+      this.receiverId,
       required this.senderId,
       required this.content,
       this.type = MessageType.text,
@@ -278,7 +292,9 @@ class _$MessagesModelImpl implements _MessagesModel {
   @override
   final String id;
   @override
-  final String groupId;
+  final String? groupId;
+  @override
+  final String? receiverId;
   @override
   final String senderId;
   @override
@@ -322,7 +338,7 @@ class _$MessagesModelImpl implements _MessagesModel {
 
   @override
   String toString() {
-    return 'MessagesModel(id: $id, groupId: $groupId, senderId: $senderId, content: $content, type: $type, timestamp: $timestamp, status: $status, readBy: $readBy, deliveredTo: $deliveredTo, replyTo: $replyTo, attachments: $attachments)';
+    return 'MessagesModel(id: $id, groupId: $groupId, receiverId: $receiverId, senderId: $senderId, content: $content, type: $type, timestamp: $timestamp, status: $status, readBy: $readBy, deliveredTo: $deliveredTo, replyTo: $replyTo, attachments: $attachments)';
   }
 
   @override
@@ -332,6 +348,8 @@ class _$MessagesModelImpl implements _MessagesModel {
             other is _$MessagesModelImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.groupId, groupId) || other.groupId == groupId) &&
+            (identical(other.receiverId, receiverId) ||
+                other.receiverId == receiverId) &&
             (identical(other.senderId, senderId) ||
                 other.senderId == senderId) &&
             (identical(other.content, content) || other.content == content) &&
@@ -353,6 +371,7 @@ class _$MessagesModelImpl implements _MessagesModel {
       runtimeType,
       id,
       groupId,
+      receiverId,
       senderId,
       content,
       type,
@@ -382,7 +401,8 @@ class _$MessagesModelImpl implements _MessagesModel {
 abstract class _MessagesModel implements MessagesModel {
   const factory _MessagesModel(
       {required final String id,
-      required final String groupId,
+      final String? groupId,
+      final String? receiverId,
       required final String senderId,
       required final String content,
       final MessageType type,
@@ -399,7 +419,9 @@ abstract class _MessagesModel implements MessagesModel {
   @override
   String get id;
   @override
-  String get groupId;
+  String? get groupId;
+  @override
+  String? get receiverId;
   @override
   String get senderId;
   @override

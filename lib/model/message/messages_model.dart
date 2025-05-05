@@ -1,5 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+
 import '../app_enums.dart';
+
 part 'messages_model.freezed.dart';
 part 'messages_model.g.dart';
 
@@ -7,7 +9,8 @@ part 'messages_model.g.dart';
 class MessagesModel with _$MessagesModel {
   const factory MessagesModel({
     required String id,
-    required String groupId,
+    String? groupId,
+    String? receiverId,
     required String senderId,
     required String content,
     @Default(MessageType.text) MessageType type,
