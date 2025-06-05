@@ -3,6 +3,7 @@ import 'dart:developer' as developer;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
+import 'package:mime/mime.dart';
 
 import '../model/app_enums.dart';
 import '../model/message/messages_model.dart';
@@ -90,30 +91,63 @@ class MessageProvider extends ChangeNotifier {
   Future<void> sendMessage({
     required String receiverId,
     required String senderId,
-    required String content,
-    MessageType type = MessageType.text,
+    required String content, // Can be empty if only sending a file
+    MessageType type = MessageType.text, // Default to text
     ReplyReference? replyTo,
+    String? attachmentUrl,
+    String? attachmentFileName, // For display or metadata
+    MessageType? attachmentMessageType, // Explicitly pass the type for the attachment
   }) async {
+    final messageId = const Uuid().v1();
+    List<String> attachments = [];
+    MessageType finalMessageType = type;
+
+    if (attachmentUrl != null && attachmentUrl.isNotEmpty) {
+      attachments.add(attachmentUrl); // MessagesModel expects List<String> for attachments
+      if (attachmentMessageType != null) {
+        finalMessageType = attachmentMessageType;
+      } else if (attachmentFileName != null) {
+        // Try to infer from file name if not explicitly provided
+        final mimeType = lookupMimeType(attachmentFileName);
+        if (mimeType != null) {
+          if (mimeType.startsWith('image/')) {
+            finalMessageType = MessageType.image;
+          } else if (mimeType.startsWith('video/')) {
+            finalMessageType = MessageType.video;
+          } else if (mimeType.startsWith('audio/')) {
+            finalMessageType = MessageType.audio;
+          } else if (mimeType.startsWith('application/pdf') || mimeType.startsWith('text/plain') || mimeType.contains('document')) {
+            finalMessageType = MessageType.document;
+          } else {
+            finalMessageType = MessageType.document; // Default for other files
+          }
+        } else {
+          finalMessageType = MessageType.document; // Default if MIME can't be determined
+        }
+      }
+    }
+
     final message = MessagesModel(
-      id: const Uuid().v1(),
+      id: messageId,
       receiverId: receiverId,
       senderId: senderId,
-      content: content,
-      type: type,
+      content: content, // This can be a caption for the file
+      type: finalMessageType,
       timestamp: DateTime.now(),
       status: MessageStatus.sent,
       replyTo: replyTo,
+      attachments: attachments,
     );
 
     try {
-      // Save message to Firestore
       await firebaseService.database
           .collection('messages')
-          .add(message.toJson());
+          .doc(messageId) // Use the generated messageId as doc ID for consistency
+          .set(message.toJson());
       notifyListeners();
     } catch (e) {
-      // Handle error - you might want to show a snackbar or log the error
       debugPrint('Error sending message: $e');
+      rethrow; // Rethrow to allow UI to handle it
     }
   }
 

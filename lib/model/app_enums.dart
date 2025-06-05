@@ -2,7 +2,7 @@ enum UserRole { admin, teacher, student, bot }
 
 enum GroupPrivacy { public, private, restricted }
 
-enum MessageType { text, image, video, audio, document, location }
+enum MessageType { text, image, video, audio, document, location, unknown }
 
 enum MessageStatus { sending, sent, delivered, read }
 

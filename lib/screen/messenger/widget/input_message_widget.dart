@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:file_picker/file_picker.dart';
+import 'dart:io';
 
 import '../../../model/message/messages_model.dart';
 import '../../../providers/message_provider.dart';
+import '../../../service/file_service.dart';
+import '../../../service/errors/file_service_errors.dart';
+import '../../../locator/service_locator.dart';
+import '../../../model/app_enums.dart';
+import 'package:mime/mime.dart';
 
 class InputMessageWidget extends StatefulWidget {
   final String receiverId;
@@ -26,6 +33,7 @@ class InputMessageWidgetState extends State<InputMessageWidget> {
   final TextEditingController _messageController = TextEditingController();
   bool _isComposing = false;
   bool _isSending = false;
+  File? _selectedFile;
 
   @override
   Widget build(BuildContext context) {
@@ -43,12 +51,13 @@ class InputMessageWidgetState extends State<InputMessageWidget> {
           mainAxisSize: MainAxisSize.min,
           children: [
             if (widget.replyTo != null) _buildReplyBanner(),
+            if (_selectedFile != null) _buildSelectedFileBanner(),
             Row(
               children: [
-                // IconButton(
-                //   icon: const Icon(Icons.attach_fnnnile, color: Colors.grey),
-                //   onPressed: _pickAttachment,
-                // ),
+                IconButton(
+                  icon: const Icon(Icons.attach_file, color: Colors.grey),
+                  onPressed: _pickAttachment,
+                ),
                 Expanded(
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -100,6 +109,38 @@ class InputMessageWidgetState extends State<InputMessageWidget> {
     );
   }
 
+  Widget _buildSelectedFileBanner() {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 8),
+      padding: const EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        color: Colors.blue[100],
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: Text(
+              'File: ${_selectedFile!.path.split('/').last}', // Show file name
+              style: const TextStyle(fontStyle: FontStyle.italic),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+          IconButton(
+            icon: const Icon(Icons.close, color: Colors.grey),
+            onPressed: () {
+              setState(() {
+                _selectedFile = null;
+              });
+            },
+            tooltip: 'Clear selected file',
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _buildReplyBanner() {
     final replyContent = widget.replyTo?.content ?? '';
     // Limit displayed reply content length
@@ -136,76 +177,115 @@ class InputMessageWidgetState extends State<InputMessageWidget> {
 
   Future<void> _sendMessage() async {
     final text = _messageController.text.trim();
-    if (text.isEmpty) return;
+    if (text.isEmpty && _selectedFile == null) return; // Nothing to send
+
+    setState(() {
+      _isSending = true;
+    });
+
+    final messageProvider = Provider.of<MessageProvider>(context, listen: false);
+    final fileService = sl<FileService>(); // Get FileService instance
 
     try {
-      setState(() {
-        _isSending = true;
-      });
+      String? attachmentUrl;
+      String? attachmentFileName;
+      MessageType? attachmentType;
 
-      final messageProvider =
-          Provider.of<MessageProvider>(context, listen: false);
+      if (_selectedFile != null) {
+        try {
+          // Determine attachment type from MIME
+          attachmentFileName = _selectedFile!.path.split('/').last;
+          final mime = lookupMimeType(_selectedFile!.path);
+          if (mime != null) {
+            if (mime.startsWith('image/')) attachmentType = MessageType.image;
+            else if (mime.startsWith('video/')) attachmentType = MessageType.video;
+            else if (mime.startsWith('audio/')) attachmentType = MessageType.audio;
+            else attachmentType = MessageType.document; // Default for others
+          } else {
+            attachmentType = MessageType.document; // Fallback
+          }
+
+          // Use receiverId for basePath for now, consider group chats later
+          String basePath = 'chat_attachments/${widget.receiverId}';
+          attachmentUrl = await fileService.uploadFile(_selectedFile!, basePath);
+
+        } on FileSizeLimitExceededException catch (e) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(e.message), backgroundColor: Colors.red),
+          );
+          setState(() { _isSending = false; }); // Reset sending state
+          return; // Stop sending
+        } catch (e) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('File upload failed: ${e.toString()}'), backgroundColor: Colors.red),
+          );
+          setState(() { _isSending = false; }); // Reset sending state
+          return; // Stop sending
+        }
+      }
 
       await messageProvider.sendMessage(
         receiverId: widget.receiverId,
         senderId: widget.currentUserId,
-        content: text,
+        content: text, // Text can be a caption or empty
         replyTo: widget.replyTo,
+        attachmentUrl: attachmentUrl,
+        attachmentFileName: attachmentFileName,
+        attachmentMessageType: attachmentType,
+        // If only file is sent, type might be overridden by attachmentType in provider
+        type: (attachmentUrl != null && text.isEmpty) ? (attachmentType ?? MessageType.document) : MessageType.text,
       );
 
-      // Clear input and reset state
       _messageController.clear();
-
-      // If there was a reply, cancel it after sending
+      if (_selectedFile != null) {
+        setState(() {
+          _selectedFile = null;
+        });
+      }
       if (widget.replyTo != null && widget.onCancelReply != null) {
         widget.onCancelReply!();
       }
     } catch (e) {
-      // Show error using a snackbar
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Failed to send message: ${e.toString()}'),
-          backgroundColor: Colors.red,
-        ),
+        SnackBar(content: Text('Failed to send message: ${e.toString()}'), backgroundColor: Colors.red),
       );
     } finally {
       setState(() {
         _isSending = false;
-        _isComposing = false;
+        _isComposing = _messageController.text.trim().isNotEmpty;
       });
     }
   }
 
-  void _pickAttachment() {
-    // Implement file/image attachment logic
-    showModalBottomSheet(
-      context: context,
-      builder: (context) => SafeArea(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ListTile(
-              leading: const Icon(Icons.photo),
-              title: const Text('Photo'),
-              onTap: () {
-                Navigator.pop(context);
-                // TODO: Implement photo picker
-                debugPrint('Photo picker not implemented');
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.file_present),
-              title: const Text('File'),
-              onTap: () {
-                Navigator.pop(context);
-                // TODO: Implement file picker
-                debugPrint('File picker not implemented');
-              },
-            ),
-          ],
-        ),
-      ),
+  Future<void> _pickAttachment() async {
+    // Close the bottom sheet first if it's open due to previous logic
+    if (Navigator.canPop(context)) {
+      Navigator.pop(context);
+    }
+
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.any, // Allow any file type for now
     );
+
+    if (result != null) {
+      setState(() {
+        _selectedFile = File(result.files.single.path!);
+      });
+      // For now, just print the selected file path.
+      // Actual upload and message sending will be handled in later steps.
+      debugPrint('Selected file: ${_selectedFile!.path}');
+
+      // Show a temporary indication that a file is selected
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Selected file: ${result.files.single.name}'),
+          duration: const Duration(seconds: 2),
+        ),
+      );
+    } else {
+      // User canceled the picker
+      debugPrint('No file selected.');
+    }
   }
 
   @override
