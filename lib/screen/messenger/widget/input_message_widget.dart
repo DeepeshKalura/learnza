@@ -1,15 +1,16 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:file_picker/file_picker.dart';
 import 'dart:io';
 
+import 'package:file_picker/file_picker.dart';
+import 'package:flutter/material.dart';
+import 'package:mime/mime.dart';
+import 'package:provider/provider.dart';
+
+import '../../../locator/injector.dart' as di;
+import '../../../model/app_enums.dart';
 import '../../../model/message/messages_model.dart';
 import '../../../providers/message_provider.dart';
-import '../../../service/file_service.dart';
 import '../../../service/errors/file_service_errors.dart';
-import '../../../locator/service_locator.dart';
-import '../../../model/app_enums.dart';
-import 'package:mime/mime.dart';
+import '../../../service/file_service.dart';
 
 class InputMessageWidget extends StatefulWidget {
   final String receiverId;
@@ -183,8 +184,9 @@ class InputMessageWidgetState extends State<InputMessageWidget> {
       _isSending = true;
     });
 
-    final messageProvider = Provider.of<MessageProvider>(context, listen: false);
-    final fileService = sl<FileService>(); // Get FileService instance
+    final messageProvider =
+        Provider.of<MessageProvider>(context, listen: false);
+    final fileService = di.injector.get<FileService>();
 
     try {
       String? attachmentUrl;
@@ -197,29 +199,40 @@ class InputMessageWidgetState extends State<InputMessageWidget> {
           attachmentFileName = _selectedFile!.path.split('/').last;
           final mime = lookupMimeType(_selectedFile!.path);
           if (mime != null) {
-            if (mime.startsWith('image/')) attachmentType = MessageType.image;
-            else if (mime.startsWith('video/')) attachmentType = MessageType.video;
-            else if (mime.startsWith('audio/')) attachmentType = MessageType.audio;
-            else attachmentType = MessageType.document; // Default for others
+            if (mime.startsWith('image/')) {
+              attachmentType = MessageType.image;
+            } else if (mime.startsWith('video/')) {
+              attachmentType = MessageType.video;
+            } else if (mime.startsWith('audio/')) {
+              attachmentType = MessageType.audio;
+            } else {
+              attachmentType = MessageType.document;
+            }
           } else {
-            attachmentType = MessageType.document; // Fallback
+            attachmentType = MessageType.document;
           }
 
           // Use receiverId for basePath for now, consider group chats later
           String basePath = 'chat_attachments/${widget.receiverId}';
-          attachmentUrl = await fileService.uploadFile(_selectedFile!, basePath);
-
+          attachmentUrl =
+              await fileService.uploadFile(_selectedFile!, basePath);
         } on FileSizeLimitExceededException catch (e) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(e.message), backgroundColor: Colors.red),
           );
-          setState(() { _isSending = false; }); // Reset sending state
+          setState(() {
+            _isSending = false;
+          }); // Reset sending state
           return; // Stop sending
         } catch (e) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('File upload failed: ${e.toString()}'), backgroundColor: Colors.red),
+            SnackBar(
+                content: Text('File upload failed: ${e.toString()}'),
+                backgroundColor: Colors.red),
           );
-          setState(() { _isSending = false; }); // Reset sending state
+          setState(() {
+            _isSending = false;
+          }); // Reset sending state
           return; // Stop sending
         }
       }
@@ -233,7 +246,9 @@ class InputMessageWidgetState extends State<InputMessageWidget> {
         attachmentFileName: attachmentFileName,
         attachmentMessageType: attachmentType,
         // If only file is sent, type might be overridden by attachmentType in provider
-        type: (attachmentUrl != null && text.isEmpty) ? (attachmentType ?? MessageType.document) : MessageType.text,
+        type: (attachmentUrl != null && text.isEmpty)
+            ? (attachmentType ?? MessageType.document)
+            : MessageType.text,
       );
 
       _messageController.clear();
@@ -247,7 +262,9 @@ class InputMessageWidgetState extends State<InputMessageWidget> {
       }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to send message: ${e.toString()}'), backgroundColor: Colors.red),
+        SnackBar(
+            content: Text('Failed to send message: ${e.toString()}'),
+            backgroundColor: Colors.red),
       );
     } finally {
       setState(() {

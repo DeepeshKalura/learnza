@@ -1,8 +1,10 @@
 import 'dart:io';
+
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:uuid/uuid.dart'; // For generating unique file names
+import 'package:uuid/uuid.dart';
+
+import 'errors/file_service_errors.dart';
 import 'firebase_service.dart';
-import 'errors/file_service_errors.dart'; // Ensure this path is correct
 
 class FileService {
   final FirebaseService _firebaseService;
@@ -20,7 +22,7 @@ class FileService {
     }
 
     try {
-      final fileName = const Uuid().v4() + '.' + file.path.split('.').last;
+      final fileName = '${const Uuid().v4()}.${file.path.split('.').last}';
       final String filePath = '$basePath/$fileName';
 
       Reference storageRef = _firebaseService.storage.ref().child(filePath);

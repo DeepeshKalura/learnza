@@ -27,6 +27,8 @@ void setup(GetIt getIt) {
   );
 
   getIt.registerLazySingleton<FileService>(
-    () => FileService(firebaseService: getIt()),
+    () => FileService(
+      firebaseService: getIt.get<FirebaseService>(),
+    ),
   );
 }
