@@ -18,4 +18,7 @@ class ResourceUtil {
 
   static const String coverImage =
       "https://images.pexels.com/photos/531880/pexels-photo-531880.jpeg";
+
+  static const String defaultPostImage =
+      "https://unsplash.com/photos/a-small-brown-and-white-dog-standing-next-to-a-cement-wall-KwUMj6kWYZ8";
 }

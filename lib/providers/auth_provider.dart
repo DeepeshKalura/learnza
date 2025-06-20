@@ -1,13 +1,13 @@
+import 'dart:convert';
 import 'dart:developer' as developer;
 import 'dart:math';
-import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:learnza/model/app_enums.dart';
 import 'package:learnza/service/firebase_service.dart';
-import 'package:http/http.dart' as http;
 import 'package:uuid/uuid.dart';
 
 import '../model/users/users_model.dart';
@@ -98,7 +98,7 @@ class AuthProvider extends ChangeNotifier {
         .join();
   }
 
-  Future<void> createAdminRegisteration({
+  Future<void> createAdminRegistration({
     required String email,
     required String username,
   }) async {

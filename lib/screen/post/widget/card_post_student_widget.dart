@@ -1,4 +1,6 @@
 // lib/screen/post/widget/card_post_student_widget.dart
+import 'dart:developer' as developer show log;
+
 import 'package:animations/animations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -11,8 +13,10 @@ import 'package:shadcn_ui/shadcn_ui.dart';
 
 import '../../../model/posts/posts_model.dart';
 import '../../../model/users/users_model.dart';
+import '../../../utils/image_utils.dart';
 import '../../../utils/resource_util.dart';
 import '../../../utils/theme.dart';
+import '../../common/widget/custom_image_widget.dart';
 
 class CardPostStudentWidget extends StatelessWidget {
   final PostsModel post;
@@ -87,10 +91,12 @@ class CardPostStudentWidget extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    ShadAvatar(
-                      user.profileImageURL ?? ResourceUtil.defaultProfileImage,
-                      placeholder: Text(user.fullName.substring(0, 2)),
-                      size: const Size(50, 50),
+                    CircleAvatar(
+                      // Assuming both models have a way to get an avatar/image
+                      child: ImageUtils.load(
+                        urlOrAsset: user.profileImageURL,
+                        defaultAsset: ResourceUtil.defaultProfileImage,
+                      ),
                     ),
                     const SizedBox(width: 8),
                     Column(
@@ -150,14 +156,18 @@ class CardPostStudentWidget extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12.0),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 12.0,
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   post.title,
                   style: const TextStyle(
-                      fontSize: 22, fontWeight: FontWeight.bold),
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 const SizedBox(height: 8),
                 Text(
@@ -179,14 +189,24 @@ class CardPostStudentWidget extends StatelessWidget {
                           width: double.infinity,
                           fit: BoxFit.cover,
                           placeholder: (context, url) => Container(
-                              color: Colors.grey.shade200,
-                              child: Center(
-                                  child: CircularProgressIndicator(
-                                      color: Colors.blue.shade200))),
-                          errorWidget: (context, url, error) => Container(
-                              color: Colors.grey.shade200,
-                              child: Icon(Icons.error_outline,
-                                  size: 50, color: Colors.grey.shade500)),
+                            color: Colors.grey.shade200,
+                            child: Center(
+                              child: CircularProgressIndicator(
+                                color: Colors.blue.shade200,
+                              ),
+                            ),
+                          ),
+                          errorWidget: (context, url, error) {
+                            developer.log(
+                              'Failed to load card image for post ${post.id}: $error',
+                            );
+                            return Image.network(
+                              ResourceUtil.defaultPostImage,
+                              height: 200,
+                              width: double.infinity,
+                              fit: BoxFit.cover,
+                            );
+                          },
                         ),
                       ),
                     ),
@@ -211,7 +231,10 @@ class CardPostStudentWidget extends StatelessWidget {
                 padding: EdgeInsets.all(8.0),
                 child: CircleAvatar(
                   backgroundColor: Colors.black54,
-                  child: Icon(Icons.arrow_back, color: Colors.white),
+                  child: Icon(
+                    Icons.arrow_back,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),
@@ -225,7 +248,9 @@ class CardPostStudentWidget extends StatelessWidget {
                         imageUrl: post.thumbnailUrl!,
                         width: double.infinity,
                         fit: BoxFit.cover)
-                    : Container(color: Colors.grey.shade200),
+                    : Container(
+                        color: Colors.grey.shade200,
+                      ),
               ),
             ),
           ),
@@ -245,13 +270,8 @@ class CardPostStudentWidget extends StatelessWidget {
                   const SizedBox(height: 12),
                   Row(
                     children: [
-                      CircleAvatar(
-                        backgroundImage: user.profileImageURL != null
-                            ? NetworkImage(user.profileImageURL!)
-                            : null,
-                        child: user.profileImageURL == null
-                            ? Text(user.fullName.substring(0, 2))
-                            : null,
+                      CustomImageWidget(
+                        imageUrl: user.profileImageURL,
                       ),
                       const SizedBox(width: 12),
                       Column(

@@ -1,9 +1,7 @@
-import 'dart:developer' as developer;
-
+// lib/screen/common/widget/custom_image_widget.dart
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:http/http.dart' as http;
+import 'package:flutter_svg/flutter_svg.dart'; // Make sure this import is here
 
 import '../../../utils/resource_util.dart';
 
@@ -33,54 +31,33 @@ class CustomImageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // If imageUrl is null, return default image
-    if (imageUrl == null) {
+    final effectiveUrl = imageUrl?.isNotEmpty == true ? imageUrl : null;
+
+    // --- START OF CHANGE ---
+    final bool isSvg = effectiveUrl?.toLowerCase().contains('svg') ?? false;
+
+    if (effectiveUrl == null) {
+      // If no URL is provided, show the default raster image.
+      return _buildContainer(child: Image.network(defaultImage, fit: fit));
+    } else if (isSvg) {
       return _buildContainer(
-        child: Image.network(
-          defaultImage,
+        child: SvgPicture.network(
+          effectiveUrl,
           fit: fit,
+          placeholderBuilder: (BuildContext context) => _buildLoadingWidget(),
+        ),
+      );
+    } else {
+      // For all other URLs, use CachedNetworkImage
+      return _buildContainer(
+        child: CachedNetworkImage(
+          imageUrl: effectiveUrl,
+          fit: fit,
+          placeholder: (context, url) => _buildLoadingWidget(),
+          errorWidget: (context, url, error) => _buildErrorWidget(),
         ),
       );
     }
-
-    // Check if it's an SVG
-    if (imageUrl!.toLowerCase().contains('svg')) {
-      return _buildSvgImage(context);
-    } else {
-      // Regular image
-      return _buildRegularImage();
-    }
-  }
-
-  Widget _buildSvgImage(BuildContext context) {
-    return _buildContainer(
-      child: FutureBuilder<String>(
-        future: _loadSvgData(imageUrl!),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return _buildLoadingWidget();
-          } else if (snapshot.hasError) {
-            return _buildErrorWidget();
-          } else {
-            return SvgPicture.string(
-              snapshot.data!,
-              fit: fit,
-            );
-          }
-        },
-      ),
-    );
-  }
-
-  Widget _buildRegularImage() {
-    return _buildContainer(
-      child: CachedNetworkImage(
-        imageUrl: imageUrl!,
-        fit: fit,
-        placeholder: (context, url) => _buildLoadingWidget(),
-        errorWidget: (context, url, error) => _buildErrorWidget(),
-      ),
-    );
   }
 
   Widget _buildContainer({required Widget child}) {
@@ -94,32 +71,18 @@ class CustomImageWidget extends StatelessWidget {
         ),
         child: ClipOval(child: child),
       );
-    } else if (shape == ShapeType.rectangle) {
-      return Container(
-        width: width,
-        height: height,
-        decoration: BoxDecoration(
-          borderRadius: customBorderRadius ?? BorderRadius.circular(8),
-          color: backgroundColor,
-        ),
-        child: ClipRRect(
-          borderRadius: customBorderRadius ?? BorderRadius.circular(8),
-          child: child,
-        ),
-      );
     } else {
-      // Custom shape based on customBorderRadius
+      // Handles both rectangle and custom shapes
       return Container(
         width: width,
         height: height,
         decoration: BoxDecoration(
-          borderRadius: customBorderRadius,
+          borderRadius: customBorderRadius ??
+              (shape == ShapeType.rectangle ? BorderRadius.circular(8) : null),
           color: backgroundColor,
         ),
-        child: ClipRRect(
-          borderRadius: customBorderRadius ?? BorderRadius.zero,
-          child: child,
-        ),
+        clipBehavior: Clip.antiAlias,
+        child: child,
       );
     }
   }
@@ -141,25 +104,11 @@ class CustomImageWidget extends StatelessWidget {
   }
 
   Widget _buildErrorWidget() {
+    // When a regular image fails, fallback to the default raster image.
     return Image.network(
       defaultImage,
       fit: fit,
     );
-  }
-
-  Future<String> _loadSvgData(String url) async {
-    try {
-      final response = await http.get(Uri.parse(url));
-      if (response.statusCode == 200) {
-        return response.body;
-      } else {
-        developer.log('Failed to load SVG');
-        throw Exception('Failed to load SVG');
-      }
-    } catch (e, s) {
-      developer.log('load Svg data', error: e, stackTrace: s);
-      rethrow;
-    }
   }
 }
 
