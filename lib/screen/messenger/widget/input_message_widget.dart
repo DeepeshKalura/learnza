@@ -2,28 +2,21 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:mime/mime.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:learnza/providers/state/messanger/chat_state_provider.dart';
+import 'package:learnza/screen/messenger/widget/attachment_preview_screen.dart';
 import 'package:provider/provider.dart';
 
-import '../../../locator/injector.dart' as di;
-import '../../../model/app_enums.dart';
 import '../../../model/message/messages_model.dart';
-import '../../../providers/message_provider.dart';
-import '../../../service/errors/file_service_errors.dart';
-import '../../../service/file_service.dart';
 
 class InputMessageWidget extends StatefulWidget {
-  final String receiverId;
   final String currentUserId;
-  final ReplyReference? replyTo;
-  final Function()? onCancelReply;
+  final bool isGroup;
 
   const InputMessageWidget({
     super.key,
-    required this.receiverId,
     required this.currentUserId,
-    this.replyTo,
-    this.onCancelReply,
+    required this.isGroup,
   });
 
   @override
@@ -34,7 +27,83 @@ class InputMessageWidgetState extends State<InputMessageWidget> {
   final TextEditingController _messageController = TextEditingController();
   bool _isComposing = false;
   bool _isSending = false;
-  File? _selectedFile;
+  ReplyReference? _currentReply;
+
+  @override
+  void dispose() {
+    _messageController.dispose();
+    super.dispose();
+  }
+
+  void _onCancelReply() {
+    setState(() {
+      _currentReply = null;
+    });
+  }
+
+  void _navigateToPreview(BuildContext context, File file) {
+    final chatProvider = context.read<ChatStateProvider>();
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (_) => DraggableScrollableSheet(
+        initialChildSize: 1.0,
+        minChildSize: 0.5,
+        maxChildSize: 1.0,
+        builder: (_, scrollController) {
+          return ChangeNotifierProvider.value(
+            value: chatProvider,
+            child: AttachmentPreviewScreen(
+              file: file,
+              replyTo: _currentReply,
+            ),
+          );
+        },
+      ),
+    ).then((_) => _onCancelReply());
+  }
+
+  Future<void> _sendTextMessage() async {
+    final text = _messageController.text.trim();
+    if (text.isEmpty || _isSending) return;
+
+    setState(() {
+      _isSending = true;
+    });
+
+    try {
+      final chatProvider = context.read<ChatStateProvider>();
+
+      await chatProvider.sendMessage(
+        senderId: widget.currentUserId,
+        content: text,
+        replyTo: _currentReply,
+      );
+
+      _messageController.clear();
+      _onCancelReply();
+      setState(() {
+        _isComposing = false;
+      });
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Failed to send message: ${e.toString()}'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isSending = false;
+          _isComposing = false;
+        });
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,28 +113,23 @@ class InputMessageWidgetState extends State<InputMessageWidget> {
         margin: const EdgeInsets.symmetric(horizontal: 4, vertical: 6),
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
         decoration: BoxDecoration(
-          border: Border(
-            top: BorderSide(color: Colors.grey[300]!),
-          ),
+          border: Border(top: BorderSide(color: Colors.grey[300]!)),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            if (widget.replyTo != null) _buildReplyBanner(),
-            if (_selectedFile != null) _buildSelectedFileBanner(),
+            if (_currentReply != null) _buildReplyBanner(),
             Row(
               children: [
                 IconButton(
                   icon: const Icon(Icons.attach_file, color: Colors.grey),
-                  onPressed: _pickAttachment,
+                  onPressed: _showAttachmentOptions,
                 ),
                 Expanded(
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.grey[300]!,
-                      ),
+                      border: Border.all(color: Colors.grey[300]!),
                       borderRadius: BorderRadius.circular(25),
                     ),
                     child: TextField(
@@ -75,20 +139,17 @@ class InputMessageWidgetState extends State<InputMessageWidget> {
                         border: InputBorder.none,
                       ),
                       onChanged: (text) {
-                        setState(() {
-                          _isComposing = text.trim().isNotEmpty;
-                        });
+                        setState(() => _isComposing = text.trim().isNotEmpty);
                       },
                       maxLines: null,
                       keyboardType: TextInputType.multiline,
                     ),
                   ),
                 ),
-
-                // Send button
                 const SizedBox(width: 6),
                 GestureDetector(
-                  onTap: (_isComposing && !_isSending) ? _sendMessage : null,
+                  onTap:
+                      (_isComposing && !_isSending) ? _sendTextMessage : null,
                   child: CircleAvatar(
                     child: _isSending
                         ? const SizedBox(
@@ -110,41 +171,69 @@ class InputMessageWidgetState extends State<InputMessageWidget> {
     );
   }
 
-  Widget _buildSelectedFileBanner() {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 8),
-      padding: const EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        color: Colors.blue[100],
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            child: Text(
-              'File: ${_selectedFile!.path.split('/').last}', // Show file name
-              style: const TextStyle(fontStyle: FontStyle.italic),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
+  void _showAttachmentOptions() {
+    showModalBottomSheet(
+      context: context,
+      builder: (ctx) {
+        return SafeArea(
+          child: Wrap(
+            children: <Widget>[
+              ListTile(
+                leading: const Icon(Icons.photo_library),
+                title: const Text('Gallery'),
+                onTap: () {
+                  Navigator.pop(ctx);
+                  _pickMediaFromGallery();
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.camera_alt),
+                title: const Text('Camera'),
+                onTap: () {
+                  Navigator.pop(ctx);
+                  _pickFromCamera();
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.insert_drive_file),
+                title: const Text('Document'),
+                onTap: () {
+                  Navigator.pop(ctx);
+                  _pickDocument();
+                },
+              ),
+            ],
           ),
-          IconButton(
-            icon: const Icon(Icons.close, color: Colors.grey),
-            onPressed: () {
-              setState(() {
-                _selectedFile = null;
-              });
-            },
-            tooltip: 'Clear selected file',
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 
+  Future<void> _pickMediaFromGallery() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null && mounted) {
+      _navigateToPreview(context, File(pickedFile.path));
+    }
+  }
+
+  Future<void> _pickFromCamera() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.camera);
+    if (pickedFile != null && mounted) {
+      _navigateToPreview(context, File(pickedFile.path));
+    }
+  }
+
+  Future<void> _pickDocument() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    if (result != null && result.files.single.path != null && mounted) {
+      _navigateToPreview(context, File(result.files.single.path!));
+    }
+  }
+
   Widget _buildReplyBanner() {
-    final replyContent = widget.replyTo?.content ?? '';
-    // Limit displayed reply content length
+    final replyContent = _currentReply?.content ?? '';
     final displayContent = replyContent.length > 50
         ? '${replyContent.substring(0, 47)}...'
         : replyContent;
@@ -168,146 +257,11 @@ class InputMessageWidgetState extends State<InputMessageWidget> {
           ),
           IconButton(
             icon: const Icon(Icons.close, color: Colors.grey),
-            onPressed: widget.onCancelReply,
+            onPressed: _onCancelReply,
             tooltip: 'Cancel reply',
           ),
         ],
       ),
     );
-  }
-
-  Future<void> _sendMessage() async {
-    final text = _messageController.text.trim();
-    if (text.isEmpty && _selectedFile == null) return; // Nothing to send
-
-    setState(() {
-      _isSending = true;
-    });
-
-    final messageProvider =
-        Provider.of<MessageProvider>(context, listen: false);
-    final fileService = di.injector.get<FileService>();
-
-    try {
-      String? attachmentUrl;
-      String? attachmentFileName;
-      MessageType? attachmentType;
-
-      if (_selectedFile != null) {
-        try {
-          // Determine attachment type from MIME
-          attachmentFileName = _selectedFile!.path.split('/').last;
-          final mime = lookupMimeType(_selectedFile!.path);
-          if (mime != null) {
-            if (mime.startsWith('image/')) {
-              attachmentType = MessageType.image;
-            } else if (mime.startsWith('video/')) {
-              attachmentType = MessageType.video;
-            } else if (mime.startsWith('audio/')) {
-              attachmentType = MessageType.audio;
-            } else {
-              attachmentType = MessageType.document;
-            }
-          } else {
-            attachmentType = MessageType.document;
-          }
-
-          // Use receiverId for basePath for now, consider group chats later
-          String basePath = 'chat_attachments/${widget.receiverId}';
-          attachmentUrl =
-              await fileService.uploadFile(_selectedFile!, basePath);
-        } on FileSizeLimitExceededException catch (e) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(e.message), backgroundColor: Colors.red),
-          );
-          setState(() {
-            _isSending = false;
-          }); // Reset sending state
-          return; // Stop sending
-        } catch (e) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-                content: Text('File upload failed: ${e.toString()}'),
-                backgroundColor: Colors.red),
-          );
-          setState(() {
-            _isSending = false;
-          }); // Reset sending state
-          return; // Stop sending
-        }
-      }
-
-      await messageProvider.sendMessage(
-        receiverId: widget.receiverId,
-        senderId: widget.currentUserId,
-        content: text, // Text can be a caption or empty
-        replyTo: widget.replyTo,
-        attachmentUrl: attachmentUrl,
-        attachmentFileName: attachmentFileName,
-        attachmentMessageType: attachmentType,
-        // If only file is sent, type might be overridden by attachmentType in provider
-        type: (attachmentUrl != null && text.isEmpty)
-            ? (attachmentType ?? MessageType.document)
-            : MessageType.text,
-      );
-
-      _messageController.clear();
-      if (_selectedFile != null) {
-        setState(() {
-          _selectedFile = null;
-        });
-      }
-      if (widget.replyTo != null && widget.onCancelReply != null) {
-        widget.onCancelReply!();
-      }
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-            content: Text('Failed to send message: ${e.toString()}'),
-            backgroundColor: Colors.red),
-      );
-    } finally {
-      setState(() {
-        _isSending = false;
-        _isComposing = _messageController.text.trim().isNotEmpty;
-      });
-    }
-  }
-
-  Future<void> _pickAttachment() async {
-    // Close the bottom sheet first if it's open due to previous logic
-    if (Navigator.canPop(context)) {
-      Navigator.pop(context);
-    }
-
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-      type: FileType.any, // Allow any file type for now
-    );
-
-    if (result != null) {
-      setState(() {
-        _selectedFile = File(result.files.single.path!);
-      });
-      // For now, just print the selected file path.
-      // Actual upload and message sending will be handled in later steps.
-      debugPrint('Selected file: ${_selectedFile!.path}');
-
-      // Show a temporary indication that a file is selected
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Selected file: ${result.files.single.name}'),
-          duration: const Duration(seconds: 2),
-        ),
-      );
-    } else {
-      // User canceled the picker
-      debugPrint('No file selected.');
-    }
-  }
-
-  @override
-  void dispose() {
-    _messageController.dispose();
-    super.dispose();
   }
 }

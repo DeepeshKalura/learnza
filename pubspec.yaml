@@ -81,6 +81,7 @@ dependencies:
   sentry_flutter: ^8.13.0
   flutter_svg: ^2.0.17
   cloud_functions: ^5.3.4
+  rxdart: ^0.28.0
 
 dev_dependencies:
   flutter_test:
@@ -104,6 +105,7 @@ dev_dependencies:
     sdk: flutter
   sentry_dart_plugin: ^2.4.1
   dart_pre_commit: ^5.4.3
+  mocktail: ^1.0.4
 
 
 
@@ -113,7 +115,6 @@ flutter_gen:
 
   integrations:
     flutter_svg: true
-    flare_flutter: true
     rive: true
     lottie: true
 

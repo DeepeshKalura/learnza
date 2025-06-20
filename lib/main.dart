@@ -25,7 +25,6 @@ import 'providers/book_provider.dart';
 import 'providers/course_provider.dart';
 import 'providers/department_provider.dart';
 import 'providers/groups_provider.dart';
-import 'providers/message_provider.dart';
 import 'providers/post_provider.dart';
 import 'providers/state/groups/groups_state_provider.dart';
 import 'providers/state/libary/course_book_libary_state_provider.dart';
@@ -80,8 +79,8 @@ Future<void> main() async {
           options.sendDefaultPii = true;
         },
         appRunner: () => runApp(
-          const SentryWidget(
-            child: MyApp(),
+          SentryWidget(
+            child: const MyApp(),
           ),
         ),
       );
@@ -154,11 +153,6 @@ class MyApp extends StatelessWidget {
                 );
               },
             ),
-            ChangeNotifierProvider(create: (context) {
-              return MessageProvider(
-                firebaseService: di.injector.get<FirebaseService>(),
-              );
-            }),
             ChangeNotifierProvider(
               create: (context) {
                 return LibaryStudentStateProvider();

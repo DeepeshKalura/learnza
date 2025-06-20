@@ -32,6 +32,9 @@ mixin _$MessagesModel {
   List<String> get deliveredTo => throw _privateConstructorUsedError;
   ReplyReference? get replyTo => throw _privateConstructorUsedError;
   List<String> get attachments => throw _privateConstructorUsedError;
+  String? get attachmentFileName => throw _privateConstructorUsedError;
+  int? get attachmentFileSize => throw _privateConstructorUsedError;
+  String? get chatRoomId => throw _privateConstructorUsedError;
 
   /// Serializes this MessagesModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -61,7 +64,10 @@ abstract class $MessagesModelCopyWith<$Res> {
       List<String> readBy,
       List<String> deliveredTo,
       ReplyReference? replyTo,
-      List<String> attachments});
+      List<String> attachments,
+      String? attachmentFileName,
+      int? attachmentFileSize,
+      String? chatRoomId});
 
   $ReplyReferenceCopyWith<$Res>? get replyTo;
 }
@@ -93,6 +99,9 @@ class _$MessagesModelCopyWithImpl<$Res, $Val extends MessagesModel>
     Object? deliveredTo = null,
     Object? replyTo = freezed,
     Object? attachments = null,
+    Object? attachmentFileName = freezed,
+    Object? attachmentFileSize = freezed,
+    Object? chatRoomId = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -143,6 +152,18 @@ class _$MessagesModelCopyWithImpl<$Res, $Val extends MessagesModel>
           ? _value.attachments
           : attachments // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      attachmentFileName: freezed == attachmentFileName
+          ? _value.attachmentFileName
+          : attachmentFileName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      attachmentFileSize: freezed == attachmentFileSize
+          ? _value.attachmentFileSize
+          : attachmentFileSize // ignore: cast_nullable_to_non_nullable
+              as int?,
+      chatRoomId: freezed == chatRoomId
+          ? _value.chatRoomId
+          : chatRoomId // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 
@@ -181,7 +202,10 @@ abstract class _$$MessagesModelImplCopyWith<$Res>
       List<String> readBy,
       List<String> deliveredTo,
       ReplyReference? replyTo,
-      List<String> attachments});
+      List<String> attachments,
+      String? attachmentFileName,
+      int? attachmentFileSize,
+      String? chatRoomId});
 
   @override
   $ReplyReferenceCopyWith<$Res>? get replyTo;
@@ -212,6 +236,9 @@ class __$$MessagesModelImplCopyWithImpl<$Res>
     Object? deliveredTo = null,
     Object? replyTo = freezed,
     Object? attachments = null,
+    Object? attachmentFileName = freezed,
+    Object? attachmentFileSize = freezed,
+    Object? chatRoomId = freezed,
   }) {
     return _then(_$MessagesModelImpl(
       id: null == id
@@ -262,6 +289,18 @@ class __$$MessagesModelImplCopyWithImpl<$Res>
           ? _value._attachments
           : attachments // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      attachmentFileName: freezed == attachmentFileName
+          ? _value.attachmentFileName
+          : attachmentFileName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      attachmentFileSize: freezed == attachmentFileSize
+          ? _value.attachmentFileSize
+          : attachmentFileSize // ignore: cast_nullable_to_non_nullable
+              as int?,
+      chatRoomId: freezed == chatRoomId
+          ? _value.chatRoomId
+          : chatRoomId // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -281,7 +320,10 @@ class _$MessagesModelImpl implements _MessagesModel {
       final List<String> readBy = const [],
       final List<String> deliveredTo = const [],
       this.replyTo,
-      final List<String> attachments = const []})
+      final List<String> attachments = const [],
+      this.attachmentFileName,
+      this.attachmentFileSize,
+      this.chatRoomId})
       : _readBy = readBy,
         _deliveredTo = deliveredTo,
         _attachments = attachments;
@@ -337,8 +379,15 @@ class _$MessagesModelImpl implements _MessagesModel {
   }
 
   @override
+  final String? attachmentFileName;
+  @override
+  final int? attachmentFileSize;
+  @override
+  final String? chatRoomId;
+
+  @override
   String toString() {
-    return 'MessagesModel(id: $id, groupId: $groupId, receiverId: $receiverId, senderId: $senderId, content: $content, type: $type, timestamp: $timestamp, status: $status, readBy: $readBy, deliveredTo: $deliveredTo, replyTo: $replyTo, attachments: $attachments)';
+    return 'MessagesModel(id: $id, groupId: $groupId, receiverId: $receiverId, senderId: $senderId, content: $content, type: $type, timestamp: $timestamp, status: $status, readBy: $readBy, deliveredTo: $deliveredTo, replyTo: $replyTo, attachments: $attachments, attachmentFileName: $attachmentFileName, attachmentFileSize: $attachmentFileSize, chatRoomId: $chatRoomId)';
   }
 
   @override
@@ -362,7 +411,13 @@ class _$MessagesModelImpl implements _MessagesModel {
                 .equals(other._deliveredTo, _deliveredTo) &&
             (identical(other.replyTo, replyTo) || other.replyTo == replyTo) &&
             const DeepCollectionEquality()
-                .equals(other._attachments, _attachments));
+                .equals(other._attachments, _attachments) &&
+            (identical(other.attachmentFileName, attachmentFileName) ||
+                other.attachmentFileName == attachmentFileName) &&
+            (identical(other.attachmentFileSize, attachmentFileSize) ||
+                other.attachmentFileSize == attachmentFileSize) &&
+            (identical(other.chatRoomId, chatRoomId) ||
+                other.chatRoomId == chatRoomId));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -380,7 +435,10 @@ class _$MessagesModelImpl implements _MessagesModel {
       const DeepCollectionEquality().hash(_readBy),
       const DeepCollectionEquality().hash(_deliveredTo),
       replyTo,
-      const DeepCollectionEquality().hash(_attachments));
+      const DeepCollectionEquality().hash(_attachments),
+      attachmentFileName,
+      attachmentFileSize,
+      chatRoomId);
 
   /// Create a copy of MessagesModel
   /// with the given fields replaced by the non-null parameter values.
@@ -411,7 +469,10 @@ abstract class _MessagesModel implements MessagesModel {
       final List<String> readBy,
       final List<String> deliveredTo,
       final ReplyReference? replyTo,
-      final List<String> attachments}) = _$MessagesModelImpl;
+      final List<String> attachments,
+      final String? attachmentFileName,
+      final int? attachmentFileSize,
+      final String? chatRoomId}) = _$MessagesModelImpl;
 
   factory _MessagesModel.fromJson(Map<String, dynamic> json) =
       _$MessagesModelImpl.fromJson;
@@ -440,6 +501,12 @@ abstract class _MessagesModel implements MessagesModel {
   ReplyReference? get replyTo;
   @override
   List<String> get attachments;
+  @override
+  String? get attachmentFileName;
+  @override
+  int? get attachmentFileSize;
+  @override
+  String? get chatRoomId;
 
   /// Create a copy of MessagesModel
   /// with the given fields replaced by the non-null parameter values.

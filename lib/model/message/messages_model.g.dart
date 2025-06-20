@@ -33,6 +33,9 @@ _$MessagesModelImpl _$$MessagesModelImplFromJson(Map<String, dynamic> json) =>
               ?.map((e) => e as String)
               .toList() ??
           const [],
+      attachmentFileName: json['attachmentFileName'] as String?,
+      attachmentFileSize: (json['attachmentFileSize'] as num?)?.toInt(),
+      chatRoomId: json['chatRoomId'] as String?,
     );
 
 Map<String, dynamic> _$$MessagesModelImplToJson(_$MessagesModelImpl instance) =>
@@ -49,6 +52,9 @@ Map<String, dynamic> _$$MessagesModelImplToJson(_$MessagesModelImpl instance) =>
       'deliveredTo': instance.deliveredTo,
       'replyTo': instance.replyTo,
       'attachments': instance.attachments,
+      'attachmentFileName': instance.attachmentFileName,
+      'attachmentFileSize': instance.attachmentFileSize,
+      'chatRoomId': instance.chatRoomId,
     };
 
 const _$MessageTypeEnumMap = {
@@ -58,6 +64,7 @@ const _$MessageTypeEnumMap = {
   MessageType.audio: 'audio',
   MessageType.document: 'document',
   MessageType.location: 'location',
+  MessageType.unknown: 'unknown',
 };
 
 const _$MessageStatusEnumMap = {

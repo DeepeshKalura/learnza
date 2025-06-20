@@ -1,4 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../model/app_enums.dart';
 import '../../../model/message/messages_model.dart';
@@ -15,74 +17,61 @@ class MessageBubbleGroupWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bool isMediaMessage =
+        message.type == MessageType.image || message.type == MessageType.video;
+    final hasTextContent = message.content.isNotEmpty;
+
     return Align(
       alignment: isCurrentUser ? Alignment.centerRight : Alignment.centerLeft,
       child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+        constraints:
+            BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.75),
+        margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+        padding: const EdgeInsets.all(3),
         decoration: BoxDecoration(
-          color: isCurrentUser ? Colors.blueAccent[200] : Colors.grey[200],
-          borderRadius: BorderRadius.only(
-            topLeft: const Radius.circular(12),
-            topRight: const Radius.circular(12),
-            bottomLeft: isCurrentUser ? const Radius.circular(12) : Radius.zero,
-            bottomRight:
-                isCurrentUser ? Radius.zero : const Radius.circular(12),
-          ),
-          boxShadow: const [
-            BoxShadow(
-              color: Colors.black12,
-              blurRadius: 4,
-              offset: Offset(0, 2),
-            ),
-          ],
+          color: isCurrentUser ? Colors.blueAccent[100] : Colors.grey[300],
+          borderRadius: BorderRadius.circular(12),
         ),
         child: Column(
-          crossAxisAlignment:
-              isCurrentUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Reply reference if exists
-            if (message.replyTo != null)
-              Container(
-                margin: const EdgeInsets.only(bottom: 4),
-                padding: const EdgeInsets.all(4),
-                decoration: BoxDecoration(
-                  color: Colors.grey[300],
-                  borderRadius: BorderRadius.circular(6),
-                ),
+            if (message.replyTo != null) _buildReplyBanner(message.replyTo!),
+            if (isMediaMessage)
+              ClipRRect(
+                borderRadius: hasTextContent
+                    ? const BorderRadius.vertical(top: Radius.circular(9))
+                    : BorderRadius.circular(9),
+                child: _buildMediaContent(),
+              ),
+            if (message.type == MessageType.document) _buildDocumentContent(),
+            if (hasTextContent)
+              Padding(
+                padding: const EdgeInsets.fromLTRB(8, 8, 8, 2),
                 child: Text(
-                  message.replyTo!.content,
+                  message.content,
                   style: const TextStyle(
-                    color: Colors.black54,
-                    fontStyle: FontStyle.italic,
+                    color: Colors.black87,
+                    fontSize: 16,
                   ),
                 ),
               ),
-
-            // Main message content
-            Text(
-              message.content,
-              style: TextStyle(
-                color: isCurrentUser ? Colors.black87 : Colors.black87,
-                fontSize: 16,
-              ),
-            ),
-
-            // Timestamp and status
-            const SizedBox(height: 4),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  _formatTimestamp(message.timestamp),
-                  style: const TextStyle(
-                    color: Colors.black54,
-                    fontSize: 12,
+            Padding(
+              padding: const EdgeInsets.only(right: 8, top: 2, bottom: 2),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    _formatTimestamp(message.timestamp),
+                    style: TextStyle(
+                      color: Colors.grey[600],
+                      fontSize: 12,
+                    ),
                   ),
-                ),
-                const SizedBox(width: 4),
-                buildMessageStatusIcon(message.status),
-              ],
+                  const SizedBox(width: 4),
+                  if (isCurrentUser) buildMessageStatusIcon(message.status),
+                ],
+              ),
             ),
           ],
         ),
@@ -90,23 +79,123 @@ class MessageBubbleGroupWidget extends StatelessWidget {
     );
   }
 
-  // Helper method to format timestamp
-  String _formatTimestamp(DateTime timestamp) {
-    return '${timestamp.hour.toString().padLeft(2, '0')}:'
-        '${timestamp.minute.toString().padLeft(2, '0')}';
+  Widget _buildMediaContent() {
+    if (message.attachments.isEmpty) return const SizedBox.shrink();
+    return CachedNetworkImage(
+      imageUrl: message.attachments.first,
+      placeholder: (context, url) => Container(
+        height: 200,
+        color: Colors.grey.shade200,
+        child: const Center(child: CircularProgressIndicator()),
+      ),
+      errorWidget: (context, url, error) => Container(
+        height: 200,
+        color: Colors.grey.shade200,
+        child: const Icon(Icons.error),
+      ),
+    );
   }
 
-  //? Helper method to show message status icon based on the status
+  Widget _buildDocumentContent() {
+    final fileName = message.attachmentFileName ?? 'File';
+    final fileSize = message.attachmentFileSize != null
+        ? '${(message.attachmentFileSize! / 1024).toStringAsFixed(1)} KB'
+        : '';
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(Icons.insert_drive_file, color: Colors.blueGrey[700]),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  fileName,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                ),
+                Text(
+                  fileSize,
+                  style: TextStyle(fontSize: 12, color: Colors.grey[700]),
+                ),
+              ],
+            ),
+          ),
+          IconButton(
+            icon: Icon(Icons.download_for_offline_outlined,
+                color: Colors.blueGrey[800]),
+            onPressed: () async {
+              if (message.attachments.isNotEmpty) {
+                final url = Uri.parse(message.attachments.first);
+                if (await canLaunchUrl(url)) {
+                  await launchUrl(url, mode: LaunchMode.externalApplication);
+                }
+              }
+            },
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _buildReplyBanner(ReplyReference reply) {
+    return Container(
+      padding: const EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        color: Colors.black.withOpacity(0.05),
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(10)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            reply.senderId, // You might want to resolve this to a name
+            style: const TextStyle(
+                fontWeight: FontWeight.bold, color: Colors.blue),
+          ),
+          const SizedBox(height: 2),
+          Text(
+            reply.content,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(color: Colors.grey[600]),
+          ),
+        ],
+      ),
+    );
+  }
+
+  String _formatTimestamp(DateTime timestamp) {
+    return '${timestamp.hour.toString().padLeft(2, '0')}:${timestamp.minute.toString().padLeft(2, '0')}';
+  }
+
   Widget buildMessageStatusIcon(MessageStatus status) {
+    IconData iconData;
+    Color color;
     switch (status) {
+      case MessageStatus.sending:
+        iconData = Icons.access_time;
+        color = Colors.grey;
+        break;
       case MessageStatus.sent:
-        return const Icon(Icons.check, color: Colors.grey, size: 16);
+        iconData = Icons.check;
+        color = Colors.grey;
+        break;
       case MessageStatus.delivered:
-        return const Icon(Icons.done_all, color: Colors.grey, size: 16);
+        iconData = Icons.done_all;
+        color = Colors.grey;
+        break;
       case MessageStatus.read:
-        return const Icon(Icons.done_all, color: Colors.blue, size: 16);
-      default:
-        return const SizedBox.shrink();
+        iconData = Icons.done_all;
+        color = Colors.blue;
+        break;
     }
+    return Icon(iconData, color: color, size: 16);
   }
 }

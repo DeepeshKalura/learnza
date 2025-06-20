@@ -26,7 +26,6 @@ import '../screen/library/search_book_student_screen.dart';
 import '../screen/library/user_library_screen.dart';
 import '../screen/library/widget/book_card_widget.dart';
 import '../screen/messenger/consumer_messenger_screen.dart';
-import '../screen/messenger/groups_message_screen.dart';
 import '../screen/messenger/groups_student_screen.dart';
 import '../screen/messenger/search_messanger_screen.dart';
 import '../screen/messenger/widget/groups_details_screen.dart';
@@ -185,16 +184,16 @@ class AppRouters {
               );
             },
           ),
-          GoRoute(
-            path: '/groups-message',
-            name: AppUrls.groupMessageStudentScreen,
-            builder: (context, state) {
-              var args = state.extra! as Map<String, GroupsModel>;
-              return GroupsMessageScreen(
-                groups: args['group'] as GroupsModel,
-              );
-            },
-          ),
+          // GoRoute(
+          //   path: '/groups-message',
+          //   name: AppUrls.groupMessageStudentScreen,
+          //   builder: (context, state) {
+          //     var args = state.extra! as Map<String, GroupsModel>;
+          //     return GroupsMessageScreen(
+          //       groups: args['group'] as GroupsModel,
+          //     );
+          //   },
+          // ),
           GoRoute(
             path: "/groups-detail",
             name: AppUrls.groupDetailStudentScreen,
@@ -259,12 +258,23 @@ class AppRouters {
             },
           ),
           GoRoute(
-            path: "messanger/users",
+            path: "messenger/:conversationId", // Use path parameter
             name: AppUrls.messageConsumerScreen,
             builder: (context, state) {
-              var args = state.extra! as Map<String, MessengerInterface>;
+              final conversationId = state.pathParameters['conversationId']!;
+              final extraData = state.extra as Map<String, dynamic>;
+              final isGroup = extraData['isGroup'] as bool;
+              final userOrGroupData =
+                  extraData['data']; // The UsersModel or GroupsModel
+
+              // We pass the full data object to avoid an extra fetch on the chat screen
+              final MessengerInterface interface =
+                  MessengerInterface(userOrGroupData);
+
               return ConsumerMessengerScreen(
-                interface: args['consumer'] as MessengerInterface,
+                conversationId: conversationId,
+                isGroup: isGroup,
+                interface: interface,
               );
             },
           )

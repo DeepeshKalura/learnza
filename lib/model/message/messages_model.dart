@@ -20,6 +20,9 @@ class MessagesModel with _$MessagesModel {
     @Default([]) List<String> deliveredTo,
     ReplyReference? replyTo,
     @Default([]) List<String> attachments,
+    String? attachmentFileName,
+    int? attachmentFileSize,
+    String? chatRoomId,
   }) = _MessagesModel;
 
   factory MessagesModel.fromJson(Map<String, dynamic> json) =>

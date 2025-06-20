@@ -3,7 +3,7 @@ import 'package:get_it/get_it.dart';
 import '../providers/model/books_provider.dart';
 import '../providers/model/courses_provider.dart';
 import '../providers/model/groups_provider.dart';
-import '../providers/model/messenger_provider.dart';
+import '../providers/model/message_provider.dart';
 import '../providers/model/post_provider.dart';
 import '../providers/model/users_provider.dart';
 import '../providers/state/user_preference_provider.dart';
@@ -50,8 +50,8 @@ void setup(GetIt getIt) {
     ),
   );
 
-  getIt.registerLazySingleton<MessengerProvider>(
-    () => MessengerProvider(
+  getIt.registerLazySingleton<MessageProvider>(
+    () => MessageProvider(
       firebaseService: getIt.get<FirebaseService>(),
     ),
   );
