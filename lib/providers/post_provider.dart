@@ -1,5 +1,7 @@
+// lib/providers/post_provider.dart
 import 'dart:developer' as developer;
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:universal_io/io.dart';
@@ -20,25 +22,27 @@ class PostProvider extends ChangeNotifier {
   Future<void> createPost({
     required String title,
     required String content,
+    // --- CHANGE 2: ACCEPT the thumbnail as an optional parameter.
+    XFile? thumbnail,
   }) async {
     isLoading = true;
     notifyListeners();
     var authorId = firebaseService.auth.currentUser!.uid;
     String? thumbnailUrl;
+
+    // --- CHANGE 3: USE the passed-in thumbnail parameter.
     if (thumbnail != null) {
       try {
         final storageRef = firebaseService.storage
-            .ref('users/posts/$authorId/${thumbnail!.name}');
+            .ref('users/posts/$authorId/${thumbnail.name}');
 
         if (kIsWeb) {
-          Uint8List imageData = await thumbnail!.readAsBytes();
-
+          Uint8List imageData = await thumbnail.readAsBytes();
           final snapShot = await storageRef.putData(imageData);
-
           thumbnailUrl = await snapShot.ref.getDownloadURL();
         } else {
-          File file = File(thumbnail!.path);
-          developer.log(thumbnail!.path);
+          File file = File(thumbnail.path);
+          developer.log(thumbnail.path);
           final snapShot = await storageRef.putFile(file);
           thumbnailUrl = await snapShot.ref.getDownloadURL();
         }
@@ -58,7 +62,8 @@ class PostProvider extends ChangeNotifier {
         createdAt: DateTime.now(),
         updatedAt: DateTime.now(),
         authorId: authorId,
-        engagementMetrics: const PostEngagementMetrics(),
+        engagementMetrics:
+            const PostEngagementMetrics(likes: [], totalComments: 0),
       );
 
       final postDocRef =
@@ -72,27 +77,22 @@ class PostProvider extends ChangeNotifier {
           .runTransaction(
             (transaction) async {
               final postData = newPost.toJson();
-              // ? We have to manually convert the `engagementMetrics` to JSON because the `frezze` package is not supporting
               postData['engagementMetrics'] =
                   newPost.engagementMetrics.toJson();
 
-              // Convert `newGlobalPostMetrics` to JSON
-              final metricsData =
+              final metricsSnapshot =
                   await transaction.get(globalPostMertricsDocRef);
 
-              // Increment the totalPosts by 1
-              var newMetricsData = metricsData.data();
-
-              developer.log('Metrics data: $newMetricsData');
-
-              newMetricsData!['totalPosts'] = newMetricsData['totalPosts'] + 1;
-              newMetricsData['activePosts'] = newMetricsData['activePosts'] + 1;
-
-              developer.log('Metrics data: $newMetricsData');
-
-              // Write the new post
-              transaction.set(postDocRef, postData);
-              transaction.update(globalPostMertricsDocRef, newMetricsData);
+              if (metricsSnapshot.exists) {
+                transaction.set(postDocRef, postData);
+                transaction.update(globalPostMertricsDocRef, {
+                  'totalPosts': FieldValue.increment(1),
+                  'activePosts': FieldValue.increment(1),
+                });
+              } else {
+                // Handle case where metrics doc doesn't exist if necessary
+                developer.log('Global metrics document not found!');
+              }
             },
           )
           .then(
@@ -137,6 +137,120 @@ class PostProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> toggleLike(String postId, String userId) async {
+    final postRef = firebaseService.database.collection('posts').doc(postId);
+    try {
+      final doc = await postRef.get();
+      if (doc.exists) {
+        final post = PostsModel.fromJson(doc.data()!);
+        final likes = post.engagementMetrics.likes;
+        if (likes.contains(userId)) {
+          // Unlike
+          await postRef.update({
+            'engagementMetrics.likes': FieldValue.arrayRemove([userId])
+          });
+        } else {
+          // Like
+          await postRef.update({
+            'engagementMetrics.likes': FieldValue.arrayUnion([userId])
+          });
+        }
+      }
+    } catch (e) {
+      developer.log('Error toggling like: $e');
+      rethrow;
+    }
+  }
+
+  Future<void> updatePost({
+    required PostsModel post,
+    required String newTitle,
+    required String newContent,
+    XFile? newThumbnail,
+    bool removeThumbnail = false,
+  }) async {
+    isLoading = true;
+    notifyListeners();
+
+    try {
+      String? updatedThumbnailUrl = post.thumbnailUrl;
+
+      if (removeThumbnail && post.thumbnailUrl != null) {
+        await firebaseService.storage.refFromURL(post.thumbnailUrl!).delete();
+        updatedThumbnailUrl = null;
+      } else if (newThumbnail != null) {
+        if (post.thumbnailUrl != null) {
+          await firebaseService.storage.refFromURL(post.thumbnailUrl!).delete();
+        }
+        updatedThumbnailUrl = await _uploadImage(newThumbnail);
+      }
+
+      final updatedPost = post.copyWith(
+        title: newTitle,
+        content: newContent,
+        thumbnailUrl: updatedThumbnailUrl,
+        updatedAt: DateTime.now(),
+      );
+
+      final Map<String, dynamic> postJson = updatedPost.toJson();
+      postJson['engagementMetrics'] = updatedPost.engagementMetrics.toJson();
+
+      await firebaseService.database
+          .collection('posts')
+          .doc(post.id)
+          .update(postJson);
+    } catch (e) {
+      developer.log('Error updating post: $e');
+      rethrow;
+    } finally {
+      isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  Future<String> _uploadImage(XFile image) async {
+    final authorId = firebaseService.auth.currentUser!.uid;
+    final storageRef =
+        firebaseService.storage.ref('users/posts/$authorId/${image.name}');
+    File file = File(image.path);
+    final snapShot = await storageRef.putFile(file);
+    return await snapShot.ref.getDownloadURL();
+  }
+
+  Future<void> deletePost(String postId) async {
+    try {
+      final postDoc =
+          await firebaseService.database.collection('posts').doc(postId).get();
+      if (!postDoc.exists) return;
+
+      final post = PostsModel.fromJson(postDoc.data()!);
+      if (post.thumbnailUrl != null && post.thumbnailUrl!.isNotEmpty) {
+        try {
+          await firebaseService.storage.refFromURL(post.thumbnailUrl!).delete();
+        } catch (e) {
+          developer.log('Error deleting thumbnail: $e');
+        }
+      }
+
+      await firebaseService.database.runTransaction((transaction) async {
+        final postRef =
+            firebaseService.database.collection('posts').doc(postId);
+        final globalMetricsRef = firebaseService.database
+            .collection('global-post-metrics')
+            .doc("LwOyb4Ffxn9Kj1122mqg");
+
+        transaction.delete(postRef);
+        transaction.update(globalMetricsRef, {
+          'totalPosts': FieldValue.increment(-1),
+          'activePosts': FieldValue.increment(-1),
+        });
+      });
+    } catch (e) {
+      developer.log('Error deleting post: $e');
+      rethrow;
+    }
+  }
+
   Stream<List<PostsModel>> getPostsWithPagination(int limit) {
     return firebaseService.database
         .collection('posts')
@@ -150,11 +264,6 @@ class PostProvider extends ChangeNotifier {
     });
   }
 
-  List<Map<PostsModel, UsersModel>> getPostsAndUsers(nextPosts) {
-    // TODO: Implement this method and switch from the `getPostsAndUsersWithPagination` method [PR#35]
-    return [];
-  }
-
   Stream<Map<PostsModel, UsersModel>> getPostsAndUsersWithPagination(
       int limit) {
     return firebaseService.database
@@ -164,24 +273,32 @@ class PostProvider extends ChangeNotifier {
         .snapshots()
         .asyncMap((snapshot) async {
       if (snapshot.docs.isEmpty) {
-        developer.log("I am just chiling");
         return <PostsModel, UsersModel>{};
       }
 
       final posts =
           snapshot.docs.map((doc) => PostsModel.fromJson(doc.data())).toList();
-      final users = await Future.wait(posts.map((post) async {
-        final userDoc = await firebaseService.database
-            .collection('users')
-            .doc(post.authorId)
-            .get();
+      final userIds = posts.map((post) => post.authorId).toSet().toList();
 
-        return UsersModel.fromJson(userDoc.data()!);
-      }));
+      if (userIds.isEmpty) {
+        return <PostsModel, UsersModel>{};
+      }
+
+      final usersSnapshot = await firebaseService.database
+          .collection('users')
+          .where('uid', whereIn: userIds)
+          .get();
+
+      final usersMap = {
+        for (var doc in usersSnapshot.docs)
+          doc.id: UsersModel.fromJson(doc.data())
+      };
 
       final postsWithUsers = <PostsModel, UsersModel>{};
-      for (var i = 0; i < posts.length; i++) {
-        postsWithUsers[posts[i]] = users[i];
+      for (var post in posts) {
+        if (usersMap.containsKey(post.authorId)) {
+          postsWithUsers[post] = usersMap[post.authorId]!;
+        }
       }
       return postsWithUsers;
     });

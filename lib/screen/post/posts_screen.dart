@@ -1,9 +1,10 @@
+// lib/screen/post/posts_screen.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
 import '../common/widget/drawer_widget.dart';
-import 'post_editor_screen.dart';
+import 'edit_post_screen.dart';
 import 'widget/post_list_widget.dart';
 
 class PostStudentScreen extends StatefulWidget {
@@ -69,7 +70,7 @@ class _PostStudentScreenState extends State<PostStudentScreen> {
     showShadSheet(
       context: context,
       side: ShadSheetSide.bottom,
-      builder: (context) => const PostEditorScreen(),
+      builder: (context) => const EditPostScreen(),
     );
   }
 }
