@@ -1,21 +1,22 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:learnza/providers/state/messanger/chat_state_provider.dart';
+import 'package:learnza/screen/messenger/widget/attachment_preview_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../../../model/message/messages_model.dart';
-import '../../../providers/message_provider.dart';
 
 class InputMessageWidget extends StatefulWidget {
-  final String receiverId;
   final String currentUserId;
-  final ReplyReference? replyTo;
-  final Function()? onCancelReply;
+  final bool isGroup;
 
   const InputMessageWidget({
     super.key,
-    required this.receiverId,
     required this.currentUserId,
-    this.replyTo,
-    this.onCancelReply,
+    required this.isGroup,
   });
 
   @override
@@ -26,6 +27,83 @@ class InputMessageWidgetState extends State<InputMessageWidget> {
   final TextEditingController _messageController = TextEditingController();
   bool _isComposing = false;
   bool _isSending = false;
+  ReplyReference? _currentReply;
+
+  @override
+  void dispose() {
+    _messageController.dispose();
+    super.dispose();
+  }
+
+  void _onCancelReply() {
+    setState(() {
+      _currentReply = null;
+    });
+  }
+
+  void _navigateToPreview(BuildContext context, File file) {
+    final chatProvider = context.read<ChatStateProvider>();
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (_) => DraggableScrollableSheet(
+        initialChildSize: 1.0,
+        minChildSize: 0.5,
+        maxChildSize: 1.0,
+        builder: (_, scrollController) {
+          return ChangeNotifierProvider.value(
+            value: chatProvider,
+            child: AttachmentPreviewScreen(
+              file: file,
+              replyTo: _currentReply,
+            ),
+          );
+        },
+      ),
+    ).then((_) => _onCancelReply());
+  }
+
+  Future<void> _sendTextMessage() async {
+    final text = _messageController.text.trim();
+    if (text.isEmpty || _isSending) return;
+
+    setState(() {
+      _isSending = true;
+    });
+
+    try {
+      final chatProvider = context.read<ChatStateProvider>();
+
+      await chatProvider.sendMessage(
+        senderId: widget.currentUserId,
+        content: text,
+        replyTo: _currentReply,
+      );
+
+      _messageController.clear();
+      _onCancelReply();
+      setState(() {
+        _isComposing = false;
+      });
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Failed to send message: ${e.toString()}'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isSending = false;
+          _isComposing = false;
+        });
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,27 +113,23 @@ class InputMessageWidgetState extends State<InputMessageWidget> {
         margin: const EdgeInsets.symmetric(horizontal: 4, vertical: 6),
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
         decoration: BoxDecoration(
-          border: Border(
-            top: BorderSide(color: Colors.grey[300]!),
-          ),
+          border: Border(top: BorderSide(color: Colors.grey[300]!)),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            if (widget.replyTo != null) _buildReplyBanner(),
+            if (_currentReply != null) _buildReplyBanner(),
             Row(
               children: [
-                // IconButton(
-                //   icon: const Icon(Icons.attach_fnnnile, color: Colors.grey),
-                //   onPressed: _pickAttachment,
-                // ),
+                IconButton(
+                  icon: const Icon(Icons.attach_file, color: Colors.grey),
+                  onPressed: _showAttachmentOptions,
+                ),
                 Expanded(
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.grey[300]!,
-                      ),
+                      border: Border.all(color: Colors.grey[300]!),
                       borderRadius: BorderRadius.circular(25),
                     ),
                     child: TextField(
@@ -65,20 +139,17 @@ class InputMessageWidgetState extends State<InputMessageWidget> {
                         border: InputBorder.none,
                       ),
                       onChanged: (text) {
-                        setState(() {
-                          _isComposing = text.trim().isNotEmpty;
-                        });
+                        setState(() => _isComposing = text.trim().isNotEmpty);
                       },
                       maxLines: null,
                       keyboardType: TextInputType.multiline,
                     ),
                   ),
                 ),
-
-                // Send button
                 const SizedBox(width: 6),
                 GestureDetector(
-                  onTap: (_isComposing && !_isSending) ? _sendMessage : null,
+                  onTap:
+                      (_isComposing && !_isSending) ? _sendTextMessage : null,
                   child: CircleAvatar(
                     child: _isSending
                         ? const SizedBox(
@@ -100,9 +171,69 @@ class InputMessageWidgetState extends State<InputMessageWidget> {
     );
   }
 
+  void _showAttachmentOptions() {
+    showModalBottomSheet(
+      context: context,
+      builder: (ctx) {
+        return SafeArea(
+          child: Wrap(
+            children: <Widget>[
+              ListTile(
+                leading: const Icon(Icons.photo_library),
+                title: const Text('Gallery'),
+                onTap: () {
+                  Navigator.pop(ctx);
+                  _pickMediaFromGallery();
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.camera_alt),
+                title: const Text('Camera'),
+                onTap: () {
+                  Navigator.pop(ctx);
+                  _pickFromCamera();
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.insert_drive_file),
+                title: const Text('Document'),
+                onTap: () {
+                  Navigator.pop(ctx);
+                  _pickDocument();
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> _pickMediaFromGallery() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null && mounted) {
+      _navigateToPreview(context, File(pickedFile.path));
+    }
+  }
+
+  Future<void> _pickFromCamera() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.camera);
+    if (pickedFile != null && mounted) {
+      _navigateToPreview(context, File(pickedFile.path));
+    }
+  }
+
+  Future<void> _pickDocument() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    if (result != null && result.files.single.path != null && mounted) {
+      _navigateToPreview(context, File(result.files.single.path!));
+    }
+  }
+
   Widget _buildReplyBanner() {
-    final replyContent = widget.replyTo?.content ?? '';
-    // Limit displayed reply content length
+    final replyContent = _currentReply?.content ?? '';
     final displayContent = replyContent.length > 50
         ? '${replyContent.substring(0, 47)}...'
         : replyContent;
@@ -126,91 +257,11 @@ class InputMessageWidgetState extends State<InputMessageWidget> {
           ),
           IconButton(
             icon: const Icon(Icons.close, color: Colors.grey),
-            onPressed: widget.onCancelReply,
+            onPressed: _onCancelReply,
             tooltip: 'Cancel reply',
           ),
         ],
       ),
     );
-  }
-
-  Future<void> _sendMessage() async {
-    final text = _messageController.text.trim();
-    if (text.isEmpty) return;
-
-    try {
-      setState(() {
-        _isSending = true;
-      });
-
-      final messageProvider =
-          Provider.of<MessageProvider>(context, listen: false);
-
-      await messageProvider.sendMessage(
-        receiverId: widget.receiverId,
-        senderId: widget.currentUserId,
-        content: text,
-        replyTo: widget.replyTo,
-      );
-
-      // Clear input and reset state
-      _messageController.clear();
-
-      // If there was a reply, cancel it after sending
-      if (widget.replyTo != null && widget.onCancelReply != null) {
-        widget.onCancelReply!();
-      }
-    } catch (e) {
-      // Show error using a snackbar
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Failed to send message: ${e.toString()}'),
-          backgroundColor: Colors.red,
-        ),
-      );
-    } finally {
-      setState(() {
-        _isSending = false;
-        _isComposing = false;
-      });
-    }
-  }
-
-  void _pickAttachment() {
-    // Implement file/image attachment logic
-    showModalBottomSheet(
-      context: context,
-      builder: (context) => SafeArea(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ListTile(
-              leading: const Icon(Icons.photo),
-              title: const Text('Photo'),
-              onTap: () {
-                Navigator.pop(context);
-                // TODO: Implement photo picker
-                debugPrint('Photo picker not implemented');
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.file_present),
-              title: const Text('File'),
-              onTap: () {
-                Navigator.pop(context);
-                // TODO: Implement file picker
-                debugPrint('File picker not implemented');
-              },
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  @override
-  void dispose() {
-    _messageController.dispose();
-    super.dispose();
   }
 }

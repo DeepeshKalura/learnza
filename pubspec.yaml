@@ -50,6 +50,7 @@ dependencies:
   http: ^1.2.2
   freezed_annotation: ^2.4.4
   file_picker: ^8.1.4
+  mime: ^1.0.5 # Add this
   flutter_quill: ^10.8.5
   image_picker: ^1.1.2
   cached_network_image: ^3.4.1
@@ -80,6 +81,7 @@ dependencies:
   sentry_flutter: ^8.13.0
   flutter_svg: ^2.0.17
   cloud_functions: ^5.3.4
+  rxdart: ^0.28.0
 
 dev_dependencies:
   flutter_test:
@@ -103,6 +105,7 @@ dev_dependencies:
     sdk: flutter
   sentry_dart_plugin: ^2.4.1
   dart_pre_commit: ^5.4.3
+  mocktail: ^1.0.4
 
 
 
@@ -112,7 +115,6 @@ flutter_gen:
 
   integrations:
     flutter_svg: true
-    flare_flutter: true
     rive: true
     lottie: true
 

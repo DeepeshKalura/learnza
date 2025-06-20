@@ -4,8 +4,6 @@ import 'package:provider/provider.dart';
 
 import '../../interface/messenger_interface.dart';
 import '../../model/app_enums.dart' show SearchType;
-import '../../model/groups/groups_model.dart';
-import '../../model/users/users_model.dart';
 import '../../providers/state/messanger/messanger_state_provider.dart';
 import '../../router/app_urls.dart';
 import 'widget/messanger_list_widget.dart';
@@ -26,24 +24,15 @@ class _SearchMessengerScreenState extends State<SearchMessengerScreen>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(
-      length: 2,
-      vsync: this,
-      initialIndex: 0,
-    );
-
-    // Listen to tab changes to update search type
+    _tabController = TabController(length: 2, vsync: this, initialIndex: 0);
     _tabController.addListener(_handleTabChange);
-
-    // Automatically focus on the search field when the screen opens
     WidgetsBinding.instance.addPostFrameCallback((_) {
       FocusScope.of(context).requestFocus(_searchFocusNode);
     });
   }
 
   void _handleTabChange() {
-    final provider = context.read<MessengerStateProvider>();
-    provider.switchSearchType(
+    context.read<MessengerStateProvider>().switchSearchType(
         _tabController.index == 0 ? SearchType.people : SearchType.groups);
   }
 
@@ -70,7 +59,8 @@ class _SearchMessengerScreenState extends State<SearchMessengerScreen>
           controller: _searchController,
           focusNode: _searchFocusNode,
           decoration: InputDecoration(
-            hintText: 'Search',
+            hintText:
+                'Search for ${provider.currentSearchType == SearchType.people ? "people" : "groups"}...',
             border: InputBorder.none,
             suffixIcon: _searchController.text.isNotEmpty
                 ? IconButton(
@@ -78,14 +68,11 @@ class _SearchMessengerScreenState extends State<SearchMessengerScreen>
                     onPressed: () {
                       _searchController.clear();
                       provider.clearSearch();
-                      FocusScope.of(context).requestFocus(_searchFocusNode);
                     },
                   )
                 : null,
           ),
-          onChanged: (value) {
-            provider.performSearch(value);
-          },
+          onChanged: provider.performSearch,
         ),
         bottom: TabBar(
           controller: _tabController,
@@ -108,55 +95,42 @@ class _SearchMessengerScreenState extends State<SearchMessengerScreen>
   Widget _buildSearchResultsList(BuildContext context,
       {required bool isGroups}) {
     final provider = context.watch<MessengerStateProvider>();
-
-    // Determine loading and results based on search type
     final isLoading =
         isGroups ? provider.isGroupsLoading : provider.isPeopleLoading;
     final results =
         isGroups ? provider.searchGroupsResults : provider.searchPeopleResults;
+    final query = _searchController.text.trim();
 
-    // If loading, show a loading indicator
     if (isLoading) {
       return const Center(child: CircularProgressIndicator());
     }
 
-    // If no results, show a message
+    if (query.isEmpty) {
+      return const Center(child: Text('Please enter a search term.'));
+    }
+
     if (results.isEmpty) {
       return Center(
-        child: Text(
-          isGroups ? 'No groups found' : 'No people found',
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
+        child: Text(isGroups ? 'No groups found' : 'No people found'),
       );
     }
 
-    // Build list of results
     return ListView.builder(
       itemCount: results.length,
       itemBuilder: (context, index) {
         final consumer = MessengerInterface(results[index]);
         return MessengerListWidget(
           consumer: consumer,
-          onTap: () async {
-            if (consumer.source is UsersModel) {
-              await provider.addPersonOrGroupToMessengerForUser(
-                userId: consumer.id,
-              );
-
-              context.pushNamed(
-                AppUrls.messageConsumerScreen,
-                extra: {'consumer': consumer},
-              );
-            } else if (consumer.source is GroupsModel) {
-              await provider.addPersonOrGroupToMessengerForUser(
-                groupId: consumer.id,
-              );
-
-              context.pushNamed(
-                AppUrls.messageConsumerScreen,
-                extra: {'consumer': consumer},
-              );
-            }
+          onTap: () {
+            // --- CORRECTED NAVIGATION ---
+            context.pushNamed(
+              AppUrls.messageConsumerScreen,
+              pathParameters: {'conversationId': consumer.id},
+              extra: {
+                'isGroup': consumer.isGroup,
+                'data': consumer.source,
+              },
+            );
           },
         );
       },

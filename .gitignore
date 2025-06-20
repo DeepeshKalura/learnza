@@ -53,3 +53,4 @@ secret
 keys/
 
 /android/app/.cxx/
+copy.sh
