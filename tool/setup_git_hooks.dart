@@ -12,7 +12,7 @@ Future<void> main() async {
 dart_files=$(git diff --cached --name-only --diff-filter=ACM | grep '\.dart$')
 if [ -n "$dart_files" ]; then
   echo "🖋️ Running dart format on staged files..."
-  echo "$dart_files" | xargs dart format --set-exit-if-changed
+  echo "$dart_files" | grep -q '[^[:space:]]' && echo "$dart_files" | xargs dart format --set-exit-if-changed
   if [ $? -ne 0 ]; then
     echo "❌ dart format found issues. Please run 'dart format .' and re-stage."
     exit 1
