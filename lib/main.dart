@@ -4,18 +4,17 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:learnza/app_config.dart';
+import 'package:learnza/l10n/app_localizations.dart';
 import 'package:learnza/locator/injector.dart' as di;
 import 'package:learnza/providers/state/admin/admin_state_provider.dart';
+// --- NEW IMPORT ---
+import 'package:learnza/service/migration_service.dart';
 import 'package:provider/provider.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
-
-// import 'package:firebase_app_check/firebase_app_check.dart';
-// I will remove add app check
 
 import 'firebase_options.dart';
 import 'l10n/l10n.dart';
@@ -40,37 +39,40 @@ import 'providers/student_provider.dart';
 import 'providers/teacher_provider.dart';
 import 'router/app_routers.dart';
 import 'service/firebase_service.dart';
+import 'utils/logger.dart';
 import 'utils/theme.dart';
 
 Future<void> main() async {
-  // SentryFlutterWidgetsBinding.ensureInitialized();
   WidgetsFlutterBinding.ensureInitialized();
 
-  // await FirebaseAppCheck.instance.activate(
-  //   webProvider: ReCaptchaV3Provider('recaptcha-v3-site-key'),
-  //   androidProvider: AndroidProvider.debug,
-  //   appleProvider: AppleProvider.appAttest,s
-  // );
-
-  // Catch early errors BEFORE Sentry initializes
   FlutterError.onError = (FlutterErrorDetails details) {
-    FlutterError.presentError(details);
+    log.e("Caught FlutterError",
+        error: details.exception, stackTrace: details.stack);
     Sentry.captureException(details.exception, stackTrace: details.stack);
   };
 
   runZonedGuarded(() async {
     try {
+      log.i("--- Application Starting ---");
       await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform,
       );
+      log.i("Firebase Initialized.");
+
       await SystemChrome.setPreferredOrientations([
         DeviceOrientation.portraitUp,
         DeviceOrientation.portraitDown,
       ]);
-      await di.init();
-      await di.injector.get<AppConfig>().setup();
 
-      // Initialize Sentry
+      await di.init();
+      log.i("Dependency Injector Initialized.");
+      await di.injector.get<AppConfig>().setup();
+      log.i("AppConfig Setup Complete.");
+
+      // --- NEW: RUN MIGRATION LOGIC HERE ---
+      await MigrationService().runUserSearchMigration();
+      // --- END OF NEW CODE ---
+
       await SentryFlutter.init(
         (options) {
           options.dsn = di.injector.get<AppConfig>().sentryDnsUrl;
@@ -84,10 +86,15 @@ Future<void> main() async {
           ),
         ),
       );
+      log.i("Sentry Initialized. Running app.");
     } catch (e, stackTrace) {
+      log.f("FATAL: Error during app initialization",
+          error: e, stackTrace: stackTrace);
       Sentry.captureException(e, stackTrace: stackTrace);
     }
   }, (error, stackTrace) {
+    log.f("FATAL: Uncaught error in zoned guard",
+        error: error, stackTrace: stackTrace);
     Sentry.captureException(error, stackTrace: stackTrace);
   });
 }

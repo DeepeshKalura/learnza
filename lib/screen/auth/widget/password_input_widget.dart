@@ -19,11 +19,11 @@ class _PasswordInputState extends State<PasswordInput> {
       placeholder: const Text('Password'),
       obscureText: obscure,
       controller: widget.controller,
-      prefix: const Padding(
+      leading: const Padding(
         padding: EdgeInsets.all(4.0),
-        child: ShadImage.square(size: 16, LucideIcons.lock),
+        child: Icon(LucideIcons.lock, size: 16),
       ),
-      suffix: ShadButton(
+      trailing: ShadIconButton(
         width: 24,
         height: 24,
         padding: EdgeInsets.zero,
@@ -31,9 +31,9 @@ class _PasswordInputState extends State<PasswordInput> {
           secondaryBorder: ShadBorder.none,
           secondaryFocusedBorder: ShadBorder.none,
         ),
-        icon: ShadImage.square(
-          size: 16,
+        icon: Icon(
           obscure ? LucideIcons.eyeOff : LucideIcons.eye,
+          size: 16,
         ),
         onPressed: () {
           setState(() => obscure = !obscure);

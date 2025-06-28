@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,171 +10,100 @@ part of 'post_metrics.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-PostEngagementMetrics _$PostEngagementMetricsFromJson(
-    Map<String, dynamic> json) {
-  return _PostEngagementMetrics.fromJson(json);
-}
 
 /// @nodoc
 mixin _$PostEngagementMetrics {
 // View and Interaction Metrics
-  int get totalViews => throw _privateConstructorUsedError;
-  int get uniqueViews => throw _privateConstructorUsedError; // Reaction Metrics
-  List<String> get likes => throw _privateConstructorUsedError;
-  List<String> get dislikes =>
-      throw _privateConstructorUsedError; // Comment and Discussion Metrics
-  int get totalComments => throw _privateConstructorUsedError;
-  int get activeDiscussions => throw _privateConstructorUsedError;
-  int get topLevelComments => throw _privateConstructorUsedError;
-  int get nestedComments =>
-      throw _privateConstructorUsedError; // Sharing and Distribution
-  int get shares => throw _privateConstructorUsedError; // Performance Metrics
-  double get engagementRate => throw _privateConstructorUsedError;
-  double get reachRate =>
-      throw _privateConstructorUsedError; // User Interaction Details
-  int get uniqueInteractors =>
-      throw _privateConstructorUsedError; // Content Performance
-  double get averageReadTime => throw _privateConstructorUsedError;
-  int get scrollDepth => throw _privateConstructorUsedError;
-
-  /// Serializes this PostEngagementMetrics to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  int get totalViews;
+  int get uniqueViews; // Reaction Metrics
+  List<String> get likes;
+  List<String> get dislikes; // Comment and Discussion Metrics
+  int get totalComments;
+  int get activeDiscussions;
+  int get topLevelComments;
+  int get nestedComments; // Sharing and Distribution
+  int get shares; // Performance Metrics
+  double get engagementRate;
+  double get reachRate; // User Interaction Details
+  int get uniqueInteractors; // Content Performance
+  double get averageReadTime;
+  int get scrollDepth;
 
   /// Create a copy of PostEngagementMetrics
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $PostEngagementMetricsCopyWith<PostEngagementMetrics> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $PostEngagementMetricsCopyWith<$Res> {
-  factory $PostEngagementMetricsCopyWith(PostEngagementMetrics value,
-          $Res Function(PostEngagementMetrics) then) =
-      _$PostEngagementMetricsCopyWithImpl<$Res, PostEngagementMetrics>;
-  @useResult
-  $Res call(
-      {int totalViews,
-      int uniqueViews,
-      List<String> likes,
-      List<String> dislikes,
-      int totalComments,
-      int activeDiscussions,
-      int topLevelComments,
-      int nestedComments,
-      int shares,
-      double engagementRate,
-      double reachRate,
-      int uniqueInteractors,
-      double averageReadTime,
-      int scrollDepth});
-}
-
-/// @nodoc
-class _$PostEngagementMetricsCopyWithImpl<$Res,
-        $Val extends PostEngagementMetrics>
-    implements $PostEngagementMetricsCopyWith<$Res> {
-  _$PostEngagementMetricsCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of PostEngagementMetrics
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
+  $PostEngagementMetricsCopyWith<PostEngagementMetrics> get copyWith =>
+      _$PostEngagementMetricsCopyWithImpl<PostEngagementMetrics>(
+          this as PostEngagementMetrics, _$identity);
+
+  /// Serializes this PostEngagementMetrics to a JSON map.
+  Map<String, dynamic> toJson();
+
   @override
-  $Res call({
-    Object? totalViews = null,
-    Object? uniqueViews = null,
-    Object? likes = null,
-    Object? dislikes = null,
-    Object? totalComments = null,
-    Object? activeDiscussions = null,
-    Object? topLevelComments = null,
-    Object? nestedComments = null,
-    Object? shares = null,
-    Object? engagementRate = null,
-    Object? reachRate = null,
-    Object? uniqueInteractors = null,
-    Object? averageReadTime = null,
-    Object? scrollDepth = null,
-  }) {
-    return _then(_value.copyWith(
-      totalViews: null == totalViews
-          ? _value.totalViews
-          : totalViews // ignore: cast_nullable_to_non_nullable
-              as int,
-      uniqueViews: null == uniqueViews
-          ? _value.uniqueViews
-          : uniqueViews // ignore: cast_nullable_to_non_nullable
-              as int,
-      likes: null == likes
-          ? _value.likes
-          : likes // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      dislikes: null == dislikes
-          ? _value.dislikes
-          : dislikes // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      totalComments: null == totalComments
-          ? _value.totalComments
-          : totalComments // ignore: cast_nullable_to_non_nullable
-              as int,
-      activeDiscussions: null == activeDiscussions
-          ? _value.activeDiscussions
-          : activeDiscussions // ignore: cast_nullable_to_non_nullable
-              as int,
-      topLevelComments: null == topLevelComments
-          ? _value.topLevelComments
-          : topLevelComments // ignore: cast_nullable_to_non_nullable
-              as int,
-      nestedComments: null == nestedComments
-          ? _value.nestedComments
-          : nestedComments // ignore: cast_nullable_to_non_nullable
-              as int,
-      shares: null == shares
-          ? _value.shares
-          : shares // ignore: cast_nullable_to_non_nullable
-              as int,
-      engagementRate: null == engagementRate
-          ? _value.engagementRate
-          : engagementRate // ignore: cast_nullable_to_non_nullable
-              as double,
-      reachRate: null == reachRate
-          ? _value.reachRate
-          : reachRate // ignore: cast_nullable_to_non_nullable
-              as double,
-      uniqueInteractors: null == uniqueInteractors
-          ? _value.uniqueInteractors
-          : uniqueInteractors // ignore: cast_nullable_to_non_nullable
-              as int,
-      averageReadTime: null == averageReadTime
-          ? _value.averageReadTime
-          : averageReadTime // ignore: cast_nullable_to_non_nullable
-              as double,
-      scrollDepth: null == scrollDepth
-          ? _value.scrollDepth
-          : scrollDepth // ignore: cast_nullable_to_non_nullable
-              as int,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is PostEngagementMetrics &&
+            (identical(other.totalViews, totalViews) ||
+                other.totalViews == totalViews) &&
+            (identical(other.uniqueViews, uniqueViews) ||
+                other.uniqueViews == uniqueViews) &&
+            const DeepCollectionEquality().equals(other.likes, likes) &&
+            const DeepCollectionEquality().equals(other.dislikes, dislikes) &&
+            (identical(other.totalComments, totalComments) ||
+                other.totalComments == totalComments) &&
+            (identical(other.activeDiscussions, activeDiscussions) ||
+                other.activeDiscussions == activeDiscussions) &&
+            (identical(other.topLevelComments, topLevelComments) ||
+                other.topLevelComments == topLevelComments) &&
+            (identical(other.nestedComments, nestedComments) ||
+                other.nestedComments == nestedComments) &&
+            (identical(other.shares, shares) || other.shares == shares) &&
+            (identical(other.engagementRate, engagementRate) ||
+                other.engagementRate == engagementRate) &&
+            (identical(other.reachRate, reachRate) ||
+                other.reachRate == reachRate) &&
+            (identical(other.uniqueInteractors, uniqueInteractors) ||
+                other.uniqueInteractors == uniqueInteractors) &&
+            (identical(other.averageReadTime, averageReadTime) ||
+                other.averageReadTime == averageReadTime) &&
+            (identical(other.scrollDepth, scrollDepth) ||
+                other.scrollDepth == scrollDepth));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      totalViews,
+      uniqueViews,
+      const DeepCollectionEquality().hash(likes),
+      const DeepCollectionEquality().hash(dislikes),
+      totalComments,
+      activeDiscussions,
+      topLevelComments,
+      nestedComments,
+      shares,
+      engagementRate,
+      reachRate,
+      uniqueInteractors,
+      averageReadTime,
+      scrollDepth);
+
+  @override
+  String toString() {
+    return 'PostEngagementMetrics(totalViews: $totalViews, uniqueViews: $uniqueViews, likes: $likes, dislikes: $dislikes, totalComments: $totalComments, activeDiscussions: $activeDiscussions, topLevelComments: $topLevelComments, nestedComments: $nestedComments, shares: $shares, engagementRate: $engagementRate, reachRate: $reachRate, uniqueInteractors: $uniqueInteractors, averageReadTime: $averageReadTime, scrollDepth: $scrollDepth)';
   }
 }
 
 /// @nodoc
-abstract class _$$PostEngagementMetricsImplCopyWith<$Res>
-    implements $PostEngagementMetricsCopyWith<$Res> {
-  factory _$$PostEngagementMetricsImplCopyWith(
-          _$PostEngagementMetricsImpl value,
-          $Res Function(_$PostEngagementMetricsImpl) then) =
-      __$$PostEngagementMetricsImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $PostEngagementMetricsCopyWith<$Res> {
+  factory $PostEngagementMetricsCopyWith(PostEngagementMetrics value,
+          $Res Function(PostEngagementMetrics) _then) =
+      _$PostEngagementMetricsCopyWithImpl;
   @useResult
   $Res call(
       {int totalViews,
@@ -193,13 +123,12 @@ abstract class _$$PostEngagementMetricsImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$PostEngagementMetricsImplCopyWithImpl<$Res>
-    extends _$PostEngagementMetricsCopyWithImpl<$Res,
-        _$PostEngagementMetricsImpl>
-    implements _$$PostEngagementMetricsImplCopyWith<$Res> {
-  __$$PostEngagementMetricsImplCopyWithImpl(_$PostEngagementMetricsImpl _value,
-      $Res Function(_$PostEngagementMetricsImpl) _then)
-      : super(_value, _then);
+class _$PostEngagementMetricsCopyWithImpl<$Res>
+    implements $PostEngagementMetricsCopyWith<$Res> {
+  _$PostEngagementMetricsCopyWithImpl(this._self, this._then);
+
+  final PostEngagementMetrics _self;
+  final $Res Function(PostEngagementMetrics) _then;
 
   /// Create a copy of PostEngagementMetrics
   /// with the given fields replaced by the non-null parameter values.
@@ -221,61 +150,61 @@ class __$$PostEngagementMetricsImplCopyWithImpl<$Res>
     Object? averageReadTime = null,
     Object? scrollDepth = null,
   }) {
-    return _then(_$PostEngagementMetricsImpl(
+    return _then(_self.copyWith(
       totalViews: null == totalViews
-          ? _value.totalViews
+          ? _self.totalViews
           : totalViews // ignore: cast_nullable_to_non_nullable
               as int,
       uniqueViews: null == uniqueViews
-          ? _value.uniqueViews
+          ? _self.uniqueViews
           : uniqueViews // ignore: cast_nullable_to_non_nullable
               as int,
       likes: null == likes
-          ? _value._likes
+          ? _self.likes
           : likes // ignore: cast_nullable_to_non_nullable
               as List<String>,
       dislikes: null == dislikes
-          ? _value._dislikes
+          ? _self.dislikes
           : dislikes // ignore: cast_nullable_to_non_nullable
               as List<String>,
       totalComments: null == totalComments
-          ? _value.totalComments
+          ? _self.totalComments
           : totalComments // ignore: cast_nullable_to_non_nullable
               as int,
       activeDiscussions: null == activeDiscussions
-          ? _value.activeDiscussions
+          ? _self.activeDiscussions
           : activeDiscussions // ignore: cast_nullable_to_non_nullable
               as int,
       topLevelComments: null == topLevelComments
-          ? _value.topLevelComments
+          ? _self.topLevelComments
           : topLevelComments // ignore: cast_nullable_to_non_nullable
               as int,
       nestedComments: null == nestedComments
-          ? _value.nestedComments
+          ? _self.nestedComments
           : nestedComments // ignore: cast_nullable_to_non_nullable
               as int,
       shares: null == shares
-          ? _value.shares
+          ? _self.shares
           : shares // ignore: cast_nullable_to_non_nullable
               as int,
       engagementRate: null == engagementRate
-          ? _value.engagementRate
+          ? _self.engagementRate
           : engagementRate // ignore: cast_nullable_to_non_nullable
               as double,
       reachRate: null == reachRate
-          ? _value.reachRate
+          ? _self.reachRate
           : reachRate // ignore: cast_nullable_to_non_nullable
               as double,
       uniqueInteractors: null == uniqueInteractors
-          ? _value.uniqueInteractors
+          ? _self.uniqueInteractors
           : uniqueInteractors // ignore: cast_nullable_to_non_nullable
               as int,
       averageReadTime: null == averageReadTime
-          ? _value.averageReadTime
+          ? _self.averageReadTime
           : averageReadTime // ignore: cast_nullable_to_non_nullable
               as double,
       scrollDepth: null == scrollDepth
-          ? _value.scrollDepth
+          ? _self.scrollDepth
           : scrollDepth // ignore: cast_nullable_to_non_nullable
               as int,
     ));
@@ -284,8 +213,8 @@ class __$$PostEngagementMetricsImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$PostEngagementMetricsImpl implements _PostEngagementMetrics {
-  const _$PostEngagementMetricsImpl(
+class _PostEngagementMetrics implements PostEngagementMetrics {
+  const _PostEngagementMetrics(
       {this.totalViews = 0,
       this.uniqueViews = 0,
       final List<String> likes = const [],
@@ -302,9 +231,8 @@ class _$PostEngagementMetricsImpl implements _PostEngagementMetrics {
       this.scrollDepth = 0})
       : _likes = likes,
         _dislikes = dislikes;
-
-  factory _$PostEngagementMetricsImpl.fromJson(Map<String, dynamic> json) =>
-      _$$PostEngagementMetricsImplFromJson(json);
+  factory _PostEngagementMetrics.fromJson(Map<String, dynamic> json) =>
+      _$PostEngagementMetricsFromJson(json);
 
 // View and Interaction Metrics
   @override
@@ -369,16 +297,27 @@ class _$PostEngagementMetricsImpl implements _PostEngagementMetrics {
   @JsonKey()
   final int scrollDepth;
 
+  /// Create a copy of PostEngagementMetrics
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'PostEngagementMetrics(totalViews: $totalViews, uniqueViews: $uniqueViews, likes: $likes, dislikes: $dislikes, totalComments: $totalComments, activeDiscussions: $activeDiscussions, topLevelComments: $topLevelComments, nestedComments: $nestedComments, shares: $shares, engagementRate: $engagementRate, reachRate: $reachRate, uniqueInteractors: $uniqueInteractors, averageReadTime: $averageReadTime, scrollDepth: $scrollDepth)';
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$PostEngagementMetricsCopyWith<_PostEngagementMetrics> get copyWith =>
+      __$PostEngagementMetricsCopyWithImpl<_PostEngagementMetrics>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$PostEngagementMetricsToJson(
+      this,
+    );
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$PostEngagementMetricsImpl &&
+            other is _PostEngagementMetrics &&
             (identical(other.totalViews, totalViews) ||
                 other.totalViews == totalViews) &&
             (identical(other.uniqueViews, uniqueViews) ||
@@ -425,77 +364,124 @@ class _$PostEngagementMetricsImpl implements _PostEngagementMetrics {
       averageReadTime,
       scrollDepth);
 
-  /// Create a copy of PostEngagementMetrics
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$PostEngagementMetricsImplCopyWith<_$PostEngagementMetricsImpl>
-      get copyWith => __$$PostEngagementMetricsImplCopyWithImpl<
-          _$PostEngagementMetricsImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$PostEngagementMetricsImplToJson(
-      this,
-    );
+  String toString() {
+    return 'PostEngagementMetrics(totalViews: $totalViews, uniqueViews: $uniqueViews, likes: $likes, dislikes: $dislikes, totalComments: $totalComments, activeDiscussions: $activeDiscussions, topLevelComments: $topLevelComments, nestedComments: $nestedComments, shares: $shares, engagementRate: $engagementRate, reachRate: $reachRate, uniqueInteractors: $uniqueInteractors, averageReadTime: $averageReadTime, scrollDepth: $scrollDepth)';
   }
 }
 
-abstract class _PostEngagementMetrics implements PostEngagementMetrics {
-  const factory _PostEngagementMetrics(
-      {final int totalViews,
-      final int uniqueViews,
-      final List<String> likes,
-      final List<String> dislikes,
-      final int totalComments,
-      final int activeDiscussions,
-      final int topLevelComments,
-      final int nestedComments,
-      final int shares,
-      final double engagementRate,
-      final double reachRate,
-      final int uniqueInteractors,
-      final double averageReadTime,
-      final int scrollDepth}) = _$PostEngagementMetricsImpl;
+/// @nodoc
+abstract mixin class _$PostEngagementMetricsCopyWith<$Res>
+    implements $PostEngagementMetricsCopyWith<$Res> {
+  factory _$PostEngagementMetricsCopyWith(_PostEngagementMetrics value,
+          $Res Function(_PostEngagementMetrics) _then) =
+      __$PostEngagementMetricsCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {int totalViews,
+      int uniqueViews,
+      List<String> likes,
+      List<String> dislikes,
+      int totalComments,
+      int activeDiscussions,
+      int topLevelComments,
+      int nestedComments,
+      int shares,
+      double engagementRate,
+      double reachRate,
+      int uniqueInteractors,
+      double averageReadTime,
+      int scrollDepth});
+}
 
-  factory _PostEngagementMetrics.fromJson(Map<String, dynamic> json) =
-      _$PostEngagementMetricsImpl.fromJson;
+/// @nodoc
+class __$PostEngagementMetricsCopyWithImpl<$Res>
+    implements _$PostEngagementMetricsCopyWith<$Res> {
+  __$PostEngagementMetricsCopyWithImpl(this._self, this._then);
 
-// View and Interaction Metrics
-  @override
-  int get totalViews;
-  @override
-  int get uniqueViews; // Reaction Metrics
-  @override
-  List<String> get likes;
-  @override
-  List<String> get dislikes; // Comment and Discussion Metrics
-  @override
-  int get totalComments;
-  @override
-  int get activeDiscussions;
-  @override
-  int get topLevelComments;
-  @override
-  int get nestedComments; // Sharing and Distribution
-  @override
-  int get shares; // Performance Metrics
-  @override
-  double get engagementRate;
-  @override
-  double get reachRate; // User Interaction Details
-  @override
-  int get uniqueInteractors; // Content Performance
-  @override
-  double get averageReadTime;
-  @override
-  int get scrollDepth;
+  final _PostEngagementMetrics _self;
+  final $Res Function(_PostEngagementMetrics) _then;
 
   /// Create a copy of PostEngagementMetrics
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$PostEngagementMetricsImplCopyWith<_$PostEngagementMetricsImpl>
-      get copyWith => throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? totalViews = null,
+    Object? uniqueViews = null,
+    Object? likes = null,
+    Object? dislikes = null,
+    Object? totalComments = null,
+    Object? activeDiscussions = null,
+    Object? topLevelComments = null,
+    Object? nestedComments = null,
+    Object? shares = null,
+    Object? engagementRate = null,
+    Object? reachRate = null,
+    Object? uniqueInteractors = null,
+    Object? averageReadTime = null,
+    Object? scrollDepth = null,
+  }) {
+    return _then(_PostEngagementMetrics(
+      totalViews: null == totalViews
+          ? _self.totalViews
+          : totalViews // ignore: cast_nullable_to_non_nullable
+              as int,
+      uniqueViews: null == uniqueViews
+          ? _self.uniqueViews
+          : uniqueViews // ignore: cast_nullable_to_non_nullable
+              as int,
+      likes: null == likes
+          ? _self._likes
+          : likes // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      dislikes: null == dislikes
+          ? _self._dislikes
+          : dislikes // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      totalComments: null == totalComments
+          ? _self.totalComments
+          : totalComments // ignore: cast_nullable_to_non_nullable
+              as int,
+      activeDiscussions: null == activeDiscussions
+          ? _self.activeDiscussions
+          : activeDiscussions // ignore: cast_nullable_to_non_nullable
+              as int,
+      topLevelComments: null == topLevelComments
+          ? _self.topLevelComments
+          : topLevelComments // ignore: cast_nullable_to_non_nullable
+              as int,
+      nestedComments: null == nestedComments
+          ? _self.nestedComments
+          : nestedComments // ignore: cast_nullable_to_non_nullable
+              as int,
+      shares: null == shares
+          ? _self.shares
+          : shares // ignore: cast_nullable_to_non_nullable
+              as int,
+      engagementRate: null == engagementRate
+          ? _self.engagementRate
+          : engagementRate // ignore: cast_nullable_to_non_nullable
+              as double,
+      reachRate: null == reachRate
+          ? _self.reachRate
+          : reachRate // ignore: cast_nullable_to_non_nullable
+              as double,
+      uniqueInteractors: null == uniqueInteractors
+          ? _self.uniqueInteractors
+          : uniqueInteractors // ignore: cast_nullable_to_non_nullable
+              as int,
+      averageReadTime: null == averageReadTime
+          ? _self.averageReadTime
+          : averageReadTime // ignore: cast_nullable_to_non_nullable
+              as double,
+      scrollDepth: null == scrollDepth
+          ? _self.scrollDepth
+          : scrollDepth // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
 }
+
+// dart format on

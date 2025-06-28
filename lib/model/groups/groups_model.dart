@@ -6,7 +6,7 @@ part 'groups_model.freezed.dart';
 part 'groups_model.g.dart';
 
 @freezed
-class GroupsModel with _$GroupsModel {
+sealed class GroupsModel with _$GroupsModel {
   const factory GroupsModel({
     required String id,
     required String name,
@@ -25,7 +25,7 @@ class GroupsModel with _$GroupsModel {
 }
 
 @freezed
-class GroupMember with _$GroupMember {
+sealed class GroupMember with _$GroupMember {
   const factory GroupMember({
     required String id,
     required GroupRole role,

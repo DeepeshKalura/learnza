@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:intl/intl.dart';
+
 import '../../../model/posts/posts_model.dart';
 
 class DetailBlogStudentScreen extends StatefulWidget {
@@ -135,7 +136,7 @@ class _DetailBlogStudentScreenState extends State<DetailBlogStudentScreen> {
                   borderRadius: BorderRadius.circular(8),
                   child: QuillEditor.basic(
                     controller: _controller,
-                    configurations: const QuillEditorConfigurations(
+                    config: QuillEditorConfig(
                       checkBoxReadOnly: true,
                       showCursor: false,
                       padding: EdgeInsets.all(16),

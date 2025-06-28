@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,135 +10,84 @@ part of 'groups_model.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
 GroupsModel _$GroupsModelFromJson(Map<String, dynamic> json) {
   return _GroupModel.fromJson(json);
 }
 
 /// @nodoc
 mixin _$GroupsModel {
-  String get id => throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
-  String? get description => throw _privateConstructorUsedError;
-  String? get imageUrl => throw _privateConstructorUsedError;
-  String? get coverImageUrl => throw _privateConstructorUsedError;
-  List<GroupMember> get members => throw _privateConstructorUsedError;
-  DateTime get createdAt => throw _privateConstructorUsedError;
-  DateTime get updatedAt => throw _privateConstructorUsedError;
-  GroupPrivacy get privacy => throw _privateConstructorUsedError;
-  List<String> get pendingInvites => throw _privateConstructorUsedError;
-
-  /// Serializes this GroupsModel to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  String get id;
+  String get name;
+  String? get description;
+  String? get imageUrl;
+  String? get coverImageUrl;
+  List<GroupMember> get members;
+  DateTime get createdAt;
+  DateTime get updatedAt;
+  GroupPrivacy get privacy;
+  List<String> get pendingInvites;
 
   /// Create a copy of GroupsModel
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $GroupsModelCopyWith<GroupsModel> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $GroupsModelCopyWith<$Res> {
-  factory $GroupsModelCopyWith(
-          GroupsModel value, $Res Function(GroupsModel) then) =
-      _$GroupsModelCopyWithImpl<$Res, GroupsModel>;
-  @useResult
-  $Res call(
-      {String id,
-      String name,
-      String? description,
-      String? imageUrl,
-      String? coverImageUrl,
-      List<GroupMember> members,
-      DateTime createdAt,
-      DateTime updatedAt,
-      GroupPrivacy privacy,
-      List<String> pendingInvites});
-}
-
-/// @nodoc
-class _$GroupsModelCopyWithImpl<$Res, $Val extends GroupsModel>
-    implements $GroupsModelCopyWith<$Res> {
-  _$GroupsModelCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of GroupsModel
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
+  $GroupsModelCopyWith<GroupsModel> get copyWith =>
+      _$GroupsModelCopyWithImpl<GroupsModel>(this as GroupsModel, _$identity);
+
+  /// Serializes this GroupsModel to a JSON map.
+  Map<String, dynamic> toJson();
+
   @override
-  $Res call({
-    Object? id = null,
-    Object? name = null,
-    Object? description = freezed,
-    Object? imageUrl = freezed,
-    Object? coverImageUrl = freezed,
-    Object? members = null,
-    Object? createdAt = null,
-    Object? updatedAt = null,
-    Object? privacy = null,
-    Object? pendingInvites = null,
-  }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      description: freezed == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String?,
-      imageUrl: freezed == imageUrl
-          ? _value.imageUrl
-          : imageUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
-      coverImageUrl: freezed == coverImageUrl
-          ? _value.coverImageUrl
-          : coverImageUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
-      members: null == members
-          ? _value.members
-          : members // ignore: cast_nullable_to_non_nullable
-              as List<GroupMember>,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      updatedAt: null == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      privacy: null == privacy
-          ? _value.privacy
-          : privacy // ignore: cast_nullable_to_non_nullable
-              as GroupPrivacy,
-      pendingInvites: null == pendingInvites
-          ? _value.pendingInvites
-          : pendingInvites // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is GroupsModel &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            (identical(other.imageUrl, imageUrl) ||
+                other.imageUrl == imageUrl) &&
+            (identical(other.coverImageUrl, coverImageUrl) ||
+                other.coverImageUrl == coverImageUrl) &&
+            const DeepCollectionEquality().equals(other.members, members) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt) &&
+            (identical(other.privacy, privacy) || other.privacy == privacy) &&
+            const DeepCollectionEquality()
+                .equals(other.pendingInvites, pendingInvites));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      name,
+      description,
+      imageUrl,
+      coverImageUrl,
+      const DeepCollectionEquality().hash(members),
+      createdAt,
+      updatedAt,
+      privacy,
+      const DeepCollectionEquality().hash(pendingInvites));
+
+  @override
+  String toString() {
+    return 'GroupsModel(id: $id, name: $name, description: $description, imageUrl: $imageUrl, coverImageUrl: $coverImageUrl, members: $members, createdAt: $createdAt, updatedAt: $updatedAt, privacy: $privacy, pendingInvites: $pendingInvites)';
   }
 }
 
 /// @nodoc
-abstract class _$$GroupModelImplCopyWith<$Res>
-    implements $GroupsModelCopyWith<$Res> {
-  factory _$$GroupModelImplCopyWith(
-          _$GroupModelImpl value, $Res Function(_$GroupModelImpl) then) =
-      __$$GroupModelImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $GroupsModelCopyWith<$Res> {
+  factory $GroupsModelCopyWith(
+          GroupsModel value, $Res Function(GroupsModel) _then) =
+      _$GroupsModelCopyWithImpl;
   @useResult
   $Res call(
       {String id,
@@ -153,12 +103,11 @@ abstract class _$$GroupModelImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$GroupModelImplCopyWithImpl<$Res>
-    extends _$GroupsModelCopyWithImpl<$Res, _$GroupModelImpl>
-    implements _$$GroupModelImplCopyWith<$Res> {
-  __$$GroupModelImplCopyWithImpl(
-      _$GroupModelImpl _value, $Res Function(_$GroupModelImpl) _then)
-      : super(_value, _then);
+class _$GroupsModelCopyWithImpl<$Res> implements $GroupsModelCopyWith<$Res> {
+  _$GroupsModelCopyWithImpl(this._self, this._then);
+
+  final GroupsModel _self;
+  final $Res Function(GroupsModel) _then;
 
   /// Create a copy of GroupsModel
   /// with the given fields replaced by the non-null parameter values.
@@ -176,45 +125,45 @@ class __$$GroupModelImplCopyWithImpl<$Res>
     Object? privacy = null,
     Object? pendingInvites = null,
   }) {
-    return _then(_$GroupModelImpl(
+    return _then(_self.copyWith(
       id: null == id
-          ? _value.id
+          ? _self.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
       name: null == name
-          ? _value.name
+          ? _self.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
       description: freezed == description
-          ? _value.description
+          ? _self.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
       imageUrl: freezed == imageUrl
-          ? _value.imageUrl
+          ? _self.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
               as String?,
       coverImageUrl: freezed == coverImageUrl
-          ? _value.coverImageUrl
+          ? _self.coverImageUrl
           : coverImageUrl // ignore: cast_nullable_to_non_nullable
               as String?,
       members: null == members
-          ? _value._members
+          ? _self.members
           : members // ignore: cast_nullable_to_non_nullable
               as List<GroupMember>,
       createdAt: null == createdAt
-          ? _value.createdAt
+          ? _self.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
       updatedAt: null == updatedAt
-          ? _value.updatedAt
+          ? _self.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
       privacy: null == privacy
-          ? _value.privacy
+          ? _self.privacy
           : privacy // ignore: cast_nullable_to_non_nullable
               as GroupPrivacy,
       pendingInvites: null == pendingInvites
-          ? _value._pendingInvites
+          ? _self.pendingInvites
           : pendingInvites // ignore: cast_nullable_to_non_nullable
               as List<String>,
     ));
@@ -223,8 +172,8 @@ class __$$GroupModelImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$GroupModelImpl implements _GroupModel {
-  const _$GroupModelImpl(
+class _GroupModel implements GroupsModel {
+  const _GroupModel(
       {required this.id,
       required this.name,
       this.description,
@@ -237,9 +186,8 @@ class _$GroupModelImpl implements _GroupModel {
       final List<String> pendingInvites = const []})
       : _members = members,
         _pendingInvites = pendingInvites;
-
-  factory _$GroupModelImpl.fromJson(Map<String, dynamic> json) =>
-      _$$GroupModelImplFromJson(json);
+  factory _GroupModel.fromJson(Map<String, dynamic> json) =>
+      _$GroupModelFromJson(json);
 
   @override
   final String id;
@@ -275,16 +223,26 @@ class _$GroupModelImpl implements _GroupModel {
     return EqualUnmodifiableListView(_pendingInvites);
   }
 
+  /// Create a copy of GroupsModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'GroupsModel(id: $id, name: $name, description: $description, imageUrl: $imageUrl, coverImageUrl: $coverImageUrl, members: $members, createdAt: $createdAt, updatedAt: $updatedAt, privacy: $privacy, pendingInvites: $pendingInvites)';
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$GroupModelCopyWith<_GroupModel> get copyWith =>
+      __$GroupModelCopyWithImpl<_GroupModel>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$GroupModelToJson(
+      this,
+    );
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$GroupModelImpl &&
+            other is _GroupModel &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.description, description) ||
@@ -318,189 +276,121 @@ class _$GroupModelImpl implements _GroupModel {
       privacy,
       const DeepCollectionEquality().hash(_pendingInvites));
 
-  /// Create a copy of GroupsModel
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$GroupModelImplCopyWith<_$GroupModelImpl> get copyWith =>
-      __$$GroupModelImplCopyWithImpl<_$GroupModelImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$GroupModelImplToJson(
-      this,
-    );
-  }
-}
-
-abstract class _GroupModel implements GroupsModel {
-  const factory _GroupModel(
-      {required final String id,
-      required final String name,
-      final String? description,
-      final String? imageUrl,
-      final String? coverImageUrl,
-      required final List<GroupMember> members,
-      required final DateTime createdAt,
-      required final DateTime updatedAt,
-      final GroupPrivacy privacy,
-      final List<String> pendingInvites}) = _$GroupModelImpl;
-
-  factory _GroupModel.fromJson(Map<String, dynamic> json) =
-      _$GroupModelImpl.fromJson;
-
-  @override
-  String get id;
-  @override
-  String get name;
-  @override
-  String? get description;
-  @override
-  String? get imageUrl;
-  @override
-  String? get coverImageUrl;
-  @override
-  List<GroupMember> get members;
-  @override
-  DateTime get createdAt;
-  @override
-  DateTime get updatedAt;
-  @override
-  GroupPrivacy get privacy;
-  @override
-  List<String> get pendingInvites;
-
-  /// Create a copy of GroupsModel
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$GroupModelImplCopyWith<_$GroupModelImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-GroupMember _$GroupMemberFromJson(Map<String, dynamic> json) {
-  return _GroupMember.fromJson(json);
-}
-
-/// @nodoc
-mixin _$GroupMember {
-  String get id => throw _privateConstructorUsedError;
-  GroupRole get role => throw _privateConstructorUsedError;
-
-  /// Serializes this GroupMember to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of GroupMember
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $GroupMemberCopyWith<GroupMember> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $GroupMemberCopyWith<$Res> {
-  factory $GroupMemberCopyWith(
-          GroupMember value, $Res Function(GroupMember) then) =
-      _$GroupMemberCopyWithImpl<$Res, GroupMember>;
-  @useResult
-  $Res call({String id, GroupRole role});
-}
-
-/// @nodoc
-class _$GroupMemberCopyWithImpl<$Res, $Val extends GroupMember>
-    implements $GroupMemberCopyWith<$Res> {
-  _$GroupMemberCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of GroupMember
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = null,
-    Object? role = null,
-  }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      role: null == role
-          ? _value.role
-          : role // ignore: cast_nullable_to_non_nullable
-              as GroupRole,
-    ) as $Val);
+  String toString() {
+    return 'GroupsModel(id: $id, name: $name, description: $description, imageUrl: $imageUrl, coverImageUrl: $coverImageUrl, members: $members, createdAt: $createdAt, updatedAt: $updatedAt, privacy: $privacy, pendingInvites: $pendingInvites)';
   }
 }
 
 /// @nodoc
-abstract class _$$GroupMemberImplCopyWith<$Res>
-    implements $GroupMemberCopyWith<$Res> {
-  factory _$$GroupMemberImplCopyWith(
-          _$GroupMemberImpl value, $Res Function(_$GroupMemberImpl) then) =
-      __$$GroupMemberImplCopyWithImpl<$Res>;
+abstract mixin class _$GroupModelCopyWith<$Res>
+    implements $GroupsModelCopyWith<$Res> {
+  factory _$GroupModelCopyWith(
+          _GroupModel value, $Res Function(_GroupModel) _then) =
+      __$GroupModelCopyWithImpl;
   @override
   @useResult
-  $Res call({String id, GroupRole role});
+  $Res call(
+      {String id,
+      String name,
+      String? description,
+      String? imageUrl,
+      String? coverImageUrl,
+      List<GroupMember> members,
+      DateTime createdAt,
+      DateTime updatedAt,
+      GroupPrivacy privacy,
+      List<String> pendingInvites});
 }
 
 /// @nodoc
-class __$$GroupMemberImplCopyWithImpl<$Res>
-    extends _$GroupMemberCopyWithImpl<$Res, _$GroupMemberImpl>
-    implements _$$GroupMemberImplCopyWith<$Res> {
-  __$$GroupMemberImplCopyWithImpl(
-      _$GroupMemberImpl _value, $Res Function(_$GroupMemberImpl) _then)
-      : super(_value, _then);
+class __$GroupModelCopyWithImpl<$Res> implements _$GroupModelCopyWith<$Res> {
+  __$GroupModelCopyWithImpl(this._self, this._then);
 
-  /// Create a copy of GroupMember
+  final _GroupModel _self;
+  final $Res Function(_GroupModel) _then;
+
+  /// Create a copy of GroupsModel
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
   @override
+  @pragma('vm:prefer-inline')
   $Res call({
     Object? id = null,
-    Object? role = null,
+    Object? name = null,
+    Object? description = freezed,
+    Object? imageUrl = freezed,
+    Object? coverImageUrl = freezed,
+    Object? members = null,
+    Object? createdAt = null,
+    Object? updatedAt = null,
+    Object? privacy = null,
+    Object? pendingInvites = null,
   }) {
-    return _then(_$GroupMemberImpl(
+    return _then(_GroupModel(
       id: null == id
-          ? _value.id
+          ? _self.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      role: null == role
-          ? _value.role
-          : role // ignore: cast_nullable_to_non_nullable
-              as GroupRole,
+      name: null == name
+          ? _self.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      description: freezed == description
+          ? _self.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      imageUrl: freezed == imageUrl
+          ? _self.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      coverImageUrl: freezed == coverImageUrl
+          ? _self.coverImageUrl
+          : coverImageUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      members: null == members
+          ? _self._members
+          : members // ignore: cast_nullable_to_non_nullable
+              as List<GroupMember>,
+      createdAt: null == createdAt
+          ? _self.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      updatedAt: null == updatedAt
+          ? _self.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      privacy: null == privacy
+          ? _self.privacy
+          : privacy // ignore: cast_nullable_to_non_nullable
+              as GroupPrivacy,
+      pendingInvites: null == pendingInvites
+          ? _self._pendingInvites
+          : pendingInvites // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ));
   }
 }
 
 /// @nodoc
-@JsonSerializable()
-class _$GroupMemberImpl implements _GroupMember {
-  const _$GroupMemberImpl({required this.id, required this.role});
+mixin _$GroupMember {
+  String get id;
+  GroupRole get role;
 
-  factory _$GroupMemberImpl.fromJson(Map<String, dynamic> json) =>
-      _$$GroupMemberImplFromJson(json);
+  /// Create a copy of GroupMember
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $GroupMemberCopyWith<GroupMember> get copyWith =>
+      _$GroupMemberCopyWithImpl<GroupMember>(this as GroupMember, _$identity);
 
-  @override
-  final String id;
-  @override
-  final GroupRole role;
-
-  @override
-  String toString() {
-    return 'GroupMember(id: $id, role: $role)';
-  }
+  /// Serializes this GroupMember to a JSON map.
+  Map<String, dynamic> toJson();
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$GroupMemberImpl &&
+            other is GroupMember &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.role, role) || other.role == role));
   }
@@ -509,39 +399,132 @@ class _$GroupMemberImpl implements _GroupMember {
   @override
   int get hashCode => Object.hash(runtimeType, id, role);
 
-  /// Create a copy of GroupMember
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$GroupMemberImplCopyWith<_$GroupMemberImpl> get copyWith =>
-      __$$GroupMemberImplCopyWithImpl<_$GroupMemberImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$GroupMemberImplToJson(
-      this,
-    );
+  String toString() {
+    return 'GroupMember(id: $id, role: $role)';
   }
 }
 
-abstract class _GroupMember implements GroupMember {
-  const factory _GroupMember(
-      {required final String id,
-      required final GroupRole role}) = _$GroupMemberImpl;
+/// @nodoc
+abstract mixin class $GroupMemberCopyWith<$Res> {
+  factory $GroupMemberCopyWith(
+          GroupMember value, $Res Function(GroupMember) _then) =
+      _$GroupMemberCopyWithImpl;
+  @useResult
+  $Res call({String id, GroupRole role});
+}
 
-  factory _GroupMember.fromJson(Map<String, dynamic> json) =
-      _$GroupMemberImpl.fromJson;
+/// @nodoc
+class _$GroupMemberCopyWithImpl<$Res> implements $GroupMemberCopyWith<$Res> {
+  _$GroupMemberCopyWithImpl(this._self, this._then);
+
+  final GroupMember _self;
+  final $Res Function(GroupMember) _then;
+
+  /// Create a copy of GroupMember
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? role = null,
+  }) {
+    return _then(_self.copyWith(
+      id: null == id
+          ? _self.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      role: null == role
+          ? _self.role
+          : role // ignore: cast_nullable_to_non_nullable
+              as GroupRole,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _GroupMember implements GroupMember {
+  const _GroupMember({required this.id, required this.role});
+  factory _GroupMember.fromJson(Map<String, dynamic> json) =>
+      _$GroupMemberFromJson(json);
 
   @override
-  String get id;
+  final String id;
   @override
-  GroupRole get role;
+  final GroupRole role;
 
   /// Create a copy of GroupMember
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$GroupMemberImplCopyWith<_$GroupMemberImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  _$GroupMemberCopyWith<_GroupMember> get copyWith =>
+      __$GroupMemberCopyWithImpl<_GroupMember>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$GroupMemberToJson(
+      this,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _GroupMember &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.role, role) || other.role == role));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, id, role);
+
+  @override
+  String toString() {
+    return 'GroupMember(id: $id, role: $role)';
+  }
 }
+
+/// @nodoc
+abstract mixin class _$GroupMemberCopyWith<$Res>
+    implements $GroupMemberCopyWith<$Res> {
+  factory _$GroupMemberCopyWith(
+          _GroupMember value, $Res Function(_GroupMember) _then) =
+      __$GroupMemberCopyWithImpl;
+  @override
+  @useResult
+  $Res call({String id, GroupRole role});
+}
+
+/// @nodoc
+class __$GroupMemberCopyWithImpl<$Res> implements _$GroupMemberCopyWith<$Res> {
+  __$GroupMemberCopyWithImpl(this._self, this._then);
+
+  final _GroupMember _self;
+  final $Res Function(_GroupMember) _then;
+
+  /// Create a copy of GroupMember
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? id = null,
+    Object? role = null,
+  }) {
+    return _then(_GroupMember(
+      id: null == id
+          ? _self.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      role: null == role
+          ? _self.role
+          : role // ignore: cast_nullable_to_non_nullable
+              as GroupRole,
+    ));
+  }
+}
+
+// dart format on

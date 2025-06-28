@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
-import '../../../../gen/assets.gen.dart';
 import '/utils/theme.dart';
+import '../../../../gen/assets.gen.dart';
 
 class BooksSnapshotErrorWidget extends StatelessWidget {
   const BooksSnapshotErrorWidget({super.key, required this.errorMessage});
@@ -25,9 +25,8 @@ class BooksSnapshotErrorWidget extends StatelessWidget {
           ),
           const SizedBox(height: 20),
 
-          ShadImage.square(
+          SvgPicture.asset(
             Assets.icons.icSomthingWentWrong.path,
-            size: 400,
           ),
 
           // Error Message

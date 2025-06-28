@@ -6,7 +6,7 @@ part 'messages_model.freezed.dart';
 part 'messages_model.g.dart';
 
 @freezed
-class MessagesModel with _$MessagesModel {
+sealed class MessagesModel with _$MessagesModel {
   const factory MessagesModel({
     required String id,
     String? groupId,
@@ -30,7 +30,7 @@ class MessagesModel with _$MessagesModel {
 }
 
 @freezed
-class ReplyReference with _$ReplyReference {
+sealed class ReplyReference with _$ReplyReference {
   const factory ReplyReference({
     required String messageId,
     required String content,

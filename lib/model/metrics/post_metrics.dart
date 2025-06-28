@@ -4,7 +4,7 @@ part 'post_metrics.freezed.dart';
 part 'post_metrics.g.dart';
 
 @freezed
-class PostEngagementMetrics with _$PostEngagementMetrics {
+sealed class PostEngagementMetrics with _$PostEngagementMetrics {
   const factory PostEngagementMetrics({
     // View and Interaction Metrics
     @Default(0) int totalViews,

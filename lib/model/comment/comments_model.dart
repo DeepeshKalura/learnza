@@ -7,7 +7,7 @@ part 'comments_model.freezed.dart';
 part 'comments_model.g.dart';
 
 @freezed
-class CommentsModel with _$CommentsModel {
+sealed class CommentsModel with _$CommentsModel {
   const factory CommentsModel({
     // Core Comment Information
     required String id,

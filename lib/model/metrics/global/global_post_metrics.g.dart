@@ -6,9 +6,8 @@ part of 'global_post_metrics.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$GlobalPostMetricsImpl _$$GlobalPostMetricsImplFromJson(
-        Map<String, dynamic> json) =>
-    _$GlobalPostMetricsImpl(
+_GlobalPostMetrics _$GlobalPostMetricsFromJson(Map<String, dynamic> json) =>
+    _GlobalPostMetrics(
       totalPosts: (json['totalPosts'] as num?)?.toInt() ?? 0,
       activePosts: (json['activePosts'] as num?)?.toInt() ?? 0,
       archivedPosts: (json['archivedPosts'] as num?)?.toInt() ?? 0,
@@ -52,8 +51,7 @@ _$GlobalPostMetricsImpl _$$GlobalPostMetricsImplFromJson(
               const {},
     );
 
-Map<String, dynamic> _$$GlobalPostMetricsImplToJson(
-        _$GlobalPostMetricsImpl instance) =>
+Map<String, dynamic> _$GlobalPostMetricsToJson(_GlobalPostMetrics instance) =>
     <String, dynamic>{
       'totalPosts': instance.totalPosts,
       'activePosts': instance.activePosts,

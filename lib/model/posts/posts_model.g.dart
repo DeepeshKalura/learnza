@@ -6,8 +6,7 @@ part of 'posts_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$PostsModelImpl _$$PostsModelImplFromJson(Map<String, dynamic> json) =>
-    _$PostsModelImpl(
+_PostsModel _$PostsModelFromJson(Map<String, dynamic> json) => _PostsModel(
       id: json['id'] as String,
       title: json['title'] as String,
       content: json['content'] as String,
@@ -37,7 +36,7 @@ _$PostsModelImpl _$$PostsModelImplFromJson(Map<String, dynamic> json) =>
           const [],
     );
 
-Map<String, dynamic> _$$PostsModelImplToJson(_$PostsModelImpl instance) =>
+Map<String, dynamic> _$PostsModelToJson(_PostsModel instance) =>
     <String, dynamic>{
       'id': instance.id,
       'title': instance.title,

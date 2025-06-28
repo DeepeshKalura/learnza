@@ -6,8 +6,7 @@ part of 'books_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$BooksModelImpl _$$BooksModelImplFromJson(Map<String, dynamic> json) =>
-    _$BooksModelImpl(
+_BooksModel _$BooksModelFromJson(Map<String, dynamic> json) => _BooksModel(
       id: json['id'] as String,
       isbn: json['isbn'] as String?,
       bookTitle: json['bookTitle'] as String?,
@@ -41,7 +40,7 @@ _$BooksModelImpl _$$BooksModelImplFromJson(Map<String, dynamic> json) =>
           const [],
     );
 
-Map<String, dynamic> _$$BooksModelImplToJson(_$BooksModelImpl instance) =>
+Map<String, dynamic> _$BooksModelToJson(_BooksModel instance) =>
     <String, dynamic>{
       'id': instance.id,
       'isbn': instance.isbn,

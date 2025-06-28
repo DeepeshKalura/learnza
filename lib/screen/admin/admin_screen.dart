@@ -57,7 +57,7 @@ class _AdminScreenState extends State<AdminScreen> {
               ),
               actions: [
                 ShadButton(
-                  icon: const Icon(LucideIcons.plus),
+                  child: const Icon(LucideIcons.plus),
                   onPressed: () {
                     _showEventBottomSheet();
                   },

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:learnza/l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
@@ -82,9 +82,8 @@ class _ForgotPasswordAuthScreenState extends State<ForgotPasswordAuthScreen> {
                     children: [
                       Align(
                         alignment: Alignment.center,
-                        child: ShadImage.square(
+                        child: SvgPicture.asset(
                           Assets.icons.icSleepy.path,
-                          size: 210,
                         ),
                       ),
                       Align(

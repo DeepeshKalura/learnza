@@ -6,8 +6,8 @@ part of 'comment_metrics.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$CommentMetricsImpl _$$CommentMetricsImplFromJson(Map<String, dynamic> json) =>
-    _$CommentMetricsImpl(
+_CommentMetrics _$CommentMetricsFromJson(Map<String, dynamic> json) =>
+    _CommentMetrics(
       likes: (json['likes'] as num?)?.toInt() ?? 0,
       dislikes: (json['dislikes'] as num?)?.toInt() ?? 0,
       replies: (json['replies'] as num?)?.toInt() ?? 0,
@@ -25,8 +25,7 @@ _$CommentMetricsImpl _$$CommentMetricsImplFromJson(Map<String, dynamic> json) =>
       isFlagged: json['isFlagged'] as bool? ?? false,
     );
 
-Map<String, dynamic> _$$CommentMetricsImplToJson(
-        _$CommentMetricsImpl instance) =>
+Map<String, dynamic> _$CommentMetricsToJson(_CommentMetrics instance) =>
     <String, dynamic>{
       'likes': instance.likes,
       'dislikes': instance.dislikes,

@@ -6,8 +6,7 @@ part of 'users_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$UsersModelImpl _$$UsersModelImplFromJson(Map<String, dynamic> json) =>
-    _$UsersModelImpl(
+_UsersModel _$UsersModelFromJson(Map<String, dynamic> json) => _UsersModel(
       role: $enumDecode(_$UserRoleEnumMap, json['role']),
       title: json['title'] as String?,
       uid: json['uid'] as String,
@@ -19,25 +18,29 @@ _$UsersModelImpl _$$UsersModelImplFromJson(Map<String, dynamic> json) =>
       batch: json['batch'] as String?,
       motherName: json['motherName'] as String?,
       fatherName: json['fatherName'] as String?,
-      lastseen: json['lastseen'] as String?,
+      lastSeen: json['lastSeen'] as String?,
       isActive: json['isActive'] as bool? ?? true,
       isOnline: json['isOnline'] as bool? ?? false,
       blockedUsers: (json['blockedUsers'] as List<dynamic>?)
               ?.map((e) => e as String)
               .toList() ??
-          const [],
+          const <String>[],
       contactUsers: (json['contactUsers'] as List<dynamic>?)
               ?.map((e) => e as String)
               .toList() ??
-          const [],
+          const <String>[],
       courseId: json['courseId'] as String?,
       departmentId: json['departmentId'] as String?,
+      searchableKeywords: (json['searchableKeywords'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const <String>[],
       banReason: json['banReason'] as String?,
       bannedById: json['bannedById'] as String?,
       createdAt: DateTime.parse(json['createdAt'] as String),
     );
 
-Map<String, dynamic> _$$UsersModelImplToJson(_$UsersModelImpl instance) =>
+Map<String, dynamic> _$UsersModelToJson(_UsersModel instance) =>
     <String, dynamic>{
       'role': _$UserRoleEnumMap[instance.role]!,
       'title': instance.title,
@@ -50,13 +53,14 @@ Map<String, dynamic> _$$UsersModelImplToJson(_$UsersModelImpl instance) =>
       'batch': instance.batch,
       'motherName': instance.motherName,
       'fatherName': instance.fatherName,
-      'lastseen': instance.lastseen,
+      'lastSeen': instance.lastSeen,
       'isActive': instance.isActive,
       'isOnline': instance.isOnline,
       'blockedUsers': instance.blockedUsers,
       'contactUsers': instance.contactUsers,
       'courseId': instance.courseId,
       'departmentId': instance.departmentId,
+      'searchableKeywords': instance.searchableKeywords,
       'banReason': instance.banReason,
       'bannedById': instance.bannedById,
       'createdAt': instance.createdAt.toIso8601String(),

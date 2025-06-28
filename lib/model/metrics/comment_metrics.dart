@@ -4,7 +4,7 @@ part 'comment_metrics.freezed.dart';
 part 'comment_metrics.g.dart';
 
 @freezed
-class CommentMetrics with _$CommentMetrics {
+sealed class CommentMetrics with _$CommentMetrics {
   const factory CommentMetrics({
     // Engagement Metrics
     @Default(0) int likes,

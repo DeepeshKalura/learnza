@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer' as developer;
 import 'dart:math';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -12,6 +11,18 @@ import 'package:uuid/uuid.dart';
 
 import '../model/users/users_model.dart';
 import '../service/firebase_cloud_function_service.dart';
+import '../utils/logger.dart';
+
+List<String> _generateSearchKeywords(String text) {
+  final keywords = <String>{};
+  final lowercaseText = text.toLowerCase();
+  for (int i = 0; i < lowercaseText.length; i++) {
+    for (int j = i + 1; j <= lowercaseText.length; j++) {
+      keywords.add(lowercaseText.substring(i, j));
+    }
+  }
+  return keywords.toList();
+}
 
 class AuthProvider extends ChangeNotifier {
   final FirebaseService firebaseService;
@@ -31,24 +42,35 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void updateLocalUser(UsersModel updatedUser) {
+    _user = updatedUser;
+    notifyListeners();
+  }
+
   Future<void> getUser(String uid) async {
+    log.i("Fetching user data for UID: $uid");
     try {
-      developer.log("I reached here");
       final userFromCollection =
           await firebaseService.database.collection('users').doc(uid).get();
+
+      if (!userFromCollection.exists) {
+        log.w("User document not found in Firestore for UID: $uid");
+        throw Exception("User data not found in database.");
+      }
 
       _user = UsersModel.fromJson(
         userFromCollection.data() as Map<String, dynamic>,
       );
-      developer.log("I reached here");
+      log.i(
+          "Successfully fetched user: ${_user?.fullName} | Role: ${_user?.role.name}");
     } catch (e, s) {
-      developer.log(e.toString());
-      developer.log(s.toString());
+      log.e("Failed to get user data for UID: $uid", error: e, stackTrace: s);
       rethrow;
     }
   }
 
   Future<UsersModel?> login(String email, String password) async {
+    log.i("Login attempt for email: $email");
     try {
       isLoading = true;
       notifyListeners();
@@ -62,21 +84,13 @@ class AuthProvider extends ChangeNotifier {
         );
       }
 
-      final userFromCollection = await firebaseService.database
-          .collection('users')
-          .doc(userCredential.user!.uid)
-          .get();
+      log.i("Firebase Auth successful for UID: ${userCredential.user!.uid}");
 
-      // print(userFromCollection.data());
-
-      _user = UsersModel.fromJson(
-        userFromCollection.data() as Map<String, dynamic>,
-      );
+      await getUser(userCredential.user!.uid);
 
       return _user;
     } catch (e, s) {
-      developer.log(e.toString());
-      developer.log(s.toString());
+      log.e("Login failed for email: $email", error: e, stackTrace: s);
       rethrow;
     } finally {
       isLoading = false;
@@ -85,9 +99,11 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future<void> logout() async {
+    log.i("User logging out: ${_user?.email}");
     await firebaseService.auth.signOut();
     _user = null;
     notifyListeners();
+    log.i("Logout successful.");
   }
 
   String _generateRandomPassword() {
@@ -102,6 +118,7 @@ class AuthProvider extends ChangeNotifier {
     required String email,
     required String username,
   }) async {
+    log.i("Attempting to create new ADMIN: $username ($email)");
     try {
       final password = _generateRandomPassword();
       final id = const Uuid().v4();
@@ -113,6 +130,8 @@ class AuthProvider extends ChangeNotifier {
         isActive: true,
         isOnline: false,
         createdAt: DateTime.now(),
+        searchableKeywords:
+            _generateSearchKeywords(username), // Generate keywords
       );
       var response = await http.post(
         headers: {
@@ -128,13 +147,12 @@ class AuthProvider extends ChangeNotifier {
       );
 
       if (response.statusCode != 200) {
-        throw Exception('Failed to create user');
+        throw Exception('Failed to create user: ${response.body}');
       }
-
+      log.i("Successfully created new ADMIN via cloud function.");
       return;
     } catch (e, s) {
-      developer.log(e.toString());
-      developer.log(s.toString());
+      log.e("Failed to create admin", error: e, stackTrace: s);
       rethrow;
     }
   }
@@ -144,6 +162,7 @@ class AuthProvider extends ChangeNotifier {
     required String fullName,
     required String courseId,
   }) async {
+    log.i("Attempting to create new TEACHER: $fullName ($email)");
     try {
       final password = _generateRandomPassword();
       final id = const Uuid().v4();
@@ -157,6 +176,8 @@ class AuthProvider extends ChangeNotifier {
         courseId: courseId,
         createdAt: DateTime.now(),
         isOnline: false,
+        searchableKeywords:
+            _generateSearchKeywords(fullName), // Generate keywords
       );
 
       var response = await http.post(
@@ -173,12 +194,12 @@ class AuthProvider extends ChangeNotifier {
       );
 
       if (response.statusCode != 200) {
-        throw Exception('Failed to create user');
+        throw Exception('Failed to create user: ${response.body}');
       }
+      log.i("Successfully created new TEACHER via cloud function.");
       return;
     } catch (e, s) {
-      developer.log(e.toString());
-      developer.log(s.toString());
+      log.e("Failed to create teacher", error: e, stackTrace: s);
       rethrow;
     }
   }
@@ -189,6 +210,7 @@ class AuthProvider extends ChangeNotifier {
     List<String>? enrolledCourseIds,
     required String batch,
   }) async {
+    log.i("Attempting to create new STUDENT: $fullName ($email)");
     try {
       final password = _generateRandomPassword();
       final id = const Uuid().v4();
@@ -202,6 +224,8 @@ class AuthProvider extends ChangeNotifier {
         isActive: true,
         batch: batch,
         createdAt: DateTime.now(),
+        searchableKeywords:
+            _generateSearchKeywords(fullName), // Generate keywords
       );
 
       var response = await http.post(
@@ -218,22 +242,23 @@ class AuthProvider extends ChangeNotifier {
       );
 
       if (response.statusCode != 200) {
-        throw Exception('Failed to create student');
+        throw Exception('Failed to create student: ${response.body}');
       }
+      log.i("Successfully created new STUDENT via cloud function.");
       return;
     } catch (e, s) {
-      developer.log('Student Registration Error', error: e);
-      developer.log(s.toString());
+      log.e('Student Registration Error', error: e, stackTrace: s);
       rethrow;
     }
   }
 
   Future<void> forgotPassword(String email) async {
+    log.i("Sending password reset email to: $email");
     try {
       await firebaseService.auth.sendPasswordResetEmail(email: email);
+      log.i("Password reset email sent successfully.");
     } catch (e, s) {
-      developer.log(e.toString());
-      developer.log(s.toString());
+      log.e("Failed to send password reset email", error: e, stackTrace: s);
       rethrow;
     }
   }

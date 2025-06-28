@@ -6,8 +6,8 @@ part of 'comments_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$CommentsModelImpl _$$CommentsModelImplFromJson(Map<String, dynamic> json) =>
-    _$CommentsModelImpl(
+_CommentsModel _$CommentsModelFromJson(Map<String, dynamic> json) =>
+    _CommentsModel(
       id: json['id'] as String,
       postId: json['postId'] as String,
       content: json['content'] as String,
@@ -35,7 +35,7 @@ _$CommentsModelImpl _$$CommentsModelImplFromJson(Map<String, dynamic> json) =>
           const [],
     );
 
-Map<String, dynamic> _$$CommentsModelImplToJson(_$CommentsModelImpl instance) =>
+Map<String, dynamic> _$CommentsModelToJson(_CommentsModel instance) =>
     <String, dynamic>{
       'id': instance.id,
       'postId': instance.postId,

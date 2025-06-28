@@ -6,16 +6,15 @@ part of 'messenger_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$MessengerModelImpl _$$MessengerModelImplFromJson(Map<String, dynamic> json) =>
-    _$MessengerModelImpl(
+_MessengerModel _$MessengerModelFromJson(Map<String, dynamic> json) =>
+    _MessengerModel(
       id: json['id'] as String,
       userId: json['userId'] as String?,
       groupId: json['groupId'] as String?,
       lastseen: DateTime.parse(json['lastseen'] as String),
     );
 
-Map<String, dynamic> _$$MessengerModelImplToJson(
-        _$MessengerModelImpl instance) =>
+Map<String, dynamic> _$MessengerModelToJson(_MessengerModel instance) =>
     <String, dynamic>{
       'id': instance.id,
       'userId': instance.userId,

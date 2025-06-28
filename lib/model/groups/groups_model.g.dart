@@ -6,8 +6,7 @@ part of 'groups_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$GroupModelImpl _$$GroupModelImplFromJson(Map<String, dynamic> json) =>
-    _$GroupModelImpl(
+_GroupModel _$GroupModelFromJson(Map<String, dynamic> json) => _GroupModel(
       id: json['id'] as String,
       name: json['name'] as String,
       description: json['description'] as String?,
@@ -26,7 +25,7 @@ _$GroupModelImpl _$$GroupModelImplFromJson(Map<String, dynamic> json) =>
           const [],
     );
 
-Map<String, dynamic> _$$GroupModelImplToJson(_$GroupModelImpl instance) =>
+Map<String, dynamic> _$GroupModelToJson(_GroupModel instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
@@ -46,13 +45,12 @@ const _$GroupPrivacyEnumMap = {
   GroupPrivacy.restricted: 'restricted',
 };
 
-_$GroupMemberImpl _$$GroupMemberImplFromJson(Map<String, dynamic> json) =>
-    _$GroupMemberImpl(
+_GroupMember _$GroupMemberFromJson(Map<String, dynamic> json) => _GroupMember(
       id: json['id'] as String,
       role: $enumDecode(_$GroupRoleEnumMap, json['role']),
     );
 
-Map<String, dynamic> _$$GroupMemberImplToJson(_$GroupMemberImpl instance) =>
+Map<String, dynamic> _$GroupMemberToJson(_GroupMember instance) =>
     <String, dynamic>{
       'id': instance.id,
       'role': _$GroupRoleEnumMap[instance.role]!,
