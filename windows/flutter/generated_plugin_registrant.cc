@@ -18,11 +18,6 @@
 #include <share_plus/share_plus_windows_plugin_c_api.h>
 #include <url_launcher_windows/url_launcher_windows.h>
 
-/**
- * @brief Registers all supported Flutter plugins with the provided plugin registry.
- *
- * This function enables plugin functionality for the Windows Flutter application by registering each plugin with the given registry instance.
- */
 void RegisterPlugins(flutter::PluginRegistry* registry) {
   CloudFirestorePluginCApiRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("CloudFirestorePluginCApi"));
