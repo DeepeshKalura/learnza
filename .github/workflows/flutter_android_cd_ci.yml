@@ -45,7 +45,6 @@ jobs:
           flutter-version: ${{ env.FLUTTER_VERSION }}
           cache: true
 
-      # ─── New: Decode .env for flutter pub get ───────────────────────────────
       - name: Setup .env for tests
         run: |
           echo "${{ secrets.ENV }}" | base64 -d > .env

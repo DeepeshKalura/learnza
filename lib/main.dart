@@ -198,9 +198,11 @@ class MyApp extends StatelessWidget {
                 return MessengerStateProvider();
               },
             ),
-            ChangeNotifierProvider(create: (context) {
-              return AdminStateProvider();
-            }),
+            ChangeNotifierProvider(
+              create: (context) {
+                return AdminStateProvider();
+              },
+            ),
           ],
           child: Consumer<UserPreferenceProvider>(
             builder: (context, userPreferenceProvider, _) {
