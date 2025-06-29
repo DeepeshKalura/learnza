@@ -1,16 +1,18 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+
 import '../app_enums.dart';
 
 part 'users_model.freezed.dart';
 part 'users_model.g.dart';
 
 @freezed
-class UsersModel with _$UsersModel {
+sealed class UsersModel with _$UsersModel {
   const factory UsersModel({
+    // Core
     required UserRole role,
     String? title,
 
-    // Students
+    // Student info
     required String uid,
     required String email,
     required String fullName,
@@ -21,26 +23,31 @@ class UsersModel with _$UsersModel {
     String? motherName,
     String? fatherName,
 
-    // Message
-    String? lastseen,
+    // Messaging
+    /// Use camelCase for consistency
+    String? lastSeen,
     @Default(true) bool isActive,
     @Default(false) bool isOnline,
-    @Default([]) List<String> blockedUsers,
-    @Default([]) List<String> contactUsers,
 
-    // Teachers
+    /// Default must be a const, and you should parameterize the generic
+    @Default(<String>[]) List<String> blockedUsers,
+    @Default(<String>[]) List<String> contactUsers,
+
+    // Teaching
     String? courseId,
 
-    // Future purpose
+    // Future use
     String? departmentId,
+    @Default(<String>[]) List<String> searchableKeywords,
 
-    // Status tracking
+    // Moderation
     String? banReason,
     String? bannedById,
+
+    // Metadata
     required DateTime createdAt,
   }) = _UsersModel;
 
-  // For JSON serialization
   factory UsersModel.fromJson(Map<String, dynamic> json) =>
       _$UsersModelFromJson(json);
 }

@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,52 +10,102 @@ part of 'posts_model.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-PostsModel _$PostsModelFromJson(Map<String, dynamic> json) {
-  return _PostsModel.fromJson(json);
-}
 
 /// @nodoc
 mixin _$PostsModel {
 // Core Post Information
-  String get id => throw _privateConstructorUsedError;
-  String get title => throw _privateConstructorUsedError;
-  String get content => throw _privateConstructorUsedError;
-  String get authorId => throw _privateConstructorUsedError;
-  String? get thumbnailUrl => throw _privateConstructorUsedError;
-  DateTime get createdAt => throw _privateConstructorUsedError;
-  DateTime get updatedAt => throw _privateConstructorUsedError;
-  DateTime? get scheduledAt =>
-      throw _privateConstructorUsedError; // Enhanced Engagement Metrics
-  PostEngagementMetrics get engagementMetrics =>
-      throw _privateConstructorUsedError; // Post Categorization and Visibility
-  List<String> get tags => throw _privateConstructorUsedError;
-  PostVisibility get visibility =>
-      throw _privateConstructorUsedError; // Advanced Post Attributes
-  String? get categoryId => throw _privateConstructorUsedError;
-  bool get isPinned => throw _privateConstructorUsedError;
-  bool get isFeatured => throw _privateConstructorUsedError;
-  List<CommentsModel> get comments => throw _privateConstructorUsedError;
-
-  /// Serializes this PostsModel to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  String get id;
+  String get title;
+  String get content;
+  String get authorId;
+  String? get thumbnailUrl;
+  DateTime get createdAt;
+  DateTime get updatedAt;
+  DateTime? get scheduledAt; // Enhanced Engagement Metrics
+  PostEngagementMetrics
+      get engagementMetrics; // Post Categorization and Visibility
+  List<String> get tags;
+  PostVisibility get visibility; // Advanced Post Attributes
+  String? get categoryId;
+  bool get isPinned;
+  bool get isFeatured;
+  List<CommentsModel> get comments;
 
   /// Create a copy of PostsModel
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
   $PostsModelCopyWith<PostsModel> get copyWith =>
-      throw _privateConstructorUsedError;
+      _$PostsModelCopyWithImpl<PostsModel>(this as PostsModel, _$identity);
+
+  /// Serializes this PostsModel to a JSON map.
+  Map<String, dynamic> toJson();
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is PostsModel &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.title, title) || other.title == title) &&
+            (identical(other.content, content) || other.content == content) &&
+            (identical(other.authorId, authorId) ||
+                other.authorId == authorId) &&
+            (identical(other.thumbnailUrl, thumbnailUrl) ||
+                other.thumbnailUrl == thumbnailUrl) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt) &&
+            (identical(other.scheduledAt, scheduledAt) ||
+                other.scheduledAt == scheduledAt) &&
+            (identical(other.engagementMetrics, engagementMetrics) ||
+                other.engagementMetrics == engagementMetrics) &&
+            const DeepCollectionEquality().equals(other.tags, tags) &&
+            (identical(other.visibility, visibility) ||
+                other.visibility == visibility) &&
+            (identical(other.categoryId, categoryId) ||
+                other.categoryId == categoryId) &&
+            (identical(other.isPinned, isPinned) ||
+                other.isPinned == isPinned) &&
+            (identical(other.isFeatured, isFeatured) ||
+                other.isFeatured == isFeatured) &&
+            const DeepCollectionEquality().equals(other.comments, comments));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      title,
+      content,
+      authorId,
+      thumbnailUrl,
+      createdAt,
+      updatedAt,
+      scheduledAt,
+      engagementMetrics,
+      const DeepCollectionEquality().hash(tags),
+      visibility,
+      categoryId,
+      isPinned,
+      isFeatured,
+      const DeepCollectionEquality().hash(comments));
+
+  @override
+  String toString() {
+    return 'PostsModel(id: $id, title: $title, content: $content, authorId: $authorId, thumbnailUrl: $thumbnailUrl, createdAt: $createdAt, updatedAt: $updatedAt, scheduledAt: $scheduledAt, engagementMetrics: $engagementMetrics, tags: $tags, visibility: $visibility, categoryId: $categoryId, isPinned: $isPinned, isFeatured: $isFeatured, comments: $comments)';
+  }
 }
 
 /// @nodoc
-abstract class $PostsModelCopyWith<$Res> {
+abstract mixin class $PostsModelCopyWith<$Res> {
   factory $PostsModelCopyWith(
-          PostsModel value, $Res Function(PostsModel) then) =
-      _$PostsModelCopyWithImpl<$Res, PostsModel>;
+          PostsModel value, $Res Function(PostsModel) _then) =
+      _$PostsModelCopyWithImpl;
   @useResult
   $Res call(
       {String id,
@@ -77,14 +128,11 @@ abstract class $PostsModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$PostsModelCopyWithImpl<$Res, $Val extends PostsModel>
-    implements $PostsModelCopyWith<$Res> {
-  _$PostsModelCopyWithImpl(this._value, this._then);
+class _$PostsModelCopyWithImpl<$Res> implements $PostsModelCopyWith<$Res> {
+  _$PostsModelCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final PostsModel _self;
+  final $Res Function(PostsModel) _then;
 
   /// Create a copy of PostsModel
   /// with the given fields replaced by the non-null parameter values.
@@ -107,68 +155,68 @@ class _$PostsModelCopyWithImpl<$Res, $Val extends PostsModel>
     Object? isFeatured = null,
     Object? comments = null,
   }) {
-    return _then(_value.copyWith(
+    return _then(_self.copyWith(
       id: null == id
-          ? _value.id
+          ? _self.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
       title: null == title
-          ? _value.title
+          ? _self.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
       content: null == content
-          ? _value.content
+          ? _self.content
           : content // ignore: cast_nullable_to_non_nullable
               as String,
       authorId: null == authorId
-          ? _value.authorId
+          ? _self.authorId
           : authorId // ignore: cast_nullable_to_non_nullable
               as String,
       thumbnailUrl: freezed == thumbnailUrl
-          ? _value.thumbnailUrl
+          ? _self.thumbnailUrl
           : thumbnailUrl // ignore: cast_nullable_to_non_nullable
               as String?,
       createdAt: null == createdAt
-          ? _value.createdAt
+          ? _self.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
       updatedAt: null == updatedAt
-          ? _value.updatedAt
+          ? _self.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
       scheduledAt: freezed == scheduledAt
-          ? _value.scheduledAt
+          ? _self.scheduledAt
           : scheduledAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
       engagementMetrics: null == engagementMetrics
-          ? _value.engagementMetrics
+          ? _self.engagementMetrics
           : engagementMetrics // ignore: cast_nullable_to_non_nullable
               as PostEngagementMetrics,
       tags: null == tags
-          ? _value.tags
+          ? _self.tags
           : tags // ignore: cast_nullable_to_non_nullable
               as List<String>,
       visibility: null == visibility
-          ? _value.visibility
+          ? _self.visibility
           : visibility // ignore: cast_nullable_to_non_nullable
               as PostVisibility,
       categoryId: freezed == categoryId
-          ? _value.categoryId
+          ? _self.categoryId
           : categoryId // ignore: cast_nullable_to_non_nullable
               as String?,
       isPinned: null == isPinned
-          ? _value.isPinned
+          ? _self.isPinned
           : isPinned // ignore: cast_nullable_to_non_nullable
               as bool,
       isFeatured: null == isFeatured
-          ? _value.isFeatured
+          ? _self.isFeatured
           : isFeatured // ignore: cast_nullable_to_non_nullable
               as bool,
       comments: null == comments
-          ? _value.comments
+          ? _self.comments
           : comments // ignore: cast_nullable_to_non_nullable
               as List<CommentsModel>,
-    ) as $Val);
+    ));
   }
 
   /// Create a copy of PostsModel
@@ -176,140 +224,17 @@ class _$PostsModelCopyWithImpl<$Res, $Val extends PostsModel>
   @override
   @pragma('vm:prefer-inline')
   $PostEngagementMetricsCopyWith<$Res> get engagementMetrics {
-    return $PostEngagementMetricsCopyWith<$Res>(_value.engagementMetrics,
+    return $PostEngagementMetricsCopyWith<$Res>(_self.engagementMetrics,
         (value) {
-      return _then(_value.copyWith(engagementMetrics: value) as $Val);
+      return _then(_self.copyWith(engagementMetrics: value));
     });
   }
 }
 
 /// @nodoc
-abstract class _$$PostsModelImplCopyWith<$Res>
-    implements $PostsModelCopyWith<$Res> {
-  factory _$$PostsModelImplCopyWith(
-          _$PostsModelImpl value, $Res Function(_$PostsModelImpl) then) =
-      __$$PostsModelImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {String id,
-      String title,
-      String content,
-      String authorId,
-      String? thumbnailUrl,
-      DateTime createdAt,
-      DateTime updatedAt,
-      DateTime? scheduledAt,
-      PostEngagementMetrics engagementMetrics,
-      List<String> tags,
-      PostVisibility visibility,
-      String? categoryId,
-      bool isPinned,
-      bool isFeatured,
-      List<CommentsModel> comments});
-
-  @override
-  $PostEngagementMetricsCopyWith<$Res> get engagementMetrics;
-}
-
-/// @nodoc
-class __$$PostsModelImplCopyWithImpl<$Res>
-    extends _$PostsModelCopyWithImpl<$Res, _$PostsModelImpl>
-    implements _$$PostsModelImplCopyWith<$Res> {
-  __$$PostsModelImplCopyWithImpl(
-      _$PostsModelImpl _value, $Res Function(_$PostsModelImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of PostsModel
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = null,
-    Object? title = null,
-    Object? content = null,
-    Object? authorId = null,
-    Object? thumbnailUrl = freezed,
-    Object? createdAt = null,
-    Object? updatedAt = null,
-    Object? scheduledAt = freezed,
-    Object? engagementMetrics = null,
-    Object? tags = null,
-    Object? visibility = null,
-    Object? categoryId = freezed,
-    Object? isPinned = null,
-    Object? isFeatured = null,
-    Object? comments = null,
-  }) {
-    return _then(_$PostsModelImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      title: null == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
-              as String,
-      content: null == content
-          ? _value.content
-          : content // ignore: cast_nullable_to_non_nullable
-              as String,
-      authorId: null == authorId
-          ? _value.authorId
-          : authorId // ignore: cast_nullable_to_non_nullable
-              as String,
-      thumbnailUrl: freezed == thumbnailUrl
-          ? _value.thumbnailUrl
-          : thumbnailUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      updatedAt: null == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      scheduledAt: freezed == scheduledAt
-          ? _value.scheduledAt
-          : scheduledAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      engagementMetrics: null == engagementMetrics
-          ? _value.engagementMetrics
-          : engagementMetrics // ignore: cast_nullable_to_non_nullable
-              as PostEngagementMetrics,
-      tags: null == tags
-          ? _value._tags
-          : tags // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      visibility: null == visibility
-          ? _value.visibility
-          : visibility // ignore: cast_nullable_to_non_nullable
-              as PostVisibility,
-      categoryId: freezed == categoryId
-          ? _value.categoryId
-          : categoryId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      isPinned: null == isPinned
-          ? _value.isPinned
-          : isPinned // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isFeatured: null == isFeatured
-          ? _value.isFeatured
-          : isFeatured // ignore: cast_nullable_to_non_nullable
-              as bool,
-      comments: null == comments
-          ? _value._comments
-          : comments // ignore: cast_nullable_to_non_nullable
-              as List<CommentsModel>,
-    ));
-  }
-}
-
-/// @nodoc
 @JsonSerializable()
-class _$PostsModelImpl implements _PostsModel {
-  const _$PostsModelImpl(
+class _PostsModel implements PostsModel {
+  const _PostsModel(
       {required this.id,
       required this.title,
       required this.content,
@@ -327,9 +252,8 @@ class _$PostsModelImpl implements _PostsModel {
       final List<CommentsModel> comments = const []})
       : _tags = tags,
         _comments = comments;
-
-  factory _$PostsModelImpl.fromJson(Map<String, dynamic> json) =>
-      _$$PostsModelImplFromJson(json);
+  factory _PostsModel.fromJson(Map<String, dynamic> json) =>
+      _$PostsModelFromJson(json);
 
 // Core Post Information
   @override
@@ -384,16 +308,26 @@ class _$PostsModelImpl implements _PostsModel {
     return EqualUnmodifiableListView(_comments);
   }
 
+  /// Create a copy of PostsModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'PostsModel(id: $id, title: $title, content: $content, authorId: $authorId, thumbnailUrl: $thumbnailUrl, createdAt: $createdAt, updatedAt: $updatedAt, scheduledAt: $scheduledAt, engagementMetrics: $engagementMetrics, tags: $tags, visibility: $visibility, categoryId: $categoryId, isPinned: $isPinned, isFeatured: $isFeatured, comments: $comments)';
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$PostsModelCopyWith<_PostsModel> get copyWith =>
+      __$PostsModelCopyWithImpl<_PostsModel>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$PostsModelToJson(
+      this,
+    );
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$PostsModelImpl &&
+            other is _PostsModel &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.content, content) || other.content == content) &&
@@ -441,80 +375,143 @@ class _$PostsModelImpl implements _PostsModel {
       isFeatured,
       const DeepCollectionEquality().hash(_comments));
 
-  /// Create a copy of PostsModel
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$PostsModelImplCopyWith<_$PostsModelImpl> get copyWith =>
-      __$$PostsModelImplCopyWithImpl<_$PostsModelImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$PostsModelImplToJson(
-      this,
-    );
+  String toString() {
+    return 'PostsModel(id: $id, title: $title, content: $content, authorId: $authorId, thumbnailUrl: $thumbnailUrl, createdAt: $createdAt, updatedAt: $updatedAt, scheduledAt: $scheduledAt, engagementMetrics: $engagementMetrics, tags: $tags, visibility: $visibility, categoryId: $categoryId, isPinned: $isPinned, isFeatured: $isFeatured, comments: $comments)';
   }
 }
 
-abstract class _PostsModel implements PostsModel {
-  const factory _PostsModel(
-      {required final String id,
-      required final String title,
-      required final String content,
-      required final String authorId,
-      final String? thumbnailUrl,
-      required final DateTime createdAt,
-      required final DateTime updatedAt,
-      final DateTime? scheduledAt,
-      final PostEngagementMetrics engagementMetrics,
-      final List<String> tags,
-      final PostVisibility visibility,
-      final String? categoryId,
-      final bool isPinned,
-      final bool isFeatured,
-      final List<CommentsModel> comments}) = _$PostsModelImpl;
+/// @nodoc
+abstract mixin class _$PostsModelCopyWith<$Res>
+    implements $PostsModelCopyWith<$Res> {
+  factory _$PostsModelCopyWith(
+          _PostsModel value, $Res Function(_PostsModel) _then) =
+      __$PostsModelCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {String id,
+      String title,
+      String content,
+      String authorId,
+      String? thumbnailUrl,
+      DateTime createdAt,
+      DateTime updatedAt,
+      DateTime? scheduledAt,
+      PostEngagementMetrics engagementMetrics,
+      List<String> tags,
+      PostVisibility visibility,
+      String? categoryId,
+      bool isPinned,
+      bool isFeatured,
+      List<CommentsModel> comments});
 
-  factory _PostsModel.fromJson(Map<String, dynamic> json) =
-      _$PostsModelImpl.fromJson;
+  @override
+  $PostEngagementMetricsCopyWith<$Res> get engagementMetrics;
+}
 
-// Core Post Information
-  @override
-  String get id;
-  @override
-  String get title;
-  @override
-  String get content;
-  @override
-  String get authorId;
-  @override
-  String? get thumbnailUrl;
-  @override
-  DateTime get createdAt;
-  @override
-  DateTime get updatedAt;
-  @override
-  DateTime? get scheduledAt; // Enhanced Engagement Metrics
-  @override
-  PostEngagementMetrics
-      get engagementMetrics; // Post Categorization and Visibility
-  @override
-  List<String> get tags;
-  @override
-  PostVisibility get visibility; // Advanced Post Attributes
-  @override
-  String? get categoryId;
-  @override
-  bool get isPinned;
-  @override
-  bool get isFeatured;
-  @override
-  List<CommentsModel> get comments;
+/// @nodoc
+class __$PostsModelCopyWithImpl<$Res> implements _$PostsModelCopyWith<$Res> {
+  __$PostsModelCopyWithImpl(this._self, this._then);
+
+  final _PostsModel _self;
+  final $Res Function(_PostsModel) _then;
 
   /// Create a copy of PostsModel
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$PostsModelImplCopyWith<_$PostsModelImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? id = null,
+    Object? title = null,
+    Object? content = null,
+    Object? authorId = null,
+    Object? thumbnailUrl = freezed,
+    Object? createdAt = null,
+    Object? updatedAt = null,
+    Object? scheduledAt = freezed,
+    Object? engagementMetrics = null,
+    Object? tags = null,
+    Object? visibility = null,
+    Object? categoryId = freezed,
+    Object? isPinned = null,
+    Object? isFeatured = null,
+    Object? comments = null,
+  }) {
+    return _then(_PostsModel(
+      id: null == id
+          ? _self.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      title: null == title
+          ? _self.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      content: null == content
+          ? _self.content
+          : content // ignore: cast_nullable_to_non_nullable
+              as String,
+      authorId: null == authorId
+          ? _self.authorId
+          : authorId // ignore: cast_nullable_to_non_nullable
+              as String,
+      thumbnailUrl: freezed == thumbnailUrl
+          ? _self.thumbnailUrl
+          : thumbnailUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      createdAt: null == createdAt
+          ? _self.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      updatedAt: null == updatedAt
+          ? _self.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      scheduledAt: freezed == scheduledAt
+          ? _self.scheduledAt
+          : scheduledAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      engagementMetrics: null == engagementMetrics
+          ? _self.engagementMetrics
+          : engagementMetrics // ignore: cast_nullable_to_non_nullable
+              as PostEngagementMetrics,
+      tags: null == tags
+          ? _self._tags
+          : tags // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      visibility: null == visibility
+          ? _self.visibility
+          : visibility // ignore: cast_nullable_to_non_nullable
+              as PostVisibility,
+      categoryId: freezed == categoryId
+          ? _self.categoryId
+          : categoryId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      isPinned: null == isPinned
+          ? _self.isPinned
+          : isPinned // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isFeatured: null == isFeatured
+          ? _self.isFeatured
+          : isFeatured // ignore: cast_nullable_to_non_nullable
+              as bool,
+      comments: null == comments
+          ? _self._comments
+          : comments // ignore: cast_nullable_to_non_nullable
+              as List<CommentsModel>,
+    ));
+  }
+
+  /// Create a copy of PostsModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $PostEngagementMetricsCopyWith<$Res> get engagementMetrics {
+    return $PostEngagementMetricsCopyWith<$Res>(_self.engagementMetrics,
+        (value) {
+      return _then(_self.copyWith(engagementMetrics: value));
+    });
+  }
 }
+
+// dart format on

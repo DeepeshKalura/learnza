@@ -55,7 +55,7 @@ class _MessengerScreenState extends State<MessengerScreen> {
                       if (asyncSnapshot.connectionState ==
                               ConnectionState.done &&
                           asyncSnapshot.data == true) {
-                        return ShadButton(
+                        return ShadIconButton(
                           icon: const Icon(Icons.add, size: 20),
                           onPressed: () {
                             // TODO: Implement create group dialog

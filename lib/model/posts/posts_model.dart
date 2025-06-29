@@ -8,7 +8,7 @@ part 'posts_model.freezed.dart';
 part 'posts_model.g.dart';
 
 @freezed
-class PostsModel with _$PostsModel {
+sealed class PostsModel with _$PostsModel {
   const factory PostsModel({
     // Core Post Information
     required String id,

@@ -1,6 +1,6 @@
 // lib/screen/post/posts_screen.dart
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:learnza/l10n/app_localizations.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
 import '../common/widget/drawer_widget.dart';
@@ -51,7 +51,7 @@ class _PostStudentScreenState extends State<PostStudentScreen> {
               ),
               actions: [
                 ShadButton(
-                  icon: const Icon(LucideIcons.plus),
+                  child: const Icon(LucideIcons.plus),
                   onPressed: () {
                     _showCreatePostBottomSheet(context);
                   },

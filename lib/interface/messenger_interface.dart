@@ -26,7 +26,7 @@ class MessengerInterface {
 
   bool get isOnline => isGroup ? false : (source as UsersModel).isOnline;
 
-  String? get lastSeen => isGroup ? null : (source as UsersModel).lastseen;
+  String? get lastSeen => isGroup ? null : (source as UsersModel).lastSeen;
 
   bool isUserBlocked(String userId) =>
       isGroup ? false : (source as UsersModel).blockedUsers.contains(userId);

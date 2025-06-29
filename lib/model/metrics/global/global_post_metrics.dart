@@ -4,7 +4,7 @@ part 'global_post_metrics.freezed.dart';
 part 'global_post_metrics.g.dart';
 
 @freezed
-class GlobalPostMetrics with _$GlobalPostMetrics {
+sealed class GlobalPostMetrics with _$GlobalPostMetrics {
   const factory GlobalPostMetrics({
     // Total Post Counts
     @Default(0) int totalPosts,

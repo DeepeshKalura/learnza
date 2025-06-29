@@ -6,8 +6,8 @@ part of 'courses_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$CoursesModelImpl _$$CoursesModelImplFromJson(Map<String, dynamic> json) =>
-    _$CoursesModelImpl(
+_CoursesModel _$CoursesModelFromJson(Map<String, dynamic> json) =>
+    _CoursesModel(
       id: json['id'] as String,
       name: json['name'] as String,
       year: (json['year'] as num).toInt(),
@@ -22,7 +22,7 @@ _$CoursesModelImpl _$$CoursesModelImplFromJson(Map<String, dynamic> json) =>
           : DateTime.parse(json['updatedAt'] as String),
     );
 
-Map<String, dynamic> _$$CoursesModelImplToJson(_$CoursesModelImpl instance) =>
+Map<String, dynamic> _$CoursesModelToJson(_CoursesModel instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,

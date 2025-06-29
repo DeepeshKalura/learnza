@@ -207,7 +207,7 @@ class UserProfileScreen extends StatelessWidget {
                 _InfoItem(
                   icon: Icons.access_time,
                   title: 'Last Seen',
-                  value: user.lastseen ?? 'Unknown',
+                  value: user.lastSeen ?? 'Unknown',
                 ),
                 _InfoItem(
                   icon: Icons.verified_user,

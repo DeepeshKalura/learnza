@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
+import 'package:learnza/l10n/app_localizations.dart';
 import 'package:learnza/screen/universal/success_universal_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
@@ -31,7 +31,7 @@ class _GroupsStudentScreenState extends State<GroupsStudentScreen> {
 
   final _groupNameController = TextEditingController();
   final _groupDescriptionController = TextEditingController();
-  final _popoverController = ShadPopoverController();
+  final _popoverController = ShadSelectController<GroupPrivacy>();
 
   GroupPrivacy _selectedPrivacy = GroupPrivacy.private;
   String? _error;
@@ -573,7 +573,7 @@ class _GroupsStudentScreenState extends State<GroupsStudentScreen> {
       ),
       title: Text(localizations?.groupsCardTitile ?? 'Messanger'),
       actions: [
-        ShadButton(
+        ShadIconButton(
           icon: const Icon(Icons.add),
           onPressed: _showCreateGroupDialog,
         ),

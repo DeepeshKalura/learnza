@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer' as developer;
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -11,6 +10,7 @@ import 'package:learnza/service/errors/file_service_errors.dart';
 import 'package:learnza/service/file_service.dart';
 import 'package:mime/mime.dart';
 
+import '../../../utils/logger.dart';
 import '../../model/message_provider.dart';
 
 class ChatStateProvider extends ChangeNotifier {
@@ -27,7 +27,7 @@ class ChatStateProvider extends ChangeNotifier {
   bool _isLoading = true;
   bool _isLoadingMore = false;
   bool _hasMoreMessages = true;
-  DocumentSnapshot? _lastDocument; // Keep track of the pagination cursor here
+  DocumentSnapshot? _lastDocument;
 
   List<MessagesModel> get messages => _messages;
   bool get isLoading => _isLoading;
@@ -44,29 +44,27 @@ class ChatStateProvider extends ChangeNotifier {
         ? _messageProvider.getGroupMessagesStream(conversationId)
         : _messageProvider.getPrivateMessagesStream(conversationId);
 
-    _messageSubscription = stream.listen((newMessages) {
-      // This is the key change: We merge the new messages with the existing ones
-      // to handle real-time updates without losing paginated data.
+    _messageSubscription = stream.listen((newMessages) async {
+      // Make this async
       _messages = _mergeMessages(_messages, newMessages);
 
-      if (_messages.isNotEmpty) {
-        _lastDocument = _messageProvider.firebaseService.database
-            .collection('messages')
-            .doc(_messages.last.id) as DocumentSnapshot?; // Update cursor
-      }
+      // --- START OF FIX ---
+      // We no longer need to manually set the _lastDocument here.
+      // The pagination logic in _fetchMoreMessages will handle it correctly.
+      // This removes the line that was causing the crash.
+      // --- END OF FIX ---
 
       if (_isLoading) {
         _isLoading = false;
       }
       notifyListeners();
-    }, onError: (error) {
+    }, onError: (error, stackTrace) {
       _isLoading = false;
-      print("Error in chat stream: $error");
+      log.e("Error in chat stream", error: error, stackTrace: stackTrace);
       notifyListeners();
     });
   }
 
-  // Helper function to merge new and old message lists without duplicates
   List<MessagesModel> _mergeMessages(
       List<MessagesModel> oldMessages, List<MessagesModel> newMessages) {
     var messageMap = <String, MessagesModel>{};
@@ -91,27 +89,30 @@ class ChatStateProvider extends ChangeNotifier {
   }
 
   Future<void> _fetchMoreMessages() async {
-    // If we're already loading or have no more messages, do nothing.
     if (_isLoadingMore || !_hasMoreMessages || _messages.isEmpty) return;
 
     _isLoadingMore = true;
     notifyListeners();
 
     try {
+      // --- START OF FIX 2 ---
       // Get the actual DocumentSnapshot of the last message we currently have.
+      // This is the correct way to get the cursor for pagination.
       final lastMessageId = _messages.last.id;
       final lastDocSnapshot = await _messageProvider.firebaseService.database
           .collection('messages')
           .doc(lastMessageId)
           .get();
 
-      // Ensure the document exists before trying to paginate from it.
       if (!lastDocSnapshot.exists) {
+        log.w("Last document for pagination does not exist. Stopping.");
         _hasMoreMessages = false;
         _isLoadingMore = false;
         notifyListeners();
         return;
       }
+      _lastDocument = lastDocSnapshot;
+      // --- END OF FIX 2 ---
 
       final chatRoomId = isGroupChat
           ? null
@@ -123,7 +124,7 @@ class ChatStateProvider extends ChangeNotifier {
       final olderMessages = await _messageProvider.fetchOlderMessages(
         groupId: isGroupChat ? conversationId : null,
         chatRoomId: chatRoomId,
-        lastVisible: lastDocSnapshot, // Pass the correct DocumentSnapshot
+        lastVisible: _lastDocument!, // We now have a valid snapshot
         limit: 20,
       );
 
@@ -132,8 +133,8 @@ class ChatStateProvider extends ChangeNotifier {
       } else {
         _messages.addAll(olderMessages);
       }
-    } catch (e) {
-      developer.log("Error fetching older messages: $e");
+    } catch (e, s) {
+      log.e("Error fetching older messages", error: e, stackTrace: s);
     } finally {
       _isLoadingMore = false;
       notifyListeners();
@@ -150,9 +151,7 @@ class ChatStateProvider extends ChangeNotifier {
     String? attachmentFileName;
     int? attachmentFileSize;
     MessageType messageType = MessageType.text;
-    MessagesModel message;
 
-    // This part is for handling file uploads before sending the message
     if (file != null) {
       try {
         String basePath = 'chat_attachments/$conversationId';
@@ -164,25 +163,23 @@ class ChatStateProvider extends ChangeNotifier {
         if (mimeType != null) {
           if (mimeType.startsWith('image/')) {
             messageType = MessageType.image;
-          } else if (mimeType.startsWith('video/'))
+          } else if (mimeType.startsWith('video/')) {
             messageType = MessageType.video;
-          else if (mimeType.startsWith('audio/'))
+          } else if (mimeType.startsWith('audio/')) {
             messageType = MessageType.audio;
-          else
+          } else {
             messageType = MessageType.document;
+          }
         }
       } on FileSizeLimitExceededException catch (e) {
-        // Re-throw to be caught by the UI layer
         throw FileSizeLimitExceededException(e.message);
       } catch (e) {
-        // Re-throw to be caught by the UI layer
         rethrow;
       }
     }
 
-    // Now, call the appropriate method on the MessageProvider to send the message
     if (isGroupChat) {
-      message = await _messageProvider.sendGroupMessage(
+      await _messageProvider.sendGroupMessage(
         groupId: conversationId,
         senderId: senderId,
         content: content,
@@ -193,7 +190,7 @@ class ChatStateProvider extends ChangeNotifier {
         attachmentFileSize: attachmentFileSize,
       );
     } else {
-      message = await _messageProvider.sendPrivateMessage(
+      await _messageProvider.sendPrivateMessage(
         receiverId: conversationId,
         senderId: senderId,
         content: content,
@@ -204,13 +201,6 @@ class ChatStateProvider extends ChangeNotifier {
         attachmentFileSize: attachmentFileSize,
       );
     }
-
-    // Now, handling in the UI
-    _messages.insert(
-      0,
-      message.copyWith(status: MessageStatus.sent),
-    );
-    notifyListeners();
   }
 
   @override

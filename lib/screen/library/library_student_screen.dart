@@ -177,7 +177,9 @@ class _LibraryStudentScreenState extends State<LibraryStudentScreen>
       }
     } catch (e) {
       ShadAlert.destructive(
-        iconSrc: LucideIcons.circleAlert,
+        icon: Icon(
+          LucideIcons.circleAlert,
+        ),
         title: const Text('Error'),
         description: Text(
           e.toString(),

@@ -4,7 +4,7 @@ part 'industry_identifiers.freezed.dart';
 part 'industry_identifiers.g.dart';
 
 @freezed
-class IndustryIdentifiers with _$IndustryIdentifiers {
+sealed class IndustryIdentifiers with _$IndustryIdentifiers {
   const factory IndustryIdentifiers({
     required String type,
     required String value,

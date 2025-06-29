@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,48 +10,99 @@ part of 'messages_model.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-MessagesModel _$MessagesModelFromJson(Map<String, dynamic> json) {
-  return _MessagesModel.fromJson(json);
-}
 
 /// @nodoc
 mixin _$MessagesModel {
-  String get id => throw _privateConstructorUsedError;
-  String? get groupId => throw _privateConstructorUsedError;
-  String? get receiverId => throw _privateConstructorUsedError;
-  String get senderId => throw _privateConstructorUsedError;
-  String get content => throw _privateConstructorUsedError;
-  MessageType get type => throw _privateConstructorUsedError;
-  DateTime get timestamp => throw _privateConstructorUsedError;
-  MessageStatus get status => throw _privateConstructorUsedError;
-  List<String> get readBy => throw _privateConstructorUsedError;
-  List<String> get deliveredTo => throw _privateConstructorUsedError;
-  ReplyReference? get replyTo => throw _privateConstructorUsedError;
-  List<String> get attachments => throw _privateConstructorUsedError;
-  String? get attachmentFileName => throw _privateConstructorUsedError;
-  int? get attachmentFileSize => throw _privateConstructorUsedError;
-  String? get chatRoomId => throw _privateConstructorUsedError;
-
-  /// Serializes this MessagesModel to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  String get id;
+  String? get groupId;
+  String? get receiverId;
+  String get senderId;
+  String get content;
+  MessageType get type;
+  DateTime get timestamp;
+  MessageStatus get status;
+  List<String> get readBy;
+  List<String> get deliveredTo;
+  ReplyReference? get replyTo;
+  List<String> get attachments;
+  String? get attachmentFileName;
+  int? get attachmentFileSize;
+  String? get chatRoomId;
 
   /// Create a copy of MessagesModel
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
   $MessagesModelCopyWith<MessagesModel> get copyWith =>
-      throw _privateConstructorUsedError;
+      _$MessagesModelCopyWithImpl<MessagesModel>(
+          this as MessagesModel, _$identity);
+
+  /// Serializes this MessagesModel to a JSON map.
+  Map<String, dynamic> toJson();
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is MessagesModel &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.groupId, groupId) || other.groupId == groupId) &&
+            (identical(other.receiverId, receiverId) ||
+                other.receiverId == receiverId) &&
+            (identical(other.senderId, senderId) ||
+                other.senderId == senderId) &&
+            (identical(other.content, content) || other.content == content) &&
+            (identical(other.type, type) || other.type == type) &&
+            (identical(other.timestamp, timestamp) ||
+                other.timestamp == timestamp) &&
+            (identical(other.status, status) || other.status == status) &&
+            const DeepCollectionEquality().equals(other.readBy, readBy) &&
+            const DeepCollectionEquality()
+                .equals(other.deliveredTo, deliveredTo) &&
+            (identical(other.replyTo, replyTo) || other.replyTo == replyTo) &&
+            const DeepCollectionEquality()
+                .equals(other.attachments, attachments) &&
+            (identical(other.attachmentFileName, attachmentFileName) ||
+                other.attachmentFileName == attachmentFileName) &&
+            (identical(other.attachmentFileSize, attachmentFileSize) ||
+                other.attachmentFileSize == attachmentFileSize) &&
+            (identical(other.chatRoomId, chatRoomId) ||
+                other.chatRoomId == chatRoomId));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      groupId,
+      receiverId,
+      senderId,
+      content,
+      type,
+      timestamp,
+      status,
+      const DeepCollectionEquality().hash(readBy),
+      const DeepCollectionEquality().hash(deliveredTo),
+      replyTo,
+      const DeepCollectionEquality().hash(attachments),
+      attachmentFileName,
+      attachmentFileSize,
+      chatRoomId);
+
+  @override
+  String toString() {
+    return 'MessagesModel(id: $id, groupId: $groupId, receiverId: $receiverId, senderId: $senderId, content: $content, type: $type, timestamp: $timestamp, status: $status, readBy: $readBy, deliveredTo: $deliveredTo, replyTo: $replyTo, attachments: $attachments, attachmentFileName: $attachmentFileName, attachmentFileSize: $attachmentFileSize, chatRoomId: $chatRoomId)';
+  }
 }
 
 /// @nodoc
-abstract class $MessagesModelCopyWith<$Res> {
+abstract mixin class $MessagesModelCopyWith<$Res> {
   factory $MessagesModelCopyWith(
-          MessagesModel value, $Res Function(MessagesModel) then) =
-      _$MessagesModelCopyWithImpl<$Res, MessagesModel>;
+          MessagesModel value, $Res Function(MessagesModel) _then) =
+      _$MessagesModelCopyWithImpl;
   @useResult
   $Res call(
       {String id,
@@ -73,14 +125,12 @@ abstract class $MessagesModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$MessagesModelCopyWithImpl<$Res, $Val extends MessagesModel>
+class _$MessagesModelCopyWithImpl<$Res>
     implements $MessagesModelCopyWith<$Res> {
-  _$MessagesModelCopyWithImpl(this._value, this._then);
+  _$MessagesModelCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final MessagesModel _self;
+  final $Res Function(MessagesModel) _then;
 
   /// Create a copy of MessagesModel
   /// with the given fields replaced by the non-null parameter values.
@@ -103,68 +153,68 @@ class _$MessagesModelCopyWithImpl<$Res, $Val extends MessagesModel>
     Object? attachmentFileSize = freezed,
     Object? chatRoomId = freezed,
   }) {
-    return _then(_value.copyWith(
+    return _then(_self.copyWith(
       id: null == id
-          ? _value.id
+          ? _self.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
       groupId: freezed == groupId
-          ? _value.groupId
+          ? _self.groupId
           : groupId // ignore: cast_nullable_to_non_nullable
               as String?,
       receiverId: freezed == receiverId
-          ? _value.receiverId
+          ? _self.receiverId
           : receiverId // ignore: cast_nullable_to_non_nullable
               as String?,
       senderId: null == senderId
-          ? _value.senderId
+          ? _self.senderId
           : senderId // ignore: cast_nullable_to_non_nullable
               as String,
       content: null == content
-          ? _value.content
+          ? _self.content
           : content // ignore: cast_nullable_to_non_nullable
               as String,
       type: null == type
-          ? _value.type
+          ? _self.type
           : type // ignore: cast_nullable_to_non_nullable
               as MessageType,
       timestamp: null == timestamp
-          ? _value.timestamp
+          ? _self.timestamp
           : timestamp // ignore: cast_nullable_to_non_nullable
               as DateTime,
       status: null == status
-          ? _value.status
+          ? _self.status
           : status // ignore: cast_nullable_to_non_nullable
               as MessageStatus,
       readBy: null == readBy
-          ? _value.readBy
+          ? _self.readBy
           : readBy // ignore: cast_nullable_to_non_nullable
               as List<String>,
       deliveredTo: null == deliveredTo
-          ? _value.deliveredTo
+          ? _self.deliveredTo
           : deliveredTo // ignore: cast_nullable_to_non_nullable
               as List<String>,
       replyTo: freezed == replyTo
-          ? _value.replyTo
+          ? _self.replyTo
           : replyTo // ignore: cast_nullable_to_non_nullable
               as ReplyReference?,
       attachments: null == attachments
-          ? _value.attachments
+          ? _self.attachments
           : attachments // ignore: cast_nullable_to_non_nullable
               as List<String>,
       attachmentFileName: freezed == attachmentFileName
-          ? _value.attachmentFileName
+          ? _self.attachmentFileName
           : attachmentFileName // ignore: cast_nullable_to_non_nullable
               as String?,
       attachmentFileSize: freezed == attachmentFileSize
-          ? _value.attachmentFileSize
+          ? _self.attachmentFileSize
           : attachmentFileSize // ignore: cast_nullable_to_non_nullable
               as int?,
       chatRoomId: freezed == chatRoomId
-          ? _value.chatRoomId
+          ? _self.chatRoomId
           : chatRoomId // ignore: cast_nullable_to_non_nullable
               as String?,
-    ) as $Val);
+    ));
   }
 
   /// Create a copy of MessagesModel
@@ -172,143 +222,20 @@ class _$MessagesModelCopyWithImpl<$Res, $Val extends MessagesModel>
   @override
   @pragma('vm:prefer-inline')
   $ReplyReferenceCopyWith<$Res>? get replyTo {
-    if (_value.replyTo == null) {
+    if (_self.replyTo == null) {
       return null;
     }
 
-    return $ReplyReferenceCopyWith<$Res>(_value.replyTo!, (value) {
-      return _then(_value.copyWith(replyTo: value) as $Val);
+    return $ReplyReferenceCopyWith<$Res>(_self.replyTo!, (value) {
+      return _then(_self.copyWith(replyTo: value));
     });
   }
 }
 
 /// @nodoc
-abstract class _$$MessagesModelImplCopyWith<$Res>
-    implements $MessagesModelCopyWith<$Res> {
-  factory _$$MessagesModelImplCopyWith(
-          _$MessagesModelImpl value, $Res Function(_$MessagesModelImpl) then) =
-      __$$MessagesModelImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {String id,
-      String? groupId,
-      String? receiverId,
-      String senderId,
-      String content,
-      MessageType type,
-      DateTime timestamp,
-      MessageStatus status,
-      List<String> readBy,
-      List<String> deliveredTo,
-      ReplyReference? replyTo,
-      List<String> attachments,
-      String? attachmentFileName,
-      int? attachmentFileSize,
-      String? chatRoomId});
-
-  @override
-  $ReplyReferenceCopyWith<$Res>? get replyTo;
-}
-
-/// @nodoc
-class __$$MessagesModelImplCopyWithImpl<$Res>
-    extends _$MessagesModelCopyWithImpl<$Res, _$MessagesModelImpl>
-    implements _$$MessagesModelImplCopyWith<$Res> {
-  __$$MessagesModelImplCopyWithImpl(
-      _$MessagesModelImpl _value, $Res Function(_$MessagesModelImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of MessagesModel
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = null,
-    Object? groupId = freezed,
-    Object? receiverId = freezed,
-    Object? senderId = null,
-    Object? content = null,
-    Object? type = null,
-    Object? timestamp = null,
-    Object? status = null,
-    Object? readBy = null,
-    Object? deliveredTo = null,
-    Object? replyTo = freezed,
-    Object? attachments = null,
-    Object? attachmentFileName = freezed,
-    Object? attachmentFileSize = freezed,
-    Object? chatRoomId = freezed,
-  }) {
-    return _then(_$MessagesModelImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      groupId: freezed == groupId
-          ? _value.groupId
-          : groupId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      receiverId: freezed == receiverId
-          ? _value.receiverId
-          : receiverId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      senderId: null == senderId
-          ? _value.senderId
-          : senderId // ignore: cast_nullable_to_non_nullable
-              as String,
-      content: null == content
-          ? _value.content
-          : content // ignore: cast_nullable_to_non_nullable
-              as String,
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as MessageType,
-      timestamp: null == timestamp
-          ? _value.timestamp
-          : timestamp // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as MessageStatus,
-      readBy: null == readBy
-          ? _value._readBy
-          : readBy // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      deliveredTo: null == deliveredTo
-          ? _value._deliveredTo
-          : deliveredTo // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      replyTo: freezed == replyTo
-          ? _value.replyTo
-          : replyTo // ignore: cast_nullable_to_non_nullable
-              as ReplyReference?,
-      attachments: null == attachments
-          ? _value._attachments
-          : attachments // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      attachmentFileName: freezed == attachmentFileName
-          ? _value.attachmentFileName
-          : attachmentFileName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      attachmentFileSize: freezed == attachmentFileSize
-          ? _value.attachmentFileSize
-          : attachmentFileSize // ignore: cast_nullable_to_non_nullable
-              as int?,
-      chatRoomId: freezed == chatRoomId
-          ? _value.chatRoomId
-          : chatRoomId // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ));
-  }
-}
-
-/// @nodoc
 @JsonSerializable()
-class _$MessagesModelImpl implements _MessagesModel {
-  const _$MessagesModelImpl(
+class _MessagesModel implements MessagesModel {
+  const _MessagesModel(
       {required this.id,
       this.groupId,
       this.receiverId,
@@ -327,9 +254,8 @@ class _$MessagesModelImpl implements _MessagesModel {
       : _readBy = readBy,
         _deliveredTo = deliveredTo,
         _attachments = attachments;
-
-  factory _$MessagesModelImpl.fromJson(Map<String, dynamic> json) =>
-      _$$MessagesModelImplFromJson(json);
+  factory _MessagesModel.fromJson(Map<String, dynamic> json) =>
+      _$MessagesModelFromJson(json);
 
   @override
   final String id;
@@ -385,16 +311,26 @@ class _$MessagesModelImpl implements _MessagesModel {
   @override
   final String? chatRoomId;
 
+  /// Create a copy of MessagesModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'MessagesModel(id: $id, groupId: $groupId, receiverId: $receiverId, senderId: $senderId, content: $content, type: $type, timestamp: $timestamp, status: $status, readBy: $readBy, deliveredTo: $deliveredTo, replyTo: $replyTo, attachments: $attachments, attachmentFileName: $attachmentFileName, attachmentFileSize: $attachmentFileSize, chatRoomId: $chatRoomId)';
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$MessagesModelCopyWith<_MessagesModel> get copyWith =>
+      __$MessagesModelCopyWithImpl<_MessagesModel>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$MessagesModelToJson(
+      this,
+    );
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$MessagesModelImpl &&
+            other is _MessagesModel &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.groupId, groupId) || other.groupId == groupId) &&
             (identical(other.receiverId, receiverId) ||
@@ -440,218 +376,171 @@ class _$MessagesModelImpl implements _MessagesModel {
       attachmentFileSize,
       chatRoomId);
 
-  /// Create a copy of MessagesModel
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$MessagesModelImplCopyWith<_$MessagesModelImpl> get copyWith =>
-      __$$MessagesModelImplCopyWithImpl<_$MessagesModelImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$MessagesModelImplToJson(
-      this,
-    );
+  String toString() {
+    return 'MessagesModel(id: $id, groupId: $groupId, receiverId: $receiverId, senderId: $senderId, content: $content, type: $type, timestamp: $timestamp, status: $status, readBy: $readBy, deliveredTo: $deliveredTo, replyTo: $replyTo, attachments: $attachments, attachmentFileName: $attachmentFileName, attachmentFileSize: $attachmentFileSize, chatRoomId: $chatRoomId)';
   }
 }
 
-abstract class _MessagesModel implements MessagesModel {
-  const factory _MessagesModel(
-      {required final String id,
-      final String? groupId,
-      final String? receiverId,
-      required final String senderId,
-      required final String content,
-      final MessageType type,
-      required final DateTime timestamp,
-      final MessageStatus status,
-      final List<String> readBy,
-      final List<String> deliveredTo,
-      final ReplyReference? replyTo,
-      final List<String> attachments,
-      final String? attachmentFileName,
-      final int? attachmentFileSize,
-      final String? chatRoomId}) = _$MessagesModelImpl;
+/// @nodoc
+abstract mixin class _$MessagesModelCopyWith<$Res>
+    implements $MessagesModelCopyWith<$Res> {
+  factory _$MessagesModelCopyWith(
+          _MessagesModel value, $Res Function(_MessagesModel) _then) =
+      __$MessagesModelCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {String id,
+      String? groupId,
+      String? receiverId,
+      String senderId,
+      String content,
+      MessageType type,
+      DateTime timestamp,
+      MessageStatus status,
+      List<String> readBy,
+      List<String> deliveredTo,
+      ReplyReference? replyTo,
+      List<String> attachments,
+      String? attachmentFileName,
+      int? attachmentFileSize,
+      String? chatRoomId});
 
-  factory _MessagesModel.fromJson(Map<String, dynamic> json) =
-      _$MessagesModelImpl.fromJson;
+  @override
+  $ReplyReferenceCopyWith<$Res>? get replyTo;
+}
 
-  @override
-  String get id;
-  @override
-  String? get groupId;
-  @override
-  String? get receiverId;
-  @override
-  String get senderId;
-  @override
-  String get content;
-  @override
-  MessageType get type;
-  @override
-  DateTime get timestamp;
-  @override
-  MessageStatus get status;
-  @override
-  List<String> get readBy;
-  @override
-  List<String> get deliveredTo;
-  @override
-  ReplyReference? get replyTo;
-  @override
-  List<String> get attachments;
-  @override
-  String? get attachmentFileName;
-  @override
-  int? get attachmentFileSize;
-  @override
-  String? get chatRoomId;
+/// @nodoc
+class __$MessagesModelCopyWithImpl<$Res>
+    implements _$MessagesModelCopyWith<$Res> {
+  __$MessagesModelCopyWithImpl(this._self, this._then);
+
+  final _MessagesModel _self;
+  final $Res Function(_MessagesModel) _then;
 
   /// Create a copy of MessagesModel
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$MessagesModelImplCopyWith<_$MessagesModelImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? id = null,
+    Object? groupId = freezed,
+    Object? receiverId = freezed,
+    Object? senderId = null,
+    Object? content = null,
+    Object? type = null,
+    Object? timestamp = null,
+    Object? status = null,
+    Object? readBy = null,
+    Object? deliveredTo = null,
+    Object? replyTo = freezed,
+    Object? attachments = null,
+    Object? attachmentFileName = freezed,
+    Object? attachmentFileSize = freezed,
+    Object? chatRoomId = freezed,
+  }) {
+    return _then(_MessagesModel(
+      id: null == id
+          ? _self.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      groupId: freezed == groupId
+          ? _self.groupId
+          : groupId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      receiverId: freezed == receiverId
+          ? _self.receiverId
+          : receiverId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      senderId: null == senderId
+          ? _self.senderId
+          : senderId // ignore: cast_nullable_to_non_nullable
+              as String,
+      content: null == content
+          ? _self.content
+          : content // ignore: cast_nullable_to_non_nullable
+              as String,
+      type: null == type
+          ? _self.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as MessageType,
+      timestamp: null == timestamp
+          ? _self.timestamp
+          : timestamp // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      status: null == status
+          ? _self.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as MessageStatus,
+      readBy: null == readBy
+          ? _self._readBy
+          : readBy // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      deliveredTo: null == deliveredTo
+          ? _self._deliveredTo
+          : deliveredTo // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      replyTo: freezed == replyTo
+          ? _self.replyTo
+          : replyTo // ignore: cast_nullable_to_non_nullable
+              as ReplyReference?,
+      attachments: null == attachments
+          ? _self._attachments
+          : attachments // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      attachmentFileName: freezed == attachmentFileName
+          ? _self.attachmentFileName
+          : attachmentFileName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      attachmentFileSize: freezed == attachmentFileSize
+          ? _self.attachmentFileSize
+          : attachmentFileSize // ignore: cast_nullable_to_non_nullable
+              as int?,
+      chatRoomId: freezed == chatRoomId
+          ? _self.chatRoomId
+          : chatRoomId // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
 
-ReplyReference _$ReplyReferenceFromJson(Map<String, dynamic> json) {
-  return _ReplyReference.fromJson(json);
+  /// Create a copy of MessagesModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ReplyReferenceCopyWith<$Res>? get replyTo {
+    if (_self.replyTo == null) {
+      return null;
+    }
+
+    return $ReplyReferenceCopyWith<$Res>(_self.replyTo!, (value) {
+      return _then(_self.copyWith(replyTo: value));
+    });
+  }
 }
 
 /// @nodoc
 mixin _$ReplyReference {
-  String get messageId => throw _privateConstructorUsedError;
-  String get content => throw _privateConstructorUsedError;
-  String get senderId => throw _privateConstructorUsedError;
-
-  /// Serializes this ReplyReference to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  String get messageId;
+  String get content;
+  String get senderId;
 
   /// Create a copy of ReplyReference
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
   $ReplyReferenceCopyWith<ReplyReference> get copyWith =>
-      throw _privateConstructorUsedError;
-}
+      _$ReplyReferenceCopyWithImpl<ReplyReference>(
+          this as ReplyReference, _$identity);
 
-/// @nodoc
-abstract class $ReplyReferenceCopyWith<$Res> {
-  factory $ReplyReferenceCopyWith(
-          ReplyReference value, $Res Function(ReplyReference) then) =
-      _$ReplyReferenceCopyWithImpl<$Res, ReplyReference>;
-  @useResult
-  $Res call({String messageId, String content, String senderId});
-}
-
-/// @nodoc
-class _$ReplyReferenceCopyWithImpl<$Res, $Val extends ReplyReference>
-    implements $ReplyReferenceCopyWith<$Res> {
-  _$ReplyReferenceCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of ReplyReference
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? messageId = null,
-    Object? content = null,
-    Object? senderId = null,
-  }) {
-    return _then(_value.copyWith(
-      messageId: null == messageId
-          ? _value.messageId
-          : messageId // ignore: cast_nullable_to_non_nullable
-              as String,
-      content: null == content
-          ? _value.content
-          : content // ignore: cast_nullable_to_non_nullable
-              as String,
-      senderId: null == senderId
-          ? _value.senderId
-          : senderId // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
-  }
-}
-
-/// @nodoc
-abstract class _$$ReplyReferenceImplCopyWith<$Res>
-    implements $ReplyReferenceCopyWith<$Res> {
-  factory _$$ReplyReferenceImplCopyWith(_$ReplyReferenceImpl value,
-          $Res Function(_$ReplyReferenceImpl) then) =
-      __$$ReplyReferenceImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({String messageId, String content, String senderId});
-}
-
-/// @nodoc
-class __$$ReplyReferenceImplCopyWithImpl<$Res>
-    extends _$ReplyReferenceCopyWithImpl<$Res, _$ReplyReferenceImpl>
-    implements _$$ReplyReferenceImplCopyWith<$Res> {
-  __$$ReplyReferenceImplCopyWithImpl(
-      _$ReplyReferenceImpl _value, $Res Function(_$ReplyReferenceImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of ReplyReference
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? messageId = null,
-    Object? content = null,
-    Object? senderId = null,
-  }) {
-    return _then(_$ReplyReferenceImpl(
-      messageId: null == messageId
-          ? _value.messageId
-          : messageId // ignore: cast_nullable_to_non_nullable
-              as String,
-      content: null == content
-          ? _value.content
-          : content // ignore: cast_nullable_to_non_nullable
-              as String,
-      senderId: null == senderId
-          ? _value.senderId
-          : senderId // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$ReplyReferenceImpl implements _ReplyReference {
-  const _$ReplyReferenceImpl(
-      {required this.messageId, required this.content, required this.senderId});
-
-  factory _$ReplyReferenceImpl.fromJson(Map<String, dynamic> json) =>
-      _$$ReplyReferenceImplFromJson(json);
-
-  @override
-  final String messageId;
-  @override
-  final String content;
-  @override
-  final String senderId;
-
-  @override
-  String toString() {
-    return 'ReplyReference(messageId: $messageId, content: $content, senderId: $senderId)';
-  }
+  /// Serializes this ReplyReference to a JSON map.
+  Map<String, dynamic> toJson();
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ReplyReferenceImpl &&
+            other is ReplyReference &&
             (identical(other.messageId, messageId) ||
                 other.messageId == messageId) &&
             (identical(other.content, content) || other.content == content) &&
@@ -663,43 +552,150 @@ class _$ReplyReferenceImpl implements _ReplyReference {
   @override
   int get hashCode => Object.hash(runtimeType, messageId, content, senderId);
 
-  /// Create a copy of ReplyReference
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$ReplyReferenceImplCopyWith<_$ReplyReferenceImpl> get copyWith =>
-      __$$ReplyReferenceImplCopyWithImpl<_$ReplyReferenceImpl>(
-          this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$ReplyReferenceImplToJson(
-      this,
-    );
+  String toString() {
+    return 'ReplyReference(messageId: $messageId, content: $content, senderId: $senderId)';
   }
 }
 
-abstract class _ReplyReference implements ReplyReference {
-  const factory _ReplyReference(
-      {required final String messageId,
-      required final String content,
-      required final String senderId}) = _$ReplyReferenceImpl;
+/// @nodoc
+abstract mixin class $ReplyReferenceCopyWith<$Res> {
+  factory $ReplyReferenceCopyWith(
+          ReplyReference value, $Res Function(ReplyReference) _then) =
+      _$ReplyReferenceCopyWithImpl;
+  @useResult
+  $Res call({String messageId, String content, String senderId});
+}
 
-  factory _ReplyReference.fromJson(Map<String, dynamic> json) =
-      _$ReplyReferenceImpl.fromJson;
+/// @nodoc
+class _$ReplyReferenceCopyWithImpl<$Res>
+    implements $ReplyReferenceCopyWith<$Res> {
+  _$ReplyReferenceCopyWithImpl(this._self, this._then);
+
+  final ReplyReference _self;
+  final $Res Function(ReplyReference) _then;
+
+  /// Create a copy of ReplyReference
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? messageId = null,
+    Object? content = null,
+    Object? senderId = null,
+  }) {
+    return _then(_self.copyWith(
+      messageId: null == messageId
+          ? _self.messageId
+          : messageId // ignore: cast_nullable_to_non_nullable
+              as String,
+      content: null == content
+          ? _self.content
+          : content // ignore: cast_nullable_to_non_nullable
+              as String,
+      senderId: null == senderId
+          ? _self.senderId
+          : senderId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _ReplyReference implements ReplyReference {
+  const _ReplyReference(
+      {required this.messageId, required this.content, required this.senderId});
+  factory _ReplyReference.fromJson(Map<String, dynamic> json) =>
+      _$ReplyReferenceFromJson(json);
 
   @override
-  String get messageId;
+  final String messageId;
   @override
-  String get content;
+  final String content;
   @override
-  String get senderId;
+  final String senderId;
 
   /// Create a copy of ReplyReference
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ReplyReferenceImplCopyWith<_$ReplyReferenceImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  _$ReplyReferenceCopyWith<_ReplyReference> get copyWith =>
+      __$ReplyReferenceCopyWithImpl<_ReplyReference>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$ReplyReferenceToJson(
+      this,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _ReplyReference &&
+            (identical(other.messageId, messageId) ||
+                other.messageId == messageId) &&
+            (identical(other.content, content) || other.content == content) &&
+            (identical(other.senderId, senderId) ||
+                other.senderId == senderId));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, messageId, content, senderId);
+
+  @override
+  String toString() {
+    return 'ReplyReference(messageId: $messageId, content: $content, senderId: $senderId)';
+  }
 }
+
+/// @nodoc
+abstract mixin class _$ReplyReferenceCopyWith<$Res>
+    implements $ReplyReferenceCopyWith<$Res> {
+  factory _$ReplyReferenceCopyWith(
+          _ReplyReference value, $Res Function(_ReplyReference) _then) =
+      __$ReplyReferenceCopyWithImpl;
+  @override
+  @useResult
+  $Res call({String messageId, String content, String senderId});
+}
+
+/// @nodoc
+class __$ReplyReferenceCopyWithImpl<$Res>
+    implements _$ReplyReferenceCopyWith<$Res> {
+  __$ReplyReferenceCopyWithImpl(this._self, this._then);
+
+  final _ReplyReference _self;
+  final $Res Function(_ReplyReference) _then;
+
+  /// Create a copy of ReplyReference
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? messageId = null,
+    Object? content = null,
+    Object? senderId = null,
+  }) {
+    return _then(_ReplyReference(
+      messageId: null == messageId
+          ? _self.messageId
+          : messageId // ignore: cast_nullable_to_non_nullable
+              as String,
+      content: null == content
+          ? _self.content
+          : content // ignore: cast_nullable_to_non_nullable
+              as String,
+      senderId: null == senderId
+          ? _self.senderId
+          : senderId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+// dart format on

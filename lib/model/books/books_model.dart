@@ -4,7 +4,7 @@ part 'books_model.freezed.dart';
 part 'books_model.g.dart';
 
 @freezed
-class BooksModel with _$BooksModel {
+sealed class BooksModel with _$BooksModel {
   const factory BooksModel({
     required String id,
     String? isbn,

@@ -4,7 +4,7 @@ part 'messenger_model.freezed.dart';
 part 'messenger_model.g.dart';
 
 @freezed
-class MessengerModel with _$MessengerModel {
+sealed class MessengerModel with _$MessengerModel {
   const factory MessengerModel({
     required String id,
     String? userId,

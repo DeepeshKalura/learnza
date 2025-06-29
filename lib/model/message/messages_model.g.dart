@@ -6,8 +6,8 @@ part of 'messages_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$MessagesModelImpl _$$MessagesModelImplFromJson(Map<String, dynamic> json) =>
-    _$MessagesModelImpl(
+_MessagesModel _$MessagesModelFromJson(Map<String, dynamic> json) =>
+    _MessagesModel(
       id: json['id'] as String,
       groupId: json['groupId'] as String?,
       receiverId: json['receiverId'] as String?,
@@ -38,7 +38,7 @@ _$MessagesModelImpl _$$MessagesModelImplFromJson(Map<String, dynamic> json) =>
       chatRoomId: json['chatRoomId'] as String?,
     );
 
-Map<String, dynamic> _$$MessagesModelImplToJson(_$MessagesModelImpl instance) =>
+Map<String, dynamic> _$MessagesModelToJson(_MessagesModel instance) =>
     <String, dynamic>{
       'id': instance.id,
       'groupId': instance.groupId,
@@ -74,15 +74,14 @@ const _$MessageStatusEnumMap = {
   MessageStatus.read: 'read',
 };
 
-_$ReplyReferenceImpl _$$ReplyReferenceImplFromJson(Map<String, dynamic> json) =>
-    _$ReplyReferenceImpl(
+_ReplyReference _$ReplyReferenceFromJson(Map<String, dynamic> json) =>
+    _ReplyReference(
       messageId: json['messageId'] as String,
       content: json['content'] as String,
       senderId: json['senderId'] as String,
     );
 
-Map<String, dynamic> _$$ReplyReferenceImplToJson(
-        _$ReplyReferenceImpl instance) =>
+Map<String, dynamic> _$ReplyReferenceToJson(_ReplyReference instance) =>
     <String, dynamic>{
       'messageId': instance.messageId,
       'content': instance.content,

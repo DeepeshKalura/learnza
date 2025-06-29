@@ -6,9 +6,9 @@ part of 'post_metrics.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$PostEngagementMetricsImpl _$$PostEngagementMetricsImplFromJson(
+_PostEngagementMetrics _$PostEngagementMetricsFromJson(
         Map<String, dynamic> json) =>
-    _$PostEngagementMetricsImpl(
+    _PostEngagementMetrics(
       totalViews: (json['totalViews'] as num?)?.toInt() ?? 0,
       uniqueViews: (json['uniqueViews'] as num?)?.toInt() ?? 0,
       likes:
@@ -30,8 +30,8 @@ _$PostEngagementMetricsImpl _$$PostEngagementMetricsImplFromJson(
       scrollDepth: (json['scrollDepth'] as num?)?.toInt() ?? 0,
     );
 
-Map<String, dynamic> _$$PostEngagementMetricsImplToJson(
-        _$PostEngagementMetricsImpl instance) =>
+Map<String, dynamic> _$PostEngagementMetricsToJson(
+        _PostEngagementMetrics instance) =>
     <String, dynamic>{
       'totalViews': instance.totalViews,
       'uniqueViews': instance.uniqueViews,
