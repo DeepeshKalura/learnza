@@ -9,6 +9,7 @@ import 'package:shadcn_ui/shadcn_ui.dart';
 import '../../../app_config.dart';
 import '../../../providers/auth_provider.dart';
 import '../../../router/app_urls.dart';
+import '../../../utils/resource_util.dart';
 import 'custom_image_widget.dart';
 
 class DrawerWidget extends StatelessWidget {
@@ -28,6 +29,7 @@ class DrawerWidget extends StatelessWidget {
             ),
             currentAccountPicture: CustomImageWidget(
               imageUrl: user?.profileImageURL,
+              defaultImageAsset: ResourceUtil.defaultProfileImage,
             ),
             accountName: Text(
               user?.fullName ?? 'John Doe',

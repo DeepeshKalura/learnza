@@ -9,6 +9,7 @@ import '../../../model/users/users_model.dart';
 import '../../../providers/auth_provider.dart';
 import '../../../providers/course_provider.dart';
 import '../../../providers/state/student/profile_student_state_provider.dart';
+import '../../../utils/resource_util.dart';
 import '../../common/widget/custom_image_widget.dart';
 
 class ProfileStudentScreen extends StatefulWidget {
@@ -160,6 +161,8 @@ class _ProfileStudentBodyState extends State<ProfileStudentBody> {
                                 imageUrl: currentUser?.profileImageURL,
                                 width: 160,
                                 height: 160,
+                                defaultImageAsset:
+                                    ResourceUtil.defaultProfileImage,
                               )
                             : Container(
                                 clipBehavior: Clip.antiAlias,
