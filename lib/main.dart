@@ -218,7 +218,9 @@ class MyApp extends StatelessWidget {
 
               return ShadApp.router(
                 debugShowCheckedModeBanner: false,
-                locale: Locale(userPreferenceProvider.currentLanguage),
+                locale: Locale(
+                  userPreferenceProvider.currentLanguage,
+                ),
                 localizationsDelegates: const [
                   AppLocalizations.delegate,
                   GlobalMaterialLocalizations.delegate,

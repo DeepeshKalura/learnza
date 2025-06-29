@@ -25,20 +25,6 @@ jobs:
         with:
           token: ${{ secrets.PAT_TOKEN }}
 
-      - name: Cache Flutter & Gradle
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.pub-cache
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-            ${{ runner.tool_cache }}/flutter
-            .dart_tool
-            build
-          key: ${{ runner.os }}-flutter-${{ env.FLUTTER_VERSION }}-${{ hashFiles('**/pubspec.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-flutter-${{ env.FLUTTER_VERSION }}-
-
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
@@ -111,46 +97,38 @@ jobs:
           keyAlias=${{ secrets.KEY_ALIAS }}
           storeFile=./keystore/upload-keystore.jks
           EOF
-
-      - name: Build Android artifacts
-        run: |
-          flutter build apk --release --dart-define-from-file=.env
-          flutter build appbundle --release --dart-define-from-file=.env
-
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v4
+      
+      - name: Determine Version and Generate Changelog
+        id: semantic_release
+        uses: cycjimmy/semantic-release-action@v4
         with:
-          name: flutter-build
-          path: |
-            build/app/outputs/flutter-apk/app-release.apk
-            build/app/outputs/bundle/release/app-release.aab
-
-      - name: Install Ruby and Fastlane
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: '3.1'
-
-      - name: Deploy to Play Store
-        run: |
-          gem install fastlane -NV
-          fastlane supply \
-            --aab build/app/outputs/bundle/release/app-release.aab \
-            --track internal \
-            --json_key_data "${{ secrets.SERVICE_ACCOUNT_JSON }}" \
-            --package_name "xyz.deepeshkalura.rovaa.shadanda"
-
-      - name: Determine version
-        id: determine_version
-        run: |
-          VERSION=$(grep "^version:" pubspec.yaml | awk '{print $2}' | cut -d+ -f1)
-          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
-
-      - name: Create GitHub Release
+          # This plugin handles versioning based on commit messages
+          extra_plugins: |
+            @semantic-release/changelog
+            @semantic-release/git
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          APK=$(find build -name "*release.apk")
-          gh release create "v${{ steps.determine_version.outputs.VERSION }}" \
-            "$APK" \
-            --title "Release v${{ steps.determine_version.outputs.VERSION }}" \
-            --notes "Automated release — version ${{ steps.determine_version.outputs.VERSION }}"
+          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+
+      - name: 9. Build Android App Bundle
+        # Only build if a new version was determined
+        if: steps.semantic_release.outputs.new_release_published == 'true'
+        run: flutter build appbundle
+
+      - name: 10. Deploy to Play Store Internal Track
+        if: steps.semantic_release.outputs.new_release_published == 'true'
+        uses: r0adkll/upload-google-play@v1.1.2
+        with:
+          serviceAccountJsonPlainText: ${{ secrets.SERVICE_ACCOUNT_JSON }}
+          packageName: xyz.deepeshkalura.rovaa.shadanda
+          releaseFiles: build/app/outputs/bundle/release/app-release.aab
+          track: internal # Deploy to internal testing track
+          whatsNewDirectory: ".releasenotes/" # A temporary directory for changelogs
+
+      - name: 11. Create GitHub Release
+        if: steps.semantic_release.outputs.new_release_published == 'true'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.semantic_release.outputs.new_release_git_tag }}
+          name: Release ${{ steps.semantic_release.outputs.new_release_version }}
+          body: ${{ steps.semantic_release.outputs.new_release_notes }}
+          files: build/app/outputs/bundle/release/app-release.aab
