@@ -104,8 +104,9 @@ jobs:
         with:
           # This plugin handles versioning based on commit messages
           extra_plugins: |
-            @semantic-release/changelog
-            @semantic-release/git
+              @semantic-release/changelog
+              @semantic-release/git
+              semantic-release-flutter
         env:
           GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
 
