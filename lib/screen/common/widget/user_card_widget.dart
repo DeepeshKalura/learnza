@@ -34,11 +34,10 @@ class UserCardCommonWidget extends StatelessWidget {
               // Profile Image with the new widget
               CustomImageWidget(
                 imageUrl: user.profileImageURL,
-                defaultImage: ResourceUtil.defaultProfileImage,
+                defaultImageAsset: ResourceUtil.defaultProfileImage,
                 width: 60,
                 height: 60,
                 shape: ShapeType.circle,
-                backgroundColor: Colors.grey.shade200,
               ),
               const SizedBox(width: 16),
               // User Info

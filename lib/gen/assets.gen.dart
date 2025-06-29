@@ -41,18 +41,22 @@ class $AssetsIconsGen {
 
   /// List of all assets
   List<SvgGenImage> get values => [
-        icHi,
-        icLooking,
-        icNoBookFound,
-        icSleepy,
-        icSomthingWentWrong,
-        icUnderDevelopment,
-        icWelcome,
-      ];
+    icHi,
+    icLooking,
+    icNoBookFound,
+    icSleepy,
+    icSomthingWentWrong,
+    icUnderDevelopment,
+    icWelcome,
+  ];
 }
 
 class $AssetsImagesGen {
   const $AssetsImagesGen();
+
+  /// File path: assets/images/default_post_image.png
+  AssetGenImage get defaultPostImage =>
+      const AssetGenImage('assets/images/default_post_image.png');
 
   /// File path: assets/images/ig_campus_image.png
   AssetGenImage get igCampusImage =>
@@ -76,12 +80,13 @@ class $AssetsImagesGen {
 
   /// List of all assets
   List<AssetGenImage> get values => [
-        igCampusImage,
-        igNagendraBasnet,
-        igNotebookImage,
-        igShadanda,
-        igStudentCouncil,
-      ];
+    defaultPostImage,
+    igCampusImage,
+    igNagendraBasnet,
+    igNotebookImage,
+    igShadanda,
+    igStudentCouncil,
+  ];
 }
 
 class $AssetsLogoGen {
@@ -115,19 +120,19 @@ class $AssetsLogoAdaptiveIconShadandaGen {
 
   /// File path: assets/logo/adaptive_icon/Shadanda/ic_launcher_background.png
   AssetGenImage get icLauncherBackground => const AssetGenImage(
-        'assets/logo/adaptive_icon/Shadanda/ic_launcher_background.png',
-      );
+    'assets/logo/adaptive_icon/Shadanda/ic_launcher_background.png',
+  );
 
   /// File path: assets/logo/adaptive_icon/Shadanda/ic_launcher_foreground.png
   AssetGenImage get icLauncherForeground => const AssetGenImage(
-        'assets/logo/adaptive_icon/Shadanda/ic_launcher_foreground.png',
-      );
+    'assets/logo/adaptive_icon/Shadanda/ic_launcher_foreground.png',
+  );
 
   /// List of all assets
   List<AssetGenImage> get values => [
-        icLauncherBackground,
-        icLauncherForeground,
-      ];
+    icLauncherBackground,
+    icLauncherForeground,
+  ];
 }
 
 class Assets {
@@ -214,10 +219,10 @@ class AssetGenImage {
 
 class SvgGenImage {
   const SvgGenImage(this._assetName, {this.size, this.flavors = const {}})
-      : _isVecFormat = false;
+    : _isVecFormat = false;
 
   const SvgGenImage.vec(this._assetName, {this.size, this.flavors = const {}})
-      : _isVecFormat = true;
+    : _isVecFormat = true;
 
   final String _assetName;
   final Size? size;
@@ -271,7 +276,8 @@ class SvgGenImage {
       placeholderBuilder: placeholderBuilder,
       semanticsLabel: semanticsLabel,
       excludeFromSemantics: excludeFromSemantics,
-      colorFilter: colorFilter ??
+      colorFilter:
+          colorFilter ??
           (color == null ? null : ColorFilter.mode(color, colorBlendMode)),
       clipBehavior: clipBehavior,
       cacheColorFilter: cacheColorFilter,

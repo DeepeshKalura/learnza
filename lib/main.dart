@@ -41,8 +41,6 @@ import 'utils/logger.dart';
 import 'utils/theme.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-
   FlutterError.onError = (FlutterErrorDetails details) {
     log.e("Caught FlutterError",
         error: details.exception, stackTrace: details.stack);
@@ -52,6 +50,7 @@ Future<void> main() async {
   runZonedGuarded(() async {
     try {
       log.i("--- Application Starting ---");
+      WidgetsFlutterBinding.ensureInitialized();
       await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform,
       );

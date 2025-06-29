@@ -10,10 +10,10 @@ import 'package:learnza/providers/post_provider.dart';
 import 'package:learnza/screen/post/edit_post_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../../model/posts/posts_model.dart';
 import '../../../model/users/users_model.dart';
-import '../../../utils/image_utils.dart';
 import '../../../utils/resource_util.dart';
 import '../../../utils/theme.dart';
 import '../../common/widget/custom_image_widget.dart';
@@ -57,6 +57,27 @@ class CardPostStudentWidget extends StatelessWidget {
     );
   }
 
+  void _sharePost(BuildContext context) {
+    // A slight delay to give visual feedback before the share sheet appears
+    Future.delayed(const Duration(milliseconds: 100), () {
+      final String textToShare =
+          'Check out this post on e-Shadananda:\n\n*${post.title}*\n\n${post.content}';
+
+      // This gets the position of the share button to anchor the share sheet on iPad.
+      final box = context.findRenderObject() as RenderBox?;
+
+      SharePlus.instance.share(
+        ShareParams(
+          text: textToShare,
+          title: 'Share Post',
+          subject: post.title,
+          sharePositionOrigin:
+              box != null ? box.localToGlobal(Offset.zero) & box.size : null,
+        ),
+      );
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -91,20 +112,24 @@ class CardPostStudentWidget extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    CircleAvatar(
-                      // Assuming both models have a way to get an avatar/image
-                      child: ImageUtils.load(
-                        urlOrAsset: user.profileImageURL,
-                        defaultAsset: ResourceUtil.defaultProfileImage,
-                      ),
+                    CustomImageWidget(
+                      imageUrl: user.profileImageURL,
+                      defaultImageAsset: ResourceUtil.defaultProfileImage,
+                      shape: ShapeType.circle,
+                      height: 40,
+                      width: 40,
                     ),
                     const SizedBox(width: 8),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(user.fullName,
-                            style: const TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold)),
+                        Text(
+                          user.fullName,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                         Text(
                           'Created on ${DateFormat('MMM d, yyyy').format(post.createdAt)}',
                           style:
@@ -116,6 +141,11 @@ class CardPostStudentWidget extends StatelessWidget {
                 ),
                 Row(
                   children: [
+                    IconButton(
+                      icon: const Icon(Icons.share_outlined),
+                      tooltip: 'Share Post',
+                      onPressed: () => _sharePost(context),
+                    ),
                     IconButton(
                       icon: Icon(
                         isLiked ? Icons.favorite : Icons.favorite_border,
@@ -272,6 +302,7 @@ class CardPostStudentWidget extends StatelessWidget {
                     children: [
                       CustomImageWidget(
                         imageUrl: user.profileImageURL,
+                        defaultImageAsset: ResourceUtil.defaultProfileImage,
                       ),
                       const SizedBox(width: 12),
                       Column(

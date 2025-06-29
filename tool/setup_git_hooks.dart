@@ -9,10 +9,10 @@ Future<void> main() async {
   const hookScript = r'''#!/bin/sh
 
 # 1️⃣ FORMAT staged Dart files (only if any are staged)
-dart_files=$(git diff --cached --name-only --diff-filter=ACM | grep '\.dart$')
+dart_files=$(git diff --cached --name-only --diff-filter=ACM | grep '\.dart$' || true)
 if [ -n "$dart_files" ]; then
   echo "🖋️ Running dart format on staged files..."
-  echo "$dart_files" | grep -q '[^[:space:]]' && echo "$dart_files" | xargs dart format --set-exit-if-changed
+  echo "$dart_files" | xargs dart format --set-exit-if-changed
   if [ $? -ne 0 ]; then
     echo "❌ dart format found issues. Please run 'dart format .' and re-stage."
     exit 1
@@ -20,6 +20,7 @@ if [ -n "$dart_files" ]; then
 else
   echo "ℹ️ No Dart files staged for formatting."
 fi
+
 
 # 2️⃣ APPLY auto-fixes
 echo "🔧 Applying dart fix --apply..."

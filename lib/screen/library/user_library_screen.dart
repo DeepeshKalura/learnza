@@ -111,7 +111,7 @@ class _UserLibraryScreenState extends State<UserLibraryScreen> {
                         title: localizations.onlineBookStoreTitle,
                         quote: localizations.onlineBookStoreQuote,
                         image:
-                            'https://images.unsplash.com/photo-1519681393784-d120267933ba',
+                            'https://picsum.photos/seed/online_library/1200/800',
                         onTap: () {
                           context.pushNamed(AppUrls.libraryStudentScreen);
                         },
@@ -124,7 +124,7 @@ class _UserLibraryScreenState extends State<UserLibraryScreen> {
                         ),
                         quote: localizations.offlineBookStoreQuote,
                         image:
-                            'https://images.unsplash.com/photo-1604866830893-c13cafa515d5',
+                            'https://picsum.photos/seed/personal_library/1200/800',
                         onTap: () {
                           context.pushNamed(AppUrls.offlineLibarayCommonScreen);
                         },
