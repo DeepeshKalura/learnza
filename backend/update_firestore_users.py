@@ -4,7 +4,15 @@ import os
 
 # --- Helper Function to Generate Keywords ---
 def generate_search_keywords(text: str) -> list:
-    """Generates all possible substrings for a given text."""
+    """
+    Generate all unique lowercase substrings from each part of the input text.
+    
+    Parameters:
+        text (str): The input string, typically a full name.
+    
+    Returns:
+        list: A list of unique substrings derived from each part of the input text. Returns an empty list if the input is empty or None.
+    """
     if not text:
         return []
     
@@ -24,7 +32,9 @@ def generate_search_keywords(text: str) -> list:
 
 def main():
     """
-    Main function to update user documents in Firestore with searchable keywords.
+    Scans all Firestore user documents and adds a 'searchableKeywords' field with generated keyword substrings for users who have a 'fullName' but lack the 'searchableKeywords' field.
+    
+    Initializes Firebase using a local service account key, processes users in batches to comply with Firestore limits, and prints progress and summary information. Handles missing credentials and Firestore errors gracefully with informative output.
     """
     print("--- Firestore User Update Script ---")
 
