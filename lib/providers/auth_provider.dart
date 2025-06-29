@@ -43,6 +43,10 @@ class AuthProvider extends ChangeNotifier {
   }
 
   void updateLocalUser(UsersModel updatedUser) {
+    if (firebaseService.auth.currentUser?.uid != updatedUser.uid) {
+      log.w("Attempted to update user with mismatched UID");
+      return;
+    }
     _user = updatedUser;
     notifyListeners();
   }
