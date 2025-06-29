@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 
 import '../../../model/app_enums.dart';
 import '../../../model/users/users_model.dart';
+import '../../../utils/resource_util.dart';
 import '../../common/widget/custom_image_widget.dart';
 
 class UserProfileScreen extends StatelessWidget {
@@ -45,6 +46,7 @@ class UserProfileScreen extends StatelessWidget {
                         ),
                         child: CustomImageWidget(
                           imageUrl: user.profileImageURL,
+                          defaultImageAsset: ResourceUtil.defaultProfileImage,
                         ),
                       ),
                       // Online indicator
