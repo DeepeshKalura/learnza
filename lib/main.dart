@@ -10,8 +10,6 @@ import 'package:learnza/app_config.dart';
 import 'package:learnza/l10n/app_localizations.dart';
 import 'package:learnza/locator/injector.dart' as di;
 import 'package:learnza/providers/state/admin/admin_state_provider.dart';
-// --- NEW IMPORT ---
-import 'package:learnza/service/migration_service.dart';
 import 'package:provider/provider.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
@@ -68,10 +66,6 @@ Future<void> main() async {
       log.i("Dependency Injector Initialized.");
       await di.injector.get<AppConfig>().setup();
       log.i("AppConfig Setup Complete.");
-
-      // --- NEW: RUN MIGRATION LOGIC HERE ---
-      await MigrationService().runUserSearchMigration();
-      // --- END OF NEW CODE ---
 
       await SentryFlutter.init(
         (options) {
