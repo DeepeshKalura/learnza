@@ -115,6 +115,13 @@ jobs:
         if: steps.semantic_release.outputs.new_release_published == 'true'
         run: flutter build appbundle
 
+      - name: 9.5. Prepare Play Store Release Notes
+        if: steps.semantic_release.outputs.new_release_published == 'true'
+        run: |
+          mkdir -p .releasenotes/en-US
+          # Extract first 500 characters of release notes for Play Store
+          echo "${{ steps.semantic_release.outputs.new_release_notes }}" | head -c 500 > .releasenotes/en-US/whatsnew
+
       - name: 10. Deploy to Play Store Internal Track
         if: steps.semantic_release.outputs.new_release_published == 'true'
         uses: r0adkll/upload-google-play@v1.1.2
