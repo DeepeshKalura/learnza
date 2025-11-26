@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/DeepeshKalura/learnza/compare/v1.4.0...v1.5.0) (2025-11-26)
+
+
+### Features
+
+* **ui:** add dark mode support ([aef5994](https://github.com/DeepeshKalura/learnza/commit/aef59942605c9272d7f922563e78a71a02fe4cd3))
+
 # [1.4.0](https://github.com/DeepeshKalura/learnza/compare/v1.3.16+31...v1.4.0) (2025-11-26)
 
 

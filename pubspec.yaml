@@ -1,7 +1,7 @@
 name: learnza
 description: A new Flutter project.
 publish_to: none
-version: 1.4.0+1764159192
+version: 1.5.0+1764161435
 environment:
   sdk: ^3.5.3
 dependencies:
